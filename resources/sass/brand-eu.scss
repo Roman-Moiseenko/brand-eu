@@ -1,7 +1,7 @@
 // Fonts
 
 @import 'fontawesome/scss/fontawesome.scss';
-@import 'nordihome/variables';
+@import 'brand-eu/variables';
 @import 'adverta';
 @import 'bootstrap/scss/bootstrap';
 @import "bootstrap/scss/variables";
@@ -38,31 +38,36 @@ $blue: #0088cc;
 $green: #56ab56;
 $yellow:#FCE944;
 $base-font: 'Adverta', sans-serif;
+$border-radius_100: 0;
+$border-radius_50: 0;
+$border-radius_20: 0;
+$border-radius_16: 0;
+$border-radius_12: 0;
+$border-radius_8: 0;
+$border-radius_4: 0;
+
+/**
+$border-radius_100: 100%;
+$border-radius_50: 50%;
 $border-radius_20: 20px;
 $border-radius_16: 16px;
 $border-radius_12: 12px;
 $border-radius_8: 8px;
-
+$border-radius_4: 4px;
+ */
 //@import "node_modules/font-awesome/scss/font-awesome.scss";
 
 @import "common";
-@import "nordihome/main";
-@import "nordihome/shop-l-classes";
-@import "nordihome/element";
-@import "nordihome/menu";
-@import "nordihome/cart_page";
-@import "nordihome/order_page";
-@import "nordihome/home_page";
-@import "nordihome/pages";
-@import "nordihome/parser";
-@import "nordihome/cabinet";
-@import "nordihome/catalog";
-@import "nordihome/products";
-@import "nordihome/filter";
-@import "nordihome/widgets/feedback";
-@import "nordihome/old_widget";
-@import "nordihome/widgets";
-@import "nordihome/form";
-@import "nordihome/post";
-@import "nordihome/cookie";
+@import "brand-eu/main";
+@import "brand-eu/shop-l-classes";
+@import "brand-eu/element";
+@import "brand-eu/menu";
+@import "brand-eu/cart_page";
+@import "brand-eu/order_page";
+@import "brand-eu/home_page";
+@import "brand-eu/cabinet";
+@import "brand-eu/catalog";
+@import "brand-eu/products";
+@import "brand-eu/filter";
+@import "brand-eu/cookie";
 

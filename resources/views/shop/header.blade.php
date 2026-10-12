@@ -5,53 +5,12 @@
 @endphp
 
 <header>
-    <div class="header-mobile bg-f2f2f2">
-        <div class="container-xl">
-            <div class="d-flex justify-content-between align-items-center mob-gray-line">
-                <div id="code-region" style="margin-right: auto; cursor: pointer" class="f-z_12">Калининград</div>
-                <div class="wrap-mob-menu-top">
-                    @if(isset($menus['menu-header02']))
-                        <ul id="menu-menyu-v-shapke02" class="h-menu">
-                            @foreach($menus['menu-header02']->items as $item)
-                                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    @else
-                        Меню не найдено
-                    @endif
-                </div>
-
-                @include('shop.widgets.header.contacts')
-
-            </div>
-        </div>
-    </div>
-
-    <div class="menu-top hide-mobile">
-        <div class="container-xl">
-            <div class="d-flex justify-content-end align-items-center">
-                <div id="code-region" style="margin-right: auto; cursor: pointer" class="f-z_14">Калининград</div>
-                <div>
-                    @if(isset($menus['menu-header02']))
-                        <ul id="menu-menyu-v-shapke02" class="h-menu">
-                            @foreach($menus['menu-header02']->items as $item)
-                                <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    @else
-                        Меню не найдено
-                    @endif
-                </div>
-                @include('shop.widgets.header.contacts')
-            </div>
-        </div>
-    </div>
 
     <nav class="menu-bottom navbar navbar-expand-md navbar-light bg-white">
         <div class="menu-container container-xl">
             <div class="menu-bottom-catalog d-flex">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="/images/icons/nordi-home-rus.svg" alt="Nordi Home" class="img-fluid img-logo">
+                    <img src="/images/icons/brand.svg" alt="Euro Sport Brand" class="img-fluid img-logo">
                     <div class="h-city-text">склады находятся в г.Калининград</div>
                 </a>
 

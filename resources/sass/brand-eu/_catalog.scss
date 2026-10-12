@@ -1,7 +1,7 @@
 .catalog-card {
     overflow: hidden;
     margin: 0 0 20px 0;
-    border-radius: 12px;
+    border-radius: $border-radius_12;
     img {
         width: 100%;
         transition: $transition-slow;
@@ -41,10 +41,10 @@
     border: 1px solid black;
     padding: 8px 15px;
     font-size: 14px;
-    border-radius: 12px;
+    border-radius: $border-radius_12;
     .dropdown-menu.show {
         border:1px solid black;
-        border-radius: 12px;
+        border-radius: $border-radius_12;
         font-size: 14px;
         ul li.active {
             &:before {
@@ -59,7 +59,7 @@
         text-decoration: none;
         background: #e8e8e8;
         display: inline-block;
-        border-radius: 12px;
+        border-radius: $border-radius_12;
         text-align: center;
         padding: 5px 10px;
         font-size: 14px;

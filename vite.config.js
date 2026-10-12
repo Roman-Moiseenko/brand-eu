@@ -47,13 +47,13 @@ export default defineConfig({
         laravel({
             input: [
                 //Theme - Nordihome
-                'resources/sass/nordihome.scss',
-                'resources/js/nordihome.js',
-                'resources/js/nordihome/product.js',
+                'resources/sass/brand-eu.scss',
+                'resources/js/brand-eu.js',
+                'resources/js/brand-eu/product.js',
 
                // 'resources/sass/admin.scss',
                 'resources/js/admin.js',
-                'resources/js/nordihome/analytics-tracker.js',
+                'resources/js/brand-eu/analytics-tracker.js',
                 'resources/css/admin.css',
                 'resources/images/logo.svg',
                 'resources/css/livewire/notification.css',

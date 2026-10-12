@@ -2,7 +2,7 @@
     color: black;
     .children {
         border: 1px solid black;
-        border-radius: 8px;
+        border-radius: $border-radius_8;
         padding: 10px;
         .heading {
             font-weight: bold;

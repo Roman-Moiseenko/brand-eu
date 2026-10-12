@@ -23,7 +23,7 @@
         padding: 3px 5px;
         font-size: 12px;
         font-weight: 500;
-        border-radius: 8px;
+        border-radius: $border-radius_8;
         display: inline-block;
         margin-right: 3px;
         color: $light-gray;
@@ -50,7 +50,7 @@
                     padding-left: 20px;
                     &:before {
                         border: 1px solid #afafaf;
-                        border-radius: 50%;
+                        border-radius: $border-radius_50;
                         box-sizing: border-box;
                         content: "";
                         display: block;
@@ -220,7 +220,7 @@
     z-index: 3;
     right: 4px;
     top: 4px;
-    border-radius: 50%;
+    border-radius: $border-radius_50;
     width: 65px;
     height: 65px;
     color: #fff;
@@ -272,7 +272,7 @@
         background: $red;
         width: auto;
         height: auto;
-        border-radius: 5px;
+        border-radius: $border-radius_4;
         padding: 6px 8px 7px 8px;
     }
 }
@@ -284,7 +284,7 @@
         position: absolute;
         background: $red;
         color: white;
-        border-radius: 5px;
+        border-radius: $border-radius_4;
         padding: 3px 8px;
         font-size: 16px;
     }
@@ -395,7 +395,7 @@
     width: 15px;
     height: 15px;
     text-align: center;
-    border-radius: 50%;
+    border-radius: $border-radius_50;
     display: inline-block;
     background: url(/wp-content/themes/euroikea/images/arrow-right.svg) center center / 15px no-repeat;
     transform: rotate(90deg);
@@ -407,7 +407,7 @@
 .product-materials.accordion .accordion-heading span {
     border: 1px solid $light-gray;
     color: $light-gray;
-    border-radius: 8px;
+    border-radius: $border-radius_8;
     padding: 4px 9px;
     margin-left: 10px;
     font-weight: 500;
@@ -608,7 +608,7 @@
         margin: 10px;
         >a {
             border: 1px solid var(--bs-gray-600);
-            border-radius: 16px;
+            border-radius: $border-radius_16;
             padding: 4px 10px;
             &:hover {
                 color: var(--bs-white);
@@ -621,8 +621,6 @@
         margin-bottom: 10px;
         margin-left: auto;
         >span {
-            //border: 1px solid var(--bs-gray-600);
-            //border-radius: 16px;
             padding-left: 10px;
             font-weight: 600;
         }

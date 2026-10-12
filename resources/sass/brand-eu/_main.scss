@@ -159,7 +159,7 @@ img {
     margin-left: 20px;
 }
 .btn {
-    border-radius: 50px;
+    border-radius: $border-radius_50;
     padding: 9px 25px 11px 25px;
     text-decoration: none;
     font-weight: 500;
@@ -258,7 +258,7 @@ button[type="submit"]:hover, .feedback button[type="button"]:hover {
     background:black;
 }
 .form-send-message {
-    border-radius: 12px;
+    border-radius: $border-radius_12;
     padding: 10px;
     background: $green;
     color: white;
@@ -267,7 +267,7 @@ button[type="submit"]:hover, .feedback button[type="button"]:hover {
     }
 }
 input[type="submit"], button[type="submit"], .feedback button[type="button"] {
-    border-radius: 50px;
+    border-radius: $border-radius_50;
     padding: 9px 25px 11px 25px;
     background:black;
     color:white;
@@ -325,7 +325,7 @@ a[href^="tel:"] {
     background: url(/images/icons/svg-hot-50.svg) no-repeat center left / 17px;
     padding-left: 20px;
 }
-#menu-menyu-v-shapke.h-menu li:nth-child(2) a:after {content:'до -50%';background:$orange;text-transform:none;color:white;border-radius: 13px;padding: 2px 9px 4px 9px;margin-left: 5px;font-weight: 500;}
+#menu-menyu-v-shapke.h-menu li:nth-child(2) a:after {content:'до -50%';background:$orange;text-transform:none;color:white;border-radius: $border-radius_12;padding: 2px 9px 4px 9px;margin-left: 5px;font-weight: 500;}
 .h-menu li .sub-menu, #menu-menyu-katalog .sub-menu {display:none;}
 .h-menu li:hover .sub-menu, #menu-menyu-katalog li:hover .sub-menu {
     display:block;
@@ -380,7 +380,7 @@ a[href^="tel:"] {
     text-align: left;
 }
 .main-slider, #main-slider-reviews {
-    border-radius: 12px;
+    border-radius: $border-radius_12;
     overflow: hidden;
 }
 .main-slider .sl-text {
@@ -449,7 +449,7 @@ a[href^="tel:"] {
 .page-item .page-link {
     font-weight: 600;
     padding: 11px 10px;
-    border-radius: 50%!important;
+    border-radius: $border-radius_50;
     border: 1px solid $black;
     margin-right: 5px;
     width: 45px;

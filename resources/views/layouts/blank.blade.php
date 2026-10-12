@@ -17,7 +17,7 @@
 
 
 <!-- BEGIN: CSS Assets-->
-    @vite(['resources/sass/nordihome.scss', 'resources/js/nordihome.js'])
+    @vite(['resources/sass/brand-eu.scss', 'resources/js/brand-eu.js'])
 <!-- END: CSS Assets-->
 </head>
 <!-- END: Head -->

@@ -57,7 +57,7 @@
     background-color: $black;
     border: 1px solid $white;
     outline: none;
-    border-radius: 50%;
+    border-radius: $border-radius_50;
     text-align: center;
     font-size: 33px;
     font-weight: 500;
@@ -98,7 +98,7 @@
     right: 15px;
     background: url(/public/images/pages/home/in-touch01.svg) no-repeat center center  / 60px, $blue;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: $border-radius_50;
     box-shadow: 0 0 20px 0 rgb(0 0 0 / 30%);
     transition: all 0.3s ease-in-out;
 }
@@ -230,7 +230,7 @@ button.to-wish, button.is-wish {
         padding: 8px 15px;
         margin-right: 8px;
         margin-bottom: 10px;
-        border-radius: 8px;
+        border-radius: $border-radius_8;
         display: inline-block;
         &.active {
             background: black;

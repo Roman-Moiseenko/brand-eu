@@ -12,7 +12,7 @@
     text-transform: uppercase;
     font-size: 13px;
     font-weight: 400;
-    border-radius: 20px;
+    border-radius: $border-radius_20;
     padding: 11px 13px 13px 13px;
     text-decoration: none;
     display: flex;
@@ -27,7 +27,7 @@
     background: $white;
     height: 2px;
     display: block;
-    border-radius: 5px;
+    border-radius: $border-radius_4;
     transition: all 0.3s;
     margin-bottom: 4px;
 }
@@ -634,7 +634,7 @@ header {
     text-transform: uppercase;
     font-size: 13px;
     font-weight: 400;
-    border-radius: 20px;
+    border-radius: $border-radius_20;
     padding: 9px 13px 11px 13px;
     text-decoration: none;
     display: flex;

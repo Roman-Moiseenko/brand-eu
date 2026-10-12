@@ -9,9 +9,9 @@
     @if(isset($pageData) && !is_null($pageData->meta))
         @include('partials.seo-meta', ['meta' => $pageData->meta])
     @endif
-    <link rel="icon" href="{{ url('images/nordihome/favicon/32x32.png') }}" size="32x32">
-    <link rel="icon" href="{{ url('images/nordihome/favicon/192x192.png') }}" size="192x192">
-    <link rel="apple-touch-icon" href="{{ url('images/nordihome/favicon/180x180.png') }}" size="192x192">
+    <link rel="icon" href="{{ url('images/nordihome/favicon.png') }}" size="32x32">
+    <link rel="icon" href="{{ url('images/nordihome/favicon.png') }}" size="192x192">
+    <link rel="apple-touch-icon" href="{{ url('images/nordihome/favicon.png') }}" size="192x192">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -22,7 +22,7 @@
     @livewireStyles
     @yield('head')
     <!-- Scripts -->
-    @vite(['resources/sass/nordihome.scss', 'resources/js/nordihome.js'])
+    @vite(['resources/sass/brand-eu.scss', 'resources/js/brand-eu.js'])
     @stack('styles')
 
     <script>

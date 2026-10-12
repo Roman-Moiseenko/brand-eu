@@ -36,7 +36,4 @@
             </div>
         @endif
     @endforeach
-
-    @include('shop.widgets.map')
-
 @endsection

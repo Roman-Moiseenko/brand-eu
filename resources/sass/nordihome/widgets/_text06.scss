@@ -34,7 +34,7 @@
         transform: translate(-50%, -50%);
         z-index: 98;
         background: white;
-        border-radius: 50px;
+        border-radius: $border-radius_50;
         min-width: 190px;
     }
 }
