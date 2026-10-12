@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Modules\Auth\Application\DTOs;
+
+use Spatie\LaravelData\Attributes\Validation\BooleanType;
+use Spatie\LaravelData\Attributes\Validation\Email;
+use Spatie\LaravelData\Attributes\Validation\Nullable;
+use Spatie\LaravelData\Attributes\Validation\Password;
+use Spatie\LaravelData\Attributes\Validation\Required;
+use Spatie\LaravelData\Attributes\Validation\StringType;
+use Spatie\LaravelData\Data;
+
+class LoginData extends Data
+{
+    public function __construct(
+        #[Required, Email]
+        public readonly string $email,
+        #[Required, Password(min: 6)]
+        public readonly string $password,
+        #[Nullable, BooleanType]
+        public readonly bool $remember = false,
+        #[Nullable, StringType]
+        public readonly ?string $verify_token = null,
+        #[Nullable, BooleanType]
+        public readonly bool $agreement = false,
+        #[Nullable, BooleanType]
+        public readonly bool $newsletter = false,
+    ) {}
+}

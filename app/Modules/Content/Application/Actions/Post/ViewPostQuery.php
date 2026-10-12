@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Content\Application\Actions\Post;
+
+use App\Modules\Content\Domain\Entities\PostEntity;
+use App\Modules\Content\Domain\Interfaces\PostRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class ViewPostQuery
+{
+    public function __construct(
+        private PostRepositoryInterface $postRepository,
+    ) {}
+
+    public function execute(int $id, UserPermission $userPermission): PostEntity
+    {
+        if (!$userPermission->can('content.post.view')) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->postRepository->getById($id);
+    }
+}

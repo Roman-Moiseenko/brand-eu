@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Application\Actions\Category;
+
+use App\Modules\Catalog\Domain\Entities\CategoryEntity;
+use App\Modules\Catalog\Domain\Interfaces\CategoryRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class IndexCategoryUseCase
+{
+    public function __construct(
+        private CategoryRepositoryInterface $categoryRepository,
+    )
+    {
+    }
+
+    /**
+     * @return CategoryEntity[]
+     */
+    public function execute(UserPermission $userPermission): array
+    {
+        // Проверка прав доступа
+        if (!$userPermission->can('catalog.category.view')) throw new AccessDeniedException();
+
+        return $this->categoryRepository->getAll();
+    }
+}

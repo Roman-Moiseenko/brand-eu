@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Application\Actions\Category;
+
+use App\Modules\Catalog\Domain\Entities\CategoryEntity;
+use App\Modules\Catalog\Domain\Interfaces\CategoryRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class ViewCategoryUseCase
+{
+    public function __construct(
+        private CategoryRepositoryInterface $categoryRepository,
+    )
+    {
+    }
+
+    public function execute(int $id, UserPermission $userPermission): CategoryEntity
+    {
+        if (!$userPermission->can('catalog.category.view')) throw new AccessDeniedException();
+
+        return $this->categoryRepository->getById($id);
+    }
+}

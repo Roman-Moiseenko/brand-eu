@@ -1,0 +1,214 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Parser\Infrastructure\Persistence;
+
+use App\Modules\Parser\Application\DTOs\Product\ParserProductFilterData;
+use App\Modules\Parser\Domain\Entities\ParserProductEntity;
+use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Domain\ValueObjects\Package;
+use App\Modules\Parser\Domain\ValueObjects\Store;
+use App\Modules\Parser\Infrastructure\Models\ParserProduct;
+use App\Modules\Shared\Domain\ValueObjects\Slug;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class ParserProductRepository implements ParserProductRepositoryInterface
+{
+    public function getById(int $id): ParserProductEntity
+    {
+        $model = ParserProduct::findOrFail($id);
+        return $this->hydrate($model);
+    }
+
+    public function getByCode(string $code): ?ParserProductEntity
+    {
+        $model = ParserProduct::where('code', $code)->first();
+
+        if ($model === null) {
+            return null;
+        }
+        return $this->hydrate($model);
+    }
+    public function existsByCode(string $code): bool
+    {
+        return ParserProduct::where('code', $code)->exists();
+    }
+
+    public function save(ParserProductEntity $product): ParserProductEntity
+    {
+        $model = $product->id
+            ? ParserProduct::findOrFail($product->id)
+            : new ParserProduct();
+
+        $model->name = $product->name;
+        $model->code = $product->code;
+        $model->slug = (string) $product->slug;
+        $model->url = $product->url;
+        $model->price_base = $product->priceBase;
+        $model->price_sell = $product->priceSell;
+        $model->short = $product->short;
+        $model->description = $product->description;
+        $model->fragile = $product->fragile;
+        $model->sanctioned = $product->sanctioned;
+        $model->availability = $product->availability;
+        $model->product_id = $product->productId;
+        $model->packs = $product->packs;
+        $model->materials = $product->materials;
+        $model->care = $product->care;
+        $model->dimensions = $product->dimensions;
+        $model->variants = $product->variants;
+
+        $model->composite = $product->composite;
+
+        // stores — массив Store[], сохраняем в виде ассоциативного массива ['код_магазина' => кол-во]
+        $model->stores = Store::collectionToAssociative($product->stores);
+
+        // packages — массив Package[]
+        $model->packages = array_map(
+            fn(Package $p) => $p->toArray(),
+            $product->packages
+        );
+
+        // colors — массив строк
+        $model->colors = $product->colors;
+
+        $model->save();
+        $model->refresh();
+
+        return $this->hydrate($model);
+    }
+
+
+    public function getAll(): array
+    {
+        return ParserProduct::get()
+            ->map(fn(ParserProduct $model) => $this->hydrate($model))
+            ->toArray();
+    }
+
+    public function getAllId(): array
+    {
+        return ParserProduct::where('availability', true)
+            ->pluck('id')
+            ->toArray();
+    }
+
+    public function getByProductId(int $productId): ?ParserProductEntity
+    {
+        $model = ParserProduct::where('product_id', $productId)->first();
+        if (is_null($model)) return null;
+        return $this->hydrate($model);
+    }
+
+
+    public function delete(int $id): void
+    {
+        $model = ParserProduct::findOrFail($id);
+        $model->delete();
+    }
+
+    /**
+     * @return ParserProductEntity[]
+     */
+    public function getByCategoryIds(array $categoryIds): array
+    {
+        return ParserProduct::whereHas('categories', function ($query) use ($categoryIds) {
+            $query->whereIn('id', $categoryIds);
+        })
+            ->get()
+            ->map(fn(ParserProduct $model) => $this->hydrate($model))
+            ->values()
+            ->toArray();
+    }
+
+    public function bulkToggleAvailability(array $productIds, bool $availability): void
+    {
+        if (empty($productIds)) {
+            return;
+        }
+
+        ParserProduct::whereIn('id', $productIds)->update(['availability' => $availability]);
+    }
+
+    public function findAllByCategoryId(int $categoryId, int $perPage = 15, int $page = 1): LengthAwarePaginator
+    {
+        return ParserProduct::orderBy('name')
+            ->whereHas('categories', fn($query) => $query->where('id', $categoryId))
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->through(fn(ParserProduct $model) => $this->hydrate($model));
+    }
+
+
+    private function hydrate(ParserProduct $model): ParserProductEntity
+    {
+        $entity = new ParserProductEntity(
+            name: $model->name,
+            code: $model->code,
+        );
+
+        $entity->id = $model->id;
+        $entity->productId = $model->product_id;
+        $entity->slug = new Slug($model->slug ?? '');
+        $entity->url = $model->url ?? '';
+        $entity->priceBase = (float) ($model->price_base ?? 0);
+        $entity->priceSell = (float) ($model->price_sell ?? 0);
+        $entity->short = $model->short ?? '';
+        $entity->description = $model->description ?? '';
+        $entity->fragile = (bool) ($model->fragile ?? false);
+        $entity->sanctioned = (bool) ($model->sanctioned ?? false);
+        $entity->availability = (bool) ($model->availability ?? false);
+        $entity->packs = (int) ($model->packs ?? 1);
+
+        $entity->materials = (array)$model->materials;
+        $entity->care = $model->care;
+        $entity->dimensions = (array)$model->dimensions;
+        $entity->variants = (array)$model->variants;
+
+        $entity->composite = $model->composite ?? [];
+
+        // stores — ассоциативный массив ['код_магазина' => кол-во] -> Store[]
+        $entity->stores = Store::collectionFromAssociative($model->stores ?? []);
+
+        // packages
+        $entity->packages = array_map(
+            fn(array $item) => Package::fromArray($item),
+            $model->packages ?? []
+        );
+
+        // colors
+        $entity->colors = $model->colors ?? [];
+
+        return $entity;
+    }
+
+    public function getFilteredPaginated(ParserProductFilterData &$filter): LengthAwarePaginator
+    {
+        $query = ParserProduct::orderBy('name');
+        $filter->count = 0;
+        if ($filter->code !== null) {
+            $code = $filter->code;
+            $query->where(function ($q) use ($code) {
+                $q->whereRaw("LOWER(name) like LOWER('%$code%')")
+                    ->orWhere('code', 'like', "%$code%");
+            });
+            $filter->count++;
+        }
+
+        if ($filter->show !== null) {
+            match ($filter->show) {
+                'availability' => $query->where('availability', true),
+                'not_availability' => $query->where('availability', false),
+                'fragile' => $query->where('fragile', true),
+                'sanctioned' => $query->where('sanctioned', true),
+                default => null,
+            };
+            $filter->count++;
+        }
+
+        return $query->paginate($filter->perPage)
+            ->withQueryString()
+            ->through(fn(ParserProduct $model) => $this->hydrate($model));
+    }
+
+}

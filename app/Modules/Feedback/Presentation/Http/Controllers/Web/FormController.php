@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Modules\Feedback\Presentation\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Analytics\Domain\ValueObjects\ActionType;
+use App\Modules\Analytics\Domain\ValueObjects\EntityType;
+use App\Modules\Analytics\Presentation\Support\RecordsAnalyticsAction;
+use App\Modules\Content\Entity\Widgets\FormWidget;
+use App\Modules\Feedback\Application\Actions\FormBack\CreateFormBackUseCase;
+use App\Modules\Feedback\Application\Actions\FormBack\IndexFormBackUseCase;
+use App\Modules\Feedback\Application\DTOs\FormBack\FormBackCreateData;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class FormController extends Controller
+{
+    use RecordsAnalyticsAction;
+
+    public function __construct(
+        public IndexFormBackUseCase  $indexFormBackUseCase,
+        public CreateFormBackUseCase $createFormBackUseCase,
+    )
+    {
+    }
+
+    public function index(Request $request, UserPermission $userPermission)
+    {
+        $forms = $this->indexFormBackUseCase->execute($userPermission);
+        return Inertia::render('Feedback/Form/Index',
+            [
+                'forms' => $forms,
+            ]);
+    }
+/*
+    public function from_shop(FormWidget $widget, Request $request): JsonResponse
+    {
+        $dto = FormBackCreateData::validateAndCreate($request->all());
+        $this->createFormBackUseCase->execute($dto);
+        return \response()->json(true);
+    }
+*/
+    public function feedback(Request $request)
+    {
+        try {
+            $dto = FormBackCreateData::validateAndCreate($request->all());
+            $this->createFormBackUseCase->execute($dto);
+
+            $formName = $dto->data['form'] ?? $dto->data['form_name'] ?? null;
+            $this->recordAnalyticsAction(
+                ActionType::FORM_SUBMIT,
+                EntityType::FORM,
+                null,
+                ['form' => $formName, 'url' => $dto->url],
+            );
+
+            return \response()->json(true);
+        } catch (\Throwable $exception) {
+            return \response()->json(false);
+        }
+    }
+/*
+    public function get_url(FormWidget $widget): JsonResponse
+    {
+        return \response()->json(route('admin.feedback.form.from-shop', $widget));
+    }*/
+}

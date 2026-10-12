@@ -1,0 +1,24 @@
+<?php
+
+return [
+    App\Modules\Accounting\Providers\AccountingServiceProvider::class,
+    App\Modules\Analytics\Providers\AnalyticsServiceProvider::class,
+    App\Modules\Auth\Providers\AuthServiceProvider::class,
+    App\Modules\Cabinet\Providers\CabinetServiceProvider::class,
+    App\Modules\Cart\Providers\CartServiceProvider::class,
+    App\Modules\Catalog\Providers\CatalogServiceProvider::class,
+    App\Modules\Content\Providers\ContentServiceProvider::class,
+    App\Modules\Discount\Providers\DiscountServiceProvider::class,
+    App\Modules\Feedback\Providers\FeedbackServiceProvider::class,
+    App\Modules\Guide\Providers\GuideServiceProvider::class,
+    App\Modules\Lead\Providers\LeadServiceProvider::class,
+    App\Modules\Notification\Providers\NotificationServiceProvider::class,
+    App\Modules\Order\Providers\OrderServiceProvider::class,
+    App\Modules\Output\Providers\OutputServiceProvider::class,
+    App\Modules\Parser\Providers\ParserServiceProvider::class,
+    App\Modules\Shared\Providers\SharedServiceProvider::class,
+    App\Modules\Shop\Providers\ShopServiceProvider::class,
+    App\Providers\AppServiceProvider::class,
+    App\Providers\EventServiceProvider::class,
+    App\Providers\RouteServiceProvider::class,
+];

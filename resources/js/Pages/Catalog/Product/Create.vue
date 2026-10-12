@@ -1,0 +1,137 @@
+<template>
+    <Head><title>{{ title }}</title></Head>
+    <el-config-provider :locale="ru">
+        <h1 class="font-medium text-xl">Создание нового товара</h1>
+        <div class="mt-2 p-5 bg-white rounded-md">
+            <el-row :gutter="10">
+                <el-col :span="8">
+                    <el-form label-width="auto">
+                        <el-form-item label="Название товара">
+                            <el-input v-model="form.name" @change="onName"/>
+                            <div v-if="errors.name" class="text-red-700">{{ errors.name }}</div>
+                        </el-form-item>
+                        <el-form-item label="Название для печати">
+                            <el-input v-model="form.namePrint" />
+                            <div v-if="errors.namePrint" class="text-red-700">{{ errors.namePrint }}</div>
+                        </el-form-item>
+                        <el-form-item label="Ссылка">
+                            <el-input v-model="form.slug" placeholder="Заполнится автоматически" clearable/>
+                        </el-form-item>
+                        <el-form-item label="Артикул">
+                            <el-input v-model="form.code" />
+                            <div v-if="errors.code" class="text-red-700">{{ errors.code }}</div>
+                        </el-form-item>
+                        <el-form-item label="Описание (комментарий)">
+                            <el-input v-model="form.comment" type="textarea" rows="3" maxlength="255" show-word-limit/>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+                <el-col :span="8">
+                    <el-form label-width="auto">
+                        <el-form-item label="Главная категория">
+                            <el-select v-model="form.categoryId" filterable>
+                                <el-option v-for="item in useCatalog.categories" :value="item.id" :label="item.name"/>
+                            </el-select>
+                            <div v-if="errors.categoryId" class="text-red-700">{{ errors.categoryId }}</div>
+                        </el-form-item>
+                        <el-form-item label="Бренд">
+                            <el-select v-model="form.brandId" filterable>
+                                <el-option v-for="item in useCatalog.brands" :value="item.id" :label="item.name"/>
+                            </el-select>
+                            <div v-if="errors.brandId" class="text-red-700">{{ errors.brandId }}</div>
+                        </el-form-item>
+                        <el-form-item label="Страна происхождения">
+                            <el-select v-model="form.countryId" filterable clearable>
+                                <el-option v-for="item in useGuide.countries" :value="item.id" :label="item.name"/>
+                            </el-select>
+                            <div v-if="errors.countryId" class="text-red-700">{{ errors.countryId }}</div>
+                        </el-form-item>
+                        <el-form-item label="Поставщик">
+                            <el-select v-model="form.distributorId" filterable clearable>
+                                <el-option v-for="item in useAccounting.distributors" :value="item.id" :label="item.name"/>
+                            </el-select>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+                <el-col :span="8">
+                    <el-form label-width="auto">
+
+                        <el-form-item label="Вид продукции ИС">
+                            <el-select v-model="form.markingTypeId" filterable clearable>
+                                <el-option v-for="item in useGuide.markingType" :value="item.id" :label="item.name"/>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Ед.измерения">
+                            <el-select v-model="form.measuringId" @change="onMeasuring">
+                                <el-option v-for="item in useGuide.measuring" :value="item.id" :label="item.name"/>
+                            </el-select>
+                            <div v-if="errors.measuringId" class="text-red-700">{{ errors.measuringId }}</div>
+                        </el-form-item>
+                        <el-form-item label="Дробление количества">
+                            <el-checkbox v-model="form.fractional" :checked="form.fractional" />
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+            </el-row>
+        </div>
+        <el-button type="primary" @click="onCreate" class="mt-3">Создать товар</el-button>
+    </el-config-provider>
+</template>
+
+<script setup lang="ts">
+import ru from 'element-plus/dist/locale/ru.mjs'
+import {Head, router} from "@inertiajs/vue3";
+import {reactive} from "vue";
+import {useCatalogStore} from "@Res/catalogStore.ts";
+import {useGuideStore} from "@Res/guideStore";
+import {useAccountingStore} from "@Res/accountingStore";
+
+const props = defineProps({
+    errors: Object,
+
+    title: {
+        type: String,
+        default: 'Создание нового товара',
+    },
+})
+const useCatalog = useCatalogStore()
+const useGuide = useGuideStore()
+const useAccounting = useAccountingStore()
+
+const form = reactive({
+    name: null,
+    namePrint: null,
+    slug: null,
+    code: null,
+    comment: null,
+    categoryId: null,
+    brandId: null,
+    countryId: null,
+    distributorId: null,
+    markingTypeId: null,
+    measuringId: null,
+    fractional: false,
+})
+
+function onMeasuring(val) {
+    props.measuring.forEach(function (item) {
+        if (item.id === val && item.fractional === 1) form.fractional = true
+        if (item.id === val && item.fractional === 0) form.fractional = false
+
+    })
+}
+function onName() {
+    if (form.namePrint === null) form.namePrint = form.name
+}
+
+
+function onCreate() {
+
+    router.post(route('admin.catalog.product.store'), form)
+}
+
+</script>
+
+<style scoped>
+
+</style>

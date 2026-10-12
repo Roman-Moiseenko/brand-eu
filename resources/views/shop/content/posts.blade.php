@@ -1,0 +1,54 @@
+@php
+
+    use App\Modules\Content\Infrastructure\Models\Post;use App\Modules\Content\Infrastructure\Models\PostCategory;use App\Modules\Shop\Application\DTOs\Pages\PostIndexPageData;
+
+    /** @var PostCategory $category */
+    /** @var Post[] $posts */
+    /** @var PostIndexPageData $pageData */
+@endphp
+@extends('layouts.main')
+@section('main', 'posts container-xl')
+
+@section('content')
+    <h1 class="my-4">{{ $pageData->category->caption }}</h1>
+
+    @if(count($pageData->filters->labels) > 0)
+        <div class="box-card top-tags">
+            @foreach($pageData->filters->labels as $label)
+                @if($pageData->filters->labelId == $label->id)
+                    <a href="{{ route('shop.posts.view', [$pageData->category->slug]) }}"
+                       class="tag-filter active" data-tag-id="{{ $label->id }}">{{ $label->name }}</a>
+                @else
+                    <a href="{{ route('shop.posts.view', [$pageData->category->slug, 'label_id' => $label->id]) }}"
+                       class="tag-filter" data-tag-id="{{ $label->id }}">{{ $label->name }}</a>
+                @endif
+            @endforeach
+        </div>
+    @endif
+
+    @foreach($pageData->posts as $post)
+        <div class="item-news m-b_20">
+            <div class="row">
+                <div class="col-md-5 col-lg-4 img">
+                    <img src="{{ $post->image->src }}" alt="{{ $post->caption }}" class="width_100">
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <h3 class="news-head"><a href="{{ route('shop.post.view', $post->slug) }}">{{ $post->caption }}</a>
+                    </h3>
+                    <div class="news-info">
+                        {{ $post->fragment }}
+                    </div>
+                    <div class="news-more-link m-t_20">
+                        <a href="{{ route('shop.post.view', $post->slug) }}" class="btn btn-orange">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    <div class="products-page-list--bottom">
+        @include('shop.widgets.paginator', ['paginator' => $pageData->paginator])
+    </div>
+    <script type="application/ld+json" class="schemantra.com">
+        {!! json_encode($pageData->schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+@endsection

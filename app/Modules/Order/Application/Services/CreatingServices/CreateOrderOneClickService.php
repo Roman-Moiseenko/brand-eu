@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Modules\Order\Application\Services\CreatingServices;
+
+use App\Modules\Accounting\Application\Actions\Trader\GetDefaultTraderIdUseCase;
+use App\Modules\Auth\Application\Services\FindOrCreateClientService;
+use App\Modules\Auth\Domain\ValueObjects\Address;
+use App\Modules\Order\Application\Actions\AdditionGuide\GetDeliveryAdditionUseCase;
+use App\Modules\Order\Application\Actions\OrderLogger\CreateOrderLoggerUseCase;
+use App\Modules\Order\Application\DTOs\OrderItem\OrderItemData;
+use App\Modules\Order\Application\DTOs\OrderLogger\OrderLoggerCreateData;
+use App\Modules\Order\Application\Queries\GetSellPriceQuery;
+use App\Modules\Order\Domain\Entities\OrderEntity;
+use App\Modules\Order\Domain\Interfaces\OrderRepositoryInterface;
+use App\Modules\Order\Domain\ValueObjects\OrderSellType;
+use App\Modules\Order\Domain\ValueObjects\OrderStatus;
+use App\Modules\Order\Infrastructure\Events\OrderHasCreated;
+use App\Modules\Order\Infrastructure\Models\Order;
+use App\Modules\Shared\Application\DTOs\Lead\LeadSourceData;
+use App\Modules\Shared\Application\Interfaces\TransactionManagerInterface;
+use App\Modules\Shared\Infrastructure\Events\LeadCollected;
+use App\Modules\Shop\Application\DTOs\Checkout\OneClickOrderData;
+use App\Modules\Shop\Application\DTOs\ClientContext;
+use App\Modules\Shop\Application\Services\RegionalPriceCalculator;
+use Illuminate\Events\Dispatcher;
+
+/**
+ * Создание заказа в 1 клик, для цены нужна наценка
+ */
+readonly class CreateOrderOneClickService
+{
+    public function __construct(
+        private TransactionManagerInterface $transactionManager,
+        private Dispatcher                  $dispatcher,
+        private FindOrCreateClientService   $findOrCreateClientService,
+        private GetSellPriceQuery           $sellPriceUseCase,
+        private OrderRepositoryInterface    $repository,
+        private GetDeliveryAdditionUseCase  $deliveryAdditionUseCase,
+        private GetDefaultTraderIdUseCase   $traderIdUseCase,
+        private CreateOrderLoggerUseCase    $loggerUseCase,
+        private RegionalPriceCalculator $regionalPriceCalculator,
+    )
+    {
+
+    }
+
+    public function execute(OneClickOrderData $dto, ClientContext $context): ?OrderEntity
+    {
+        return $this->transactionManager->execute(function () use ($dto, $context) {
+            $client = $this->findOrCreateClientService->execute($dto); //Ищем или создаем клиента
+            //Получаем данные о товаре
+            $product = $this->sellPriceUseCase->execute($dto->productId, $client->priceType);
+            //Создаем заказ с клиентом
+            $orderEntity = new OrderEntity(
+                traderId: $this->traderIdUseCase->execute(),
+                type: new OrderSellType(Order::ONLINE),
+                clientId: $client->id,
+                priceType: $client->priceType);
+
+            $orderEntity->isPickup = $dto->isPickup;
+            if (!$dto->isPickup) {
+                $orderEntity->address = new Address(
+                    street: $dto->address,
+                    region: $dto->region,
+                    regionCode: $dto->regionCode,
+                );
+                //По доставке или нет, добавляем Доставку по региону или РФ, и вносим данные
+                $addition = $this->deliveryAdditionUseCase->execute($orderEntity->address->regionCode);
+                $orderEntity->addAddition($addition->id);
+            }
+
+            //Добавляем продукт, и применяем региональный коэффициент
+            $orderEntity->addItem(new OrderItemData(
+                productId: $dto->productId,
+                quantity: 1.0,
+                basePrice: $this->regionalPriceCalculator->apply($product->basePrice, $context->region),
+                sellPrice: $this->regionalPriceCalculator->apply($product->sellPrice, $context->region),
+                discountId: $product->discountId,
+                discountType: $product->discountType,
+            ));
+            //Устанавливаем статусы
+            $orderEntity->addStatus(OrderStatus::new());
+
+            $orderEntity = $this->repository->save($orderEntity);
+            //Отправляем событие
+            $leadData = new LeadSourceData(
+                id: $orderEntity->id,
+                able: 'order.order',
+                data: [],
+                orderId: $orderEntity->id,
+            );
+            $this->dispatcher->dispatch(new LeadCollected($leadData));
+            $this->dispatcher->dispatch(new OrderHasCreated($orderEntity->id));
+
+            $log = new OrderLoggerCreateData(action: 'Заказ создан в один клик',);
+            $this->loggerUseCase->execute($orderEntity->id, $log);
+            return $orderEntity;
+        });
+    }
+}

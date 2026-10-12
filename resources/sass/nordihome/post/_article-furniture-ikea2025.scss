@@ -1,0 +1,47 @@
+.article-mebel2025-img {
+    display:flex;flex-wrap:wrap;
+    div.one {
+        width:29%;
+        margin-right: 11px;
+    }
+    div.two {
+        width:69%;
+        .d-flex {justify-content:space-between;}
+        .d-flex:first-child {margin-bottom: 11px;}
+        a {display:flex;}
+        .w-62 {width: 62%;}
+        .w-37 {width: 37%;}
+    }
+    div {
+        img {width:100%;display:block;}
+    }
+}
+.article-mebel-table {
+    width:100%;
+    text-align:left;
+    border-collapse:collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    font-size:12px;
+    td, th {
+        border:1px solid #B9B9B9;padding: 10px 5px;
+    }
+}
+@media (max-width: 990px) {
+    .article-mebel2025-img {
+        div.one {margin-right: 8px;}
+        div.two {
+            width: 68%;
+            .d-flex:first-child {margin-bottom: 8px;}
+            .w-37 {width: 36%;}
+        }
+    }
+    .article-mebel-table {margin-bottom:30px;}
+}
+@media (max-width: 576px) {
+    .article-mebel2025-img {
+        div.two {
+            .d-flex:first-child {margin-bottom: 2.5%;}
+        }
+    }
+}

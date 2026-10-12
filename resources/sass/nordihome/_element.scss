@@ -1,0 +1,253 @@
+
+
+
+/* ХЛЕБНЫЕ КРОШКИ */
+.breadcrumbs {
+    margin: 15px 0;
+    padding: 0;
+    font-size: 11px;
+    color: black;
+    >li {
+        display: inline-block;
+        list-style-type: none;
+        &:before {
+            margin: 0 4px;
+        }
+        >a {
+            text-decoration: underline;
+            color: black;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        &.active {
+
+        }
+    }
+}
+
+//Кнопка Scroll Up
+%scrollup_hover_focus {
+    color: #fff;
+    transform: translateY(-95%) rotate(-45deg);
+    -webkit-transform: translateY(-95%) rotate(-45deg);
+    -moz-transform: translateY(-95%) rotate(-45deg);
+    -o-transform: translateY(-95%) rotate(-45deg);
+    -ms-transform: translateY(-95%) rotate(-45deg);
+    i {
+        transform: translateY(0) rotate(45deg);
+        -webkit-transform: translateY(0) rotate(45deg);
+        -moz-transform: translateY(0) rotate(45deg);
+        -o-transform: translateY(0) rotate(45deg);
+        -ms-transform: translateY(0) rotate(45deg);
+    }
+}
+.scrollup {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    line-height: 42px;
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    color: $white;
+    background-color: $black;
+    border: 1px solid $white;
+    outline: none;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 33px;
+    font-weight: 500;
+    transform: rotate(-90deg);
+    -webkit-transition: .9s;
+    transition: .9s;
+    z-index: 99;
+    visibility: hidden;
+    opacity: 0;
+    padding: 0px 0px 4px 0;
+    i {
+        display: inline-block;
+        -webkit-transition: all .5s;
+        -o-transition: all .5s;
+        transition: all .5s;
+    }
+    &.is-active {
+        bottom:140px;
+        opacity: 1;
+        visibility: visible;
+
+        &:hover {
+            background: $dark-gray;
+        }
+        &:focus {
+            background: $dark-gray;
+        }
+    }
+}
+.mob-bottom {
+    position: fixed;
+    bottom: 72px;
+    z-index: 99;
+    width: 60px;
+    justify-content: center;
+    padding: 5px 0;
+    height: 60px;
+    right: 15px;
+    background: url(/public/images/pages/home/in-touch01.svg) no-repeat center center  / 60px, $blue;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 0 rgb(0 0 0 / 30%);
+    transition: all 0.3s ease-in-out;
+}
+.mob-bottom.close {
+    background: url(/public/images/pages/home/icon-close.svg) no-repeat center center  / 20px, white;
+}
+.mob-bottom-open {
+    overflow: hidden;
+    position: fixed;
+    z-index: 99;
+    transition: all 0.6s;
+    right: 26px;
+    visibility: hidden;
+    bottom: 75px;
+    right: -100%;
+}
+.mob-bottom-open.show {
+    visibility: visible;
+    right: 90px;
+    bottom: 75px;
+}
+@media screen and (max-width: 991px) {
+    .mob-bottom-open {
+        bottom: 127px;
+        &.show {
+            bottom: 127px;
+        }
+    }
+    .scrollup {
+        &.is-active {
+            bottom: 195px;
+        }
+    }
+    .online-chat-root-TalkMe {
+        #supportTrigger {
+            bottom: 65px !important;
+            right: 15px !important;
+        }
+    }
+    .mob-bottom {
+        bottom: 125px;
+    }
+}
+
+//Рейтинг звездочки поле выбора
+
+.rating-area {
+    overflow: hidden;
+}
+.rating-area:not(:checked) > input {
+    display: none;
+}
+.rating-area:not(:checked) > label {
+    float: right;
+    width: 24px;
+    padding: 0;
+
+    font-size: 20px;
+    line-height: 32px;
+    color: lightgrey;
+    // text-shadow: 1px 1px #bbb;
+}
+.rating-area.edit:not(:checked) > label {
+    cursor: pointer;
+}
+.rating-area:not(:checked) > label:before {
+    content: '\f005';
+    font-family: "Font Awesome 6 Pro", serif;
+    font-weight: 600;
+}
+.rating-area > input:checked ~ label {
+    color: gold;
+    // text-shadow: 1px 1px #c60;
+}
+.rating-area.edit:not(:checked) > label:hover,
+.rating-area.edit:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.rating-area.edit > input:checked + label:hover,
+.rating-area.edit > input:checked + label:hover ~ label,
+.rating-area.edit > input:checked ~ label:hover,
+.rating-area.edit > input:checked ~ label:hover ~ label,
+.rating-area.edit > label:hover ~ input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px goldenrod;
+}
+
+.rate-area > label:active {
+    position: relative;
+}
+
+//Элемент с загрузкой
+.show-load {
+    display: none;
+}
+.hide-load {
+    display: block;
+}
+.loading {
+    .show-load {
+        display: block;
+        animation-name: rotation;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    .hide-load {
+        display: none;
+    }
+}
+@keyframes rotation {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}
+//Кнопки избранное
+button.to-wish, button.is-wish {
+    background: var(--bs-white);
+}
+.top-tags { //Теги
+    .tag-filter {
+        cursor: pointer;
+        font-size: 13px;
+        text-decoration: none;
+        border: 1px solid black;
+        padding: 8px 15px;
+        margin-right: 8px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        display: inline-block;
+        &.active {
+            background: black;
+            color: white;
+        }
+        &:hover {
+            background: black;
+            color: white;
+        }
+    }
+}
+@media screen and (max-width: 992px) {
+    .top-tags {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-right: 5px;
+        white-space: nowrap;
+        scrollbar-width: thin;
+    }
+}

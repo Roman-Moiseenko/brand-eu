@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Modules\Parser\Application\Actions\Product;
+
+use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
+use App\Modules\Parser\Application\Services\LoadParserProductIkeaService;
+use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Setting\Entity\Settings;
+
+/**
+ * Получаем цену в рублях для товара, который под заказ, с учетом санкционности и коэфициента злота
+ */
+readonly class GetParserPriceByProductUseCase
+{
+    public function __construct(
+        private ParserProductRepositoryInterface $repository,
+        private ProductRepositoryInterface       $productRepository,
+        private Settings                         $settings,
+        private LoadParserProductIkeaService     $ikeaService,
+    ) {}
+    public function execute(int $productId): float
+    {
+        $parser = $this->repository->getByProductId($productId);
+
+        //Если товар не найден, то запустить парсер
+        if (is_null($parser)) {
+            try {
+                set_time_limit(300); //Увеличиваем время, т.к. парсинг может занять ресурсы
+                $productEntity = $this->productRepository->getById($productId);
+                $parser = $this->ikeaService->FindByCode($productEntity->code);
+                set_time_limit(30);
+            } catch (\Throwable $e) {
+                \Log::info($e->getMessage());
+            }
+
+        }
+
+        //Товар нельзя спарсить
+        if (is_null($parser)) throw new \InvalidArgumentException("Для товара $productId нет товара под заказ");
+
+
+        $parserSettings = $this->settings->getParser();
+
+        $ratio = $parserSettings->parser_coefficient;
+        $sanctioned = $parserSettings->cost_sanctioned;
+
+        return $parser->priceBase * (1 + (int)$parser->sanctioned * $sanctioned / 100) * $ratio;
+    }
+}

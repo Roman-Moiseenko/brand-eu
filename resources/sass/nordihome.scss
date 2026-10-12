@@ -1,0 +1,68 @@
+// Fonts
+
+@import 'fontawesome/scss/fontawesome.scss';
+@import 'nordihome/variables';
+@import 'adverta';
+@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/variables";
+
+@import url('https://fonts.bunny.net/css?family=Nunito');
+// Variables
+// Bootstrap
+
+$font-sizes: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+    7: $font-size-base * 0.9,
+    8: $font-size-base * 0.75
+) !default;
+
+$black: #000000;
+$white: #ffffff;
+$gray: #e8e8e8;
+$light-gray: #6b6b6b;
+$dark-gray: #858585;
+$sert-gray: #F8F6F0;
+$f2f2f2: #f2f2f2;
+$orange: #D7B56D;
+$light-orange:#F6EEDB;
+$red: #ff4a4a;
+$dark-red: #7B1616;
+$sert-red: #CA0A0F;
+$light-red: #ff8562;
+$blue: #0088cc;
+$green: #56ab56;
+$yellow:#FCE944;
+$base-font: 'Adverta', sans-serif;
+$border-radius_20: 20px;
+$border-radius_16: 16px;
+$border-radius_12: 12px;
+$border-radius_8: 8px;
+
+//@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+@import "common";
+@import "nordihome/main";
+@import "nordihome/shop-l-classes";
+@import "nordihome/element";
+@import "nordihome/menu";
+@import "nordihome/cart_page";
+@import "nordihome/order_page";
+@import "nordihome/home_page";
+@import "nordihome/pages";
+@import "nordihome/parser";
+@import "nordihome/cabinet";
+@import "nordihome/catalog";
+@import "nordihome/products";
+@import "nordihome/filter";
+@import "nordihome/widgets/feedback";
+@import "nordihome/old_widget";
+@import "nordihome/widgets";
+@import "nordihome/form";
+@import "nordihome/post";
+@import "nordihome/cookie";
+

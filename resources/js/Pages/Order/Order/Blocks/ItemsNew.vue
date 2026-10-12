@@ -1,0 +1,324 @@
+<template>
+    <el-table
+        :data="tableData"
+        header-cell-class-name="nordihome-header"
+        style="width: 100%;"
+    >
+        <el-table-column type="index" label="п/п" align="center"/>
+        <el-table-column prop="product.code" label="Артикул" width="100" align="center"/>
+        <el-table-column prop="product.name" label="Товар / Вес, Объем" width="260" show-overflow-tooltip>
+            <template #default="scope">
+                {{ scope.row.product.name}}
+                <div>
+                    {{ scope.row.product.weight }}кг / {{ scope.row.product.volume }}м3
+                </div>
+            </template>
+        </el-table-column>
+        <el-table-column v-if="is_new" label="Базовая" width="100" align="center">
+            <template #default="scope">
+                <span :class="scope.row.percent > 0 ? 'text-red-800 font-medium' : ''">{{
+                        func.price(scope.row.baseCost)
+                    }}</span>
+                <div v-if="isProm(scope.row)" class="text-red-800">
+                    Акция
+                </div>
+            </template>
+        </el-table-column>
+        <el-table-column label="Продажа" width="90" align="center">
+            <template #default="scope">
+                <span v-if="is_new" class="flex">
+                    <el-input
+                        v-model="scope.row.sellCost"
+                        :formatter="val => func.MaskInteger(val)"
+                        @change="setSellCost(scope.row)"
+                        :disabled="iSaving || isProm(scope.row)"
+                        style="width: 86px;">
+                    </el-input>
+                </span>
+                <span v-else>
+                    <span class="text-green-800">{{ func.price(scope.row.sell_cost) }}</span>
+                    <span v-if="scope.row.percentDiscount > 0" class="text-green-800 ml-2"> -{{
+                            scope.row.percentDiscount
+                        }}%</span>
+                </span>
+            </template>
+        </el-table-column>
+        <el-table-column v-if="is_new" label="Скид. %" width="70" align="center">
+            <template #default="scope">
+                <el-input
+                    v-model="scope.row.percentDiscount"
+                    :formatter="val => func.MaskFloat(val, 0, 100)"
+                    @change="setPercentDiscount(scope.row)"
+                    :disabled="iSaving || isProm(scope.row)"
+                    :class="(scope.row.percentDiscount > 0 ? 'bg-red-100' : '') + ' m-0'" style="width: 60px;">
+                </el-input>
+            </template>
+        </el-table-column>
+        <el-table-column label="Кол-во" width="60" align="center">
+            <template #default="scope">
+                <span v-if="is_new">
+                    <el-input
+                        v-model="scope.row.quantity"
+                        :formatter="val => func.MaskFloat(val)"
+                        @change="setQuantity(scope.row)"
+                        :disabled="iSaving"
+                        style="width: 50px;">
+                        <!--template #append>{{ scope.row.product.measuring }}</template-->
+                    </el-input>
+                </span>
+                <span v-else>
+                    <span class="text-green-800">{{ scope.row.quantity }}</span>
+                </span>
+            </template>
+        </el-table-column>
+        <el-table-column v-if="is_new" label="Сумма" width="80" align="center">
+            <template #default="scope">
+                <el-tag size="large" type="success" effect="dark">{{ func.price(scope.row.quantity * scope.row.sellCost) }}</el-tag>
+            </template>
+        </el-table-column>
+
+        <el-table-column v-if="is_new" prop="quantity_sell" label="Налич." width="80" align="center" >
+        </el-table-column>
+        <el-table-column prop="assemblage" width="50" align="center">
+            <template #header>
+                <el-tooltip content="Сборка у заказчика">Сб </el-tooltip>
+                <el-checkbox v-model="checkedAssemblage" :checked="checkedAssemblage" @change="checkAssemblage" />
+            </template>
+            <template #default="scope">
+                <el-checkbox v-if="is_new"
+                             :checked="scope.row.assemblage"
+                             @change="val => setAssemblage(val, scope.row)"
+                             :disabled="iSaving"
+                />
+                <Active v-else :active="scope.row.assemblage"/>
+            </template>
+        </el-table-column>
+        <el-table-column prop="packing" width="50" align="center">
+            <template #header>
+                <el-tooltip content="Упаковка товара">Уп </el-tooltip>
+                <el-checkbox v-model="checkedPacking" :checked="checkedPacking" @change="checkPacking" />
+
+            </template>
+            <template #default="scope">
+                <el-checkbox v-if="is_new"
+                             :checked="scope.row.packing"
+                             @change="val => setPacking(val, scope.row)"
+                             :disabled="iSaving"
+                />
+                <Active v-else :active="scope.row.packing"/>
+            </template>
+        </el-table-column>
+
+        <el-table-column prop="comment" label="Комментарий" :width="is_new ? 200 : 120" show-overflow-tooltip>
+            <template #default="scope">
+                <el-input v-if="is_new"
+                          v-model="scope.row.comment"
+                          @change="setComment(scope.row)"
+                          :disabled="iSaving"
+                />
+                <span v-else>{{ scope.row.comment }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="Действия" width="" align="right">
+            <template #default="scope">
+
+                <div v-if="is_new">
+
+                                <el-tooltip :content="scope.row.preorder ? 'Перенести в наличие' : 'Перенести под заказ' ">
+                                    <el-button type="warning" @click="handleChangePre(scope.row)">
+                                        <i class="fa-light fa-rotate"></i>
+                                    </el-button>
+                                </el-tooltip>
+
+
+                    <el-button type="danger" @click="handleDeleteItem(scope.row)">
+                        <i class="fa-light fa-trash"></i>
+                    </el-button>
+                </div>
+            </template>
+        </el-table-column>
+    </el-table>
+
+
+
+    <DeleteEntityModal name_entity="Товар из заказа" />
+
+</template>
+
+<script setup lang="ts">
+import {computed, inject, reactive, ref} from "vue"
+import {func} from "@Res/func.js"
+import Active from "@Comp/Elements/Active.vue";
+import {router} from "@inertiajs/vue3";
+import { ElMessage, ElMessageBox } from 'element-plus'
+import {route} from "ziggy-js";
+
+const props = defineProps({
+    items: Array,
+    orderId: Number,
+})
+//console.log(props.items)
+const $delete_entity = inject("$delete_entity")
+const iSaving = ref(false)
+const {is_new, is_issued, is_view} = inject('$status')
+const tableData = ref([...props.items])
+
+const form = reactive({
+    id: null,
+    sellCost: null,
+    percentDiscount: null,
+    quantity: null,
+    assemblage: null,
+    packing: null,
+    comment: null,
+})
+
+
+const handleChangePre = (row: any) => {
+    ElMessageBox.prompt('Укажите кол-во для переноса', 'Tip', {
+        confirmButtonText: 'Перенести',
+        cancelButtonText: 'Отмена',
+        inputPattern:
+            /[0-9]+/,
+        inputErrorMessage: 'Неверное число',
+    })
+        .then(({ value }) => {
+            iSaving.value = true;
+            router.visit(route('admin.order.change-item', {id: props.orderId}), {
+                method: "post",
+                data: {
+                    id: row.id,
+                    quantity: value,
+                    preorder: !row.preorder
+                },
+                preserveScroll: true,
+                preserveState: false,
+                onSuccess: page => {
+                    iSaving.value = false;
+                }
+            })
+
+            ElMessage({
+                type: 'success',
+                message: `Сохраняется .... `,
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: 'Отмена переноса',
+            })
+        })
+}
+
+function setSellCost(row) {
+    setProduct(row, 'sellCost', row.sellCost)
+}
+function setPercentDiscount(row) {
+    setProduct(row, 'percentDiscount', row.percentDiscount)
+}
+function setQuantity(row) {
+    setProduct(row, 'quantity', row.quantity)
+}
+function setComment(row) {
+    setProduct(row, 'comment', row.comment)
+}
+function setAssemblage(val, row) {
+    row.assemblage = val
+    setProduct(row, 'assemblage', val)
+}
+function setPacking(val, row) {
+    row.packing = val
+    setProduct(row, 'packing', val)
+}
+
+function setProduct(row, field, value) {
+    iSaving.value = true;
+
+    form.id = row.id;
+    form.sellCost = null;
+    form.percentDiscount = null;
+    form.quantity = null;
+    form.assemblage = null;
+    form.packing = null;
+    form.comment = null;
+    form[field] = value;
+
+
+    router.visit(route('admin.order.update-item', {id: props.orderId}), {
+        method: "post",
+        data: {...form},
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: page => {
+            iSaving.value = false;
+        }
+    })
+}
+
+function handleDeleteItem(row) {
+    $delete_entity.show(route('admin.order.del-item', {id: props.orderId, item: row.id}));
+}
+function isProm(row) {
+    return row.product.has_promotion && !row.preorder
+}
+
+const checkedAssemblage = computed( () => {
+    let check = true
+    props.items.forEach(function (item) {
+        if (item.assemblage !== true) check = false
+    })
+    return check
+})
+const checkedPacking = computed( () => {
+    let check = true
+    props.items.forEach(function (item) {
+        if (item.packing !== true) check = false
+    })
+    return check
+})
+function checkAssemblage() {
+   // console.log([...props.items.map(i => i.id)])
+    iSaving.value = true;
+    router.visit(route('admin.order.set-assemblage', {id: props.orderId}), {
+        method: "post",
+        data: {
+            assemblage: !checkedAssemblage.value,
+            items: [...props.items.map(i => i.id)]
+        },
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: page => {
+            iSaving.value = false;
+        }
+    })
+}
+function checkPacking() {
+   // console.log([...props.items.map(i => i.id)])
+    iSaving.value = true;
+    router.visit(route('admin.order.set-packing', {id: props.orderId}), {
+        method: "post",
+        data: {
+            packing: !checkedPacking.value,
+            items: [...props.items.map(i => i.id)]
+        },
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: page => {
+            iSaving.value = false;
+        }
+    })
+}
+</script>
+
+<style lang="scss">
+.el-input-group__append {
+    padding: 0 8px;
+}
+
+.el-input[class*=bg-] {
+    > .el-input__wrapper {
+        background-color: unset;
+    }
+}
+</style>

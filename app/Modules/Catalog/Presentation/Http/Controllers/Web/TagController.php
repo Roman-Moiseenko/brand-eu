@@ -1,0 +1,80 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Presentation\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Catalog\Application\Actions\Tag\CreateTagUseCase;
+use App\Modules\Catalog\Application\Actions\Tag\IndexTagQuery;
+use App\Modules\Catalog\Application\Actions\Tag\ListTagsQuery;
+use App\Modules\Catalog\Application\Actions\Tag\RemoveTagUseCase;
+use App\Modules\Catalog\Application\Actions\Tag\UpdateTagUseCase;
+use App\Modules\Catalog\Application\Actions\Tag\ViewTagUseCase;
+use App\Modules\Catalog\Application\DTOs\Tag\TagCreateData;
+use App\Modules\Catalog\Application\DTOs\Tag\TagUpdateData;
+use App\Modules\Catalog\Application\DTOs\Tag\TagViewData;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class TagController extends Controller
+{
+
+    public function __construct(
+        private readonly IndexTagQuery    $indexTagUseCase,
+        private readonly CreateTagUseCase $createTagUseCase,
+        private readonly UpdateTagUseCase $updateTagUseCase,
+        private readonly RemoveTagUseCase $removeTagUseCase,
+        private readonly ViewTagUseCase   $viewTagUseCase,
+        private readonly ListTagsQuery $listTagsQuery,
+    )
+    {
+    }
+
+    public function index(Request $request, UserPermission $userPermission): Response
+    {
+        $data = $this->indexTagUseCase->execute($userPermission, $request->integer('size', 20));
+        return Inertia::render('Catalog/Tag/Index', [
+            'tags' => $data,
+        ]);
+    }
+    public function show(int $id, Request $request, UserPermission $userPermission): Response
+    {
+
+        $tagEntity = $this->viewTagUseCase->execute($id, $userPermission);
+        return Inertia::render('Catalog/Tag/Show', [
+            'tag' => TagViewData::fromEntity($tagEntity),
+        ]);
+    }
+
+    public function store(Request $request, UserPermission $userPermission): RedirectResponse
+    {
+        $dto = TagCreateData::validateAndCreate($request->all());
+        $this->createTagUseCase->execute($dto, $userPermission);
+        return redirect()->back()->with('success', 'Метка создана');
+    }
+
+    public function update(int $id, Request $request, UserPermission $userPermission): RedirectResponse
+    {
+        $dto = TagUpdateData::validateAndCreate($request->all());
+        $this->updateTagUseCase->execute($id, $dto, $userPermission);
+
+        return redirect()->back()->with('success', 'Сохранено');
+    }
+
+    public function destroy(int $id, UserPermission $userPermission): RedirectResponse
+    {
+        $this->removeTagUseCase->execute($id, $userPermission);
+
+        return redirect()->back()->with('success', 'Метка удалена');
+    }
+
+    public function list(): JsonResponse
+    {
+        $tags = $this->listTagsQuery->execute();
+        return response()->json($tags);
+    }
+}

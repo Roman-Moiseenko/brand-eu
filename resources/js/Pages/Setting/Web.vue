@@ -1,0 +1,118 @@
+<template>
+    <Head><title>{{ title }}</title></Head>
+    <h1 class="font-medium text-xl">{{ title }}</h1>
+    <div class="mt-3 p-3 bg-white rounded-lg">
+        <el-form :model="form" label-width="auto">
+            <el-row :gutter="10">
+                <el-col :span="8">
+                    <el-form-item label="Количество товаров на странице" label-position="top">
+                        <el-input v-model="form.paginate" :formatter="val => func.MaskInteger(val)"/>
+                    </el-form-item>
+                    <el-form-item label="Логотип для сайта, с прозрачным фоном (svg, png)" label-position="top">
+                        <el-input v-model="form.logo_img"/>
+                    </el-form-item>
+                    <el-form-item label="Подпись (alt) под логотипом" label-position="top">
+                        <el-input v-model="form.logo_alt" />
+                    </el-form-item>
+
+                    <el-form-item label="Яндекс Метрика" label-position="top">
+                        <el-input v-model="form.metrika"/>
+                    </el-form-item>
+                    <el-form-item label="Гугл Аналитика" label-position="top">
+                        <el-input v-model="form.google"/>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="Кеширование страниц" label-position="left">
+                        <el-checkbox v-model="form.is_cache" :checked="form.is_cache"/>
+                    </el-form-item>
+
+                    <el-form-item label="Home - хлебные крошки" label-position="top">
+                        <el-input v-model="form.breadcrumbs_home" />
+                    </el-form-item>
+
+                    <el-form-item label="Показывать категории товаров" label-position="left">
+                        <el-checkbox v-model="form.is_category" :checked="form.is_category"/>
+                    </el-form-item>
+                    <el-form-item label="Название сайта" label-position="top">
+                        <el-input v-model="form.web_name" />
+                    </el-form-item>
+
+
+                </el-col>
+                <el-col :span="8">
+                    <h2 class="font-medium">SEO-настройки (Заголовки)</h2>
+                    <el-form-item label="meta-Title для списка категорий" label-position="top">
+                        <el-input v-model="form.categories_title"/>
+                    </el-form-item>
+                    <el-form-item label="meta-Description для списка категорий" label-position="top">
+                        <el-input v-model="form.categories_desc" type="textarea" :rows="3"/>
+                    </el-form-item>
+
+                    <el-form-item label="meta-Title для списка комнат" label-position="top">
+                        <el-input v-model="form.rooms_title"/>
+                    </el-form-item>
+                    <el-form-item label="meta-Description для списка комнат" label-position="top">
+                        <el-input v-model="form.rooms_desc" type="textarea" :rows="3"/>
+                    </el-form-item>
+
+                    <el-form-item label="meta-Title для Икеа" label-position="top">
+                        <el-input v-model="form.ikea_title"  />
+                    </el-form-item>
+                    <el-form-item label="meta-Description для Икеа" label-position="top">
+                        <el-input v-model="form.ikea_desc" type="textarea" :rows="3"/>
+                    </el-form-item>
+
+                    <el-form-item label="meta-Title Контактные данные" label-position="top">
+                        <el-input v-model="form.title_contact"/>
+                    </el-form-item>
+                    <el-form-item label="meta-Title Бренд и Город" label-position="top">
+                        <el-input v-model="form.title_city"/>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
+            <el-button type="primary" @click="onSubmit">Сохранить</el-button>
+        </el-form>
+    </div>
+</template>
+
+<script lang="ts" setup>
+import { Head, router } from '@inertiajs/vue3'
+import {defineProps, reactive} from "vue";
+import {func} from '@Res/func.js'
+
+const props = defineProps({
+    web: Object,
+    title: {
+        type: String,
+        default: 'Настройка сайта',
+    },
+})
+
+const form = reactive({
+    slug: 'web',
+    paginate: props.web.paginate,
+    logo_img: props.web.logo_img,
+    logo_alt: props.web.logo_alt,
+    metrika: props.web.metrika,
+    google: props.web.google,
+    web_name: props.web.web_name,
+
+    categories_title: props.web.categories_title,
+    categories_desc: props.web.categories_desc,
+    rooms_title: props.web.rooms_title,
+    rooms_desc: props.web.rooms_desc,
+    ikea_title: props.web.ikea_title,
+    ikea_desc: props.web.ikea_desc,
+    title_contact: props.web.title_contact,
+    title_city: props.web.title_city,
+    is_cache: props.web.is_cache,
+    breadcrumbs_home: props.web.breadcrumbs_home,
+    is_category: props.web.is_category,
+})
+
+function onSubmit() {
+    router.put(route('admin.setting.update'), form)
+}
+</script>

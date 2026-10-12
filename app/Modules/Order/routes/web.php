@@ -1,0 +1,146 @@
+<?php
+
+use App\Modules\Order\Controllers\ExpenseController;
+use App\Modules\Order\Controllers\PaymentController;
+use App\Modules\Order\Controllers\ProductController;
+use App\Modules\Order\Controllers\RefundController;
+use App\Modules\Order\Controllers\ReserveController;
+use App\Modules\Order\Presentation\Http\Controllers\Web\OrderController;
+use Illuminate\Support\Facades\Route;
+
+
+//Заказы
+Route::group(
+    [
+        'middleware' => 'role:admin|staff',
+        'prefix' => 'admin/order',
+        'as' => 'admin.order.',
+    ],
+    function () {
+        //Route::post('/set-created/{order}', [OrderController::class, 'set_created'])->name('set-created');
+        Route::post('/copy/{id}', [OrderController::class, 'copy'])->name('copy');
+
+        //Route::post('/movement/{order}', [OrderController::class, 'movement'])->name('movement');
+        //Route::post('/expense-calculate/{order}', [OrderController::class, 'expense_calculate'])->name('expense-calculate');
+        //Route::post('/invoice/{order}', [OrderController::class, 'invoice'])->name('invoice');
+        //Route::post('/send-invoice/{order}', [OrderController::class, 'send_invoice'])->name('send-invoice');
+        Route::post('/set-info/{id}', [OrderController::class, 'setInfo'])->name('set-info');
+        //Route::post('/resend-invoice/{order}', [OrderController::class, 'resend_invoice'])->name('resend-invoice');
+
+        //Route::post('/reserve-collect/{item}', [OrderController::class, 'reserve_collect'])->name('reserve-collect');
+        //    Route::post('/set-info/{order}', 'OrderController@set_info')->name('set-info');
+        Route::post('/add-products/{id}', [OrderController::class, 'addProducts'])->name('add-products');
+        Route::post('/add-product/{id}', [OrderController::class, 'addProduct'])->name('add-product');
+        Route::post('/update-item/{id}', [OrderController::class, 'updateItem'])->name('update-item');
+        Route::post('/change-item/{id}', [OrderController::class, 'changeItem'])->name('change-item');
+        //Route::post('/set-item/{item}', [OrderController::class, 'set_item'])->name('set-item');
+        Route::delete('/del-item/{id}/{item}', [OrderController::class, 'removeItem'])->name('del-item');
+        Route::post('/set-client/{id}', [OrderController::class, 'setClient'])->name('set-client');
+        Route::post('/set-assemblage/{id}', [OrderController::class, 'setAssemblage'])->name('set-assemblage');
+        Route::post('/set-packing/{id}', [OrderController::class, 'setPacking'])->name('set-packing');
+
+        Route::post('/set-discount/{id}', [OrderController::class, 'setDiscount'])->name('set-discount');
+        Route::post('/set-coupon/{id}', [OrderController::class, 'setCoupon'])->name('set-coupon');
+
+        Route::post('/add-addition/{id}', [OrderController::class, 'addAddition'])->name('add-addition');
+        Route::post('/update-addition/{id}', [OrderController::class, 'updateAddition'])->name('update-addition');
+        Route::delete('/del-addition/{id}/{addition}', [OrderController::class, 'removeAddition'])->name('del-addition');
+
+
+        Route::post('/set-manager/{id}', [OrderController::class, 'setManager'])->name('set-manager');
+        //Route::post('/set-reserve/{order}', [OrderController::class, 'set_reserve'])->name('set-reserve');
+       // Route::post('/set-comment/{order}', [OrderController::class, 'set_comment'])->name('set-comment');
+
+        Route::post('/cancel/{id}', [OrderController::class, 'statusCancel'])->name('cancel');
+        Route::post('/awaiting/{id}', [OrderController::class, 'statusAwaiting'])->name('awaiting');
+        Route::post('/completed/{id}', [OrderController::class, 'statusCompleted'])->name('completed');
+        Route::post('/work/{id}', [OrderController::class, 'returnDraft'])->name('work');
+
+        Route::get('/log/{id}', [OrderController::class, 'log'])->name('log');
+        Route::post('/take/{id}', [OrderController::class, 'take'])->name('take');
+
+        //Распоряжения
+        Route::group(
+            [
+                'prefix' => 'expense',
+                'as' => 'expense.',
+            ],
+            function () {
+                Route::post('/create/{order}', [ExpenseController::class, 'create'])->name('create');
+                //Route::post('/issue_shop', [ExpenseController::class, 'issue_shop'])->name('issue-shop');
+                //Route::post('/issue_warehouse', [ExpenseController::class, 'issue_warehouse'])->name('issue-warehouse');
+                Route::get('/show/{expense}', [ExpenseController::class, 'show'])->name('show');
+                Route::post('/set-delivery/{expense}', [ExpenseController::class, 'set_delivery'])->name('set-delivery');
+                Route::post('/set-honest/{expense}', [ExpenseController::class, 'set_honest'])->name('set-honest');
+
+                Route::post('/canceled/{expense}', [ExpenseController::class, 'canceled'])->name('canceled');
+                Route::post('/set-info/{expense}', [ExpenseController::class, 'set_info'])->name('set-info');
+                Route::post('/assembly/{expense}', [ExpenseController::class, 'assembly'])->name('assembly');
+                Route::post('/trade12/{expense}', [ExpenseController::class, 'trade12'])->name('trade12');
+            }
+        );
+        //Возвраты
+        Route::group(
+            [
+                'prefix' => 'refund',
+                'as' => 'refund.',
+            ],
+            function () {
+                Route::post('/completed/{refund}', [RefundController::class, 'completed'])->name('completed');
+                Route::post('/throw/{refund}', [RefundController::class, 'throw'])->name('throw');
+                Route::post('/set-info/{refund}', [RefundController::class, 'set_info'])->name('set-info');
+                Route::post('/set-item/{item}', [RefundController::class, 'set_item'])->name('set-item');
+                Route::delete('/del-item/{item}', [RefundController::class, 'del_item'])->name('del-item');
+                Route::post('/set-addition/{addition}', [RefundController::class, 'set_addition'])->name('set-addition');
+                Route::delete('/del-addition/{addition}', [RefundController::class, 'del_addition'])->name('del-addition');
+
+                Route::get('/show/{refund}', [RefundController::class, 'show'])->name('show');
+                Route::post('/store/{expense}', [RefundController::class, 'store'])->name('store');
+                Route::get('/', [RefundController::class, 'index'])->name('index');
+            }
+        );
+        //Товары
+        Route::group(
+            [
+                'prefix' => 'product',
+                'as' => 'product.',
+            ],
+            function () {
+                Route::get('/', [ProductController::class, 'index'])->name('index');
+                // Route::post('/show/{product}', [ProductController::class, 'show'])->name('show');
+            }
+        );
+        //Платежи
+
+        Route::group(
+            [
+                'prefix' => 'payment',
+                'as' => 'payment.',
+            ],
+            function () {
+                Route::get('/{payment}', [PaymentController::class, 'show'])->name('show');
+                Route::post('/find', [PaymentController::class, 'find'])->name('find');
+                Route::post('/set-order/{order}/{payment}', [PaymentController::class, 'set_order'])->name('set-order');
+
+                Route::post('/{order}', [PaymentController::class, 'create'])->name('create');
+                Route::post('/set-info/{payment}', [PaymentController::class, 'set_info'])->name('set-info');
+                Route::post('/completed/{payment}', [PaymentController::class, 'completed'])->name('completed');
+                Route::post('/work/{payment}', [PaymentController::class, 'work'])->name('work');
+                Route::post('/create-refund/{refund}', [PaymentController::class, 'create_refund'])->name('create-refund');
+                Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('destroy');
+                Route::get('/', [PaymentController::class, 'index'])->name('index');
+            }
+        );
+        //  Route::resource('payment', 'PaymentController')->only(['index', 'show']);
+        //Резерв
+        Route::get('/reserve', [ReserveController::class, 'index'])->name('reserve.index');
+    }
+);
+
+Route::group([
+    'middleware' => 'role:admin|staff',
+    'prefix' => 'admin',
+    'as' => 'admin.',
+],function () {
+    Route::resource('order', OrderController::class)->except(['destroy']);
+});

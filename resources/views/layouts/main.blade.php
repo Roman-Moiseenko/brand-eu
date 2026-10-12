@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+
+    <!--base href="https://39y.ru" /-->
+    <meta name="robots" content="noindex"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if(isset($pageData) && !is_null($pageData->meta))
+        @include('partials.seo-meta', ['meta' => $pageData->meta])
+    @endif
+    <link rel="icon" href="{{ url('images/nordihome/favicon/32x32.png') }}" size="32x32">
+    <link rel="icon" href="{{ url('images/nordihome/favicon/192x192.png') }}" size="192x192">
+    <link rel="apple-touch-icon" href="{{ url('images/nordihome/favicon/180x180.png') }}" size="192x192">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css">
+    @livewireStyles
+    @yield('head')
+    <!-- Scripts -->
+    @vite(['resources/sass/nordihome.scss', 'resources/js/nordihome.js'])
+    @stack('styles')
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        var fired = false;
+        window.addEventListener('scroll', () => {
+            if (fired === false) {
+                fired = true;
+                setTimeout(() => {
+                    //Если метрика задана, запускаем
+                    @if(!empty($web->metrika))
+
+                    (function (m, e, t, r, i, k, a) {
+                        m[i] = m[i] || function () {
+                            (m[i].a = m[i].a || []).push(arguments)
+                        };
+                        m[i].l = 1 * new Date();
+                        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+                    })
+                    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+                    ym("{{ $web->metrika }}", "init", {
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true,
+                        ecommerce: "dataLayer"
+                    });
+
+                    console.log('metrika', {{ $web->metrika }});
+                    @endif
+                    @if(!empty($web->google))
+                        function gtag() {
+                            dataLayer.push(arguments);
+                        }
+                        gtag('js', new Date());
+                        gtag('config', '{{ $web->google }}');
+                    console.log('google', '{{ $web->google }}')
+                    @endif
+                    //document.head.appendChild("//code.jivosite.com/widget/IWidqpXM0K");
+                }, 4000)
+            }
+        });
+    </script>
+    <!-- Begin Talk-Me {literal} -->
+    <script>
+        (function(){(function c(d,w,m,i) {
+            window.supportAPIMethod = m;
+            var s = d.createElement('script');
+            s.id = 'supportScript';
+            s.async = true;
+            var id = '453ea4fa212864b24ff726d422d110c6';
+            s.src = (!i ? 'https://lcab.talk-me.ru/support/support.js' : 'https://static.site-chat.me/support/support.int.js') + '?h=' + id;
+            s.onerror = i ? undefined : function(){c(d,w,m,true)};
+            w[m] = w[m] ? w[m] : function(){(w[m].q = w[m].q ? w[m].q : []).push(arguments);};
+            (d.head ? d.head : d.body).appendChild(s);
+        })(document,window,'TalkMe')})();
+    </script>
+    <!-- {/literal} End Talk-Me -->
+</head>
+<body class="@yield('body')">
+@include('shop.header')
+
+@include('shop.widgets.flash')
+
+@hasSection('breadcrumbs')
+    @yield('breadcrumbs')
+@else
+    <div class="container-xl">
+        {{ \Diglactic\Breadcrumbs\Breadcrumbs::view('shop.breadcrumbs') }}
+    </div>
+@endif
+
+<main class="@yield('main')">
+    @yield('content')
+</main>
+
+<div class="@yield('bottom-class')">
+    @yield('bottom-content')
+</div>
+<!--POP-UP ОКНА-->
+@notclient
+    @include('shop.pop-up.login')
+@endnotclient
+
+<!--livewire:shop.popup.buy-click :user="$user" /-->
+@include('shop.pop-up.buy-click')
+@include('shop.pop-up.notification')
+@include('shop.pop-up.region')
+<div id="cookie_notification"></div>
+
+@include('analytics::tracker')
+@vite('resources/js/nordihome/analytics-tracker.js')
+
+<!--FOOTER-->
+
+@include('shop.footer')
+<button id="upbutton" type="button" class="scrollup" aria-label="В начало"> > </button>
+@include('shop.widgets.contact-bottom')
+@stack('scripts')
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+
+@livewireScripts
+</body>
+</html>

@@ -1,0 +1,147 @@
+<?php
+
+
+namespace App\Modules\Catalog\Infrastructure\Models;
+
+use App\Modules\Auth\Infrastructure\Models\Client;
+use App\Modules\Base\Entity\Video;
+use App\Modules\Base\Traits\ImageField;
+use App\Modules\Discount\Entity\DiscountReview;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property int $id
+ * @property int $product_id
+ * @property int $client_id
+ * @property string $text
+ * @property int $rating
+ * @property string $status
+ * @property Carbon|null $published_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Video $video
+ * @property DiscountReview $discount
+ *
+ * @property Client $client
+ * @property Product $product
+ */
+class Review extends Model
+{
+    use ImageField;
+
+    const string STATUS_DRAFT = 'draft';
+    const string STATUS_MODERATED = 'moderated';
+    const string STATUS_PUBLISHED = 'published';
+    const string STATUS_BLOCKED = 'blocked';
+    const array STATUSES = [
+        self::STATUS_DRAFT => 'Черновик',
+        self::STATUS_MODERATED => 'На модерации',
+        self::STATUS_PUBLISHED => 'Опубликован',
+        self::STATUS_BLOCKED => 'Заблокирован',
+    ];
+
+    protected $table = 'product_reviews';
+    protected $fillable = [
+        'product_id',
+        'client_id',
+        'text',
+        'rating',
+        'status',
+        'published_at',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public static function empty(int $product_id, int $client_id):self
+    {
+        return self::create([
+            'product_id' => $product_id,
+            'client_id' => $client_id,
+            'text' => '',
+            'rating' => 5,
+            'status' => self::STATUS_DRAFT,
+        ]);
+    }
+
+    public static function register(int $product_id, int $client_id, string $text, int $rating): self
+    {
+        return self::create([
+            'product_id' => $product_id,
+            'client_id' => $client_id,
+            'text' => $text,
+            'rating' => $rating,
+            'status' => self::STATUS_MODERATED,
+        ]);
+    }
+
+    //*** IS-...
+
+    public function isDraft(): bool
+    {
+        return $this->status == self::STATUS_DRAFT;
+    }
+
+    public function isModerated(): bool
+    {
+        return $this->status == self::STATUS_MODERATED;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->status == self::STATUS_PUBLISHED;
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->status == self::STATUS_BLOCKED;
+    }
+
+
+    public function isProduct(int $product_id): bool
+    {
+        return $this->product_id == $product_id;
+    }
+
+    //*** RELATIONS
+    public function discount()
+    {
+        return $this->hasOne(DiscountReview::class, 'review_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id', 'id');
+    }
+
+
+    public function video()
+    {
+        return $this->morphOne(Video::class, 'videoable');
+    }
+
+    //*** Helpers
+    public function htmlDate(): string
+    {
+        if ($this->updated_at == null) {
+            return $this->created_at->translatedFormat('j F Y H:i');
+        } else {
+            return $this->updated_at->translatedFormat('j F Y H:i');
+        }
+    }
+
+    public function statusHtml(): string
+    {
+        return self::STATUSES[$this->status];
+    }
+
+}

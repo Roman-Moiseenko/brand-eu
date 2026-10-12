@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Application\Actions\CategoryProduct;
+
+use App\Modules\Catalog\Domain\Interfaces\CategoryProductRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class AssignCategoriesToProductUseCase
+{
+    public function __construct(
+        private CategoryProductRepositoryInterface $categoryProductRepository,
+    )
+    {
+    }
+
+    /**
+     * Назначить категории товару (sync — заменяет весь набор).
+     *
+     * @param int   $productId
+     * @param int[] $categoryIds
+     * @param UserPermission $userPermission
+     */
+    public function execute(int $productId, array $categoryIds, UserPermission $userPermission): void
+    {
+        if (!$userPermission->can('catalog.product.edit')) {
+            throw new AccessDeniedException();
+        }
+
+        $this->categoryProductRepository->syncCategories($productId, $categoryIds);
+    }
+}

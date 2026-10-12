@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Modules\Lead\Listeners;
+
+use App\Modules\Lead\Service\LeadService;
+use App\Modules\Order\Events\OrderHasPaid;
+
+/**
+ * Отмена заявки при отмене Заказа по событию OrderHasCanceled
+ */
+class LeadSetPaid
+{
+    private LeadService $service;
+
+    public function __construct(LeadService $service)
+    {
+        $this->service = $service;
+    }
+
+    public function handle(OrderHasPaid $event): void
+    {
+        $this->service->paid($event->order->lead);
+    }
+}

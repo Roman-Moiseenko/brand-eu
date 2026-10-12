@@ -1,0 +1,112 @@
+<template>
+    <el-form label-width="auto">
+    <el-row :gutter="10">
+        <el-col :span="4">
+            <el-tooltip content="Изображение для каталога" placement="top-start" effect="dark">
+                <PhotoDTO model-type="catalog.room" :entity-id="room.id" type="image"/>
+            </el-tooltip>
+        </el-col>
+        <el-col :span="10">
+
+                <el-form-item label="Родительская комната">
+                    <el-select v-model="info.parentId">
+                        <template v-for="item in useCatalog.rooms" :key="item.id">
+                            <el-option v-if="item.id !== room.id" :value="item.id" :label="item.name"/>
+                        </template>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="Название категории">
+                    <el-input v-model="info.name"/>
+                </el-form-item>
+                <el-form-item label="Ссылка">
+                    <el-input v-model="info.slug" clearable/>
+                </el-form-item>
+                <el-form-item label="SVG">
+                    <el-input v-model="info.svgIcon" clearable type="textarea" :rows="1"/>
+                </el-form-item>
+
+        </el-col>
+        <el-col :span="10">
+            <el-form-item label="Meta-Title">
+                <el-input v-model="info.metaTitle"/>
+            </el-form-item>
+            <el-form-item label="Meta-Description">
+                <el-input v-model="info.metaDescription" type="textarea" :rows="5"/>
+            </el-form-item>
+        </el-col>
+    </el-row>
+    <el-button v-if="hasChanges" type="info" @click="onCancel" style="margin-left: 4px">
+        Отмена
+    </el-button>
+    <el-button v-if="hasChanges" type="success" @click="onSetInfo">
+        Сохранить
+    </el-button>
+    </el-form>
+
+</template>
+
+<script setup>
+import {computed, reactive, ref, watch} from "vue";
+import {router} from "@inertiajs/vue3";
+import HelpBlock from "@Comp/HelpBlock.vue";
+import PhotoDTO from "@Comp/PhotoDTO.vue";
+import {useCatalogStore} from "@Res/catalogStore.ts";
+
+
+const props = defineProps({
+    room: Object,
+})
+const useCatalog = useCatalogStore()
+const iSavingInfo = ref(false)
+console.log(props.room)
+// --- Исходные данные из пропсов (эталон для отмены) ---
+const initialInfo = {
+    name: props.room?.name ?? '',
+    metaTitle: props.room?.meta?.title ?? '',
+    metaDescription: props.room?.meta?.description ?? '',
+    slug: props.room?.slug ?? '',
+    parentId: props.room?.parentId ?? null,
+    svgIcon: props.room?.svgIcon ?? '',
+}
+
+const info = reactive({...initialInfo})
+
+// --- Отслеживание изменений ---
+const hasChanges = computed(() => {
+    for (const key of Object.keys(initialInfo)) {
+        const a = JSON.stringify(info[key])
+        const b = JSON.stringify(initialInfo[key])
+        if (a !== b) return true
+    }
+    return false
+})
+
+function onCancel() {
+    Object.assign(info, {...initialInfo})
+}
+
+function onSetInfo() {
+    iSavingInfo.value = true;
+    router.visit(
+        route('admin.catalog.room.update', {room: props.room.id}), {
+            method: "put",
+            data: info,
+            preserveScroll: true,
+            preserveState: false,
+            onSuccess: page => {
+                iSavingInfo.value = false;
+            },
+            onError: errors => {
+                iSavingInfo.value = false;
+            }
+        }
+    );
+}
+
+</script>
+
+<style scoped>
+span.svg-category::v-deep > svg {
+    max-height: 50px;
+}
+</style>

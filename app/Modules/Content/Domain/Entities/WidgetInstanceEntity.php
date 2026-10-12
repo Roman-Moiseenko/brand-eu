@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Modules\Content\Domain\Entities;
+
+use DateTimeImmutable;
+
+/**
+ * WidgetInstanceEntity — настроенный экземпляр виджета с конкретными параметрами.
+ */
+final class WidgetInstanceEntity
+{
+    public ?int $id = null {
+        get => $this->id;
+        set => $this->id = $value;
+    }
+
+    public int $widgetId {
+        get => $this->widgetId;
+    }
+
+    public array $params {
+        get => $this->params;
+        set => $this->params = $value;
+    }
+
+    public ?string $title = null {
+        get => $this->title;
+        set => $this->title = $value;
+    }
+
+    public ?DateTimeImmutable $createdAt = null {
+        get => $this->createdAt;
+        set => $this->createdAt = $value;
+    }
+
+    public ?DateTimeImmutable $updatedAt = null {
+        get => $this->updatedAt;
+        set => $this->updatedAt = $value;
+    }
+
+    public string $widgetName {
+        get => $this->widgetName;
+        set => $this->widgetName = $value;
+    }
+    public string $widgetSlug {
+        get => $this->widgetSlug;
+        set => $this->widgetSlug = $value;
+    }
+
+    public function __construct(
+        int     $widgetId,
+        array   $params = [],
+        ?string $title = null,
+    )
+    {
+        $this->widgetId = $widgetId;
+        $this->params= $params;
+        $this->title = $title;
+    }
+}

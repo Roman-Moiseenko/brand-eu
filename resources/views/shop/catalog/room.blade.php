@@ -1,0 +1,26 @@
+@php
+    use App\Modules\Shop\Application\DTOs\Pages\CatalogIndexPageData;
+    /** @var CatalogIndexPageData $pageData */
+@endphp
+@extends('layouts.main')
+@section('body', 'room')
+@section('main', 'container-xl rooms-page')
+
+@section('content')
+    <div class="title-page">
+        <h1>Каталог товаров по комнатам</h1>
+    </div>
+    <div class="row">
+        @foreach($pageData->categories as $room)
+            @include('shop.catalog.card-room', ['item' => $room])
+        @endforeach
+    </div>
+
+    <script type="application/ld+json" class="schemantra.com">
+        {!! json_encode($pageData->schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+@endsection
+
+@section('bottom-content')
+
+@endsection

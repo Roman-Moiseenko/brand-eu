@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Modules\Auth\Domain\ValueObjects;
+
+use InvalidArgumentException;
+
+final class Address
+{
+    public ?string $country = null {
+        get => $this->country;
+    }
+    public ?int $regionCode = null {
+        get => $this->regionCode;
+        set => $this->regionCode = $value;
+    }
+
+    public ?string $region = null {
+        get => $this->region;
+    }
+    public ?string $city = null {
+        get => $this->city;
+    }
+    public ?string $street = null {
+        get => $this->street;
+    }
+    public ?string $postalCode = null {
+        get => $this->postalCode;
+    }
+
+    public function __construct(
+        ?string  $country = null,
+        ?string  $city = null,
+        ?string  $street = null,
+        ?string $region = null,
+        ?string $postalCode = null,
+        ?int $regionCode = null,
+    )
+    {
+        $this->country = trim($country);
+        $this->city = trim($city);
+        $this->street = trim($street);
+        $this->region = $region ? trim($region) : null;
+        $this->postalCode = $postalCode ? trim($postalCode) : null;
+        $this->regionCode = $regionCode;
+    }
+
+    public function getFullAddress(): string
+    {
+        $parts = [
+            $this->country,
+            $this->region,
+            $this->city,
+            $this->street,
+            $this->postalCode,
+        ];
+        return implode(', ', array_filter($parts));
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFullAddress();
+    }
+
+    public function equals(self $other): bool
+    {
+        return $this->country === $other->country
+            && $this->region === $other->region
+            && $this->city === $other->city
+            && $this->street === $other->street
+            && $this->postalCode === $other->postalCode;
+    }
+}

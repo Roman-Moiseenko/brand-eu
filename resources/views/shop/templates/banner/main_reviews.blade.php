@@ -1,0 +1,37 @@
+<!--template:Главная - слайдер отзывы клиентов-->
+@php
+    /**
+    * Banner::class - string
+    * $banner->caption - string
+    * $banner->description - string
+    * BannerItem:class
+    * $banner->items - Arraible
+    * $item->image - Photo::class
+    * $item->url - string
+    * $item->caption - string
+    * $item->description - string
+    */
+    /** @var \App\Modules\Content\Entity\Widgets\BannerWidget $widget */
+    $galleryItems = [];
+    foreach ($widget->items as $item) {
+        $galleryItems[] = [
+            'src' => App\Modules\Shared\Application\Actions\GetPhotoStatic::get('content.banner-widget-item', $item->id),
+            'caption' => '',
+        ];
+    }
+
+@endphp
+<div class="main-reviews p-t_50 p-b_50" id="reviews-tab">
+    <div class="container-fluid">
+        <div id="main-slider-reviews" class="owl-carousel owl-theme">
+            @foreach($widget->items as $index => $item)
+                <img src="{{ App\Modules\Shared\Application\Actions\GetPhotoStatic::get('content.banner-widget-item', $item->id, 'slide') }}" class="review-image" data-index="{{ $index }}" style="cursor: pointer;"/>
+            @endforeach
+        </div>
+    </div>
+</div>
+{{-- Передаём данные из PHP в JavaScript --}}
+<script>
+    window.reviewGalleryData = @json($galleryItems);
+</script>
+

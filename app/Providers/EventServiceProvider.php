@@ -1,0 +1,259 @@
+<?php
+
+namespace App\Providers;
+
+use App\Events\ArrivalHasCompleted;
+use App\Events\CouponHasCreated;
+use App\Events\DepartureHasCompleted;
+use App\Events\MovementHasCompleted;
+use App\Events\MovementHasCreated;
+use App\Events\PaymentHasPaid;
+use App\Events\PriceHasMinimum;
+use App\Events\PricingHasCompleted;
+use App\Events\ProductHasBlocked;
+use App\Events\ProductHasFastCreate;
+use App\Events\ProductHasParsed;
+use App\Events\ProductHasPublished;
+use App\Events\PromotionHasMoved;
+use App\Events\ReserveHasTimeOut;
+use App\Events\ReviewHasEdit;
+use App\Events\SupplyHasCompleted;
+use App\Events\SupplyHasSent;
+use App\Events\ThrowableHasAppeared;
+use App\Events\UserHasCreated;
+use App\Events\UserHasRegistered;
+use App\Listeners\CheckNotificationStatus;
+use App\Listeners\NotificationArrivalCompleted;
+use App\Listeners\NotificationCouponCreated;
+use App\Listeners\NotificationDepartureNew;
+use App\Listeners\NotificationExpenseDelivery;
+use App\Listeners\NotificationExpenseInfo;
+use App\Listeners\NotificationMovementCompleted;
+use App\Listeners\NotificationMovementNew;
+use App\Listeners\NotificationNewLogger;
+use App\Listeners\NotificationOrderCanceled;
+use App\Listeners\NotificationOrderCompleted;
+use App\Listeners\NotificationOrderPaid;
+use App\Listeners\NotificationOrderPrepaid;
+use App\Listeners\NotificationPaymentNew;
+use App\Listeners\NotificationPriceMinimum;
+use App\Listeners\NotificationPricingCompleted;
+use App\Listeners\NotificationProductBlocked;
+use App\Listeners\NotificationProductFastCreat;
+use App\Listeners\NotificationProductParserNew;
+use App\Listeners\NotificationProductPublished;
+use App\Listeners\NotificationPromotionMoved;
+use App\Listeners\NotificationRefundNew;
+use App\Listeners\NotificationReserveTimeOut;
+use App\Listeners\NotificationReviewEdit;
+use App\Listeners\NotificationSupplyCompleted;
+use App\Listeners\NotificationSupplySent;
+use App\Listeners\NotificationThrowable;
+use App\Listeners\NotificationUserCreated;
+use App\Listeners\WelcomeToShop;
+use App\Modules\Accounting\Events\CurrencyHasUpdateFixed;
+use App\Modules\Delivery\Service\DeliveryService;
+use App\Modules\Lead\Listeners\LeadCanceled;
+use App\Modules\Lead\Listeners\LeadCompleted;
+use App\Modules\Lead\Listeners\LeadReturnPaid;
+use App\Modules\Lead\Listeners\LeadSetAssembling;
+use App\Modules\Lead\Listeners\LeadSetAwaiting;
+use App\Modules\Lead\Listeners\LeadSetDelivery;
+use App\Modules\Lead\Listeners\LeadSetInWork;
+use App\Modules\Lead\Listeners\LeadSetManager;
+use App\Modules\Lead\Listeners\LeadSetPaid;
+use App\Modules\Notification\Events\TelegramHasReceived;
+use App\Modules\Notification\Service\NotificationService;
+use App\Modules\Order\Events\ExpenseHasAssembling;
+use App\Modules\Order\Events\ExpenseHasCanceled;
+use App\Modules\Order\Events\ExpenseHasCompleted;
+use App\Modules\Order\Events\ExpenseHasDelivery;
+use App\Modules\Order\Events\OrderHasAwaiting;
+use App\Modules\Order\Events\OrderHasCanceled;
+use App\Modules\Order\Events\OrderHasCompleted;
+use App\Modules\Order\Events\OrderHasLogger;
+use App\Modules\Order\Events\OrderHasPaid;
+use App\Modules\Order\Events\OrderHasPrepaid;
+use App\Modules\Order\Events\OrderHasRefund;
+use App\Modules\Order\Events\OrderHasSetManager;
+use App\Modules\Order\Events\OrderHasWork;
+use App\Modules\Order\Listeners\UserMailExpenseCompleted;
+use App\Modules\Order\Listeners\UserWriteReview;
+use App\Modules\Order\Service\ExpenseService;
+use App\Modules\Order\Service\OrderService;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Events\NotificationSending;
+
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * The event to listener mappings for the application.
+     *
+     * @var array<class-string, array<int, class-string>>
+     */
+    protected $listen = [
+        TelegramHasReceived::class => [
+            ExpenseService::class, //Сбор заказа
+            DeliveryService::class, //Сбор? и доставка Заказа
+            NotificationService::class, //Подтверждение уведомления
+            //CalendarService::class, //Подтверждение записи
+            OrderService::class, //Взятие в работу заказ
+            /**
+             * Добавляем классы, которые обрабатывают подтверждения из Телеграм.
+             */
+
+        ],
+        //Модуль Order
+        ExpenseHasCompleted::class => [
+            UserMailExpenseCompleted::class,
+            UserWriteReview::class,
+
+        ],
+        ExpenseHasCanceled::class => [
+            LeadReturnPaid::class,
+        ],
+        ExpenseHasAssembling::class => [
+            LeadSetAssembling::class,
+            NotificationExpenseInfo::class,
+        ],
+        ExpenseHasDelivery::class => [
+            NotificationExpenseDelivery::class,
+
+            LeadSetDelivery::class,
+        ],
+
+        OrderHasCanceled::class => [
+            NotificationOrderCanceled::class,
+            LeadCanceled::class,
+        ],
+        OrderHasAwaiting::class => [
+            LeadSetAwaiting::class,
+        ],
+        OrderHasWork::class => [
+            LeadSetInWork::class,
+        ],
+        OrderHasSetManager::class => [
+            LeadSetManager::class,
+        ],
+
+        OrderHasLogger::class => [
+            NotificationNewLogger::class,
+        ],
+        OrderHasRefund::class => [
+            NotificationRefundNew::class,
+        ],
+        OrderHasPrepaid::class => [
+            NotificationOrderPrepaid::class,
+        ],
+        OrderHasPaid::class => [
+            NotificationOrderPaid::class,
+            LeadSetPaid::class,
+        ],
+        OrderHasCompleted::class => [
+            NotificationOrderCompleted::class,
+            LeadCompleted::class,
+        ],
+
+        //TODO Остальные проработать
+
+        /* Registered::class => [
+             SendEmailVerificationNotification::class,
+         ],*/
+        UserHasRegistered::class => [
+            WelcomeToShop::class,
+        ],
+        PromotionHasMoved::class => [
+            NotificationPromotionMoved::class,
+        ],
+        ProductHasParsed::class => [
+            NotificationProductParserNew::class,
+        ],
+        ArrivalHasCompleted::class => [
+            NotificationArrivalCompleted::class,
+        ],
+        ThrowableHasAppeared::class => [
+            NotificationThrowable::class,
+        ],
+
+
+
+
+        MovementHasCompleted::class => [
+            NotificationMovementCompleted::class,
+        ],
+        MovementHasCreated::class => [
+            NotificationMovementNew::class,
+        ],
+        /*PointHasEstablished::class => [
+            NotificationNewPointStorage::class
+        ],*/
+        PaymentHasPaid::class => [
+            NotificationPaymentNew::class,
+        ],
+
+        DepartureHasCompleted::class => [
+            NotificationDepartureNew::class,
+        ],
+        NotificationSending::class => [
+            CheckNotificationStatus::class,
+        ],
+        //
+        UserHasCreated::class => [
+            NotificationUserCreated::class,
+        ],
+        SupplyHasSent::class => [
+            NotificationSupplySent::class,
+        ],
+        SupplyHasCompleted::class => [
+            NotificationSupplyCompleted::class,
+        ],
+        ReserveHasTimeOut::class => [
+            NotificationReserveTimeOut::class,
+        ],
+        PricingHasCompleted::class => [
+            NotificationPricingCompleted::class,
+        ],
+        ProductHasPublished::class => [
+            NotificationProductPublished::class,
+            ],
+
+        PriceHasMinimum::class => [
+            NotificationPriceMinimum::class,
+        ],
+        CouponHasCreated::class => [
+            NotificationCouponCreated::class,
+        ],
+        ReviewHasEdit::class => [
+            NotificationReviewEdit::class,
+        ],
+
+        ProductHasBlocked::class => [
+            NotificationProductBlocked::class,
+        ],
+
+        ProductHasFastCreate::class => [
+            NotificationProductFastCreat::class,
+        ],
+    ];
+    /*
+    protected $subscribe = [
+        LeadEventListener::class,
+    ];
+*/
+    /**
+     * Register any events for your application.
+     */
+    public function boot(): void
+    {
+        //
+    }
+
+    /**
+     * Determine if events and listeners should be automatically discovered.
+     */
+    public function shouldDiscoverEvents(): bool
+    {
+        return false;
+    }
+}

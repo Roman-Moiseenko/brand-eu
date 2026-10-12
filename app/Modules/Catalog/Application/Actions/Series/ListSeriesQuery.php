@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Modules\Catalog\Application\Actions\Series;
+
+use App\Modules\Catalog\Infrastructure\Models\Series;
+use App\Modules\Shared\Application\DTOs\ListNamePublishedData;
+
+class ListSeriesQuery
+{
+    public function execute(): array
+    {
+        $series = Series::orderBy('name')->getModels();
+
+        return array_map(fn($seriey) => new ListNamePublishedData(
+            id: $seriey->id,
+            name: $seriey->name,
+            published: true,
+        ), $series);
+    }
+}

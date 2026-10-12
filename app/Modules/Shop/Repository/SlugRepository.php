@@ -1,0 +1,89 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Modules\Shop\Repository;
+
+use App\Modules\Catalog\Infrastructure\Models\Brand;
+use App\Modules\Catalog\Infrastructure\Models\Category;
+use App\Modules\Catalog\Infrastructure\Models\Group;
+use App\Modules\Catalog\Infrastructure\Models\Product;
+use App\Modules\Catalog\Infrastructure\Models\Room;
+use App\Modules\Content\Infrastructure\Models\Page;
+use App\Modules\Content\Infrastructure\Models\Post;
+use App\Modules\Content\Infrastructure\Models\PostCategory;
+use App\Modules\Discount\Domain\ValueObjects\PromotionStatus;
+use App\Modules\Discount\Infrastructure\Models\Promotion;
+use App\Modules\Parser\Infrastructure\Models\ParserCategory;
+use App\Modules\Parser\Infrastructure\Models\ParserProduct;
+
+class SlugRepository
+{
+
+    public function getProductParserByCode($code):? ParserProduct
+    {
+        //if (is_numeric($slug)) return ParserProduct::find($slug);
+        return ParserProduct::where('code', $code)->first();
+    }
+
+    public function CategoryParserBySlug($slug):? ParserCategory
+    {
+        if (is_numeric($slug)) return ParserCategory::find($slug);
+        return ParserCategory::where('slug', $slug)->first();
+    }
+
+    public function getProductBySlug($slug):? Product
+    {
+        if (is_numeric($slug)) return Product::find($slug);
+        return Product::where('slug', '=', $slug)->first();
+    }
+
+    public function CategoryBySlug($slug):? Category
+    {
+        if (is_numeric($slug)) {
+            $category = Category::find($slug);
+        } else {
+            $category = Category::where('slug', '=', $slug)->first();
+        }
+        return $category;
+    }
+
+    public function RoomBySlug($slug):? Room
+    {
+        if (is_numeric($slug)) {
+            $room = Room::find($slug);
+        } else {
+            $room = Room::where('slug', '=', $slug)->first();
+        }
+        return $room;
+    }
+
+    public function PageBySlug($slug): Page
+    {
+        return Page::where('slug', $slug)->where('published', true)->first();
+    }
+
+    public function getPromotionBySlug($slug): Promotion
+    {
+        return Promotion::where('slug', $slug)->where('status', PromotionStatus::STARTED)->firstOrFail();
+    }
+
+    public function getGroupBySlug($slug): Group
+    {
+        return Group::where('slug', $slug)->firstOrFail();
+    }
+
+    public function PostCategoryBySlug($slug): PostCategory
+    {
+        return PostCategory::where('slug', $slug)->first();
+    }
+
+    public function PostBySlug($slug)
+    {
+        return Post::where('slug', $slug)->where('published', true)->first();
+    }
+
+    public function BrandBySlug($slug)
+    {
+        return Brand::where('slug', $slug)->first();
+    }
+}

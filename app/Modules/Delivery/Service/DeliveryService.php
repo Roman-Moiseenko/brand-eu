@@ -1,0 +1,101 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Modules\Delivery\Service;
+
+use App\Modules\Cart\Domain\Entities\CartItemEntity;
+use App\Modules\Delivery\Entity\DeliveryCargo;
+use App\Modules\Delivery\Entity\Local\Tariff;
+use App\Modules\Delivery\Entity\Transport\DeliveryData;
+use App\Modules\Delivery\Helpers\DeliveryHelper;
+use App\Modules\Notification\Events\TelegramHasReceived;
+
+use App\Modules\Order\Entity\Order\OrderExpense;
+use App\Modules\Order\Events\ExpenseHasDelivery;
+use App\Modules\Order\Service\ExpenseService;
+
+use Illuminate\Http\Request;
+use JetBrains\PhpStorm\Deprecated;
+
+class DeliveryService
+{
+
+  // private OrderLoggerService $logger;
+    private ExpenseService $expenseService;
+
+    public function __construct(ExpenseService $expenseService)
+    {
+    //    $this->logger = $logger;
+        $this->expenseService = $expenseService;
+    }
+
+    public function user(int $user_id)
+    {
+
+    }
+
+    /**
+     * @param CartItemEntity[] $items
+     */
+    //TODO Пересчет от адреса
+    public function calculate(int $user_id, array $items): DeliveryData
+    {
+        $user_delivery = $this->user($user_id);
+
+        if ($user_delivery->isRegion() && !empty($user_delivery->region->address) && !empty($user_delivery->company)) {
+            return DeliveryHelper::calculate($user_delivery->company, $items, []);
+        }
+        if ($user_delivery->isLocal() && !empty($user_delivery->local->address)) {
+            //TODO Таблица с местным расчетом стоимости доставки + Вес
+            $distance = $this->distance();
+            $cost = Tariff::orderBy('distance')->where('distance', '>', $distance)->first();
+            return new DeliveryData($cost->tariff, 3);
+        }
+        return new DeliveryData(0, 0);
+    }
+
+    //TODO расчет расстояния
+    private function distance(): int
+    {
+        //Получаем базовые координаты центра из настроек
+
+
+        //Получаем координаты точки доставки
+
+        return 22; //расстояние в км
+    }
+
+
+    #[Deprecated]
+    public function create(OrderExpense $expense, Request $request): void
+    {
+
+        if (!$expense->isRegion()) throw new \DomainException('Неверный тип доставки');
+
+        $delivery = DeliveryCargo::new($request->integer('company_id'), $request->string('track')->trim()->value());
+        $expense->delivery()->save($delivery);
+        $expense->status = OrderExpense::STATUS_DELIVERY;
+        $expense->save();
+        $expense->refresh();
+        event(new ExpenseHasDelivery($expense)); //Уведомляем клиента с трек-номером
+      /*  $this->logger->log(orderId: $expense->order_id, action: 'Распоряжение в пути',
+            value: !empty($track) ? ('Трек посылки ' . $track) : '',
+            link: route('admin.order.expense.show', $expense)
+        );
+*/
+    }
+
+    public function setStatus(OrderExpense $expense, int $status): void
+    {
+        $expense->delivery->completed_at = now();
+        $expense->delivery->status = $status;
+        $expense->delivery->save();
+        if ($status == DeliveryCargo::STATUS_ISSUED) {
+            $this->expenseService->completed($expense);
+        }
+    }
+    public function handle(TelegramHasReceived $event): void
+    {
+
+    }
+}

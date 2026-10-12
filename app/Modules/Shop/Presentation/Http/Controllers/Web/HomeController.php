@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Modules\Shop\Presentation\Http\Controllers\Web;
+
+use App\Modules\Content\Entity\Widgets\ProductWidget;
+
+class HomeController extends ShopAbstractController
+{
+
+    public function index()
+    {
+        $widgets = ProductWidget::where('active', true)->get();
+        return view($this->route('home'), compact('widgets'));
+    }
+
+}

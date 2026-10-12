@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Modules\Catalog\Application\Services;
+
+use App\Modules\Accounting\Application\Actions\ProductPrice\SetPriceUseCase;
+use App\Modules\Accounting\Application\DTOs\ProductPrice\SetProductPriceData;
+use App\Modules\Accounting\Domain\ValueObjects\PriceType;
+use App\Modules\Catalog\Application\Actions\Brand\FindOrCreateBrandUseCase;
+use App\Modules\Catalog\Application\Actions\CategoryProduct\AttachCategoriesToProductUseCase;
+use App\Modules\Catalog\Application\Actions\Product\FastCreateProductUseCase;
+use App\Modules\Catalog\Application\Actions\Product\UpdateProductUseCase;
+use App\Modules\Catalog\Application\Actions\RoomProduct\AttachRoomsToProductUseCase;
+use App\Modules\Catalog\Application\Actions\Tag\FindOrCreateTagUseCase;
+use App\Modules\Catalog\Application\Actions\TagProduct\AttachTagsToProductUseCase;
+use App\Modules\Catalog\Application\Actions\Wp\GetCategoryByWpIdQuery;
+use App\Modules\Catalog\Application\Actions\Wp\GetRoomByWpIdQuery;
+use App\Modules\Catalog\Application\DTOs\Product\ProductFastCreateData;
+use App\Modules\Catalog\Application\DTOs\Product\ProductUpdateData;
+use App\Modules\Catalog\Domain\Entities\BrandEntity;
+use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
+use App\Modules\Parser\Application\Actions\Product\FindAndAttachToParserUseCase;
+use App\Modules\Shared\Application\DTOs\JobPhotoLoadData;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\ValueObjects\QueueName;
+use App\Modules\Shared\Infrastructure\Job\LoadPhotoByUrlJob;
+
+/**
+ * Загрузка одного товара из  сайта на WP
+ */
+readonly class LoadProductWpService
+{
+    public function __construct(
+        private ProductRepositoryInterface       $productRepository,
+        private GetCategoryByWpIdQuery           $categoryByWpIdUseCase,
+        private GetRoomByWpIdQuery               $roomByWpIdUseCase,
+        private FindOrCreateBrandUseCase         $findOrCreateBrandUseCase,
+        private FastCreateProductUseCase         $fastCreateProductUseCase,
+        private AttachCategoriesToProductUseCase $attachCategoriesToProductUseCase,
+        private AttachRoomsToProductUseCase      $attachRoomsToProductUseCase,
+        private UpdateProductUseCase             $updateProductUseCase,
+        private SetPriceUseCase                  $setProductPriceUseCase,
+        private FindOrCreateTagUseCase           $findOrCreateTagUseCase,
+        private AttachTagsToProductUseCase       $attachTagsToProductUseCase,
+        private AttachAttributeProductService    $attachAttributeProductService,
+        private DimensionsFromAttributeService   $dimensionsFromAttributeService,
+        private FindAndAttachToParserUseCase     $findAndAttachToParserUseCase,
+        private SetSeriesToProductByNameService  $seriesToProductByNameService,
+    )
+    {
+    }
+
+    public function load(array $product): bool
+    {
+        $userPermission = new UserPermission(
+            null,
+            ['admin'],
+            [
+                'storage.photo.upload',
+                'catalog.category.create',
+                'catalog.category.edit',
+                'catalog.product.create',
+                'catalog.product.edit',
+                'storage.photo.upload',
+                'storage.photo.edit',
+            ]
+        );
+
+        //Проверяем по артикулу $product['sku'] в базе поле code на совпадение,
+        if (!is_null($this->productRepository->findByCode($product['sku']))) return false;
+
+        //Создаем массив категорий и комнат
+        $categories = [];
+        $rooms = [];
+
+        foreach ($product['categories'] as $categoryData) {
+            if (!is_null($category = $this->categoryByWpIdUseCase->execute($categoryData['id']))) {
+                $categories[] = $category->id;
+            }
+            if (!is_null($room = $this->roomByWpIdUseCase->execute($categoryData['id']))) {
+                $rooms[] = $room->id;
+            }
+        }
+
+        if (empty($categories)) return false;
+
+        //Из атрибутов вытаскиваем бренд, и ищем его, если нет, то создаем и возвращаем Entity
+        $brandName = (isset($product['attributes']["pa_brend"][0]))
+            ? $product['attributes']["pa_brend"][0]
+            : BrandEntity::NONAME;
+        $brand = $this->findOrCreateBrandUseCase->execute($brandName);
+
+        //Создаем Товар
+        $dtoProduct = new ProductFastCreateData(
+            name: $product['name'],
+            code: $product['sku'],
+            brandId: $brand->id,
+            categoryId: $categories[0],
+            slug: $product['slug'],
+        );
+        $productEntity = $this->fastCreateProductUseCase->execute($dtoProduct, $userPermission);
+
+        //Ищем или создаем теги
+        $tags = [];
+        foreach ($product['tags'] as $tagData) {
+            $tagEntity = $this->findOrCreateTagUseCase->execute($tagData['name'], $tagData['slug']);
+            $tags[] = $tagEntity->id;
+        }
+        //назначаем найденные теги на товар
+        if (!empty($tags)) {
+            $this->attachTagsToProductUseCase->execute($productEntity->id, $tags, $userPermission);
+        }
+
+        unset($categories[0]); //Удаляем первую категорию, т.к. она теперь Main
+
+        //Обновляем оставшиеся поля
+        $dtoUpdate = new ProductUpdateData(
+            id: (int)$productEntity->id,
+            description: $product['description'],
+            short: $product['short'],
+            care: $product['care'], //Уход и материалы
+            published: true, //Сразу публикуем
+            preOrder: true,
+            delivery: true,
+            local: true,
+        );
+        $productEntity = $this->updateProductUseCase->execute($dtoUpdate, $userPermission);
+
+        // Присоединяем остальные категории и все комнаты к товару
+        $this->attachCategoriesToProductUseCase->execute($productEntity->id, $categories, $userPermission);
+        $this->attachRoomsToProductUseCase->execute($productEntity->id, $rooms, $userPermission);
+
+        //Атрибуты основные
+        if (isset($product['attributes']["pa_czveta"])) {
+            $this->attachAttributeProductService->SetColorAttribute($productEntity->id, $product['attributes']["pa_czveta"]);
+        }
+        if (isset($product['attributes']["pa_material"])) {
+            $this->attachAttributeProductService->SetMaterialAttribute($productEntity->id, $product['attributes']["pa_material"]);
+        }
+
+
+        //Парсим габариты pa_vysota pa_shirina pa_dlina
+        $this->dimensionsFromAttributeService->execute(
+            $productEntity->id,
+            $product['attributes']["pa_vysota"] ?? null,
+            $product['attributes']["pa_dlina"] ?? null,
+            $product['attributes']["pa_shirina"] ?? null,
+        );
+
+        // Привязываем изображения к товару
+        foreach ($product['images'] as $imageData) {
+            $dtoImage = new JobPhotoLoadData(
+                imageableId: $productEntity->id,
+                modelType: 'catalog.product',
+                type: 'gallery',
+                url: $imageData['url'],
+                isProxy: false,
+                alt: $imageData['alt'],
+            );
+            LoadPhotoByUrlJob::dispatch($dtoImage, $userPermission)->onQueue(QueueName::PHOTO);
+        }
+
+        //Установить цену из $product["price"], только розницу и минимальную (половина)
+        //Рыночная цена
+        $dtoPrice = new SetProductPriceData(
+            productId: $productEntity->id,
+            price: (float)$product['price'],
+            priceType: PriceType::RETAIL,
+        );
+        $this->setProductPriceUseCase->execute($dtoPrice);
+        //Минимальная
+        $dtoPrice = new SetProductPriceData(
+            productId: $productEntity->id,
+            price: (float)$product['price'] / 2,
+            priceType: PriceType::MINIMAL,
+        );
+        $this->setProductPriceUseCase->execute($dtoPrice);
+
+        //Присоединяем к товарам из парсера, если есть и устанавливаем серию
+        if (!is_null($parser = $this->findAndAttachToParserUseCase->execute($productEntity->id, $productEntity->code->getCodeSearch()))) {
+            $this->seriesToProductByNameService->execute($productEntity->id, $parser->name);
+        }
+        return true;
+    }
+
+
+}

@@ -1,0 +1,755 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Modules\Order\Infrastructure\Models;
+
+use App\Modules\Accounting\Entity\MovementDocument;
+use App\Modules\Accounting\Entity\Organization;
+use App\Modules\Auth\Infrastructure\Models\Client;
+use App\Modules\Auth\Infrastructure\Models\Staff;
+use App\Modules\Catalog\Infrastructure\Models\Product;
+use App\Modules\Discount\Entity\Coupon;
+use App\Modules\Discount\Entity\Discount;
+use App\Modules\Lead\Infrastructure\Models\Lead;
+use App\Modules\Lead\Traits\LeadField;
+use App\Modules\Mail\Entity\SystemMail;
+use App\Modules\Order\Entity\Order\OrderExpense;
+use App\Modules\Order\Entity\Order\OrderExpenseRefund;
+use App\Modules\Order\Entity\Order\OrderPayment;
+use App\Modules\Order\Entity\Order\OrderResponsible;
+use App\Modules\Order\Entity\OrderReserve;
+use App\Modules\Service\Entity\Report;
+use App\Traits\HtmlInfoData;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\ExpectedValues;
+use JetBrains\PhpStorm\Pure;
+
+/**
+ * @property int $id
+ * @property int $number - номер заказа, присваивается автоматически ++ при отправке на оплату
+ * @property int $client_id
+ * @property int $trader_id
+ * @property string $type //ONLINE, MANUAL, SHOP, PARSER
+ * @property int $shopper_id
+ *
+ * @property int $staff_id // Staff::class - менеджер, создавший или прикрепленный к заказу
+ * @property int $discount_id //Скидка на заказ - от суммы, или по дням
+ * @property int $discount_amount //Скидка в рублях для фиксации конечного значения
+ * @property float $coupon_amount //Примененная сумма скидки по товару
+ * @property int $coupon_id //Купон скидки
+ * @property float $manual //Сумма ручных скидок по всем товарам, кроме акционных.
+ * @property string $comment
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property string $price_type //Тип цены для заказа, берется от клиента, но может меняться
+ *
+ * @property string $comment_client
+ * @property bool $is_pickup
+ * @property string $country
+ * @property int $region_code
+ * @property string $region
+ * @property string $city
+ * @property string $street
+ * @property string $postal_code
+ *
+ * @property OrderHistoryStatus $status //текущий
+ * @property OrderHistoryStatus[] $statuses
+ * @property OrderAddition[] $additions //Дополнения к заказу (услуги)
+ * @property OrderPayment[] $payments //Платежи за заказ УДАЛИТЬ
+ * @property OrderPayment $payment //Последний платежи за заказ УДАЛИТЬ
+ * @property OrderExpense[] $expenses //Расходники на выдачу товаров и услуг - расчет от $issuances УДАЛИТЬ
+ * @property OrderItem[] $items
+ * @property Client $client Клиент покупатель
+ * @property Organization $shopper Организация покупатель
+ * @property Organization $trader Организация продавец
+ * @property OrderResponsible[] $responsible - УДАЛИТЬ
+ * @property MovementDocument[] $movements- УДАЛИТЬ
+ * @property Discount $discount
+ * @property Staff $staff
+ * @property Coupon $coupon
+ * @property OrderExpenseRefund $refund УДАЛИТЬ
+ * @property OrderLogger[] $logs
+ * @property Report $invoice
+ * @property SystemMail[] $systemMails
+ * @property Lead $lead
+ */
+
+class Order extends Model
+{
+    use HtmlInfoData, LeadField;
+
+    const string ONLINE = 'online';
+    const string MANUAL = 'manual';
+    const string OZON = 'ozon';
+    const array TYPES = [
+        self::ONLINE => 'Интернет-магазин',
+        self::MANUAL => 'Менеджер',
+        self::OZON => 'Озон',
+    ];
+
+    protected $fillable = [
+        'client_id',
+        'type',
+        'paid',
+        'finished',
+        'coupon_amount',
+        'coupon_id',
+        'discount_id',
+        'discount_amount',
+        'manual',
+        'comment',
+        'staff_id',
+        'trader_id',
+        'number',
+        'price_type',
+    ];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'coupon_amount' => 'float',
+    ];
+
+    public static function register(int|null $client_id, string $type, int $trader_id): self
+    {
+        $number = self::get()->count();
+        $order = self::create([
+            'client_id' => $client_id,
+            'type' => $type,
+            'paid' => false,
+            'trader_id' => $trader_id,
+            'number' => $number,
+        ]);
+        $order->statuses()->create(['value' => OrderHistoryStatus::NEW]);
+        return $order;
+    }
+
+    ///*** ПРОВЕРКА СОСТОЯНИЙ is...()
+
+    /**
+     * Статус $value был применен
+     */
+    public function isStatus(#[ExpectedValues(valuesFromClass: OrderHistoryStatus::class)] string $value): bool
+    {
+        foreach ($this->statuses as $status) {
+            if ($status->value == $value) return true;
+        }
+        return false;
+    }
+
+    public function isOzon(): bool
+    {
+        return $this->type == self::OZON;
+    }
+
+    ///***Проверка текущего статуса
+    public function isNew(): bool
+    {
+        return $this->status->value == OrderHistoryStatus::NEW;
+    }
+
+    public function isManager(): bool
+    {
+        return $this->status->value == OrderHistoryStatus::IN_WORK;
+    }
+
+    public function isAwaiting(): bool
+    {
+        return $this->status->value == OrderHistoryStatus::AWAITING;
+    }
+
+    public function isPrepaid(): bool
+    {
+        return $this->status->value == OrderHistoryStatus::PREPAID;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->status->value == OrderHistoryStatus::PAID;
+    }
+
+    public function inWork(): bool
+    {
+        return $this->status->value >= OrderHistoryStatus::PREPAID && $this->status->value < OrderHistoryStatus::CANCELLED;
+    }
+
+    /**
+     * Заказ оплачен полностью, но не завершен или отменен
+     * @return bool
+     */
+    public function afterPaid(): bool
+    {
+        return $this->status->value > OrderHistoryStatus::PAID && $this->status->value < OrderHistoryStatus::CANCELLED;
+    }
+
+    public function isCompleted(bool $only = false): bool
+    {
+        if ($only) return $this->status->value == OrderHistoryStatus::COMPLETED;
+        return $this->status->value >= OrderHistoryStatus::COMPLETED;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->status->value >= OrderHistoryStatus::CANCELLED && $this->status->value < OrderHistoryStatus::COMPLETED;
+    }
+
+    ///*** SET-еры
+    public function setStatus(
+        #[ExpectedValues(valuesFromClass: OrderHistoryStatus::class)] string $value,
+        string                                                               $comment = ''
+    ): void
+    {
+        if ($this->finished && $value != OrderHistoryStatus::COMPLETED_REFUND) throw new \DomainException('Заказ закрыт, статус менять нельзя');
+        if ($this->isStatus($value)) throw new \DomainException('Статус уже назначен');
+       //if ($this->status->value > $value) throw new \DomainException('Нарушена последовательность статусов');
+
+        $this->statuses()->create(['value' => $value, 'comment' => $comment]);
+
+        if (in_array($value, [
+            OrderHistoryStatus::CANCELLED,
+            OrderHistoryStatus::COMPLETED,
+            OrderHistoryStatus::COMPLETED_REFUND,
+            OrderHistoryStatus::RETURNED
+            ])) $this->update(['finished' => true]);
+        if ($value == OrderHistoryStatus::PAID) $this->update(['paid' => true]);
+    }
+
+    public function setPaid(): void
+    {
+        $this->setStatus(OrderHistoryStatus::PAID);
+        $this->paid = true;
+        $this->save();
+        //Увеличиваем резерв на оплаченные товары
+    }
+
+    public function setManager(int $staff_id): void
+    {
+        if ($this->staff_id != null) throw new \DomainException('Менеджер уже назначен, нельзя менять');
+        $this->staff_id = $staff_id;
+        $this->save();
+    }
+
+    public function setReserve(Carbon $addDays): void
+    {
+        foreach ($this->items as $item) {
+            $item->updateReserves($addDays);
+        }
+    }
+
+    public function setNumber(): void
+    {
+        if (is_null($this->number)) { //Не меняем уже назначенный номер
+            $count = Order::where('number', '<>', null)->max('number');
+            $this->number = (int)$count + 1;
+            $this->save();
+        }
+    }
+
+    ///*** GET-еры
+
+    /**
+     * Доступные статусы для текущего заказа, ограниченные сверху
+     */
+
+    public function getQuantity(): float
+    {
+        $quantity = 0;
+        foreach ($this->items as $item) {
+            $quantity += $item->quantity;
+        }
+        return $quantity;
+    }
+
+    public function getQuantityProduct(int $product_id, bool $withPreorder): float
+    {
+        $quantity = 0;
+        foreach ($this->items as $item) {
+            if ($item->product_id == $product_id) {
+                if (!$item->preorder || $withPreorder) $quantity += $item->quantity;
+            }
+        }
+        return $quantity;
+    }
+
+    public function getQuantityRemains(): float
+    {
+        $quantity = 0;
+        foreach ($this->items as $item) {
+            $quantity += $item->getRemains();
+        }
+        return $quantity;
+    }
+
+    public function getType(): string
+    {
+        return self::TYPES[$this->type];
+    }
+
+    public function getReserveTo(): ?Carbon
+    {
+        /** @var OrderItem $item */
+        if ($this->items()->count() == 0) return now();
+        $item = $this->items()->where('preorder', false)->first();
+
+        if (is_null($item) || is_null($item->reserves)) return now();
+        /** @var OrderReserve $reserve */
+        $reserve = $item->reserves()->first();
+        if (empty($reserve)) return null;
+        return $reserve->reserve_at;
+    }
+
+    /**
+     * Получить элемент заказа по Товару и типу (в наличии/на заказ)
+     * @param Product $product
+     * @param bool $preorder
+     * @return OrderItem|null
+     */
+    public function getItem(Product $product, bool $preorder = false): ?OrderItem
+    {
+        foreach ($this->items as $orderItem) {
+            if ($orderItem->product->id == $product->id && $orderItem->preorder == $preorder) return $orderItem;
+        }
+        return null;
+    }
+
+    public function getAddition(int $addition_id):? OrderAddition
+    {
+        foreach ($this->additions as $addition) {
+            if ($addition->addition_id == $addition_id) return $addition;
+        }
+        return null;
+    }
+    public function getManager(): ?Staff
+    {
+        if (is_null($this->staff_id)) return null;
+        return $this->staff->first();
+    }
+
+    public function getNameManager(bool $short = false): string
+    {
+        if (is_null($this->staff)) return '-';
+        if ($short) {
+            return $this->staff->fullname->getShortName();
+        } else {
+            return $this->staff->fullname->getFullName();
+        }
+    }
+
+    /**
+     * Доля выдачи заказа 0 - не выдан, 1 -выдан 100%
+     */
+    public function getPercentIssued(): float
+    {
+        $total = $this->getTotalAmount();
+        if ($total == 0) return 0;
+        $expense = $this->getExpenseAmount(OrderExpense::STATUS_COMPLETED);
+        return $expense / $total;
+    }
+
+    //Суммы по заказу*******************
+    /**
+     * Базовая стоимость всех товаров
+     * @return float
+     */
+    public function getBaseAmount(): float
+    {
+        $result = 0;
+        foreach ($this->items as $item) {
+            $result += $item->base_cost * $item->quantity;
+        }
+        return $result;
+    }
+
+    /**
+     * Базовая стоимость всех товаров, за исключением Акционных и Бонусных
+     */
+    public function getBaseAmountNotDiscount(): float
+    {
+        $result = 0;
+        foreach ($this->items as $item) {
+            if (is_null($item->discount_id)) $result += $item->base_cost * $item->quantity;
+        }
+        return $result;
+    }
+
+    /**
+     * Продажная стоимость всех товаров
+     */
+    public function getSellAmount(): float
+    {
+        $result = 0;
+        foreach ($this->items as $item) {
+            $result += $item->sell_cost * $item->quantity;
+        }
+        return $result;
+    }
+
+
+    /**
+     * Скидка на заказ - по сумме, срокам и др.
+     */
+    public function getDiscountOrder(): float
+    {
+        return $this->discount_amount;
+    }
+
+
+    /**
+     * Сумма скидки по купону
+     */
+    public function getCoupon(): float
+    {
+        return $this->coupon_amount ?? 0;
+    }
+
+    /**
+     * Сумма всех доп услуг
+     */
+    public function getAdditionsAmount(): float
+    {
+        $total_addition = 0;
+        foreach ($this->additions as $addition) {
+            $total_addition += $addition->getAmount() * $addition->quantity;
+        }
+        return $total_addition;
+    }
+
+    /**
+     * Итоговая сумма оплаты за заказ, с учетом всех скидок и платежей
+     */
+    public function getTotalAmount(): float
+    {
+        return ceil($this->getAdditionsAmount() +
+            $this->getSellAmount() +
+            $this->getDiscountOrder() -
+            $this->getCoupon() -
+            $this->getRefundAmount()
+        );
+    }
+
+    /**
+     * Сумма всех платежей по заказу, за вычетом возврата денег
+     * @return float
+     */
+    public function getPaymentAmount(): float
+    {
+        $payments = 0;
+        foreach ($this->payments as $payment) {
+            if ($payment->isCompleted())
+                if ($payment->isRefund()) {
+                    $payments -= $payment->amount;
+                } else {
+                    $payments += $payment->amount;
+                }
+        }
+
+        return $payments;
+    }
+
+    /**
+     * Сумма всех распоряжений по статусу
+     */
+    public function getExpenseAmount(#[ExpectedValues(valuesFromClass: OrderExpense::class)] int $status = null): float
+    {
+        $amount = 0;
+        foreach ($this->expenses as $expense) {
+            if (is_null($status) || $expense->status == $status)
+                $amount += $expense->getAmount();
+        }
+        return $amount;
+    }
+
+    /**
+     * Сумма всех возвратов
+     */
+    public function getRefundAmount(): float
+    {
+        $refund = 0.0;
+        foreach ($this->items as $item) {
+            $refund += $item->getRefund() * $item->sell_cost;
+        }
+        foreach ($this->additions as $addition) {
+            $refund += $addition->getRefund();
+        }
+        return $refund;
+    }
+
+    /**
+     * Общий вес заказа
+     * @return float
+     */
+    #[Pure]
+    public function getWeight(): float
+    {
+        $weight = 0;
+        foreach ($this->items as $item) {
+            $weight += $item->quantity * $item->product->weight();
+        }
+        return $weight;
+    }
+
+    /**
+     * Общий объем заказа
+     * @return float
+     */
+    #[Pure]
+    public function getVolume(): float
+    {
+        $volume = 0;
+        foreach ($this->items as $item) {
+            $volume += $item->quantity * $item->product->packages->volume();
+        }
+        return (ceil($volume * 1000)) / 1000;
+    }
+
+    /**
+     * Товары из заказа, которые были по наличию
+     */
+    public function getInStock(): array
+    {
+        return $this->items()->where('preorder', false)->getModels();
+    }
+
+    /**
+     * Товары из заказа, которые на предзаказ
+     */
+    public function getPreOrder(): array
+    {
+        return $this->items()->where('preorder', true)->getModels();
+    }
+
+    public function getItemById(int $id_item): OrderItem
+    {
+        foreach ($this->items as $item) {
+            if ($item->id == $id_item) return $item;
+        }
+        throw new \DomainException('Элемент заказа не найден item_ID = ' . $id_item);
+    }
+
+    public function getVATTrader(): int
+    {
+        return $this->trader->VAT->value;
+    }
+
+    /**
+     * НДС на весь Заказ - 2 способа обсчета
+     * @param bool $simple - простой способ сумма заказа * НДС% или по-товарно
+     * @return float
+     */
+    public function getVAT(bool $simple = false): float
+    {
+        $vat_value = $this->getVATTrader();
+        if ($simple) return $this->getTotalAmount() * $vat_value / 100; //Простое решение
+
+        $vat_total = 0;
+        //Суммируем по товарам, по индивидуальным НДС
+        foreach ($this->items as $item) {
+            $vat_total += $item->sell_cost * $item->quantity * $item->product->VAT->value / 100;
+        }
+
+        $vat_total += $this->getAdditionsAmount() * $vat_value /100;
+        return $vat_total;
+
+    }
+
+    ///*** Relations *************************************************************************************
+
+    public function systemMails(): MorphMany
+    {
+        return $this->morphMany(SystemMail::class, 'systemable');
+    }
+
+    public function shopper(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'shopper_id', 'id');
+    }
+
+    public function trader(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'trader_id', 'id');
+    }
+
+    public function invoice(): MorphOne
+    {
+        return $this->morphOne(Report::class, 'reportable');
+    }
+
+    public function refund(): HasOne
+    {
+        return $this->hasOne(OrderExpenseRefund::class, 'order_id', 'id');
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
+    }
+
+    public function staff(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class, 'staff_id', 'id');
+    }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(OrderExpense::class, 'order_id', 'id')->orderBy('status');
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
+
+    #[Deprecated]
+    public function responsible()
+    {
+        return $this->hasMany(OrderResponsible::class, 'order_id', 'id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this
+            ->belongsTo(Client::class, 'client_id', 'id')
+            ->withDefault(function (Client $client) {
+                $client->fullname->surname = 'Розничный клиент';
+                $client->email = null;
+                $client->phone = '';
+            });
+    }
+
+    public function additions(): HasMany
+    {
+        return $this->hasMany(OrderAddition::class, 'order_id', 'id');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(OrderPayment::class, 'order_id', 'id');
+    }
+
+    /**
+     * Последний платеж
+     * @return mixed
+     */
+    public function payment(): mixed
+    {
+        return $this->hasMany(OrderPayment::class, 'order_id', 'id')->latestOfMany();
+    }
+
+    public function status(): HasOne
+    {
+        return $this->hasOne(OrderHistoryStatus::class, 'order_id', 'id')->latestOfMany();
+    }
+
+    public function statuses(): HasMany
+    {
+        return $this->hasMany(OrderHistoryStatus::class, 'order_id', 'id');
+    }
+
+    public function discount(): BelongsTo
+    {
+        return $this->belongsTo(Discount::class, 'discount_id', 'id');
+    }
+
+    public function movements(): BelongsToMany
+    {
+        return $this->belongsToMany(MovementDocument::class, 'orders_movements', 'order_id', 'movement_id');
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(OrderLogger::class, 'order_id', 'id')->orderByDesc('created_at');
+    }
+
+    public function lead(): HasOne
+    {
+        return $this->hasOne(Lead::class, 'order_id', 'id');
+    }
+
+    /**
+     * Возвращает true если весь товар из заказа не имеет резерва
+     * @return bool
+     */
+    public function checkOutReserve(): bool
+    {
+        foreach ($this->items as $item) {
+            if ($item->reserve_id != null)
+                return false;
+        }
+        return true;
+    }
+
+    ///*** Хелперы
+
+    public function statusHtml(): string
+    {
+        $comment = '';
+        if (!empty($this->status->comment)) $comment = ' (' . $this->status->comment . ')';
+        return OrderHistoryStatus::STATUSES[$this->status->value] . $comment;
+    }
+
+    public function clientFullName(): string
+    {
+        return $this->client->fullname->getFullName();
+    }
+
+    public function clearReserve(): void
+    {
+        foreach ($this->items as $item) {
+            $item->clearReserves();
+        }
+    }
+
+    public function delStatus(#[ExpectedValues(valuesFromClass: OrderHistoryStatus::class)] string $value): void
+    {
+        foreach ($this->statuses as $status) {
+            if ($status->value == $value) $status->delete();
+        }
+    }
+
+    public function relatedDocuments(): array
+    {
+        $documents = [];
+        foreach ($this->movements as $movement) {
+            $documents[] = [
+                'name' => 'Перемещение № ' .$movement->number . ' от ' . $movement->created_at->format('d-m-y'),
+                'link' => route('admin.accounting.movement.show', $movement, false),
+                'type' => 'warning',
+                'completed' => $movement->isCompleted(),
+            ];
+        }
+        foreach ($this->payments as $payment) {
+            if (!$payment->isRefund()) {
+                $documents[] = [
+                    'name' => 'Платеж № ' . $payment->getNumber() . ' от ' . $payment->created_at->format('d-m-y'),
+                    'link' => route('admin.order.payment.show', $payment, false),
+                    'type' => 'primary',
+                    'completed' => $payment->isCompleted(),
+                ];
+            }
+        }
+        foreach ($this->expenses as $expense) {
+                $documents[] = [
+                    'name' => 'Распоряжение № ' .$expense->number . ' от ' . $expense->created_at->format('d-m-y'),
+                    'link' => route('admin.order.expense.show', $expense, false),
+                    'type' => 'success',
+                    'completed' => $expense->isCompleted(),
+                    'children' => $expense->relatedDocuments(),
+                ];
+        }
+
+        return [
+            'name' => 'Заказ № ' . $this->number . ' от ' . $this->created_at->format('d-m-y'),
+            'link' => route('admin.order.show', $this->id, false),
+            'type' => 'info',
+            'completed' => $this->isCompleted(),
+            'children' => $documents,
+        ];
+    }
+}

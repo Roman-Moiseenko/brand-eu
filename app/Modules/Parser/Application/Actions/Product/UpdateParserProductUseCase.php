@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Parser\Application\Actions\Product;
+
+use App\Modules\Parser\Application\DTOs\Product\ParserProductUpdateData;
+use App\Modules\Parser\Domain\Entities\ParserProductEntity;
+use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Domain\ValueObjects\Package;
+use App\Modules\Shared\Domain\ValueObjects\Slug;
+
+class UpdateParserProductUseCase
+{
+    public function __construct(
+        private ParserProductRepositoryInterface $productRepository,
+    )
+    {
+    }
+
+    public function execute(ParserProductUpdateData $dto):? ParserProductEntity
+    {
+        // Получаем текущую сущность
+        $product = $this->productRepository->getById($dto->id);
+
+        // Обновляем только те поля, которые переданы в DTO (не null)
+        if ($dto->name !== null) {
+            $product->name = $dto->name;
+        }
+        if ($dto->code !== null) {
+            $product->code = $dto->code;
+        }
+        if ($dto->slug !== null) {
+            $product->slug = new Slug($dto->slug);
+        }
+        if ($dto->url !== null) {
+            $product->url = $dto->url;
+        }
+        if ($dto->priceSell !== null) {
+            $product->priceSell = $dto->priceSell;
+        }
+        if ($dto->priceBase !== null) {
+            $product->priceBase = $dto->priceBase;
+        }
+        if ($dto->short !== null) {
+            $product->short = $dto->short;
+        }
+        if ($dto->description !== null) {
+            $product->description = $dto->description;
+        }
+        if ($dto->fragile !== null) {
+            $product->fragile = $dto->fragile;
+        }
+        if ($dto->sanctioned !== null) {
+            $product->sanctioned = $dto->sanctioned;
+        }
+        if ($dto->availability !== null) {
+            $product->availability = $dto->availability;
+        }
+        if ($dto->composite !== null) {
+            $product->composite = $dto->composite;
+        }
+        if ($dto->packages !== null) {
+            $product->packages = array_map(
+                fn(Package|array $item) => $item instanceof Package ? $item : Package::fromArray($item),
+                $dto->packages
+            );
+        }
+        if ($dto->packs !== null) {
+            $product->packs = $dto->packs;
+        }
+        if ($dto->colors !== null) {
+            $product->colors = $dto->colors;
+        }
+
+        if (!empty($dto->materials)) $product->materials = $dto->materials;
+
+        if (!empty($dto->care)) $product->care = $dto->care;
+        if (!empty($dto->dimensions)) $product->dimensions = $dto->dimensions;
+        if (!empty($dto->variants)) $product->variants = $dto->variants;
+
+        return $this->productRepository->save($product);
+    }
+}

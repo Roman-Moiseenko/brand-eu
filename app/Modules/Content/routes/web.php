@@ -1,0 +1,340 @@
+<?php
+
+use App\Modules\Content\Controllers\BannerWidgetController;
+use App\Modules\Content\Controllers\CacheController;
+use App\Modules\Content\Controllers\CatalogWidgetController;
+use App\Modules\Content\Controllers\ContactController;
+use App\Modules\Content\Controllers\FormWidgetController;
+use App\Modules\Content\Controllers\MenuController;
+use App\Modules\Content\Controllers\MetaTemplateController;
+use App\Modules\Content\Controllers\NewsController;
+use App\Modules\Content\Controllers\PostWidgetController;
+use App\Modules\Content\Controllers\ProductWidgetController;
+use App\Modules\Content\Controllers\PromotionWidgetController;
+use App\Modules\Content\Controllers\TextWidgetController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\ContentBlockController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\GalleryController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\LabelController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\PageController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\PostController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\WidgetController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\WidgetInstanceController;
+use Illuminate\Support\Facades\Route;
+
+Route::group(
+    [
+        'middleware' => 'role:admin|staff',
+        'prefix' => 'admin/content',
+        'as' => 'admin.content.',
+        //    'namespace' => 'App\Modules\Content\Controllers',
+    ],
+    function () {
+
+
+
+        // ContentBlock API
+        Route::group([
+            'prefix' => 'content-blocks',
+            'as' => 'content-blocks.'
+        ], function () {
+            Route::get('/sections', [ContentBlockController::class, 'sections'])->name('sections');
+            Route::post('/sort', [ContentBlockController::class, 'sort'])->name('sort');
+            Route::post('/{id}/toggle', [ContentBlockController::class, 'toggle'])->name('toggle');
+            Route::post('/{id}/copy', [ContentBlockController::class, 'copy'])->name('copy');
+            Route::get('/{id}', [ContentBlockController::class, 'show'])->name('show');
+            Route::post('/', [ContentBlockController::class, 'store'])->name('store');
+            Route::put('/{id}', [ContentBlockController::class, 'update'])->name('update');
+            Route::delete('/{id}', [ContentBlockController::class, 'destroy'])->name('destroy');
+        });
+
+        // WidgetInstance API
+        Route::group([
+            'prefix' => 'widget-instances',
+            'as' => 'widget-instances.'
+        ], function () {
+            Route::get('/by-widget/{widgetId}', [WidgetInstanceController::class, 'byWidget'])->name('by-widget');
+            Route::get('/{id}', [WidgetInstanceController::class, 'show'])->name('show');
+            Route::post('/', [WidgetInstanceController::class, 'store'])->name('store');
+            Route::put('/{id}', [WidgetInstanceController::class, 'update'])->name('update');
+            Route::delete('/{id}', [WidgetInstanceController::class, 'destroy'])->name('destroy');
+        });
+
+
+        //Виджеты
+        Route::group([
+            'prefix' => 'widget',
+            'as' => 'widget.'
+        ], function () {
+            Route::group([
+                'prefix' => 'product',
+                'as' => 'product.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [ProductWidgetController::class, 'set_widget'])->name('set-widget');
+          //      Route::post('/add-item/{widget}', [ProductWidgetController::class, 'add_item'])->name('add-item');
+          //      Route::post('/set-item/{item}', [ProductWidgetController::class, 'set_item'])->name('set-item');
+           //     Route::delete('/del-item/{item}', [ProductWidgetController::class, 'del_item'])->name('del-item');
+                Route::post('/toggle/{widget}', [ProductWidgetController::class, 'toggle'])->name('toggle');
+          //      Route::post('/up-item/{item}', [ProductWidgetController::class, 'up_item'])->name('up-item');
+              //  Route::post('/down-item/{item}', [ProductWidgetController::class, 'down_item'])->name('down-item');
+
+              //  Route::get('/{widget}', [ProductWidgetController::class, 'show'])->name('show');
+                Route::post('/', [ProductWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [ProductWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [ProductWidgetController::class, 'index'])->name('index');
+            });
+            //Route::resource('product', 'ProductWidgetController')->except(['create', 'edit', 'update']); //CRUD
+
+            Route::group([
+                'prefix' => 'banner',
+                'as' => 'banner.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [BannerWidgetController::class, 'set_widget'])->name('set-widget');
+                Route::post('/add-item/{widget}', [BannerWidgetController::class, 'add_item'])->name('add-item');
+                Route::post('/set-item/{item}', [BannerWidgetController::class, 'set_item'])->name('set-item');
+                Route::delete('/del-item/{item}', [BannerWidgetController::class, 'del_item'])->name('del-item');
+                Route::post('/toggle/{widget}', [BannerWidgetController::class, 'toggle'])->name('toggle');
+                Route::post('/up-item/{item}', [BannerWidgetController::class, 'up_item'])->name('up-item');
+                Route::post('/down-item/{item}', [BannerWidgetController::class, 'down_item'])->name('down-item');
+
+                Route::get('/{widget}', [BannerWidgetController::class, 'show'])->name('show');
+                Route::post('/', [BannerWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [BannerWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [BannerWidgetController::class, 'index'])->name('index');
+            });
+
+            Route::group([
+                'prefix' => 'catalog',
+                'as' => 'catalog.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [CatalogWidgetController::class, 'setWidget'])->name('set-widget');
+                Route::post('/add-item/{widget}', [CatalogWidgetController::class, 'addItem'])->name('add-item');
+                Route::post('/set-item/{item}', [CatalogWidgetController::class, 'setItem'])->name('set-item');
+                Route::delete('/del-item/{item}', [CatalogWidgetController::class, 'delItem'])->name('del-item');
+                Route::post('/toggle/{widget}', [CatalogWidgetController::class, 'toggle'])->name('toggle');
+                Route::post('/up-item/{item}', [CatalogWidgetController::class, 'upItem'])->name('up-item');
+                Route::post('/down-item/{item}', [CatalogWidgetController::class, 'downItem'])->name('down-item');
+
+                Route::get('/{widget}', [CatalogWidgetController::class, 'show'])->name('show');
+                Route::post('/', [CatalogWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [CatalogWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [CatalogWidgetController::class, 'index'])->name('index');
+            });
+
+            // Route::resource('banner', 'BannerWidgetController')->except(['create', 'edit', 'update']); //CRUD
+
+            Route::group([
+                'prefix' => 'promotion',
+                'as' => 'promotion.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [PromotionWidgetController::class, 'set_widget'])->name('set-widget');
+                Route::post('/toggle/{widget}', [PromotionWidgetController::class, 'toggle'])->name('toggle');
+
+                Route::get('/{widget}', [PromotionWidgetController::class, 'show'])->name('show');
+                Route::post('/', [PromotionWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [PromotionWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [PromotionWidgetController::class, 'index'])->name('index');
+            });
+            //  Route::resource('promotion', 'PromotionWidgetController')->except(['create', 'edit', 'update']); //CRUD
+
+            Route::group([
+                'prefix' => 'text',
+                'as' => 'text.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [TextWidgetController::class, 'set_widget'])->name('set-widget');
+                Route::post('/add-item/{widget}', [TextWidgetController::class, 'add_item'])->name('add-item');
+                Route::post('/set-item/{item}', [TextWidgetController::class, 'set_item'])->name('set-item');
+                Route::delete('/del-item/{item}', [TextWidgetController::class, 'del_item'])->name('del-item');
+                Route::post('/toggle/{widget}', [TextWidgetController::class, 'toggle'])->name('toggle');
+                Route::post('/up-item/{item}', [TextWidgetController::class, 'up_item'])->name('up-item');
+                Route::post('/down-item/{item}', [TextWidgetController::class, 'down_item'])->name('down-item');
+
+                Route::get('/{widget}', [TextWidgetController::class, 'show'])->name('show');
+                Route::post('/', [TextWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [TextWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [TextWidgetController::class, 'index'])->name('index');
+            });
+
+            Route::group([
+                'prefix' => 'form',
+                'as' => 'form.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [FormWidgetController::class, 'set_widget'])->name('set-widget');
+                Route::post('/toggle/{widget}', [FormWidgetController::class, 'toggle'])->name('toggle');
+                Route::post('/set-fields/{widget}', [FormWidgetController::class, 'set_fields'])->name('set-fields');
+                Route::post('/set-lists/{widget}', [FormWidgetController::class, 'set_lists'])->name('set-lists');
+
+                Route::get('/{widget}', [FormWidgetController::class, 'show'])->name('show');
+                Route::post('/', [FormWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [FormWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [FormWidgetController::class, 'index'])->name('index');
+            });
+
+            Route::group([
+                'prefix' => 'post',
+                'as' => 'post.'
+            ], function () {
+                Route::post('/set-widget/{widget}', [PostWidgetController::class, 'set_widget'])->name('set-widget');
+                Route::post('/toggle/{widget}', [PostWidgetController::class, 'toggle'])->name('toggle');
+
+                Route::get('/{widget}', [PostWidgetController::class, 'show'])->name('show');
+                Route::post('/', [PostWidgetController::class, 'store'])->name('store');
+                Route::delete('/{widget}', [PostWidgetController::class, 'destroy'])->name('destroy');
+                Route::get('/', [PostWidgetController::class, 'index'])->name('index');
+            });
+            // Route::resource('text', 'TextWidgetController')->except(['create', 'edit', 'update']); //CRUD
+        });
+
+        //Страницы
+        Route::group([
+            'prefix' => 'page',
+            'as' => 'page.'
+        ], function () {
+            Route::post('/toggle/{id}', [PageController::class, 'toggle'])->name('toggle');
+            Route::get('/list/', [PageController::class, 'parentList'])->name('list');
+            Route::post('/update/{id}', [PageController::class, 'update'])->name('update');
+            Route::post('/update-text/{id}', [PageController::class, 'updateText'])->name('update-text');
+            Route::post('/move/{id}', [PageController::class, 'move'])->name('move');
+        });
+
+        Route::resource('page', PageController::class)
+            ->parameters(['page' => 'id'])
+            ->except(['create', 'edit', 'update']); //CRUD
+
+        //Контакты
+        Route::group([
+            'prefix' => 'contact',
+            'as' => 'contact.'
+        ], function () {
+            Route::post('/toggle/{contact}', [ContactController::class, 'toggle'])->name('toggle');
+            Route::post('/up/{contact}', [ContactController::class, 'up'])->name('up');
+            Route::post('/down/{contact}', [ContactController::class, 'down'])->name('down');
+            Route::post('/set-info/{contact}', [ContactController::class, 'set_info'])->name('set-info');
+            Route::get('/list', [ContactController::class, 'listContacts'])->name('list');
+        });
+        Route::resource('contact', ContactController::class)->except(['show', 'create', 'edit', 'update']); //CRUD
+
+        //Новости
+        Route::group([
+            'prefix' => 'news',
+            'as' => 'news.'
+        ], function () {
+            Route::post('/toggle/{news}', [NewsController::class, 'toggle'])->name('toggle');
+
+            Route::put('/{news}', [NewsController::class, 'update'])->name('update');
+            Route::post('/', [NewsController::class, 'store'])->name('store');
+            Route::delete('/{news}', [NewsController::class, 'destroy'])->name('destroy');
+            Route::get('/', [NewsController::class, 'index'])->name('index');
+
+        });
+
+        //Рубрики
+        Route::group([
+            'prefix' => 'post-category',
+            'as' => 'post-category.'
+        ], function () {
+            Route::post('/set-info/{category}', [PostController::class, 'category_set_info'])->name('set-info');
+            Route::get('/{category}', [PostController::class, 'category'])->name('show');
+            Route::delete('/{category}', [PostController::class, 'category_destroy'])->name('destroy');
+            Route::post('/', [PostController::class, 'category_create'])->name('store');
+            Route::get('/', [PostController::class, 'categories'])->name('index');
+        });
+
+        //Записи
+        Route::group([
+            'prefix' => 'post',
+            'as' => 'post.'
+        ], function () {
+            Route::post('/set-info/{id}', [PostController::class, 'post_set_info'])->name('set-info');
+            Route::post('/toggle/{id}', [PostController::class, 'post_toggle'])->name('toggle');
+            Route::post('/set-text/{post}', [PostController::class, 'post_set_text'])->name('set-text');
+            Route::get('/{id}', [PostController::class, 'post'])->name('show');
+            Route::post('/copy/{id}', [PostController::class, 'copy'])->name('copy');
+            Route::delete('/{post}', [PostController::class, 'post_destroy'])->name('destroy');
+            Route::post('/', [PostController::class, 'post_create'])->name('store');
+
+            Route::get('/', [PostController::class, 'posts'])->name('index');
+        });
+
+        //Метки
+        Route::group([
+            'prefix' => 'label',
+            'as' => 'label.'
+        ], function () {
+            Route::get('/', [LabelController::class, 'index'])->name('index');
+            Route::get('/list', [LabelController::class, 'list'])->name('list');
+            Route::post('/', [LabelController::class, 'store'])->name('store');
+            Route::post('/{id}', [LabelController::class, 'update'])->name('update');
+            Route::delete('/{id}', [LabelController::class, 'destroy'])->name('destroy');
+        });
+
+        //Меню
+        Route::group([
+            'prefix' => 'menu',
+            'as' => 'menu.'
+        ], function () {
+
+            Route::post('/set-info/{menu}', [MenuController::class, 'set_info'])->name('set-info');
+            Route::post('/get-items/{menu}', [MenuController::class, 'get_items'])->name('get-items');
+            Route::post('/get-urls/{menu}', [MenuController::class, 'get_urls'])->name('get-urls');
+            Route::delete('/{menu}', [MenuController::class, 'destroy'])->name('destroy');
+            Route::post('/', [MenuController::class, 'store'])->name('store');
+            Route::get('/', [MenuController::class, 'index'])->name('index');
+            Route::post('/add-item/{menu}', [MenuController::class, 'item_add'])->name('add-item');
+            Route::post('/move-item/{menu}', [MenuController::class, 'item_move'])->name('move-item');
+            Route::post('/delete-item/{item}', [MenuController::class, 'item_delete'])->name('delete-item');
+            Route::post('/set-item/{item}', [MenuController::class, 'item_set'])->name('set-item');
+        });
+
+        //Галерея
+        Route::group([
+            'prefix' => 'gallery',
+            'as' => 'gallery.'
+        ], function () {
+            Route::post('/get-tree', [GalleryController::class, 'get_tree'])->name('get-tree');
+            Route::get('/widget-id', [GalleryController::class, 'widget_id'])->name('widget-id');
+            Route::post('/set-info/{gallery}', [GalleryController::class, 'set_info'])->name('set-info');
+            Route::get('/{gallery}', [GalleryController::class, 'show'])->name('show');
+            Route::delete('/image-del/{photo}', [GalleryController::class, 'image_del'])->name('image-del');
+            Route::post('/image-set/{photo}', [GalleryController::class, 'image_set'])->name('image-set');
+            Route::post('/image-add/{gallery}', [GalleryController::class, 'image_add'])->name('image-add');
+            Route::post('/images', [GalleryController::class, 'all_images'])->name('images');
+            Route::post('/upload-to-widget', [GalleryController::class, 'upload_to_widget'])->name('upload-to-widget');
+            Route::post('/image-set-widget/{photo}', [GalleryController::class, 'image_set_widget'])->name('image-set-widget');
+
+            Route::delete('/{gallery}', [GalleryController::class, 'destroy'])->name('destroy');
+            Route::get('/', [GalleryController::class, 'index'])->name('index');
+            Route::post('/', [GalleryController::class, 'store'])->name('store');
+        });
+        //SEO
+        Route::group([
+            'prefix' => 'seo-meta',
+            'as' => 'seo-meta.'
+        ], function () {
+
+            Route::get('/', [MetaTemplateController::class, 'index'])->name('index');
+            Route::post('/set-data', [MetaTemplateController::class, 'set_data'])->name('set-data');
+        });
+
+
+
+        Route::group([
+            'prefix' => 'widget',
+            'as' => 'widget.'
+        ], function () {
+            // API маршруты (должны быть до {id})
+            Route::get('/categories', [WidgetController::class, 'categories'])->name('categories');
+            Route::get('/widgets', [WidgetController::class, 'widgets'])->name('widgets');
+            Route::get('/product-group-types', [WidgetController::class, 'productGroupTypes'])->name('product-group-types');
+            Route::get('/{id}/template', [WidgetController::class, 'template'])->name('template');
+            Route::post('/{id}/template', [WidgetController::class, 'saveTemplate'])->name('save-template');
+
+            // CRUD
+            Route::get('/', [WidgetController::class, 'index'])->name('index');
+            Route::post('/', [WidgetController::class, 'store'])->name('store');
+            Route::get('/{id}', [WidgetController::class, 'show'])->name('show');
+            Route::put('/{id}', [WidgetController::class, 'update'])->name('update');
+            Route::delete('/{id}', [WidgetController::class, 'destroy'])->name('destroy');
+        });
+
+    }
+);

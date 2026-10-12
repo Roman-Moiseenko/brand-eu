@@ -1,0 +1,56 @@
+.main-kitchen {
+    position:relative;
+    .main-kitchen-form {
+        position:absolute;
+        z-index:98;
+        right:20px;
+        padding:20px;
+        border-radius:$border-radius_8;
+        max-width:500px;
+        top: 50%;
+        transform: translateY(-50%);
+        input:not([type="checkbox"]) {
+            width:100%;
+        }
+        input[type="submit"] {
+            background:$orange;
+            color:black;
+            border:1px solid $orange;
+        }
+    }
+}
+.main-kitchen {
+    .main-kitchen-form button[type="button"] {
+        background: $orange;
+        color: black;
+        border: 1px solid $orange;
+    }
+}
+.main-kitchen {
+    .main-kitchen-form label {
+        width: 100%;
+    }
+    .main-kitchen-form button {
+        width: 100%;
+    }
+}
+@media (max-width: 1200px) {
+    .main-kitchen {
+        .main-kitchen-form {
+            max-width: 550px;
+        }
+    }
+}
+@media (max-width: 990px) {
+    .main-kitchen {
+        .main-kitchen-form {
+            position: relative;
+            top: auto;
+            max-width: 100%;
+            padding: 0;
+            right:auto;
+            margin-top: 20px;
+            transform: none;
+        }
+    }
+}

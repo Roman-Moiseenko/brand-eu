@@ -1,0 +1,243 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Infrastructure\Persistence;
+
+use App\Modules\Catalog\Domain\Entities\CategoryEntity;
+use App\Modules\Catalog\Domain\Interfaces\CategoryRepositoryInterface;
+use App\Modules\Catalog\Infrastructure\Models\Category;
+use App\Modules\Shared\Domain\ValueObjects\Meta;
+use App\Modules\Shared\Domain\ValueObjects\Slug;
+
+class CategoryRepository implements CategoryRepositoryInterface
+{
+    /**
+     * @return CategoryEntity[]
+     */
+    public function getAll(): array
+    {
+        $models = Category::defaultOrder()->withDepth()->get()->toTree();
+        return $models->map(fn(Category $model) => $this->hydrateWithChildren($model))->values()->toArray();
+    }
+
+    public function getById(int $id): CategoryEntity
+    {
+        $model = Category::findOrFail($id);
+        return $this->hydrateWithChildren($model);
+    }
+
+    public function save(CategoryEntity $category): CategoryEntity
+    {
+        $model = $category->id
+            ? Category::findOrFail($category->id)
+            : new Category();
+
+        $model->name = $category->name;
+        $model->slug = (string) $category->slug;
+        $model->svg = $category->svgIcon;
+        $model->published = $category->isPublished();
+        $model->wp_id = $category->wpId;
+        $model->meta = $category->meta ? [
+            'title' => $category->meta->getTitle(),
+            'description' => $category->meta->getDescription(),
+        ] : [];
+
+        if ($category->parentId !== null) {
+            $model->parent_id = $category->parentId;
+        }
+
+        $model->save();
+
+        return $this->hydrate($model);
+    }
+
+    public function delete(int $id): void
+    {
+        $model = Category::findOrFail($id);
+        $model->delete();
+    }
+
+    /**
+     * @return CategoryEntity[]
+     */
+    public function getTree(): array
+    {
+        $roots = Category::with(['image'])
+            ->defaultOrder()
+            ->withDepth()
+            ->get()
+            ->toTree();
+
+        return $roots->map(fn(Category $model) => $this->hydrateWithChildren($model))->toArray();
+    }
+
+    /**
+     * @param int[] $ids
+     * @return CategoryEntity[]
+     */
+    public function findByIds(array $ids): array
+    {
+        $models = Category::whereIn('id', $ids)
+            ->orderBy('name')
+            ->get();
+
+        return $models->map(fn(Category $model) => $this->hydrate($model))->toArray();
+    }
+    public function getBySlug(string $slug):? CategoryEntity
+    {
+        $model = Category::where('slug', $slug)->first();
+        if (is_null($model)) return null;
+        return $this->hydrate($model);
+    }
+    public function existsSlug(string $slug, ?int $excludeId = null): bool
+    {
+        $query = Category::where('slug', $slug);
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+        return $query->exists();
+    }
+
+    public function findByWpId(int $wpId): ?CategoryEntity
+    {
+        $model = Category::where('wp_id', $wpId)->first();
+        if ($model === null) return null;
+
+        return $this->hydrate($model);
+    }
+
+    public function existsByWpId(int $wpId): bool
+    {
+        return Category::where('wp_id', $wpId)->exists();
+    }
+
+    public function moveUp(int $id): void
+    {
+        $model = Category::findOrFail($id);
+        $model->up();
+    }
+
+    public function moveDown(int $id): void
+    {
+        $model = Category::findOrFail($id);
+        $model->down();
+    }
+
+    public function move(int $id, int $position): void
+    {
+        /** @var Category $model */
+        $model = Category::findOrFail($id);
+
+        // Соседи (тот же родитель) без перемещаемого узла.
+        $others = $model->siblings()
+            ->defaultOrder()
+            ->get()
+            ->filter(fn(Category $node) => $node->getKey() !== $model->getKey())
+            ->values();
+
+        $position = max(0, min($position, $others->count()));
+
+        if ($position === 0) {
+            $target = $others->first();
+            if ($target !== null) {
+                $model->insertBeforeNode($target);
+            }
+            return;
+        }
+
+        $target = $others->get($position - 1);
+        if ($target !== null) {
+            $model->insertAfterNode($target);
+        }
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getDescendantIds(int $id): array
+    {
+        $model = Category::findOrFail($id);
+        return Category::where('_lft', '>', $model->_lft)
+            ->where('_rgt', '<', $model->_rgt)
+            ->pluck('id')
+            ->toArray();
+    }
+
+    public function bulkTogglePublished(array $ids, bool $published): void
+    {
+        if (empty($ids)) {
+            return;
+        }
+        Category::whereIn('id', $ids)->update(['published' => $published]);
+    }
+
+    public function hasChildren(int $id): bool
+    {
+        return Category::where('parent_id', $id)->exists();
+    }
+
+    /**
+     * @param int[] $ids
+     * @return array<int, string>
+     */
+    public function getParentNamesByIds(array $ids): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+
+        return Category::whereIn('id', $ids)
+            ->get()
+            ->mapWithKeys(fn(Category $model) => [$model->id => $model->getParentNames()])
+            ->toArray();
+    }
+
+    /**
+     * Преобразует Eloquent модель в Domain Entity.
+     * Ссылки на изображения формируются через полиморфные связи Photo (трейты ImageField/IconField).
+     */
+    private function hydrate(Category $model): CategoryEntity
+    {
+        $entity = new CategoryEntity(
+            name: $model->name,
+            slug: new Slug($model->slug),
+            parentId: $model->parent_id,
+        );
+
+        $entity->id = $model->id;
+        $entity->wpId = $model->wp_id;
+        $entity->svgIcon = $model->svg;
+        $entity->published = $model->published;
+        // Meta
+        $metaData = is_array($model->meta) ? $model->meta : [];
+        $entity->meta = new Meta(
+            title: $metaData['title'] ?? '',
+            description: $metaData['description'] ?? '',
+        );
+
+        // Nested Set поля
+        $entity->left = $model->_lft ?? 0;
+        $entity->right = $model->_rgt ?? 0;
+        $entity->depth = $model->depth ?? 0;
+
+        return $entity;
+    }
+
+    /**
+     * Гидратация с рекурсивным заполнением children.
+     */
+    private function hydrateWithChildren(Category $model): CategoryEntity
+    {
+        $entity = $this->hydrate($model);
+
+        if ($model->children !== null && $model->children->isNotEmpty()) {
+            $entity->children = array_map(
+                fn(Category $child) => $this->hydrateWithChildren($child),
+                $model->children->all()
+            );
+        }
+
+        return $entity;
+    }
+}

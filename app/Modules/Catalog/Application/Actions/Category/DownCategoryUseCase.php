@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Application\Actions\Category;
+
+use App\Modules\Catalog\Domain\Interfaces\CategoryRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class DownCategoryUseCase
+{
+    public function __construct(
+        private CategoryRepositoryInterface $categoryRepository,
+    )
+    {
+    }
+
+    public function execute(int $id, UserPermission $userPermission): void
+    {
+        // Проверка прав доступа
+        if (!$userPermission->can('catalog.category.edit')) {
+            throw new AccessDeniedException();
+        }
+
+        $this->categoryRepository->moveDown($id);
+    }
+}

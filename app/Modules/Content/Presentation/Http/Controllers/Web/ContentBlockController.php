@@ -1,0 +1,145 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Content\Presentation\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Content\Application\Actions\ContentBlock\CopyContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\CreateContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\RemoveContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\SortContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\ToggleContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\UpdateContentBlockUseCase;
+use App\Modules\Content\Application\Actions\ContentBlock\ViewContentBlockUseCase;
+use App\Modules\Content\Application\DTOs\ContentBlock\ContentBlockCreateData;
+use App\Modules\Content\Application\DTOs\ContentBlock\ContentBlockSortData;
+use App\Modules\Content\Application\DTOs\ContentBlock\ContentBlockUpdateData;
+use App\Modules\Content\Application\DTOs\ContentBlock\ContentBlockViewData;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+use App\Modules\Content\Domain\ValueObjects\ContentSection;
+
+class ContentBlockController extends Controller
+{
+    public function __construct(
+        private readonly CreateContentBlockUseCase $createContentBlockUseCase,
+        private readonly ViewContentBlockUseCase $viewContentBlockUseCase,
+        private readonly UpdateContentBlockUseCase $updateContentBlockUseCase,
+        private readonly SortContentBlockUseCase $sortContentBlockUseCase,
+        private readonly RemoveContentBlockUseCase $removeContentBlockUseCase,
+        private readonly ToggleContentBlockUseCase $toggleContentBlockUseCase,
+        private readonly CopyContentBlockUseCase $copyContentBlockUseCase,
+    ) {}
+
+    /**
+     * Получить список секций (ContentSection::SECTIONS).
+     * GET /admin/content/content-blocks/sections
+     */
+    public function sections(): JsonResponse
+    {
+        $result = [];
+        foreach (ContentSection::SECTIONS as $value => $label) {
+            $result[] = [
+                'value' => $value,
+                'label' => $label,
+            ];
+        }
+        return response()->json($result);
+    }
+
+    /**
+     * Создать ContentBlock.
+     * POST /admin/content/content-blocks
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $dto = ContentBlockCreateData::validateAndCreate($request->all());
+        $block = $this->createContentBlockUseCase->execute($dto);
+
+        return response()->json(
+            ContentBlockViewData::fromEntity($block),
+            201,
+        );
+    }
+
+    /**
+     * Получить ContentBlock по ID.
+     * GET /admin/content/content-blocks/{id}
+     */
+    public function show(int $id): JsonResponse
+    {
+        $block = $this->viewContentBlockUseCase->execute($id);
+
+        return response()->json(
+            ContentBlockViewData::fromEntity($block),
+        );
+    }
+
+    /**
+     * Обновить данные ContentBlock (caption, section).
+     * PUT /admin/content/content-blocks/{id}
+     */
+    public function update(int $id, Request $request): JsonResponse
+    {
+        $dto = ContentBlockUpdateData::validateAndCreate($request->all());
+
+        $block = $this->updateContentBlockUseCase->execute($id, $dto);
+
+        return response()->json(
+            ContentBlockViewData::fromEntity($block),
+        );
+    }
+
+    /**
+     * Сортировка ContentBlock.
+     * POST /admin/content/content-blocks/sort
+     */
+    public function sort(Request $request): JsonResponse
+    {
+        $dto = ContentBlockSortData::validateAndCreate($request->all());
+        $this->sortContentBlockUseCase->execute($dto);
+
+        return response()->json(['message' => 'Порядок сортировки обновлён']);
+    }
+
+    /**
+     * Переключить активность ContentBlock (active true/false).
+     * POST /admin/content/content-blocks/{id}/toggle
+     */
+    public function toggle(int $id): JsonResponse
+    {
+        $block = $this->toggleContentBlockUseCase->execute($id);
+
+        return response()->json(
+            ContentBlockViewData::fromEntity($block),
+        );
+    }
+
+    /**
+     * Скопировать ContentBlock (вместе с экземпляром виджета).
+     * Копия вставляется сразу после исходного блока.
+     * POST /admin/content/content-blocks/{id}/copy
+     */
+    public function copy(int $id): JsonResponse
+    {
+        $block = $this->copyContentBlockUseCase->execute($id);
+
+        return response()->json(
+            ContentBlockViewData::fromEntity($block),
+            201,
+        );
+    }
+
+    /**
+     * Удалить ContentBlock (и связанные WidgetInstance).
+     * DELETE /admin/content/content-blocks/{id}
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $this->removeContentBlockUseCase->execute($id);
+
+        return response()->json(['message' => 'Блок удалён']);
+    }
+}

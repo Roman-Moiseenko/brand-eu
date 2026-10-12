@@ -1,0 +1,103 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Modules\Order\Infrastructure\Models;
+
+use App\Modules\Guide\Infrastructure\Models\Addition;
+use App\Modules\Order\Entity\Order\OrderExpenseAddition;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use JetBrains\PhpStorm\Pure;
+
+/**
+ * Дополнительные оплаты(услуги) к заказу
+ * @property int $id
+ * @property int $order_id
+ * @property int $amount
+ * @property string $comment
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property int $addition_id
+ * @property int $quantity
+ * @property Order $order
+ * @property Addition $addition
+ * @property OrderExpenseAddition[] $expenseAdditions // удалить
+ */
+class OrderAddition extends Model
+{
+
+    protected $table = 'order_additions';
+    protected $touches = [
+        'order',
+    ];
+    protected $fillable = [
+        'addition_id',
+        'comment',
+        'quantity',
+        'amount',
+    ];
+
+    public static function new(int $addition_id): self
+    {
+        return self::make([
+            'comment' => '',
+            'addition_id' => $addition_id,
+            'quantity' => 1,
+        ]);
+    }
+
+    public function getAmount(): float|int
+    {
+        //Для установки вручную и если стоимость услуги уже зафиксирована /для awaiting
+        if ($this->amount != 0) return $this->amount;
+
+        if (is_null($this->addition->class))
+            return $this->addition->base; //Цена фиксирована,из справочника
+
+        //Цена рассчитывается по своему алгоритму
+        return $this->addition->class::calculate($this->order, $this->addition->base);
+    }
+
+
+    #[Pure] public function getRemains(): float
+    {
+        return $this->amount - $this->getExpenseAmount();
+    }
+
+    public function getExpenseAmount(): float
+    {
+        $result = 0;
+        foreach ($this->expenseAdditions as $expenseAddition) {
+            $result += $expenseAddition->amount;
+        }
+        return $result;
+    }
+
+    //RELATIONS
+    public function addition(): BelongsTo
+    {
+        return $this->belongsTo(Addition::class, 'addition_id', 'id');
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function expenseAdditions(): HasMany
+    {
+        return $this->hasMany(OrderExpenseAddition::class, 'order_addition_id', 'id');
+    }
+
+    public function getRefund(): float
+    {
+        $refund = 0.0;
+        foreach ($this->expenseAdditions as $expenseAddition) {
+            $refund += $expenseAddition->amountRefund();
+        }
+        return $refund;
+    }
+
+}

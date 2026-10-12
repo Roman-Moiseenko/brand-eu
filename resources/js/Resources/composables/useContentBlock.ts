@@ -1,0 +1,239 @@
+import { ref } from 'vue'
+import api from '@Res/api'
+// @ts-ignore
+import { route } from 'ziggy-js'
+
+export interface WidgetFormFieldData {
+    name: string
+    type: string
+    label: string
+    value: any
+    default: any
+    required: boolean
+    format: string | null
+    options: string[] | null
+    nestedFields: WidgetFormFieldData[] | null
+}
+
+export interface WidgetInstanceData {
+    id: number
+    widgetId: number
+    widgetName: string
+    widgetSlug: string
+    params: Record<string, any>
+    title: string | null
+    fields: WidgetFormFieldData[]
+    createdAt: string | null
+    updatedAt: string | null
+}
+
+export interface ContentBlockData {
+    id: number
+    containerType: string
+    containerId: number
+    widgetInstanceId: number | null
+    sort: number | null
+    section: string | null
+    caption: string | null
+    active: boolean
+    widgetInstance: WidgetInstanceData | null
+    createdAt: string | null
+    updatedAt: string | null
+}
+
+export function useContentBlock() {
+    const loading = ref(false)
+
+    // ---- ContentBlock ----
+
+    /** Создать ContentBlock */
+    async function createBlock(payload: {
+        container_type: string
+        container_id: number
+        caption?: string | null
+        section?: string | null
+    }): Promise<ContentBlockData> {
+        loading.value = true
+        try {
+            const res = await api.post<ContentBlockData>(
+                route('admin.content.content-blocks.store'),
+                payload,
+                { successMessage: 'Блок создан' },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Получить ContentBlock по ID */
+    async function getBlock(id: number): Promise<ContentBlockData> {
+        loading.value = true
+        try {
+            const res = await api.get<ContentBlockData>(
+                route('admin.content.content-blocks.show', { id }),
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Обновить ContentBlock (caption, section) */
+    async function updateBlock(
+        id: number,
+        payload: { caption?: string | null; section?: string | null },
+    ): Promise<ContentBlockData> {
+        loading.value = true
+        try {
+            const res = await api.put<ContentBlockData>(
+                route('admin.content.content-blocks.update', { id }),
+                payload,
+                { successMessage: 'Блок обновлён' },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Сортировать ContentBlock */
+    async function sortBlock(id: number, sort: number): Promise<void> {
+        loading.value = true
+        try {
+            await api.post(
+                route('admin.content.content-blocks.sort'),
+                { id, sort },
+                { successMessage: 'Порядок сортировки обновлён' },
+            )
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Удалить ContentBlock */
+    async function deleteBlock(id: number): Promise<void> {
+        loading.value = true
+        try {
+            await api.delete(
+                route('admin.content.content-blocks.destroy', { id }),
+                null,
+                { successMessage: 'Блок удалён' },
+            )
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Переключить active у ContentBlock */
+    async function toggleBlock(id: number): Promise<ContentBlockData> {
+        loading.value = true
+        try {
+            const res = await api.post<ContentBlockData>(
+                route('admin.content.content-blocks.toggle', { id }),
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Скопировать ContentBlock (вместе с экземпляром виджета) */
+    async function copyBlock(id: number): Promise<ContentBlockData> {
+        loading.value = true
+        try {
+            const res = await api.post<ContentBlockData>(
+                route('admin.content.content-blocks.copy', { id }),
+                null,
+                { successMessage: 'Блок скопирован' },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    // ---- WidgetInstance ----
+
+    /** Создать WidgetInstance (опционально с привязкой к ContentBlock) */
+    async function createWidgetInstance(payload: {
+        widget_id: number
+        params?: Record<string, any>
+        title?: string | null
+        content_block_id?: number | null
+    }): Promise<WidgetInstanceData> {
+        loading.value = true
+        try {
+            const res = await api.post<WidgetInstanceData>(
+                route('admin.content.widget-instances.store'),
+                payload,
+                { successMessage: 'Экземпляр виджета создан' },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Получить WidgetInstance по ID с полями формы */
+    async function getWidgetInstance(id: number): Promise<WidgetInstanceData> {
+        loading.value = true
+        try {
+            const res = await api.get<WidgetInstanceData>(
+                route('admin.content.widget-instances.show', { id }),
+                null,
+                { showSuccess: false },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Обновить WidgetInstance и получить поля формы */
+    async function updateWidgetInstance(
+        id: number,
+        payload: { params?: Record<string, any>; title?: string | null },
+    ): Promise<WidgetInstanceData> {
+        loading.value = true
+        try {
+            const res = await api.put<WidgetInstanceData>(
+                route('admin.content.widget-instances.update', { id }),
+                payload,
+                { successMessage: 'Экземпляр виджета обновлён' },
+            )
+            return res
+        } finally {
+            loading.value = false
+        }
+    }
+
+    /** Удалить WidgetInstance */
+    async function deleteWidgetInstance(id: number): Promise<void> {
+        loading.value = true
+        try {
+            await api.delete(
+                route('admin.content.widget-instances.destroy', { id }),
+                null,
+                { successMessage: 'Экземпляр виджета удалён' },
+            )
+        } finally {
+            loading.value = false
+        }
+    }
+
+    return {
+        loading,
+        createBlock,
+        getBlock,
+        updateBlock,
+        sortBlock,
+        deleteBlock,
+        toggleBlock,
+        copyBlock,
+        createWidgetInstance,
+        getWidgetInstance,
+        updateWidgetInstance,
+        deleteWidgetInstance,
+    }
+}

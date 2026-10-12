@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Modules\Cabinet\Application\Queries;
+
+use App\Modules\Auth\Domain\Interfaces\ClientRepositoryInterface;
+use App\Modules\Cabinet\Application\Actions\GetOrderClientQuery;
+use App\Modules\Cabinet\Application\DTOs\OrdersClientPageData;
+use App\Modules\Order\Domain\Interfaces\OrderRepositoryInterface;
+use App\Modules\Shop\Application\DTOs\ClientContext;
+use App\Modules\Shop\Application\DTOs\PageElements\SeoData;
+use App\Modules\Shop\Infrastructure\Persistence\Builders\PaginatorBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+readonly class PageOrdersClientQuery
+{
+    public function __construct(
+        private OrderRepositoryInterface  $repository,
+        private PaginatorBuilder          $paginatorBuilder,
+        private GetOrderClientQuery       $getOrderClientData,
+        private ClientRepositoryInterface $clientRepository,
+    )
+    {
+    }
+
+    public function execute(ClientContext $context, array $params): OrdersClientPageData
+    {
+        $perPage = 10;
+        $page = (int)($params['page'] ?? 1);
+
+        /** @var LengthAwarePaginator<int> $idsPaginator */
+        $idsPaginator = $this->repository->getIdsByClientId($context->id, $perPage, $page);
+        $client = $this->clientRepository->findById($context->id);
+        $orders = array_map(
+            fn(int $id) => $this->getOrderClientData->execute($id),
+            $idsPaginator->items(),
+        );
+
+        $paginator = $this->paginatorBuilder->build(
+            total: $idsPaginator->total(),
+            perPage: $perPage,
+            currentPage: $page,
+            options: [
+                'path' => '/' . request()->path(),
+                'query' => array_diff_key(request()->query(), ['page' => null]),
+            ]
+        );
+
+        return new OrdersClientPageData(
+            orders: $orders,
+            paginator: $paginator,
+            meta: new SeoData('Мои Заказы | ' . $client->fullName->getValue(), ''),
+        );
+    }
+}

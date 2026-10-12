@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Modules\Auth\Application\Actions\Staff\ListStaffByPositionUseCase;
+use App\Modules\Auth\Domain\ValueObjects\StaffPosition;
+use App\Modules\Order\Events\OrderHasPrepaid;
+
+class NotificationOrderPrepaid
+{
+    public function __construct(private readonly ListStaffByPositionUseCase $positionUseCase)
+    {}
+
+
+    /**
+     * Handle the event.
+     */
+    public function handle(OrderHasPrepaid $event): void
+    {
+        $staffs = $this->positionUseCase->execute(StaffPosition::customerManager());
+
+        //FIXME Модуль Notification - через RecipientResolverInterface
+/*
+
+        foreach ($staffs as $staff) {
+            if ($event->order->staff_id == $staff->id) {
+                $staff->notify(new StaffMessage(
+                    'Внесена предоплата по заказу',
+                    'Заказ ' . $event->order->htmlNumDate(),
+                    route('admin.order.show', $event->order),
+                    'credit-card'
+                ));
+            }
+        }
+
+        Mail::to($event->order->user->email)->queue(new OrderPrepaid($event->order));
+*/
+    }
+}

@@ -1,0 +1,271 @@
+<?php
+
+namespace App\Modules\Content\Application\Actions\WidgetInstance;
+
+use App\Modules\Content\Application\DTOs\WidgetInstance\WidgetFormFieldData;
+use App\Modules\Content\Application\DTOs\WidgetInstance\WidgetInstanceFormData;
+use App\Modules\Content\Application\Services\ProductSearchService;
+use App\Modules\Content\Domain\Interfaces\WidgetInstanceRepositoryInterface;
+use App\Modules\Content\Domain\Interfaces\WidgetRepositoryInterface;
+
+final readonly class GetWidgetInstanceFormUseCase
+{
+    public function __construct(
+        private WidgetInstanceRepositoryInterface $instanceRepository,
+        private WidgetRepositoryInterface $widgetRepository,
+        private ProductSearchService $productSearchService,
+    ) {}
+
+    public function execute(int $instanceId): WidgetInstanceFormData
+    {
+        // Загружаем экземпляр
+        $instance = $this->instanceRepository->getById($instanceId);
+        if (!$instance) {
+            throw new \InvalidArgumentException('Экземпляр виджета не найден');
+        }
+
+        // Загружаем тип виджета по widgetId (не по id экземпляра)
+        $widget = $this->widgetRepository->getById($instance->widgetId);
+        if (!$widget) {
+            throw new \InvalidArgumentException('Тип виджета не найден');
+        }
+
+        // Извлекаем схему и текущие параметры
+        $schema = $widget->schema->toArray();
+        $params = $instance->params;
+
+        $properties = $schema['properties'] ?? [];
+        $required = $schema['required'] ?? [];
+
+        $fields = $this->buildFields($properties, $required, $params);
+        return WidgetInstanceFormData::fromEntity($instance, $fields);
+    }
+
+    /**
+     * Рекурсивно строит массив WidgetFormFieldData из схемы.
+     *
+     * @param array $properties      Секция 'properties' из JSON Schema
+     * @param array $required        Массив обязательных полей (имена)
+     * @param array $params          Текущие значения параметров экземпляра
+     * @param string $prefix         Префикс для вложенных ключей (для точечной нотации)
+     * @return WidgetFormFieldData[]
+     */
+    private function buildFields(array $properties, array $required, array $params, string $prefix = ''): array
+    {
+        $fields = [];
+
+        foreach ($properties as $name => $prop) {
+            $fullName = $prefix ? $prefix . '.' . $name : $name;
+            $currentValue = $this->getDotValue($params, $fullName) ?? $prop['default'] ?? null;
+
+            // Вложенные поля для type === 'object'
+            $nestedFields = null;
+            if (($prop['type'] ?? null) === 'object' && isset($prop['properties'])) {
+                $nestedRequired = $prop['required'] ?? [];
+                $nestedValue = is_array($currentValue) ? $currentValue : [];
+
+                // Для format: 'image' — гарантируем, что у объекта есть id, src, alt, title, description
+                if (($prop['format'] ?? null) === 'image') {
+                    $nestedValue['id'] ??= null;
+                    $nestedValue['src'] ??= null;
+                    $nestedValue['alt'] ??= null;
+                    $nestedValue['title'] ??= null;
+                    $nestedValue['description'] ??= null;
+                }
+
+                // Для format: 'product' — подгружаем данные о товаре по ID
+                if (($prop['format'] ?? null) === 'product') {
+                    $nestedValue = $this->enrichProductValue($nestedValue);
+                }
+
+                $nestedFields = $this->buildFields(
+                    $prop['properties'],
+                    $nestedRequired,
+                    $nestedValue,
+                    $fullName
+                );
+            }
+
+            // Для array с items.object — вложенные поля элементов
+            if (($prop['type'] ?? null) === 'array'
+                && isset($prop['items']['type'])
+                && $prop['items']['type'] === 'object'
+                && isset($prop['items']['properties'])
+            ) {
+                // Для массива объектов значение — это массив, а nestedFields будут описывать структуру одного элемента
+                $itemRequired = $prop['items']['required'] ?? [];
+                $sampleValue = is_array($currentValue) ? ($currentValue[0] ?? []) : [];
+
+                // Для массива изображений — гарантируем поля id, src, alt, title, description у каждого элемента
+                // И дублируем format на уровень самого поля, чтобы шаблон мог проверить field.format === 'image'
+                if (($prop['items']['format'] ?? null) === 'image') {
+                    $prop['format'] = 'image';
+                    $sampleValue['id'] ??= null;
+                    $sampleValue['src'] ??= null;
+                    $sampleValue['alt'] ??= null;
+                    $sampleValue['title'] ??= null;
+                    $sampleValue['description'] ??= null;
+                }
+
+                // Для массива товаров — подгружаем данные о каждом товаре
+                if (($prop['items']['format'] ?? null) === 'product') {
+                    $prop['format'] = 'product';
+                    $sampleValue = $this->enrichProductValue($sampleValue);
+                }
+
+                $nestedFields = $this->buildFields(
+                    $prop['items']['properties'],
+                    $itemRequired,
+                    $sampleValue,
+                );
+            }
+
+            // Для format: 'widget' — подгружаем данные дочернего экземпляра виджета
+            if (($prop['format'] ?? null) === 'widget') {
+                $currentValue = $this->enrichWidgetInstanceValue($currentValue);
+            }
+
+            $fields[] = new WidgetFormFieldData(
+                name: $name,
+                type: $prop['type'] ?? 'string',
+                label: $prop['title'] ?? $name,
+                value: $currentValue,
+                default: $prop['default'] ?? null,
+                required: in_array($name, $required),
+                format: $prop['format'] ?? null,
+                options: $prop['enum'] ?? null,
+                nestedFields: $nestedFields,
+            );
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Обогащает значение поля товара: если есть id, подгружает данные с сервера.
+     *
+     * @param array $value
+     * @return array
+     */
+    private function enrichProductValue(array $value): array
+    {
+        $productId = $value['id'] ?? null;
+        if ($productId) {
+            $productData = $this->productSearchService->getById((int) $productId);
+            if ($productData) {
+                $value['id'] = $productData->id;
+                $value['name'] = $productData->name;
+                $value['url'] = $productData->url;
+                $value['short'] = $productData->short;
+                $value['price'] = $productData->price;
+                $value['image_src'] = $productData->image_src;
+                $value['image_alt'] = $productData->image_alt;
+                $value['image_next_src'] = $productData->image_next_src;
+                $value['image_next_alt'] = $productData->image_next_alt;
+            }
+        }
+        // Гарантируем наличие полей даже если товар не найден
+        $value['id'] ??= null;
+        $value['name'] ??= null;
+        $value['url'] ??= null;
+        $value['short'] ??= null;
+        $value['price'] ??= null;
+        $value['image_src'] ??= null;
+        $value['image_alt'] ??= null;
+        $value['image_next_src'] ??= null;
+        $value['image_next_alt'] ??= null;
+
+        return $value;
+    }
+
+    /**
+     * Обогащает значение поля виджета: если есть id дочернего экземпляра,
+     * рекурсивно подгружает его поля формы для редактирования.
+     * Защита от бесконечной рекурсии — через статический счётчик вложенности.
+     *
+     * @param mixed $value
+     * @return array|null
+     */
+    private function enrichWidgetInstanceValue(mixed $value): array|null
+    {
+        // Статический счётчик рекурсии — не более 3 уровней
+        static $depth = 0;
+        $depth++;
+
+        try {
+            if ($depth > 3) {
+                $depth--;
+                return null;
+            }
+
+            $instanceId = null;
+
+            if (is_int($value) || (is_string($value) && is_numeric($value))) {
+                $instanceId = (int) $value;
+            } elseif (is_array($value) && isset($value['id'])) {
+                $instanceId = (int) $value['id'];
+            }
+
+            if ($instanceId) {
+                $instance = $this->instanceRepository->getById($instanceId);
+
+                // Рекурсивно загружаем форму дочернего экземпляра
+                $childFormData = $this->execute($instanceId);
+
+                return [
+                    'id' => $instance->id,
+                    'title' => $instance->title,
+                    'widgetName' => $instance->widgetName,
+                    'widgetId' => $instance->widgetId,
+                    'fields' => $childFormData->fields,
+                ];
+            }
+
+        return null;
+        } catch (\Exception $e) {
+            \Log::warning('Не удалось загрузить дочерний экземпляр виджета: ' . $e->getMessage());
+            return [
+                'id' => $instanceId ?? null,
+                'title' => null,
+                'widgetName' => null,
+                'widgetId' => null,
+                'fields' => [],
+            ];
+        } finally {
+            $depth--;
+        }
+    }
+
+    /**
+     * Возвращает базовые данные о всех экземплярах виджета.
+     *
+     * @param int $widgetId
+     * @return array<int, array{id: int, title: ?string, widgetName: string}>
+     */
+    public function getInstancesByWidgetId(int $widgetId): array
+    {
+        $instances = $this->instanceRepository->getByWidgetId($widgetId);
+        return array_map(fn($inst) => [
+            'id' => $inst->id,
+            'title' => $inst->title,
+            'widgetName' => $inst->widgetName,
+        ], $instances);
+    }
+
+    /**
+     * Получить значение по точечной нотации из вложенного массива.
+     * Например, getDotValue(['a' => ['b' => 1]], 'a.b') => 1
+     */
+    private function getDotValue(array $array, string $path): mixed
+    {
+        $keys = explode('.', $path);
+        $current = $array;
+        foreach ($keys as $key) {
+            if (!is_array($current) || !array_key_exists($key, $current)) {
+                return null;
+            }
+            $current = $current[$key];
+        }
+        return $current;
+    }
+}

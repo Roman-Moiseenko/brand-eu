@@ -1,0 +1,135 @@
+<?php
+
+namespace App\Modules\Auth\Presentation\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Analytics\Domain\ValueObjects\ActionType;
+use App\Modules\Analytics\Presentation\Support\RecordsAnalyticsAction;
+use App\Modules\Auth\Application\Actions\Auth\LoginStaffUseCase;
+use App\Modules\Auth\Application\Actions\Auth\LoginUserUseCase;
+use App\Modules\Auth\Application\Actions\Auth\LogoutUserUseCase;
+use App\Modules\Auth\Application\Actions\Client\NewsletterConsentClientUseCase;
+use App\Modules\Auth\Application\Actions\User\ConfirmEmailUseCase;
+use App\Modules\Auth\Application\Actions\User\VerifyUserUseCase;
+use App\Modules\Auth\Application\DTOs\LoginData;
+use App\Modules\Auth\Application\Services\LoginOrRegisterUserService;
+use App\Modules\Auth\Domain\ValueObjects\NewsletterConsent;
+use App\Modules\Auth\Infrastructure\Events\UserIsLogin;
+use App\Modules\Catalog\Infrastructure\Models\Product;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+class AuthController extends Controller
+{
+    use RecordsAnalyticsAction;
+
+    public function __construct(
+        private readonly LoginStaffUseCase          $loginStaffUser,
+        private readonly LoginUserUseCase           $loginClientUseCase,
+        private readonly LogoutUserUseCase          $logoutUser,
+        private readonly LoginOrRegisterUserService $loginOrRegisterUserService,
+        private readonly ConfirmEmailUseCase        $confirmEmailUseCase,
+        private readonly NewsletterConsentClientUseCase $newsletterConsentClientUseCase,
+        private Dispatcher                  $dispatcher,
+    )
+    {
+    }
+
+    public function showLoginForm()
+    {
+        return Inertia::render('Auth/Staff/Login');
+    }
+
+    public function login(Request $request)
+    {
+        $dto = LoginData::validateAndCreate($request->all());
+        //Выходим из другого логина, возможно это client
+        $this->logoutUser->execute($request);
+        $user = $this->loginStaffUser->execute($dto);
+        $request->session()->regenerate();
+
+        $fullName = $user->profileable?->fullName ?? $user->email;
+        return redirect()->intended('/admin')
+            ->with('success', 'Добро пожаловать ' . $fullName);
+    }
+
+    public function logout(Request $request)
+    {
+        $this->logoutUser->execute($request);
+
+        return redirect('/admin/login');
+    }
+
+    public function logoutClient(Request $request)
+    {
+        $this->logoutUser->execute($request);
+
+        return redirect('/');
+    }
+
+    public function loginClient(Request $request): JsonResponse
+    {
+        $dto = LoginData::validateAndCreate($request->all());
+        //Выходим из другого логина, возможно это staff
+        $this->logoutUser->execute($request);
+        //Если клиент не верифицирован
+        if (!is_null($dto->verify_token)) {
+            try {
+                //Верифицируемся
+                $clientId = $this->confirmEmailUseCase->execute($dto->verify_token, $dto->agreement, $request->ip());
+
+                //Согласие на рассылку
+                if ($dto->newsletter) {
+                    $this->newsletterConsentClientUseCase->execute($clientId, NewsletterConsent::SOURCE_POPUP, $request->ip());
+                }
+
+                //Регистрация завершена — клиент подтвердил почту
+                $this->recordAnalyticsAction(ActionType::REGISTER);
+
+                //Логинимся
+                $result = $this->loginClientUseCase->execute($dto);
+
+                if ($result) {
+                    $this->dispatcher->dispatch(new UserIsLogin());
+                    $this->recordAnalyticsAction(ActionType::LOGIN);
+                }
+
+                return \response()->json($result ? 'login' : 'password');
+            } catch (\InvalidArgumentException $e) {
+                return \response()->json('token');
+            }
+        }
+        $result = $this->loginOrRegisterUserService->execute($dto);
+
+        if ($result == 'login') {
+            $this->dispatcher->dispatch(new UserIsLogin());
+            $this->recordAnalyticsAction(ActionType::LOGIN);
+        } elseif ($result == 'verification') {
+            //Попытка регистрации — клиент получил код верификации
+            $this->recordAnalyticsAction(ActionType::REGISTER_ATTEMPT);
+        }
+
+        return \response()->json($result);
+
+    }
+
+    public function verify(Request $request)
+    {
+        $clientId = $this->confirmEmailUseCase->execute($request->input('token'), $request->boolean('agreement'), $request->ip());
+
+        //Подписка на рассылку
+        if ($request->boolean('newsletter')) {
+            $this->newsletterConsentClientUseCase->execute($clientId, NewsletterConsent::SOURCE_REGISTRATION, $request->ip());
+        }
+
+        //Регистрация завершена
+        $this->recordAnalyticsAction(ActionType::REGISTER);
+
+        //TODO Возможно сделать страницу приветсвия
+        return redirect('/')->with('success', 'Верификация прошла успешно');
+    }
+
+
+}

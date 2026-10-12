@@ -1,0 +1,41 @@
+@php
+    use App\Modules\Shop\Application\DTOs\Pages\IkeaViewPageData;
+    /** @var IkeaViewPageData $pageData */
+@endphp
+@extends('layouts.main')
+@section('body', 'ikea')
+@section('main', 'container-xl ikea-view')
+
+@section('content')
+
+    <h1>{{ $pageData->category->name }} </h1>
+
+
+    <div class="row">
+        <div class="col-lg-3 d-none_990">
+            @include('shop.ikea.card-categories', [
+                'categories' => $pageData->categories,
+                'currentId' => $pageData->category->id
+                ])
+        </div>
+        <div class="col-lg-9">
+            <div class="t-color_dark-gray f-z_14 m-b_10">Найдено: {{ $pageData->paginator->total }} товаров</div>
+            <div class="products">
+                <div class="row">
+                    @foreach($pageData->products as $product)
+                        <div class="col-6 col-sm-4 col-lg-3 mb-5">
+                            @include('shop.ikea.card-product', ['product' => $product])
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="products-page-list--bottom">
+                @include('shop.widgets.paginator', ['paginator' => $pageData->paginator])
+            </div>
+        </div>
+    </div>
+
+    <!--script type="application/ld+json" class="schemantra.com">
+        {!! ''; //json_encode($pageData->schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script-->
+@endsection

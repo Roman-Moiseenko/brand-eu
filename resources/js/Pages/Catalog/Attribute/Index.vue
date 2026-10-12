@@ -1,0 +1,141 @@
+<template>
+    <Head><title>{{ title }}</title></Head>
+    <el-config-provider :locale="ru">
+        <h1 class="font-medium text-xl">Атрибуты товаров</h1>
+        <div class="flex items-center">
+            <el-popover :visible="visible_create" placement="bottom-start" :width="246">
+                <template #reference>
+                    <el-button type="primary" class="p-4 my-3" @click="visible_create = !visible_create" ref="buttonRef">
+                        Создать атрибут
+                        <el-icon class="ml-1"><ArrowDown /></el-icon>
+                    </el-button>
+                </template>
+                <el-input v-model="form.name" placeholder="Атрибут"/>
+                <el-select v-model="form.categories" placeholder="Категории" class="mt-1" filterable multiple>
+                    <el-option v-for="item in useCatalog.categories" :value="item.id" :label="item.name"/>
+                </el-select>
+                <el-select v-model="form.group_id" placeholder="Группа" class="mt-1" filterable>
+                    <el-option v-for="item in useCatalog.attrGroups" :value="item.id" :label="item.name"/>
+                </el-select>
+                <el-select v-model="form.type" placeholder="Тип значения" class="mt-1" filterable>
+                    <el-option v-for="item in useCatalog.attrTypes" :value="item.value" :label="item.label"/>
+                </el-select>
+                <div class="mt-2">
+                    <el-button @click="visible_create = false">Отмена</el-button><el-button @click="createButton" type="primary">Создать</el-button>
+                </div>
+            </el-popover>
+            <el-button type="success" plain class="ml-2" @click="handleGroup">Управление группами</el-button>
+            <TableFilter :filter="filter" class="ml-auto" :count="filters.count">
+                <el-input v-model="filter.name" placeholder="Атрибут"/>
+                <el-select v-model="filter.category_id" placeholder="Категория" class="mt-1">
+                    <el-option v-for="item in useCatalog.categories" :key="item.id" :value="item.id" :label="item.name" />
+                </el-select>
+                <el-select v-model="filter.group_id" placeholder="Группа" class="mt-1">
+                    <el-option v-for="item in useCatalog.attrGroups" :key="item.id" :value="item.id" :label="item.name" />
+                </el-select>
+                <el-select v-model="filter._filter" placeholder="Фильтр" class="mt-1">
+                    <el-option :key="null" :value="null" label="Все" />
+                    <el-option :key="true" :value="true" label="Да" />
+                    <el-option :key="false" :value="false" label="Нет" />
+                </el-select>
+            </TableFilter>
+        </div>
+
+        <div class="mt-2 p-5 bg-white rounded-md">
+            <el-table
+                :data="tableData"
+                header-cell-class-name="nordihome-header"
+                style="width: 100%; cursor: pointer;"
+                @row-click="routeClick"
+                v-loading="store.getLoading"
+            >
+                <el-table-column prop="name" label="Атрибут"  width="160" show-overflow-tooltip/>
+                <el-table-column prop="categories" label="Категории" align="center">
+                    <template #default="scope">
+                        <el-tag type="info" v-for="item in scope.row.categories" class="ml-1">{{ item.name }}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="group" label="Группа" width="160" align="center" show-overflow-tooltip/>
+                <el-table-column prop="filter" label="Фильтр" width="100" align="center">
+                    <template #default="scope">
+                        <Active :active="scope.row.filter" />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="typeText" label="Тип" align="center" show-overflow-tooltip width="80"/>
+
+                <el-table-column label="Действия" align="right" width="80">
+                    <template #default="scope">
+                        <el-button v-if="!scope.row.completed"
+                            size="small"
+                            type="danger"
+                            @click.stop="handleDeleteEntity(scope.row)"
+                        >
+                            Delete
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+
+        <pagination
+            :current_page="attributes.current_page"
+            :per_page="attributes.per_page"
+            :total="attributes.total"
+        />
+
+    </el-config-provider>
+    <DeleteEntityModal name_entity="Атрибут" />
+</template>
+<script lang="ts" setup>
+import {inject, reactive, ref, defineProps} from "vue";
+import {Head, router} from '@inertiajs/vue3'
+import Pagination from '@Comp/Pagination.vue'
+import {useStore} from "@Res/store.js"
+import TableFilter from '@Comp/TableFilter.vue'
+import {func} from '@Res/func.js'
+import ru from 'element-plus/dist/locale/ru.mjs'
+import Active from '@Comp/Elements/Active.vue'
+import {useCatalogStore} from "@Res/catalogStore.ts";
+
+const useCatalog = useCatalogStore()
+
+const props = defineProps({
+    attributes: Object,
+    title: {
+        type: String,
+        default: 'Атрибуты товаров',
+    },
+    filters: Array,
+})
+const store = useStore();
+const visible_create = ref(false)
+const $delete_entity = inject("$delete_entity")
+const tableData = ref([...props.attributes.data])
+const filter = reactive({
+    name: props.filters.name,
+    group_id: props.filters.group_id,
+    category_id: props.filters.category_id,
+    _filter: props.filters._filter,
+})
+const form = reactive({
+    name: null,
+    categories: [],
+    group_id: null,
+    type: null,
+})
+
+
+function handleDeleteEntity(row) {
+    $delete_entity.show(route('admin.catalog.attribute.destroy', {id: row.id}));
+}
+function createButton() {
+    router.post(route('admin.catalog.attribute.store', form))
+}
+function routeClick(row) {
+    router.get(route('admin.catalog.attribute.show', {id: row.id}))
+}
+function handleGroup() {
+    router.get(route('admin.catalog.attribute-group.index'))
+}
+</script>
+

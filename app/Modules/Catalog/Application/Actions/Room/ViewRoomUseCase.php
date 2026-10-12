@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Application\Actions\Room;
+
+use App\Modules\Catalog\Domain\Entities\RoomEntity;
+use App\Modules\Catalog\Domain\Interfaces\RoomRepositoryInterface;
+use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+
+readonly class ViewRoomUseCase
+{
+    public function __construct(
+        private RoomRepositoryInterface $roomRepository,
+    )
+    {
+    }
+
+    public function execute(int $id, UserPermission $userPermission): RoomEntity
+    {
+        // Проверка прав доступа
+        if (!$userPermission->can('catalog.category.view')) throw new AccessDeniedException();
+
+        return $this->roomRepository->getById($id);
+    }
+}

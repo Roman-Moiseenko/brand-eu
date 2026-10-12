@@ -1,0 +1,406 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Catalog\Infrastructure\Persistence;
+
+use App\Modules\Catalog\Application\DTOs\Product\FilterProductIndexData;
+use App\Modules\Catalog\Domain\Entities\ProductEntity;
+use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
+use App\Modules\Catalog\Domain\ValueObjects\Code;
+use App\Modules\Catalog\Infrastructure\Models\Category;
+use App\Modules\Catalog\Infrastructure\Models\CategoryProduct;
+use App\Modules\Catalog\Infrastructure\Models\Product;
+use App\Modules\Parser\Domain\ValueObjects\Package;
+use App\Modules\Shared\Domain\ValueObjects\Slug;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class ProductRepository implements ProductRepositoryInterface
+{
+    public function save(ProductEntity $product): ProductEntity
+    {
+        $model = $product->id
+            ? Product::findOrFail($product->id)
+            : new Product();
+
+        $model->name = $product->name;
+        $model->name_print = $product->namePrint;
+        $model->code = $product->code->getCode();
+        $model->code_search = $product->code->getCodeSearch();
+        $model->slug = $this->makeUniqueSlug((string)$product->slug, $product->id);
+        $model->old_slug = $product->oldSlug;
+        $model->main_category_id = $product->mainCategoryId;
+        $model->brand_id = $product->brandId;
+        $model->series_id = $product->seriesId;
+        $model->description = $product->description;
+        $model->care = $product->care;
+        $model->short = $product->short;
+        $model->comment = $product->comment;
+        $model->model = $product->model;
+        $model->barcode = $product->barcode;
+        $model->country_id = $product->countryId;
+        $model->measuring_id = $product->measuringId;
+        $model->marking_type_id = $product->markingTypeId;
+        $model->published = $product->published;
+        $model->pre_order = $product->preOrder;
+        $model->delivery = $product->delivery;
+        $model->local = $product->local;
+        $model->priority = $product->priority;
+        $model->not_sale = $product->notSale;
+        $model->price_reduced = $product->priceReduced;
+        $model->only_on_order = $product->onlyOnOrder;
+        $model->fractional = $product->fractional;
+        $model->hide_price = $product->hidePrice;
+        $model->published_at = $product->publishedAt?->format('Y-m-d H:i:s');
+
+        $model->complexity = $product->complexity;
+
+        if ($product->dimensions !== null) {
+            $model->dimensions = $product->dimensions;
+        }
+        $model->packages = array_map(
+            fn(Package $p) => $p->toArray(),
+            $product->packages
+        );
+        $model->save();
+        return $this->hydrate($model);
+    }
+
+    public function findByCode(string $code): ?ProductEntity
+    {
+        $model = Product::where('code', $code)->first();
+
+        if ($model === null) return null;
+
+        return $this->hydrate($model);
+    }
+
+    public function getByCode(string $code): ?ProductEntity
+    {
+        $model = Product::where('code_search', $code)->first();
+
+        if ($model === null) return null;
+
+        return $this->hydrate($model);
+    }
+
+    public function getById(int $id): ProductEntity
+    {
+        $model = Product::with('modification')->findOrFail($id);
+
+        return $this->hydrate($model);
+    }
+
+
+    public function findByMainCategoryId(int $categoryId, int $perPage = 15, int $page = 1): LengthAwarePaginator
+    {
+        return Product::where('main_category_id', $categoryId)
+            ->orderBy('name')
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->through(fn(Product $model) => $this->hydrate($model));
+    }
+
+    public function findAllByCategoryId(int $categoryId, int $perPage = 15, int $page = 1): LengthAwarePaginator
+    {
+        // ID товаров, привязанных через pivot
+        $pivotProductIds = CategoryProduct::where('category_id', $categoryId)
+            ->pluck('product_id')
+            ->toArray();
+
+        return Product::orderBy('name')
+            ->where(function ($query) use ($categoryId, $pivotProductIds) {
+                // Основная категория
+                $query->where('main_category_id', $categoryId);
+
+                // Или привязанные через pivot
+                if (!empty($pivotProductIds)) {
+                    $query->orWhereIn('id', $pivotProductIds);
+                }
+            })
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->through(fn(Product $model) => $this->hydrate($model));
+    }
+
+    public function findAllByBrandId(int $brandId, int $perPage = 15, int $page = 1): LengthAwarePaginator
+    {
+        return Product::where('brand_id', $brandId)
+            ->orderBy('name')
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->through(fn(Product $model) => $this->hydrate($model));
+    }
+
+    public function findByIds(array $ids): array
+    {
+        if (empty($ids)) return [];
+
+        return Product::whereIn('id', $ids)
+            ->orderByRaw('FIELD(id, ' . implode(',', $ids) . ')') // сохраняем порядок
+            ->get()
+            ->map(fn($model) => $this->hydrate($model))
+            ->all();
+    }
+
+    public function search(string $query, int $limit = 10): array
+    {
+        $models = Product::orderBy('name')
+            ->whereNull('deleted_at')
+            ->where(function ($q) use ($query) {
+                $q->where('code_search', 'LIKE', "%{$query}%")
+                    ->orWhere('code', 'LIKE', "%{$query}%")
+                    ->orWhereRaw("LOWER(name) LIKE LOWER('%{$query}%')");
+            })
+            ->take($limit)
+            ->get();
+
+        return $models->map(fn(Product $model) => $this->hydrate($model))->all();
+    }
+
+    public function searchExcluding(string $query, array $excludeIds, int $limit = 10): array
+    {
+        $models = Product::orderBy('name')
+            ->whereNull('deleted_at')
+            ->where(function ($q) use ($query) {
+                $q->where('code_search', 'LIKE', "%{$query}%")
+                    ->orWhere('code', 'LIKE', "%{$query}%")
+                    ->orWhereRaw("LOWER(name) LIKE LOWER('%{$query}%')");
+            })
+            ->when(!empty($excludeIds), fn($q) => $q->whereNotIn('id', $excludeIds))
+            ->take($limit)
+            ->get();
+
+        return $models->map(fn(Product $model) => $this->hydrate($model))->all();
+    }
+
+    public function searchForModification(string $query, array $attributeIds, array $variantFilters, array $excludeIds, int $limit = 10): array
+    {
+        $models = Product::orderBy('name')
+            ->whereNull('deleted_at')
+            ->where(function ($q) use ($query) {
+                $q->where('code_search', 'LIKE', "%{$query}%")
+                    ->orWhere('code', 'LIKE', "%{$query}%")
+                    ->orWhereRaw("LOWER(name) LIKE LOWER('%{$query}%')");
+            })
+            ->when(!empty($excludeIds), fn($q) => $q->whereNotIn('id', $excludeIds))
+            ->when(!empty($attributeIds), function ($q) use ($attributeIds) {
+                foreach ($attributeIds as $attributeId) {
+                    $q->whereExists(function ($sub) use ($attributeId) {
+                        $sub->selectRaw('1')
+                            ->from('attributes_products')
+                            ->whereColumn('attributes_products.product_id', 'products.id')
+                            ->where('attributes_products.attribute_id', (int) $attributeId);
+                    });
+                }
+            })
+            ->when(!empty($variantFilters), function ($q) use ($variantFilters) {
+                foreach ($variantFilters as $attributeId => $variantId) {
+                    $q->whereExists(function ($sub) use ($attributeId, $variantId) {
+                        $sub->selectRaw('1')
+                            ->from('attributes_products')
+                            ->whereColumn('attributes_products.product_id', 'products.id')
+                            ->where('attributes_products.attribute_id', (int) $attributeId)
+                            ->whereJsonContains('attributes_products.value', (int) $variantId);
+                    });
+                }
+            })
+            ->take($limit)
+            ->get();
+
+        return $models->map(fn(Product $model) => $this->hydrate($model))->all();
+    }
+
+    private function hydrate(Product $model): ProductEntity
+    {
+        $entity = new ProductEntity(
+            name: $model->name,
+            code: Code::fromDatabase($model->code, $model->code_search),
+            slug: new Slug($model->slug),
+            mainCategoryId: $model->main_category_id,
+            brandId: $model->brand_id,
+        );
+        $entity->id = $model->id;
+        $entity->namePrint = $model->name_print ?? $model->name;
+        $entity->oldSlug = $model->old_slug ?? '';
+        $entity->seriesId = $model->series_id;
+        $entity->description = $model->description ?? '';
+        $entity->care = $model->care ?? '';
+        $entity->short = $model->short ?? '';
+        $entity->comment = $model->comment ?? '';
+        $entity->model = $model->model ?? '';
+        $entity->barcode = $model->barcode ?? '';
+        $entity->frequency = $model->frequency ?? 105;
+        $entity->vatId = $model->vat_id;
+        $entity->countryId = $model->country_id;
+        $entity->measuringId = $model->measuring_id;
+        $entity->markingTypeId = $model->marking_type_id;
+        $entity->published = (bool)$model->published;
+        $entity->preOrder = (bool)$model->pre_order;
+        $entity->delivery = (bool)$model->delivery;
+        $entity->local = (bool)$model->local;
+        $entity->priority = (bool)$model->priority;
+        $entity->notSale = (bool)$model->not_sale;
+       // $entity->priceReduced = (bool)$model->price_reduced;
+        $entity->onlyOnOrder = (bool)$model->only_on_order;
+        $entity->fractional = (bool)$model->fractional;
+        $entity->hidePrice = (bool)$model->hide_price;
+
+        if ($model->relationLoaded('modification')) {
+            $entity->hasModification = $model->modification !== null;
+        }
+
+        $entity->complexity = $model->complexity;
+
+        if ($model->dimensions !== null) {
+            $entity->dimensions = $model->dimensions;
+        }
+        $entity->packages = array_map(
+            fn(array $item) => Package::fromArray($item),
+            $model->packages ?? []
+        );
+        if ($model->published_at !== null) {
+            $entity->publishedAt = \DateTimeImmutable::createFromInterface($model->published_at);
+        }
+
+        return $entity;
+    }
+
+    public function countProductsByBrandIds($brandIds): array
+    {
+        if (empty($brandIds)) {
+            return [];
+        }
+
+        return Product::query()
+            ->select('brand_id')
+            ->selectRaw('COUNT(*) as count')
+            ->whereIn('brand_id', $brandIds)
+            ->groupBy('brand_id')
+            ->pluck('count', 'brand_id')
+            ->toArray();
+    }
+
+    public function countProductsBySeriesIds(array $seriesIds): array
+    {
+        if (empty($seriesIds)) {
+            return [];
+        }
+
+        return Product::query()
+            ->select('series_id')
+            ->selectRaw('COUNT(*) as count')
+            ->whereIn('series_id', $seriesIds)
+            ->groupBy('series_id')
+            ->pluck('count', 'series_id')
+            ->toArray();
+    }
+
+    public function exists(int $productId): bool
+    {
+        return Product::where('id', $productId)->exists();
+    }
+
+    public function delete(int $id): void
+    {
+        Product::findOrFail($id)->delete();
+    }
+
+    public function restore(int $id): void
+    {
+        Product::onlyTrashed()->where('id', $id)->firstOrFail()->restore();
+    }
+
+    public function forceDelete(int $id): void
+    {
+        Product::onlyTrashed()->where('id', $id)->firstOrFail()->forceDelete();
+    }
+
+    public function filteredPaginated(FilterProductIndexData &$filter): LengthAwarePaginator
+    {
+        $query = Product::orderBy('name');
+
+        $filter->count = 0;
+
+        $this->fillIndexCounts($filter);
+
+        if (!is_null($filter->name) && trim($filter->name) !== '') {
+            $name = trim($filter->name);
+            $query->where(function ($q) use ($name) {
+                $q->whereRaw("LOWER(name) LIKE LOWER(?)", ["%{$name}%"])
+                    ->orWhere('code', 'like', "%{$name}%")
+                    ->orWhere('code_search', 'like', "%{$name}%");
+            });
+            $filter->count++;
+        }
+
+        if (!is_null($filter->room) && $filter->room > 0) {
+            $category = Category::find($filter->room);
+            if ($category !== null) {
+                $categories = $category->getChildrenIdAll();
+                $query->where(function ($q) use ($categories) {
+                    $q->whereHas('categories', fn($sub) => $sub->whereIn('id', $categories))
+                        ->orWhereIn('main_category_id', $categories);
+                });
+                $filter->count++;
+            }
+        }
+
+        if (!is_null($filter->show) && $filter->show !== '') {
+            if ($filter->show === 'active') {
+                $query->where('published', true);
+            } elseif ($filter->show === 'draft') {
+                $query->where('published', false);
+            } elseif ($filter->show === 'not_sale') {
+                $query->where('not_sale', true);
+            } elseif ($filter->show === 'delete') {
+                $query->onlyTrashed();
+            }
+            $filter->count++;
+        }
+
+        return $query->paginate($filter->perPage)
+            ->withQueryString()
+            ->through(fn(Product $model) => $this->hydrate($model));
+    }
+
+    private function fillIndexCounts(FilterProductIndexData $filter): void
+    {
+        $result = Product::withTrashed()
+            ->selectRaw('
+                SUM(CASE WHEN products.deleted_at IS NULL THEN 1 ELSE 0 END) as all_count,
+                SUM(CASE WHEN products.deleted_at IS NULL AND products.published = 1 THEN 1 ELSE 0 END) as active_count,
+                SUM(CASE WHEN products.deleted_at IS NULL AND products.published = 0 THEN 1 ELSE 0 END) as draft_count,
+                SUM(CASE WHEN products.deleted_at IS NULL AND products.not_sale = 1 THEN 1 ELSE 0 END) as not_sale_count,
+                SUM(CASE WHEN products.deleted_at IS NOT NULL THEN 1 ELSE 0 END) as delete_count
+            ')
+            ->first();
+
+        $filter->all = (int) ($result->all_count ?? 0);
+        $filter->active = (int) ($result->active_count ?? 0);
+        $filter->draft = (int) ($result->draft_count ?? 0);
+        $filter->notSale = (int) ($result->not_sale_count ?? 0);
+        $filter->delete = (int) ($result->delete_count ?? 0);
+    }
+
+    /**
+     * Возвращает уникальный slug, добавляя порядковый номер через дефис: name-1, name-2 и т.д.
+     */
+    private function makeUniqueSlug(string $slug, ?int $ignoreId = null): string
+    {
+        $original = $slug;
+        $counter = 1;
+
+        while ($this->slugExists($slug, $ignoreId)) {
+            $slug = $original . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    private function slugExists(string $slug, ?int $ignoreId = null): bool
+    {
+        return Product::withTrashed()
+            ->where('slug', $slug)
+            ->when($ignoreId !== null, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists();
+    }
+}

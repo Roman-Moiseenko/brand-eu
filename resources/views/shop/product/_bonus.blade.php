@@ -1,0 +1,22 @@
+@if(!empty($bonus))
+    <div class="box-card view-bonus">
+        <h2 id="bonus">Выгодная покупка</h2>
+        <div class="d-flex justify-content-around">
+            @foreach($bonus as $_product)
+                <div class="item-bonus px-2">
+                    <a href="{{ route('shop.product.view', $_product['slug']) }}" title="{{ $_product['name'] }}">
+                        <img src="{{ $_product['image']['src'] }}" alt="{{ $_product['name'] }}">
+                    </a>
+                    <div class="price-block">
+                        <div class="discount-price">{{ price($_product['discount']) }}</div>
+                        <div class="base-price">{{ price($_product['price']) }}</div>
+                    </div>
+                    <button class="to-cart btn btn-dark" data-product="{{ $_product['id'] }}">В Корзину</button>
+                </div>
+            @endforeach
+        </div>
+        <div class="fs-8 mt-3">
+            * Бонусная покупка работает при условии одинакового количества основного и бонусного товара в корзине.
+        </div>
+    </div>
+@endif

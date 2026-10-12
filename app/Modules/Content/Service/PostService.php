@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Modules\Content\Service;
+
+use App\Modules\Content\Infrastructure\Models\Post;
+use App\Modules\Content\Infrastructure\Models\PostCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class PostService
+{
+
+    public function createCategory(Request $request): PostCategory
+    {
+        return PostCategory::register(
+            $request->string('name')->trim()->value(),
+            $request->string('slug')->trim()->value(),
+            $request->string('template')->trim()->value(),
+        );
+    }
+
+    public function setInfoCategory(PostCategory $category, Request $request): void
+    {
+        $name = $request->string('name')->trim()->value();
+        $slug = $request->string('slug')->trim()->value();
+        $category->name = $name;
+        $category->slug  = empty($slug) ? Str::slug($name) : $slug;
+        $category->template = $request->string('template')->value();
+        $category->title = $request->string('title')->trim()->value();
+        $category->description = $request->string('description')->trim()->value();
+        $category->paginate = $request->input('paginate');
+        $category->meta->fromRequest($request);
+        $category->save();
+    }
+
+    public function destroyCategory(PostCategory $category): void
+    {
+        if ($category->posts()->count() != 0) throw new \DomainException('Нельзя удалить! Есть записи');
+        $category->delete();
+    }
+
+    public function createPost(PostCategory $category, Request $request): Post
+    {
+        $post = Post::new(
+            $request->string('name')->trim()->value(),
+            $request->string('template')->trim()->value()
+        );
+        //$post->category_id = $category->id;
+        //$post->save();
+        $category->posts()->save($post);
+        $category->refresh();
+        return $post;
+    }
+
+    public function togglePost(Post $post): string
+    {
+        if ($post->published) {
+            $message = 'Запись снята с публикации';
+            $post->draft();
+        } else {
+            $message = 'Запись опубликована';
+            $post->published();
+        }
+        $post->save();
+        return $message;
+    }
+
+    public function setTextPost(Post $post, Request $request): void
+    {
+        $post->text = $request->string('text')->trim()->value();
+        $post->save();
+    }
+
+
+    public function destroyPost(Post $post): void
+    {
+        $post->delete();
+    }
+}
