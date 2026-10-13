@@ -1,0 +1,1976 @@
+{
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    "@id": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html",
+    "productGroupID": "ONV04",
+    "name": "Buty Adistar XLG 2.0",
+    "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+    "brand": {
+        "@type": "Brand",
+        "name": "adidas"
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 5,
+        "reviewCount": 13,
+        "bestRating": 5,
+        "worstRating": 1
+    },
+    "review": null,
+    "variesBy": [
+        "https://schema.org/color",
+        "https://schema.org/size"
+    ],
+    "hasVariant": [
+        {
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg"
+            ],
+            "productId": "KZ9156",
+            "name": "Buty Adistar XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/HQ7468.html",
+            "color": "Bialy",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/cddca20273714bfa94de502920ad1d91_9366/BUTY_ADISTAR_XLG_2.0_Bialy_HQ7468_00_plp_standard.jpg"
+            ],
+            "productId": "HQ7468",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/HQ7551.html",
+            "color": "Zielony",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/715ba779b4104750a2e542ea24a4fee7_9366/BUTY_ADISTAR_XLG_2.0_Zielony_HQ7551_00_plp_standard.jpg"
+            ],
+            "productId": "HQ7551",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/HQ7554.html",
+            "color": "Szary",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/f09f7ddf2e9945158b09b205c8c275a7_9366/BUTY_ADISTAR_XLG_2.0_Szary_HQ7554_00_plp_standard.jpg"
+            ],
+            "productId": "HQ7554",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/HQ7555.html",
+            "color": "Czerń",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/48ac00f5cf01465fb88ad511c2cc01a6_9366/BUTY_ADISTAR_XLG_2.0_Czern_HQ7555_00_plp_standard.jpg"
+            ],
+            "productId": "HQ7555",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KI4505.html",
+            "color": "Niebieski",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/928e0507b8614ec2ab2d3c3d8826f527_9366/BUTY_ADISTAR_XLG_2.0_Niebieski_KI4505_00_plp_standard.jpg"
+            ],
+            "productId": "KI4505",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KI4506.html",
+            "color": "Czerwony",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/77261f21f60046a2bb66fb9eaf49bc26_9366/Buty_Adistar_XLG_2.0_Czerwony_KI4506_HM6.jpg"
+            ],
+            "productId": "KI4506",
+            "name": "Buty Adistar XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adidas-pok%C3%A9mon-adistar-xlg-2.0/KJ5609.html",
+            "color": "Fioletowy",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/2cacc3ef93014149931547ac4b0e5e75_9366/Buty_ADIDAS_Pokemon_ADISTAR_XLG_2.0_Fioletowy_KJ5609_00_plp_standard.jpg"
+            ],
+            "productId": "KJ5609",
+            "name": "Buty ADIDAS Pokémon ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KJ7895.html",
+            "color": "Szary",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/b1a4ef49e8dc4e6e929d9f5bc2c2c81b_9366/BUTY_ADISTAR_XLG_2.0_Szary_KJ7895_00_plp_standard.jpg"
+            ],
+            "productId": "KJ7895",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KZ8301.html",
+            "color": "Bialy",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/dd5b2619999345efb1a5f37c97d82e62_9366/BUTY_ADISTAR_XLG_2.0_Bialy_KZ8301_00_plp_standard.jpg"
+            ],
+            "productId": "KZ8301",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KZ9155.html",
+            "color": "Czerń",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/19472df0c9ad4e8cb5b374603e310468_9366/BUTY_ADISTAR_XLG_2.0_Czern_KZ9155_00_plp_standard.jpg"
+            ],
+            "productId": "KZ9155",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KZ9157.html",
+            "color": "Szary",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/8935c52028e448ffbcc12c1c547a5fee_9366/BUTY_ADISTAR_XLG_2.0_Szary_KZ9157_00_plp_standard.jpg"
+            ],
+            "productId": "KZ9157",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@type": "Product",
+            "url": "/buty-adistar-xlg-2.0/KZ9160.html",
+            "color": "Bialy",
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/8e72720c05614be49fb66a2ca999f73b_9366/BUTY_ADISTAR_XLG_2.0_Bialy_KZ9160_00_plp_standard.jpg"
+            ],
+            "productId": "KZ9160",
+            "name": "BUTY ADISTAR XLG 2.0"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=35 1/2",
+            "sku": "KZ9156_520",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (35 1/2)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "35 1/2"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=36",
+            "sku": "KZ9156_530",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (36)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "36"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=36 2/3",
+            "sku": "KZ9156_540",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (36 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "36 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=37 1/3",
+            "sku": "KZ9156_550",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (37 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "37 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=38",
+            "sku": "KZ9156_560",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (38)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "38"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=38 2/3",
+            "sku": "KZ9156_570",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (38 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "38 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=39 1/3",
+            "sku": "KZ9156_580",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (39 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "39 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=40",
+            "sku": "KZ9156_590",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (40)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "40"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=40 2/3",
+            "sku": "KZ9156_600",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (40 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "40 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=41 1/3",
+            "sku": "KZ9156_610",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (41 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "41 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=42",
+            "sku": "KZ9156_620",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (42)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "42"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=42 2/3",
+            "sku": "KZ9156_630",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (42 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "42 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=43 1/3",
+            "sku": "KZ9156_640",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (43 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "43 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=44",
+            "sku": "KZ9156_650",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (44)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "44"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=44 2/3",
+            "sku": "KZ9156_660",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (44 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "44 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=45 1/3",
+            "sku": "KZ9156_670",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (45 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "45 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=46",
+            "sku": "KZ9156_680",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (46)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "46"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=46 2/3",
+            "sku": "KZ9156_690",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (46 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "46 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=47 1/3",
+            "sku": "KZ9156_700",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (47 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "47 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=48",
+            "sku": "KZ9156_710",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (48)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "48"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=48 2/3",
+            "sku": "KZ9156_720",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (48 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "48 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=49 1/3",
+            "sku": "KZ9156_730",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (49 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "49 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=50 2/3",
+            "sku": "KZ9156_750",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (50 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "50 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=51 1/3",
+            "sku": "KZ9156_760",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (51 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "51 1/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=52 2/3",
+            "sku": "KZ9156_780",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (52 2/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "52 2/3"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "url": "https://www.adidas.pl/buty-adistar-xlg-2.0/KZ9156.html?forceSelSize=53 1/3",
+            "sku": "KZ9156_790",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "image": [
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9d02879fb7e84973b2f9699f75123596_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_01_00_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/a44418ebe9454964a5df51669534505f_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_02_standard_hover.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/9ab239bd031e42ed81211b361d2ed22d_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_03_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/e46a766c371d4ded9a95605d74a60501_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_04_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/ebc7fdbbaccc400bbb68aa160c1dc28e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_05_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/d22b434801154c698b4073bba01e042e_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_06_standard.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/86f2d1c1186b4e4ca258cc94dce473a2_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_41_detail.jpg",
+                "https://assets.adidas.com/images/w_500,f_auto,q_auto/aab2033968cc4c609615ea5d01a92920_9366/Buty_Adistar_XLG_2.0_Brazowy_KZ9156_42_detail.jpg"
+            ],
+            "name": "Buty Adistar XLG 2.0 (53 1/3)",
+            "color": "Earth Strata / Magic Beige / Core Black",
+            "category": "Buty",
+            "description": "Wejdź w nową, odważną erę miejskiego stylu dzięki butom Adistar XLG 2.0. Czerpiąc inspirację z kultowych modeli butów do biegania z pierwszej dekady XXI wieku, ten projekt na nowo interpretuje klasyczne proporcje z myślą o współczesnych odkrywcach miasta.\n\nWyjątkowo trwała podeszwa zewnętrzna Adiwear zapewnia niezawodną przyczepność na ruchliwych chodnikach, a w pięcie zastosowano adidas Adiprene – elastyczną piankę, która dostosowuje się do potrzeb amortyzacyjnych Twojej stopy podczas ruchu.\n\nSiateczkowa podstawa i formowana klatka RPU nadają cholewce świeżego charakteru, a odblaskowe detale dodają dynamiki miejskiemu stylowi. Charakterystyczne 3 paski i logo Badge of Sport oddają hołd dziedzictwu linii Originals.\n\nNiezależnie od tego, czy planujesz dzień w mieście, czy spotkanie z przyjaciółmi, te buty zapewniają komfort, styl i hołd dla dziedzictwa adidas. Wyróżnij się dzięki stylizacji, która jest zarówno buntownicza, jak i optymistyczna, zaprojektowanej tak, by dać Ci energię na każdy krok.",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5,
+                "reviewCount": 13,
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "review": null,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "PLN",
+                "price": 449.25,
+                "availability": "InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "priceType": "https://schema.org/StrikethroughPrice",
+                    "price": 599,
+                    "priceCurrency": "PLN"
+                },
+                "shippingDetails": {
+                    "@context": "https://schema.org",
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": 0,
+                        "currency": "PLN"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "PL"
+                    }
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "adidas",
+                    "url": "https://www.adidas.pl"
+                },
+                "itemCondition": "https://schema.org/NewCondition"
+            },
+            "material": "Cholewka tekstylna",
+            "video": [],
+            "audience": {
+                "@type": "PeopleAudience",
+                "suggestedGender": "Unisex"
+            },
+            "size": "53 1/3"
+        }
+    ]
+}

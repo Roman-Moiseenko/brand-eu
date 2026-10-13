@@ -12,36 +12,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @property int $id
  * @property string $name
- * @property string $code
- * @property string $slug
- * @property string $maker_id id в магазине Бренда
- * @property int $product_id
  * @property string $url
- * @property string $model используется для поиска товара в базе, совместно с maker_id
+ * @property int $brand_id
+ * @property int $product_id
+ * @property string $code
  * @property float $price_base
  * @property float $price_sell
- * @property string $short
- * @property string $description
  *
- * @property string $care
- * @property array $materials
- * @property array $dimensions
- * @property array $variants
+ * @property string $maker_id id в магазине Бренда
  *
- * @property bool $fragile - Хрупкий, может влиять на стоимость доставки
- * @property bool $sanctioned - Санкционный, может влиять на стоимость доставки
+ * @property string $data - чистый json  с оригинальными данными
+ *
  * @property bool $availability - Можно или нет возить под заказ
- *
- * @property int $packs - Количество упаковок
- *
- * @property array $composite список id товаров входящих в состав
- * @property array $stores  Кол-во товаров на складах
- * @property array $colors Цвета
- * @property array $packages Упаковки
  *
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
+ * @property ParserProductSizes[] $sizes
  * @property Product $product
  * @property ParserCategory[] $categories
  */
@@ -108,6 +94,11 @@ class ParserProduct extends Model
     public function category():? ParserCategory
     {
         return $this->categories()->first();
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ParserProductSizes::class, 'id', 'product_id');
     }
 
     public function categories(): BelongsToMany

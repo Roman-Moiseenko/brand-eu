@@ -1,0 +1,6 @@
+доступные размеры
+
+
+KZ9160 - код товара
+props.pageProps.dehydratedState.queries[0].state.data.id
+https://www.adidas.pl/api/products/KZ9160/availability

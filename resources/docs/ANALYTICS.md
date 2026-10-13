@@ -492,7 +492,7 @@ URL-ы генерируются через `route()`, чтобы не завис
 
 ### 9.3 `search.js` (отслеживание поиска)
 
-`resources/js/nordihome/search.js` (импортируется в `brand-eu.js`). Отвечает за
+`resources/js/nordihome/search.js` (импортируется в `nordihome.js`). Отвечает за
 живой поиск (`pre-search`) и фиксацию кликов по подсказкам.
 
 - `_itemSuggestPresearch(item, type, position)` — рендерит элемент подсказки и

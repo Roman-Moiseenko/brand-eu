@@ -1,0 +1,61 @@
+{
+    "articleCode": "L47817500",
+    "articleName": "Turbulence / Black / Burnt Ochre",
+    "name": "XA PRO 3D V9 GORE-TEX",
+    "subName": "Mężczyzna · Buty do biegów terenowych",
+    "modelCode": "LI3151$",
+    "urlKey": "xa-pro-3d-v9-gore-tex-li3151",
+    "type": "ActiveRange",
+    "mainCategory": "Trail Running",
+    "description": "Stabilność, trwałość i wsparcie w pakiecie do biegania w terenie...",
+    "imageUrl": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+    "gender": { "code": "M", "label": "Mężczyzna" },
+    "colorGroup1Label": "Szary",
+    "colorGroup2Label": "Czarny",
+    "price": { "basePrice": 729, "finalPrice": 729, "currency": "PLN" },
+    "rating": { "average": 4.239, "count": 682, "range": 5 },
+    "inStockPercentage": 100,
+    "isSaleable": true,
+    "isVisible": true,
+    "globallyVisible": true,
+    "isDrop": false,
+    "isEarlyAccess": false,
+    "isMemberDays": false,
+    "isMemberExclusivity": false,
+    "isPrivateSale": false,
+    "firstArticleSizeId": "L47817500026",
+    "benefits": [
+        { "title": "Stabilność", "description": "Buty z ramą 3D Advanced Chassis™..." },
+        { "title": "Ochrona", "description": "Wzmocnienia na palcach oferują pewną i solidną ochronę stóp." },
+        { "title": "Nieprzemakalność", "description": "Model wyposażony w membranę GORE-TEX..." }
+    ],
+    "sizes": [
+        { "id": "L47817500026", "name": "40", "ean": "0195751917605" },
+        { "id": "L47817500027", "name": "40 ⅔", "ean": "0195751917582" },
+        { "id": "L47817500028", "name": "41 ⅓", "ean": "0195751917575" },
+        { "id": "L47817500029", "name": "42", "ean": "0195751917568" },
+        { "id": "L47817500030", "name": "42 ⅔", "ean": "0195751917681" },
+        { "id": "L47817500031", "name": "43 ⅓", "ean": "0195751917674" },
+        { "id": "L47817500032", "name": "44", "ean": "0195751917667" },
+        { "id": "L47817500033", "name": "44 ⅔", "ean": "0195751917650" },
+        { "id": "L47817500034", "name": "45 ⅓", "ean": "0195751917643" },
+        { "id": "L47817500035", "name": "46", "ean": "0195751917636" },
+        { "id": "L47817500036", "name": "46 ⅔", "ean": "0195751917629" },
+        { "id": "L47817500037", "name": "47 ⅓", "ean": "0195751917612" },
+        { "id": "L47817500038", "name": "48", "ean": "0195751917599" },
+        { "id": "L47817500040", "name": "49 ⅓", "ean": "0195751917698" }
+    ],
+    "swatches": [
+        { "id": "L49199200", "name": "Spellbound / Maritime Blue / Wrought Iron", "colorGroup1Label": "Niebieski" },
+        { "id": "L49199100", "name": "Alloy / Castlerock / Lunar Rock", "colorGroup1Label": "Szary" },
+        { "id": "L47881900", "name": "Black / Vanilla Ice / Turmeric", "colorGroup1Label": "Czarny" },
+        { "id": "L47817500", "name": "Turbulence / Black / Burnt Ochre", "colorGroup1Label": "Szary" },
+        { "id": "L47270100", "name": "Black / Phantom / Pewter", "colorGroup1Label": "Czarny" },
+        { "id": "L47820200", "name": "Deep Lichen Green / Safari / Dark Earth", "colorGroup1Label": "Zielony" }
+    ],
+    "categories": [
+        { "code": "menss21_shoes", "name": "Obuwie" },
+        { "code": "menss21_shoes_hiking", "name": "Turystyka" },
+        { "code": "menss21_shoes_hiking_hiking", "name": "Turystyka" }
+    ]
+}

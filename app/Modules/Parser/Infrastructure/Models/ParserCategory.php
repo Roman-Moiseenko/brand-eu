@@ -14,9 +14,11 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $id
  * @property string $name
  * @property string $slug
- * @property string $ikea_id уникальный для исключения двойного парсинга
+ * @property string $category_id уникальный для исключения двойного парсинга
  * @property bool $active
  * @property int $parent_id
+ * @property int $brand_id
+ * @property int $size_grid_id
  *
  * @property int $_lft
  * @property int $_rgt
@@ -34,13 +36,19 @@ class ParserCategory extends Model
     protected $fillable = [
         'name',
         'parent_id',
-        'ikea_id',
+        'category_id',
         'active',
         'slug',
+        'brand_id',
     ];
     protected $casts = [
         'active' => 'boolean',
     ];
+
+    public function brand()
+    {
+
+    }
 
     public function products(): BelongsToMany
     {
@@ -52,15 +60,6 @@ class ParserCategory extends Model
         return ParserCategory::orderBy('_lft')->where('_lft', '<=', $this->_lft)->where('_rgt', '>=', $this->_rgt)->get();
     }
 
-    public function getParentNames(): string
-    {
-        $categories = $this->getParentAll();
-        $name = '';
-        foreach ($categories as $category) {
-            $name .= $category->name . "\\";
-        }
-        return $name;// .= $this->name;
-    }
 
 
 }
