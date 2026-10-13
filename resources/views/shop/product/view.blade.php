@@ -239,7 +239,7 @@
     </script>
 
     {{-- Подключаем наш отдельный JS-файл --}}
-    @vite('resources/js/nordihome/product.js')
+    @vite('resources/js/brand-eu/product.js')
 
 @endsection
 

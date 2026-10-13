@@ -9,9 +9,9 @@
     @if(isset($pageData) && !is_null($pageData->meta))
         @include('partials.seo-meta', ['meta' => $pageData->meta])
     @endif
-    <link rel="icon" href="{{ url('images/nordihome/favicon.png') }}" size="32x32">
-    <link rel="icon" href="{{ url('images/nordihome/favicon.png') }}" size="192x192">
-    <link rel="apple-touch-icon" href="{{ url('images/nordihome/favicon.png') }}" size="192x192">
+    <link rel="icon" href="{{ url('images/icons/favicon.png') }}" size="32x32">
+    <link rel="icon" href="{{ url('images/icons/favicon.png') }}" size="192x192">
+    <link rel="apple-touch-icon" href="{{ url('images/icons/favicon.png') }}" size="192x192">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -113,7 +113,7 @@
 <div id="cookie_notification"></div>
 
 @include('analytics::tracker')
-@vite('resources/js/nordihome/analytics-tracker.js')
+@vite('resources/js/brand-eu/analytics-tracker.js')
 
 <!--FOOTER-->
 
