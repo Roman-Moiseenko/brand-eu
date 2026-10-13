@@ -3,6 +3,7 @@
 namespace App\Modules\Parser\Infrastructure\Models;
 
 use App\Modules\Base\Traits\ImageField;
+use App\Modules\Catalog\Infrastructure\Models\Brand;
 use App\Modules\Catalog\Infrastructure\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,6 +26,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property ParserCategory $parent
  * @property ParserProduct[] $products
  * @property Category $category
+ * @property Brand $brand
  */
 class ParserCategory extends Model
 {
@@ -45,9 +47,9 @@ class ParserCategory extends Model
         'active' => 'boolean',
     ];
 
-    public function brand()
+    public function brand(): BelongsTo
     {
-
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
     public function products(): BelongsToMany

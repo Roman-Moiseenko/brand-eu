@@ -2,11 +2,6 @@
 
 namespace App\Modules\Parser\Domain\Entities;
 
-use App\Modules\Parser\Domain\ValueObjects\Composite;
-use App\Modules\Parser\Domain\ValueObjects\Package;
-use App\Modules\Parser\Domain\ValueObjects\Store;
-use App\Modules\Shared\Domain\ValueObjects\Slug;
-
 final class ParserProductEntity
 {
     // ======================== Идентификатор ========================
@@ -21,105 +16,66 @@ final class ParserProductEntity
         set => $this->productId = $value;
     }
 
+    public ?int $brandId = null {
+        get => $this->brandId;
+        set => $this->brandId = $value;
+    }
+
     // ======================== Основные поля ========================
+
     public string $name {
         get => $this->name;
         set => $this->name = $value;
-    }
-    public string $code {
-        get => $this->code;
-        set => $this->code = $value;
-    }
-
-    public Slug $slug {
-        get => $this->slug;
-        set => $this->slug = $value;
-    }
-
-    public array $composite = [] {
-        get => $this->composite;
-        set => $this->composite = $value;
     }
 
     public string $url = '' {
         get => $this->url;
         set => $this->url = $value;
     }
-    public float $priceSell = 0 {
-        get => $this->priceSell;
-        set => $this->priceSell = $value;
+
+    public string $code {
+        get => $this->code;
+        set => $this->code = $value;
     }
+
     public float $priceBase = 0 {
         get => $this->priceBase;
         set => $this->priceBase = $value;
     }
 
-    public string $short = '' {
-        get => $this->short;
-        set => $this->short = $value;
+    public float $priceSell = 0 {
+        get => $this->priceSell;
+        set => $this->priceSell = $value;
     }
 
-    public string $description = '' {
-        get => $this->description;
-        set => $this->description = $value;
+    /** id в магазине Бренда */
+    public string $makerId = '' {
+        get => $this->makerId;
+        set => $this->makerId = $value;
     }
 
-    /** @var Package[] $packages */
-    public array $packages = [] {
-        get => $this->packages;
-        set => $this->packages = $value;
+    /** чистый json с оригинальными данными */
+    public string $data = '' {
+        get => $this->data;
+        set => $this->data = $value;
     }
 
-    public int $packs = 1 {
-        get => $this->packs;
-        set => $this->packs = $value;
-    }
-
-    public bool $fragile = false {
-        get => $this->fragile;
-        set => $this->fragile = $value;
-    }
-
-    public bool $sanctioned = false {
-        get => $this->sanctioned;
-        set => $this->sanctioned = $value;
-    }
-
+    /** Можно или нет возить под заказ */
     public bool $availability = false {
         get => $this->availability;
         set => $this->availability = $value;
     }
+
     public ?\DateTimeImmutable $createdAt = null {
         get => $this->createdAt;
         set => $this->createdAt = $value;
-    }
-    public array $colors = [] {
-        get => $this->colors;
-        set => $this->colors = $value;
-    }
-
-    public array $materials = [] {
-        get => $this->materials;
-        set => $this->materials = $value;
-    }
-    public array $dimensions = [] {
-        get => $this->dimensions;
-        set => $this->dimensions = $value;
-    }
-    public array $variants = [] {
-        get => $this->variants;
-        set => $this->variants = $value;
-    }
-
-    public string $care = '' {
-        get => $this->care;
-        set => $this->care = $value;
     }
 
     public ?\DateTimeImmutable $updatedAt = null {
         get => $this->updatedAt;
         set => $this->updatedAt = $value;
     }
+
     public function __construct(
         string $name,
         string $code,
@@ -127,21 +83,11 @@ final class ParserProductEntity
     {
         $this->name = $name;
         $this->code = $code;
-        $this->slug = new Slug($name);
     }
 
-    /** @var Store[] $stores */
-    public array $stores = [] {
-        get => $this->stores;
-        set => $this->stores = $value;
-    }
-
-    public function weight(): float
-    {
-        $weight = 0;
-        foreach ($this->packages as $package) {
-            $weight += $package->weight * $package->quantity;
-        }
-        return $weight;
+    /** @var ParserProductSizeEntity[] */
+    public array $sizes = [] {
+        get => $this->sizes;
+        set => $this->sizes = $value;
     }
 }

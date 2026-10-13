@@ -20,6 +20,9 @@ interface ParserCategoryRepositoryInterface
     /** @return ParserCategoryEntity[] */
     public function getTree(): array;
 
+    /** @return ParserCategoryEntity[] */
+    public function getTreeByBrandId(int $brandId): array;
+
     public function existsByIkeaId(string $ikeaId): bool;
 
     public function findByIkeaId(string $ikeaId): ?ParserCategoryEntity;

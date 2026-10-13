@@ -43,6 +43,11 @@ final class ParserCategoryEntity
         set => $this->parentId = $value;
     }
 
+    public ?int $brandId = null {
+        get => $this->brandId;
+        set => $this->brandId = $value;
+    }
+
     public int $left = 0 {
         get => $this->left;
         set => $this->left = $value;

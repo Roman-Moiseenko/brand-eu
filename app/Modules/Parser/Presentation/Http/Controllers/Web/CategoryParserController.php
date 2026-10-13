@@ -3,7 +3,9 @@
 namespace App\Modules\Parser\Presentation\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Parser\Application\Actions\Brand\ListParserBrandQuery;
 use App\Modules\Parser\Application\Actions\Category\IndexParserCategoryUseCase;
+use App\Modules\Parser\Application\Actions\Category\ListParserCategoryByBrandQuery;
 use App\Modules\Parser\Application\Actions\Category\ViewParserCategoryUseCase;
 use App\Modules\Parser\Application\Actions\Product\ListAllProductByCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryIndexData;
@@ -25,16 +27,27 @@ class CategoryParserController extends Controller
         private readonly ToggleCategoryWithProductsService $toggleCategoryWithProductsService,
         private readonly ViewParserCategoryUseCase $viewParserCategoryUseCase,
         private readonly ListAllProductByCategoryUseCase $listAllProductByCategoryUseCase,
+        private readonly ListParserBrandQuery $listParserBrandQuery,
+        private readonly ListParserCategoryByBrandQuery $listParserCategoryByBrandQuery,
     )
     {
     }
 
     public function index(UserPermission $userPermission): Response
     {
-        $categories = $this->indexParserCategoryUseCase->execute($userPermission);
+        $brands = $this->listParserBrandQuery->execute($userPermission);
+
         return Inertia::render('Parser/Category/Index', [
-            'categories' => ParserCategoryIndexData::collect($categories),
+            'brands' => $brands,
+            'categories' => [],
         ]);
+    }
+
+    public function categoriesByBrand(int $brandId, UserPermission $userPermission): JsonResponse
+    {
+        $categories = $this->listParserCategoryByBrandQuery->execute($brandId, $userPermission);
+
+        return response()->json(ParserCategoryIndexData::collect($categories));
     }
 
     public function show(ParserCategory $category_parser, UserPermission $userPermission): Response

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -37,50 +38,24 @@ class ParserProduct extends Model
 
     public $timestamps = true;
     protected $table = 'parser_products';
-    protected $attributes = [
-        'composite' => '{}',
-        'stores' => '{}',
-        'colors' => '[]',
-        'materials' => '[]',
-        'dimensions' => '[]',
-        'variants' => '[]',
-        'packages' => '[]',
-        'packs' => 1,
-    ];
+
     protected $casts = [
-        'colors' => 'json',
-        'materials' => 'json',
-        'dimensions' => 'json',
-        'variants' => 'json',
-        'composite' => 'json',
-        'stores' => 'json',
-        'packages' => 'json',
         'price_base' => 'float',
         'price_sell' => 'float',
-        'packs' => 'integer',
+        'availability' => 'boolean',
     ];
 
     protected $fillable = [
         'url',
         'product_id',
+        'brand_id',
+        'maker_id',
+        'data',
         'name',
         'code',
-        'slug',
-        'short',
-        'description',
         'price_base',
         'price_sell',
-        'fragile',
-        'sanctioned',
         'availability',
-        'composite',
-        'colors',
-        'packages',
-        'packs',
-        'materials',
-        'care',
-        'dimensions',
-        'variants',
     ];
 
     public static function register(string $url, int $product_id): self
@@ -91,14 +66,14 @@ class ParserProduct extends Model
         ]);
     }
 
-    public function category():? ParserCategory
+    public function category(): ?ParserCategory
     {
         return $this->categories()->first();
     }
 
-    public function sizes()
+    public function sizes(): HasMany
     {
-        return $this->hasMany(ParserProductSizes::class, 'id', 'product_id');
+        return $this->hasMany(ParserProductSizes::class, 'product_id', 'id');
     }
 
     public function categories(): BelongsToMany
@@ -121,5 +96,4 @@ class ParserProduct extends Model
         $category = $this->categories()->first();
         return $category->brand->currency->first();
     }
-
 }

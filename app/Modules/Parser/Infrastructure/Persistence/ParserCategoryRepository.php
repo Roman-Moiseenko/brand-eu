@@ -45,6 +45,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         $model->slug = $category->slug;
         $model->ikea_id = $category->ikeaId;
         $model->active = $category->isActive();
+        $model->brand_id = $category->brandId;
 
         if ($category->parentId !== null) {
             $model->parent_id = $category->parentId;
@@ -69,6 +70,21 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
     public function getTree(): array
     {
         $roots = ParserCategory::defaultOrder()
+            ->get()
+            ->toTree();
+
+        return $roots
+            ->map(fn(ParserCategory $model) => $this->hydrateWithChildren($model))
+            ->toArray();
+    }
+
+    /**
+     * @return ParserCategoryEntity[]
+     */
+    public function getTreeByBrandId(int $brandId): array
+    {
+        $roots = ParserCategory::where('brand_id', $brandId)
+            ->defaultOrder()
             ->get()
             ->toTree();
 
@@ -191,6 +207,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
 
         $entity->id = $model->id;
         $entity->active = $model->active;
+        $entity->brandId = $model->brand_id;
 
         // Nested Set поля
         $entity->left = $model->_lft ?? 0;

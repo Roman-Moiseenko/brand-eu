@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Parser\Application\DTOs\Product;
 
-use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
+use App\Modules\Parser\Domain\Entities\ParserProductSizeEntity;
 use Spatie\LaravelData\Data;
 
 /**
  * DTO для списка товаров категории (на странице Show).
- * Содержит только то, что нужно для отображения в таблице товаров категории.
+ * Содержит все поля товара, кроме изображений, дат и $data.
  */
 class ParserProductCategoryData extends Data
 {
@@ -18,14 +18,15 @@ class ParserProductCategoryData extends Data
         public readonly int     $id,
         public readonly string  $code,
         public readonly string  $name,
-        public readonly string  $slug,
-        public readonly ?string $image,
+        public readonly string  $url,
+        public readonly ?int    $brandId,
+        public readonly ?int    $productId,
+        public readonly string  $makerId,
+        public readonly float   $priceSell,
+        public readonly float   $priceBase,
         public readonly bool    $availability,
-        public readonly bool    $fragile,
-        public readonly bool    $sanctioned,
-        public readonly ?int     $productId,
-        public readonly float $priceSell,
-        public readonly float $priceBase,
+        /** @var ParserProductSizeData[] */
+        public readonly array   $sizes = [],
     )
     {
     }
@@ -36,14 +37,17 @@ class ParserProductCategoryData extends Data
             id: $product->id ?? 0,
             code: $product->code,
             name: $product->name,
-            slug: $product->slug->getValue(),
-            image: null,
-            availability: $product->availability,
-            fragile: $product->fragile,
-            sanctioned: $product->sanctioned,
+            url: $product->url,
+            brandId: $product->brandId,
             productId: $product->productId,
+            makerId: $product->makerId,
             priceSell: $product->priceSell,
             priceBase: $product->priceBase,
+            availability: $product->availability,
+            sizes: array_map(
+                fn(ParserProductSizeEntity $size) => ParserProductSizeData::fromEntity($size),
+                $product->sizes
+            ),
         );
     }
 }

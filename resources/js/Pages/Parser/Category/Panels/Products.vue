@@ -10,53 +10,66 @@
         <el-table
             :data="[...tableData]"
             header-cell-class-name="nordihome-header"
-            style="width: 100%; cursor: pointer;"
-            @row-click="routeClick"
+            style="width: 100%;"
+            row-key="id"
+            v-loading="loading"
         >
-            <el-table-column prop="image" label="IMG" width="80">
+            <el-table-column type="expand">
                 <template #default="scope">
-                    <img v-if="scope.row.image" :src="scope.row.image" style="width: 40px; height: 40px; ">
+                    <div class="p-4">
+                        <el-table :data="scope.row.sizes" border size="small">
+                            <el-table-column prop="size" label="Размер" width="120"/>
+                            <el-table-column prop="sizeOriginal" label="Оригинальный размер" width="160"/>
+                            <el-table-column prop="sku" label="SKU" width="160"/>
+                            <el-table-column prop="url" label="URL" show-overflow-tooltip/>
+                            <el-table-column prop="price" label="Цена" width="100"/>
+                            <el-table-column prop="available" label="Доступен" width="100" align="center">
+                                <template #default="scope">
+                                    <Active :active="scope.row.available"/>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="values" label="Значения">
+                                <template #default="scope">
+                                    {{ formatValues(scope.row.values) }}
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="code" label="Артикул" width="160"/>
-            <el-table-column prop="name" label="Товар" show-overflow-tooltip/>
-            <el-table-column prop="priceSell" label="Цена продажи" width="120"/>
-            <el-table-column prop="priceBase" label="Цена базовая" width="120"/>
-            <el-table-column prop="productId" label="Есть в каталоге" width="120">
-                <template #default="scope">
 
-                    <Active :active="scope.row.productId !== null"/>
-                </template>
-            </el-table-column>
-            <el-table-column prop="availability" label="Доступен" width="120">
+            <el-table-column prop="code" label="Артикул" width="140"/>
+            <el-table-column prop="name" label="Товар" show-overflow-tooltip/>
+            <el-table-column prop="url" label="URL" width="200" show-overflow-tooltip/>
+            <el-table-column prop="makerId" label="ID в магазине бренда" width="160" show-overflow-tooltip/>
+            <el-table-column prop="brandId" label="Бренд ID" width="90" align="center"/>
+            <el-table-column prop="priceSell" label="Цена продажи" width="110"/>
+            <el-table-column prop="priceBase" label="Цена базовая" width="110"/>
+            <el-table-column prop="availability" label="Доступен" width="110">
                 <template #default="scope">
                     <Active :active="scope.row.availability"/>
                 </template>
             </el-table-column>
-            <el-table-column label="Действия">
+            <el-table-column prop="productId" label="Есть в каталоге" width="130">
+                <template #default="scope">
+                    <Active :active="scope.row.productId !== null"/>
+                </template>
+            </el-table-column>
+
+            <el-table-column label="Действия" fixed="right" width="260">
                 <template #default="scope">
                     <el-button :type="scope.row.availability ? 'info' : 'success'" size="small"
                                @click.stop="onAvailable(scope.row)">
                         {{ scope.row.availability ? 'Недоступен' : 'Доступен' }}
-                    </el-button>
-                    <el-button :type="scope.row.fragile ? 'success' : 'warning'" size="small"
-                               @click.stop="onFragile(scope.row)">
-                        {{ scope.row.fragile ? 'Не Хрупкий' : 'Хрупкий' }}
-                    </el-button>
-                    <el-button :type="scope.row.sanctioned ? 'success' : 'danger'" size="small"
-                               @click.stop="onSanctioned(scope.row)">
-                        {{ scope.row.sanctioned ? 'Не Санкционный' : 'Санкционный' }}
                     </el-button>
 
                     <el-button type="success" size="small" @click.stop="onParser(scope.row)">
                         Спарсить
                     </el-button>
 
-
                     <el-button v-if="scope.row.productId === null" type="success" size="small" plain @click="toCatalog(scope.row)">
                         В Каталог
                     </el-button>
-
                 </template>
             </el-table-column>
         </el-table>
@@ -96,11 +109,14 @@ interface Product {
     id: number
     code: string
     name: string
-    image: string | null
-    available: boolean
-    fragile: boolean
-    sanctioned: boolean,
+    url: string
+    availability: boolean
     productId: number | null
+    brandId: number | null
+    makerId: string
+    priceSell: number
+    priceBase: number
+    sizes: any[]
 }
 
 const tableData = ref<Product[]>([])
@@ -113,9 +129,11 @@ const pagination = ref<Pagination>({
     data: [],
 })
 const currentPage = ref(1);
+
 onMounted(() => {
     fetchProducts(1)
 })
+
 function fetchProducts(page: number = 1) {
     currentPage.value = page
     loading.value = true
@@ -123,23 +141,6 @@ function fetchProducts(page: number = 1) {
         .then(response => {
             pagination.value = response.data
             tableData.value = response.data.data
-
-            // Загружаем изображения для полученных товаров
-            const ids = response.data.data.map((p: Product) => p.id)
-            if (ids.length > 0) {
-                axios.get(route('admin.photo.get-by-ids'), {
-                    params: {
-                        imageableIds: ids,
-                        modelType: 'parser.product',
-                        type: 'gallery',
-                    }
-                }).then(photoResponse => {
-                    tableData.value = tableData.value.map((product: Product) => ({
-                        ...product,
-                        image: photoResponse.data[product.id] || null,
-                    }))
-                })
-            }
         })
         .finally(() => {
             loading.value = false
@@ -148,11 +149,6 @@ function fetchProducts(page: number = 1) {
 
 function onPageChange(page: number) {
     fetchProducts(page)
-}
-
-
-function routeClick(row: any) {
-    if (row.productId !== null) router.get(route('admin.catalog.product.edit', {id: row.productId}))
 }
 
 function onParser(row) {
@@ -170,28 +166,21 @@ function onAvailable(row) {
     })
 }
 
-function onFragile(row) {
-    router.visit(route('admin.parser.product.fragile', {id: row.id}), {
-        method: "post",
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: page => {
-            fetchProducts(currentPage.value)
-        }
-    })
-}
-
-function onSanctioned(row) {
-    router.visit(route('admin.parser.product.sanctioned', {id: row.id}), {
-        method: "post",
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: page => {
-            fetchProducts(currentPage.value)
-        }
-    })
-}
 function toCatalog(row) {
     router.post(route('admin.parser.product.to-catalog', {id: row.id}))
+}
+
+function formatValues(value: any): string {
+    if (Array.isArray(value)) {
+        if (value.length === 0) return ''
+        if (value.every(item => typeof item === 'string' || typeof item === 'number')) {
+            return value.join(', ')
+        }
+        return value.map(item => JSON.stringify(item)).join(', ')
+    }
+    if (value && typeof value === 'object') {
+        return Object.entries(value).map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`).join('; ')
+    }
+    return value ? String(value) : ''
 }
 </script>
