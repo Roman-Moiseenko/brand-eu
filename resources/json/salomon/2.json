@@ -1,0 +1,451 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "ProductGroup",
+            "name": "XA PRO 3D V9 GORE-TEX",
+            "description": "Stabilność, trwałość i wsparcie w pakiecie do biegania w terenie, który jest wystarczająco wytrzymały, aby stawić czoła nawet najbardziej uciążliwej przygodzie. Model XA Pro 3D V9 GORE-TEX to legendarne buty, które zawdzięczają popularność niezwykłej wytrzymałości. Są niesłychanie stabilne i wytrzymałe, a teraz jeszcze bardziej przyczepne i zapewniają długotrwałą ochronę dzięki dopasowanym wzorom kostek bieżnika i nieprzemakalnej membranie.",
+            "productGroupID": "LI3151$",
+            "brand": {
+                "@type": "Brand",
+                "name": "Salomon"
+            },
+            "variesBy": [
+                "https://schema.org/color",
+                "https://schema.org/size"
+            ],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 4.239,
+                "reviewCount": 682,
+                "worstRating": 1,
+                "bestRating": 5
+            },
+            "hasVariant": [
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "40",
+                    "sku": "L47817500026",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500026",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "40 ⅔",
+                    "sku": "L47817500027",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500027",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "41 ⅓",
+                    "sku": "L47817500028",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500028",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "42",
+                    "sku": "L47817500029",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500029",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "42 ⅔",
+                    "sku": "L47817500030",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500030",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "43 ⅓",
+                    "sku": "L47817500031",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500031",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "44",
+                    "sku": "L47817500032",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500032",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "44 ⅔",
+                    "sku": "L47817500033",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500033",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "45 ⅓",
+                    "sku": "L47817500034",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500034",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "46",
+                    "sku": "L47817500035",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500035",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "46 ⅔",
+                    "sku": "L47817500036",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500036",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "47 ⅓",
+                    "sku": "L47817500037",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500037",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "48",
+                    "sku": "L47817500038",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500038",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "@type": "Product",
+                    "name": "XA PRO 3D V9 GORE-TEX Turbulence / Black / Burnt Ochre",
+                    "image": "https://cdn.dam.salomon.com/99441504-5ab3-453c-b6d9-b2f4009419f4/L47817500/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12",
+                    "color": "Turbulence / Black / Burnt Ochre",
+                    "size": "49 ⅓",
+                    "sku": "L47817500040",
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47817500?sizeId=L47817500040",
+                        "priceCurrency": "PLN",
+                        "price": "729"
+                    }
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200026"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200027"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200028"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200029"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200030"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200031"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200032"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200033"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200034"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200035"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200036"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200037"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200038"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199200?sizeId=L49199200040"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100026"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100027"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100028"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100029"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100030"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100031"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100032"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100033"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100034"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100035"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100036"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100037"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100038"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L49199100?sizeId=L49199100040"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900026"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900027"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900028"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900029"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900030"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900031"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900032"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900033"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900034"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900035"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900036"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900037"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900038"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47881900?sizeId=L47881900040"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100026"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100027"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100028"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100029"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100030"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100031"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100032"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100033"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100034"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100035"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100036"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100037"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100038"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47270100?sizeId=L47270100040"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200026"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200027"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200028"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200029"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200030"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200031"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200032"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200033"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200034"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200035"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200036"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200037"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200038"
+                },
+                {
+                    "url": "https://www.salomon.com/pl-pl/product/xa-pro-3d-v9-gore-tex-li3151/L47820200?sizeId=L47820200040"
+                }
+            ]
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.salomon.com/pl-pl"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Obuwie",
+                    "item": "https://www.salomon.com/pl-pl/c/shoes"
+                }
+            ]
+        }
+    ]
+}

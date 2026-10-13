@@ -17,6 +17,7 @@ use App\Modules\Catalog\Presentation\Http\Controllers\Web\ProductEditController;
 use App\Modules\Catalog\Presentation\Http\Controllers\Web\RoomController;
 use App\Modules\Catalog\Presentation\Http\Controllers\Web\RoomProductController;
 use App\Modules\Catalog\Presentation\Http\Controllers\Web\SeriesController;
+use App\Modules\Catalog\Presentation\Http\Controllers\Web\SizeGridController;
 use App\Modules\Catalog\Presentation\Http\Controllers\Web\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -200,6 +201,17 @@ Route::group([
     Route::resource('modification', ModificationController::class)->parameters(['modification' => 'id']); //CRUD
     Route::resource('series', SeriesController::class)->except(['create', 'edit'])->parameters(['series' => 'id']); //CRUD
 
+    //Размерные сетки
+    Route::group([
+        'prefix' => 'size-grid',
+        'as' => 'size-grid.',
+    ], function () {
+        Route::get('/dimensions', [SizeGridController::class, 'dimensions'])->name('dimensions');
+    });
+    Route::resource('size-grid', SizeGridController::class)
+        ->except(['create', 'edit'])
+        ->parameters(['size_grid' => 'id']);
+
 
     //PRODUCT
     Route::group([
@@ -255,6 +267,8 @@ Route::group([
             Route::post('/bonus/{id}', [ProductEditController::class, 'saveBonus']);
             Route::get('/composite/{id}', [ProductEditController::class, 'loadComposite'])->name('composite');
             Route::post('/composite/{id}', [ProductEditController::class, 'saveComposite']);
+            Route::get('/size-grid/{id}', [ProductEditController::class, 'loadSizeGrid'])->name('size-grid');
+            Route::post('/size-grid/{id}', [ProductEditController::class, 'saveSizeGrid']);
         });
     });
     Route::resource('product', ProductController::class)->except(['update'])->parameters(['product' => 'id']);
