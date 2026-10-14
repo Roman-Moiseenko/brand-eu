@@ -29,12 +29,12 @@ return [
         'font_awesome' => 'fa-light fa-folder-magnifying-glass',
         'sub_menu' => [
             'category' => [
-                'title' => 'Категории Икеа',
+                'title' => 'Категории Парсера',
                 'route_name' => 'admin.parser.category.index',
                 'font_awesome' => 'fa-light fa-folder-tree',
             ],
             'product' => [
-                'title' => 'Товары Икеа',
+                'title' => 'Товары Парсера',
                 'route_name' => 'admin.parser.product.index',
                 'font_awesome' => 'fa-light fa-box-open',
             ],

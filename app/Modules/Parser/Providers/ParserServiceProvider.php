@@ -3,6 +3,7 @@
 namespace App\Modules\Parser\Providers;
 
 use App\Modules\Parser\Application\Interfaces\IkeaProductApiInterface;
+use App\Modules\Parser\Database\Seeders\ParserClassesSeeder;
 use App\Modules\Parser\Domain\Interfaces\CategoryProductParserRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserLogRepositoryInterface;
@@ -428,6 +429,7 @@ class ParserServiceProvider extends ServiceProvider
         $this->app->afterResolving('seed.handler', function ($handler) {
             $handler->register([
                 \App\Modules\Parser\Database\Seeders\ParserRoleSeeder::class,
+                ParserClassesSeeder::class,
             ]);
         });
     }

@@ -25,8 +25,6 @@ class MetaTemplate extends Model
         Product::class => 'Товар',
         Brand::class => 'Бренд',
         Category::class => 'Категория',
-        ParserProduct::class => 'Товар Икеа',
-        ParserCategory::class => 'Категория Икеа',
         Page::class => 'Страница',
         Post::class => 'Запись',
         PostCategory::class => 'Рубрика',

@@ -75,7 +75,7 @@ class LoadParserProductIkeaService
         //Список всех категорий, которые active и нет дочерних
         $categories = $this->parserCategoryRepository->getActiveLeaves();
         foreach ($categories as $category) {
-            LoadProductsIkeaJob::dispatch($category->ikeaId); //$this->GetListProductsByCategory($category->ikeaId);
+            LoadProductsIkeaJob::dispatch($category->categoryId); //$this->GetListProductsByCategory($category->ikeaId);
             if ($this->isTest) break;
         }
     }
@@ -86,14 +86,15 @@ class LoadParserProductIkeaService
      * @param string $ikeaId
      * @return void
      */
-    public function GetListProductsByCategory(string $ikeaId): void
+    public function GetListProductsByCategory(string $ikeaId): array
     {
-        $products = $this->ikeaProductApi->getProductsByCategory($ikeaId);
+        return $this->ikeaProductApi->getProductsByCategory($ikeaId);
         //Запускаем парсинг каждого товара
-        foreach ($products as $product) {
+        /*
+          foreach ($products as $product) {
             LoadProductIkeaJob::dispatch($product); //$entity = $this->CreateParserProduct($product);
-            if ($this->isTest) break;
         }
+         */
     }
 
     /**
@@ -228,7 +229,7 @@ class LoadParserProductIkeaService
         if (is_null($productEntity)) \Log::warning('Товар не обновился ' . json_encode($dto));
         //Назначаем категори
         $categories = array_map(function ($item) {
-            return $this->parserCategoryRepository->getByIkeaId($item['key'])->id;
+            return $this->parserCategoryRepository->getByCategoryId($item['key'])->id;
         }, $product['categoryPath']);
 
         $this->attachCategoriesToProductUseCase->execute($productEntity->id, $categories, $this->userPermission);

@@ -19,6 +19,10 @@ class LoadProductsIkeaJob implements ShouldQueue
 
     public function handle(LoadParserProductIkeaService $service): void
     {
-        $service->GetListProductsByCategory($this->ikeaId);
+        $products = $service->GetListProductsByCategory($this->ikeaId);
+
+        foreach ($products as $product) {
+            LoadProductIkeaJob::dispatch($product); //$entity = $this->CreateParserProduct($product);
+        }
     }
 }

@@ -26,7 +26,7 @@ class ParserCategoryIndexData extends Data
             name: $category->name,
             slug: (string) $category->slug,
             active: $category->active,
-            ikeaId: $category->ikeaId,
+            ikeaId: $category->categoryId,
             children: array_map(
                 fn(ParserCategoryEntity $child) => self::fromEntity($child),
                 $category->children

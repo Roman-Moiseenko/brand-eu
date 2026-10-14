@@ -28,9 +28,9 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         return $this->hydrateWithChildren($model);
     }
 
-    public function getByIkeaId(string $ikeaId):? ParserCategoryEntity
+    public function getByCategoryId(string $categoryId):? ParserCategoryEntity
     {
-        $model = ParserCategory::where('ikea_id', $ikeaId)->first();
+        $model = ParserCategory::where('category_id', $categoryId)->first();
         if (is_null($model)) return null;
         return $this->hydrate($model);
     }
@@ -43,7 +43,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
 
         $model->name = $category->name;
         $model->slug = $category->slug;
-        $model->ikea_id = $category->ikeaId;
+        $model->category_id = $category->categoryId;
         $model->active = $category->isActive();
         $model->brand_id = $category->brandId;
 
@@ -93,14 +93,14 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
             ->toArray();
     }
 
-    public function existsByIkeaId(string $ikeaId): bool
+    public function existsByCategoryId(string $categoryId): bool
     {
-        return ParserCategory::where('ikea_id', $ikeaId)->exists();
+        return ParserCategory::where('category_id', $categoryId)->exists();
     }
 
-    public function findByIkeaId(string $ikeaId): ?ParserCategoryEntity
+    public function findByCategoryId(string $categoryId): ?ParserCategoryEntity
     {
-        $model = ParserCategory::where('ikea_id', $ikeaId)->first();
+        $model = ParserCategory::where('category_id', $categoryId)->first();
 
         if ($model === null) {
             return null;
@@ -136,11 +136,14 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
     /**
      * @return ParserCategoryEntity[]
      */
-    public function getActiveLeaves(): array
+    public function getActiveLeaves(?int $brandId): array
     {
         // Листовые категории — те, у которых нет детей (не являются родителями для других)
-        $parentIds = ParserCategory::where('active', true)
-            ->whereNotNull('parent_id')
+        $query = ParserCategory::where('active', true);
+
+        if (!is_null($brandId)) $query->where('brand_id', $brandId);
+
+        $parentIds =$query->whereNotNull('parent_id')
             ->pluck('parent_id')
             ->unique()
             ->toArray();
@@ -201,7 +204,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         $entity = new ParserCategoryEntity(
             name: $model->name,
             slug: $model->slug ?? '',
-            ikeaId: $model->ikea_id,
+            categoryId: $model->category_id,
             parentId: $model->parent_id,
         );
 

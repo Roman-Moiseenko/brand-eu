@@ -11,11 +11,11 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 //CATEGORY
 Breadcrumbs::for('admin.parser.category.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
-    $trail->push('Категории Икеа', route('admin.parser.category.index'));
+    $trail->push('Категории Парсера', route('admin.parser.category.index'));
 });
 Breadcrumbs::for('admin.parser.product.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
-    $trail->push('Товары Икеа', route('admin.parser.product.index'));
+    $trail->push('Товары Парсера', route('admin.parser.product.index'));
 });
 
 Breadcrumbs::for('admin.parser.category.show', function (BreadcrumbTrail $trail, ParserCategory $category_parser) {

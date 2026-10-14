@@ -12,7 +12,7 @@ interface ParserCategoryRepositoryInterface
     public function getAll(): array;
 
     public function getById(int $id): ParserCategoryEntity;
-    public function getByIkeaId(string $ikeaId):? ParserCategoryEntity;
+    public function getByCategoryId(string $categoryId):? ParserCategoryEntity;
     public function save(ParserCategoryEntity $category): ParserCategoryEntity;
 
     public function delete(int $id): void;
@@ -23,9 +23,9 @@ interface ParserCategoryRepositoryInterface
     /** @return ParserCategoryEntity[] */
     public function getTreeByBrandId(int $brandId): array;
 
-    public function existsByIkeaId(string $ikeaId): bool;
+    public function existsByCategoryId(string $categoryId): bool;
 
-    public function findByIkeaId(string $ikeaId): ?ParserCategoryEntity;
+    public function findByCategoryId(string $categoryId): ?ParserCategoryEntity;
 
     public function existsSlug(string $slug, ?int $excludeId = null): bool;
 
@@ -33,7 +33,7 @@ interface ParserCategoryRepositoryInterface
     public function getActiveRoots(): array;
 
     /** @return ParserCategoryEntity[] */
-    public function getActiveLeaves(): array;
+    public function getActiveLeaves(?int $brandId): array;
 
     public function hasChildren(int $id): bool;
 

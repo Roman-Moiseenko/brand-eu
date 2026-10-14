@@ -47,7 +47,7 @@ readonly class LoadParserCategoryIkeaService
 
     public function addCategory($categoryData, $parent_id = null): void
     {
-        if (!is_null($this->parserCategoryRepository->getByIkeaId($categoryData['id']))) return;
+        if (!is_null($this->parserCategoryRepository->getByCategoryId($categoryData['id']))) return;
 
         $name = $this->translate->translate($categoryData['name']);
         $dto = new ParserCategoryCreateData(

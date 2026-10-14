@@ -26,9 +26,9 @@ final class ParserCategoryEntity
     }
 
     /** Уникальный идентификатор для предотвращения дублирования парсинга */
-    public string $ikeaId {
-        get => $this->ikeaId;
-        set => $this->ikeaId = $value;
+    public string $categoryId {
+        get => $this->categoryId;
+        set => $this->categoryId = $value;
     }
 
     public bool $active = true {
@@ -75,12 +75,12 @@ final class ParserCategoryEntity
     public function __construct(
         string $name,
         string $slug,
-        string $ikeaId,
+        string $categoryId,
         ?int $parentId = null,
     ) {
         $this->name = $name;
         $this->slug = $slug;
-        $this->ikeaId = $ikeaId;
+        $this->categoryId = $categoryId;
         $this->parentId = $parentId;
     }
 
