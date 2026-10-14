@@ -14,7 +14,8 @@ class ParserCategoryIndexData extends Data
         public readonly string $name,
         public readonly string $slug,
         public readonly bool $active,
-        public readonly string $ikeaId,
+        public readonly string $code,
+        public readonly ?int $categoryId = null,
         /** @var ParserCategoryIndexData[] */
         public readonly array $children = [],
     ) {}
@@ -26,7 +27,8 @@ class ParserCategoryIndexData extends Data
             name: $category->name,
             slug: (string) $category->slug,
             active: $category->active,
-            ikeaId: $category->categoryId,
+            code: $category->code,
+            categoryId: $category->categoryId,
             children: array_map(
                 fn(ParserCategoryEntity $child) => self::fromEntity($child),
                 $category->children

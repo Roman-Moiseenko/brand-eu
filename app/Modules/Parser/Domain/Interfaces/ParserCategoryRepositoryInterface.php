@@ -12,7 +12,7 @@ interface ParserCategoryRepositoryInterface
     public function getAll(): array;
 
     public function getById(int $id): ParserCategoryEntity;
-    public function getByCategoryId(string $categoryId):? ParserCategoryEntity;
+    public function getByCode(string $code):? ParserCategoryEntity;
     public function save(ParserCategoryEntity $category): ParserCategoryEntity;
 
     public function delete(int $id): void;
@@ -23,9 +23,9 @@ interface ParserCategoryRepositoryInterface
     /** @return ParserCategoryEntity[] */
     public function getTreeByBrandId(int $brandId): array;
 
-    public function existsByCategoryId(string $categoryId): bool;
+    public function existsByCode(string $code): bool;
 
-    public function findByCategoryId(string $categoryId): ?ParserCategoryEntity;
+    public function findByCode(string $code): ?ParserCategoryEntity;
 
     public function existsSlug(string $slug, ?int $excludeId = null): bool;
 

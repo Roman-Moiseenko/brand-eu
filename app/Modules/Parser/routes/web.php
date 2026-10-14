@@ -19,6 +19,7 @@ Route::group([
         Route::post('/toggle/{id}', [CategoryParserController::class, 'toggle'])->name('toggle');
         Route::get('/categories-by-brand/{brandId}', [CategoryParserController::class, 'categoriesByBrand'])->name('categories-by-brand');
         Route::get('/{category_parser}', [CategoryParserController::class, 'show'])->name('show');
+        Route::post('/catalog/{category_parser}', [CategoryParserController::class, 'setCatalog'])->name('catalog');
         Route::post('/parser-products/{category_parser}', [CategoryParserController::class, 'parser_products'])->name('parser-products');
         Route::get('/', [CategoryParserController::class, 'index'])->name('index');
         Route::get('/products/{id}', [CategoryParserController::class, 'products'])->name('products');

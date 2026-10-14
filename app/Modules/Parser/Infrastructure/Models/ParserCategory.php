@@ -15,7 +15,8 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $id
  * @property string $name
  * @property string $slug
- * @property string $category_id уникальный для исключения двойного парсинга
+ * @property string $code уникальный для исключения двойного парсинга
+ * @property int|null $category_id связанная категория каталога
  * @property bool $active
  * @property int $parent_id
  * @property int $brand_id
@@ -38,6 +39,7 @@ class ParserCategory extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'code',
         'category_id',
         'active',
         'slug',
@@ -50,6 +52,11 @@ class ParserCategory extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function products(): BelongsToMany

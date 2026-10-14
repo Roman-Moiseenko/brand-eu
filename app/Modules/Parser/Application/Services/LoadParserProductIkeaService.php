@@ -75,7 +75,7 @@ class LoadParserProductIkeaService
         //Список всех категорий, которые active и нет дочерних
         $categories = $this->parserCategoryRepository->getActiveLeaves();
         foreach ($categories as $category) {
-            LoadProductsIkeaJob::dispatch($category->categoryId); //$this->GetListProductsByCategory($category->ikeaId);
+            LoadProductsIkeaJob::dispatch($category->code); //$this->GetListProductsByCategory($category->code);
             if ($this->isTest) break;
         }
     }
@@ -229,7 +229,7 @@ class LoadParserProductIkeaService
         if (is_null($productEntity)) \Log::warning('Товар не обновился ' . json_encode($dto));
         //Назначаем категори
         $categories = array_map(function ($item) {
-            return $this->parserCategoryRepository->getByCategoryId($item['key'])->id;
+            return $this->parserCategoryRepository->getByCode($item['key'])->id;
         }, $product['categoryPath']);
 
         $this->attachCategoriesToProductUseCase->execute($productEntity->id, $categories, $this->userPermission);

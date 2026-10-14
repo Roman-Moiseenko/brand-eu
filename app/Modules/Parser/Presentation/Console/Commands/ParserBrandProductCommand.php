@@ -28,7 +28,7 @@ class ParserBrandProductCommand extends Command
 
             foreach ($categories as $category) {
                 //FixMe Запуск через Job
-                $products = $parser->GetListProductsByCategory($category->categoryId);
+                $products = $parser->GetListProductsByCategory($category->code);
                 foreach ($products as $product) {
                     $parser->GetParserProduct($product);
                 }

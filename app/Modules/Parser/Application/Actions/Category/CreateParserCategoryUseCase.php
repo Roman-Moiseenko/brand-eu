@@ -33,7 +33,7 @@ readonly class CreateParserCategoryUseCase
         $category = new ParserCategoryEntity(
             name: $dto->name,
             slug: $slug,
-            ikeaId: $dto->ikeaId,
+            code: $dto->code,
             parentId: $dto->parentId ?: null,
         );
 

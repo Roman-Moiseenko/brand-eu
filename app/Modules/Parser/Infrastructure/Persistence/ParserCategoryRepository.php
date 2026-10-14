@@ -28,9 +28,9 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         return $this->hydrateWithChildren($model);
     }
 
-    public function getByCategoryId(string $categoryId):? ParserCategoryEntity
+    public function getByCode(string $code):? ParserCategoryEntity
     {
-        $model = ParserCategory::where('category_id', $categoryId)->first();
+        $model = ParserCategory::where('code', $code)->first();
         if (is_null($model)) return null;
         return $this->hydrate($model);
     }
@@ -43,6 +43,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
 
         $model->name = $category->name;
         $model->slug = $category->slug;
+        $model->code = $category->code;
         $model->category_id = $category->categoryId;
         $model->active = $category->isActive();
         $model->brand_id = $category->brandId;
@@ -93,14 +94,14 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
             ->toArray();
     }
 
-    public function existsByCategoryId(string $categoryId): bool
+    public function existsByCode(string $code): bool
     {
-        return ParserCategory::where('category_id', $categoryId)->exists();
+        return ParserCategory::where('code', $code)->exists();
     }
 
-    public function findByCategoryId(string $categoryId): ?ParserCategoryEntity
+    public function findByCode(string $code): ?ParserCategoryEntity
     {
-        $model = ParserCategory::where('category_id', $categoryId)->first();
+        $model = ParserCategory::where('code', $code)->first();
 
         if ($model === null) {
             return null;
@@ -204,13 +205,14 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         $entity = new ParserCategoryEntity(
             name: $model->name,
             slug: $model->slug ?? '',
-            categoryId: $model->category_id,
+            code: $model->code,
             parentId: $model->parent_id,
         );
 
         $entity->id = $model->id;
         $entity->active = $model->active;
         $entity->brandId = $model->brand_id;
+        $entity->categoryId = $model->category_id;
 
         // Nested Set поля
         $entity->left = $model->_lft ?? 0;

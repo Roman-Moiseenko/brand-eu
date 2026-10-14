@@ -6,8 +6,8 @@
             <el-row :gutter="10">
                 <el-col :span="12">
                     <el-descriptions :column="2" border class="mb-5">
-                        <el-descriptions-item label="Id Категории в Ikea">
-                            {{ category.ikeaId}}
+                        <el-descriptions-item label="Код категории">
+                            {{ category.code }}
                         </el-descriptions-item>
                         <el-descriptions-item label="Доступна для парсинга">
                             <Active :active="category.active" />

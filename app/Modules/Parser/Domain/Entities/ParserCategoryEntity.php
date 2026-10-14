@@ -25,10 +25,10 @@ final class ParserCategoryEntity
         set => $this->slug = $value;
     }
 
-    /** Уникальный идентификатор для предотвращения дублирования парсинга */
-    public string $categoryId {
-        get => $this->categoryId;
-        set => $this->categoryId = $value;
+    /** Уникальный код категории для предотвращения дублирования парсинга */
+    public string $code {
+        get => $this->code;
+        set => $this->code = $value;
     }
 
     public bool $active = true {
@@ -46,6 +46,12 @@ final class ParserCategoryEntity
     public ?int $brandId = null {
         get => $this->brandId;
         set => $this->brandId = $value;
+    }
+
+    /** Связанная категория каталога (Catalog\Category::id) */
+    public ?int $categoryId = null {
+        get => $this->categoryId;
+        set => $this->categoryId = $value;
     }
 
     public int $left = 0 {
@@ -75,12 +81,12 @@ final class ParserCategoryEntity
     public function __construct(
         string $name,
         string $slug,
-        string $categoryId,
+        string $code,
         ?int $parentId = null,
     ) {
         $this->name = $name;
         $this->slug = $slug;
-        $this->categoryId = $categoryId;
+        $this->code = $code;
         $this->parentId = $parentId;
     }
 
