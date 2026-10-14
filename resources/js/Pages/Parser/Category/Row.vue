@@ -14,6 +14,42 @@
             <span class="text-cyan-800">{{ category.url }}</span>
         </div>
 
+        <div class="ml-4 flex items-center" style="gap: 8px;">
+            <el-select
+                v-model="selectedCategoryId"
+                placeholder="Категория каталога"
+                filterable
+                clearable
+                size="small"
+                style="width: 220px;"
+                @change="onCategoryChange"
+            >
+                <el-option
+                    v-for="item in catalogStore.categories"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                />
+            </el-select>
+
+            <el-select
+                v-model="selectedSizeGridId"
+                placeholder="Размерная сетка"
+                filterable
+                clearable
+                size="small"
+                style="width: 220px;"
+                @change="onSizeGridChange"
+            >
+                <el-option
+                    v-for="item in catalogStore.sizeGrids"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                />
+            </el-select>
+        </div>
+
         <div class="ml-5 text-center" style="width: 150px;">
             <span v-if="isChildren">
                 {{ category.children.length }}
@@ -55,15 +91,21 @@
 <script setup lang="ts">
 import {router, Link} from "@inertiajs/vue3";
 import {computed, inject, onActivated, reactive, ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 import CategoryChildren from "./Children.vue";
 import Active from "@Comp/Elements/Active.vue";
 import {route} from "ziggy-js";
+import {useCatalogStore} from "@Res/catalogStore.ts";
 
 const props = defineProps({
     category: Object,
     product_categories: Array,
 })
 const $emit = defineEmits(['delete:category'])
+
+const catalogStore = useCatalogStore()
+
 const visible_create = ref(false)
 const form = reactive({
     name: null,
@@ -75,7 +117,36 @@ const isChildren = ref(props.category.children.length > 0)
 const showChildren = computed(() => {
     return isChildren && checkChildren.value
 })
-const category_id = ref(null)
+
+const selectedCategoryId = computed({
+    get: () => props.category.categoryId ?? null,
+    set: (value) => {
+        props.category.categoryId = value
+    },
+})
+
+const selectedSizeGridId = computed({
+    get: () => props.category.sizeGridId ?? null,
+    set: (value) => {
+        props.category.sizeGridId = value
+    },
+})
+
+function applyCategoryToTree(node, value) {
+    if (!node) return
+    node.categoryId = value
+    if (Array.isArray(node.children)) {
+        node.children.forEach(child => applyCategoryToTree(child, value))
+    }
+}
+
+function applySizeGridToTree(node, value) {
+    if (!node) return
+    node.sizeGridId = value
+    if (Array.isArray(node.children)) {
+        node.children.forEach(child => applySizeGridToTree(child, value))
+    }
+}
 
 function onToggle() {
     router.visit(route('admin.parser.category.toggle', {id: props.category.id}), {
@@ -85,6 +156,32 @@ function onToggle() {
         onSuccess: page => {
             console.log(page.props)
         }
+    })
+}
+
+function onCategoryChange(value) {
+    const categoryId = value || null
+    applyCategoryToTree(props.category, categoryId)
+
+    axios.post(route('admin.parser.category.catalog', {category_parser: props.category.id}), {
+        category_id: categoryId,
+    }).then(() => {
+        ElMessage.success('Сохранено')
+    }).catch(() => {
+        ElMessage.error('Ошибка сохранения')
+    })
+}
+
+function onSizeGridChange(value) {
+    const sizeGridId = value || null
+    applySizeGridToTree(props.category, sizeGridId)
+
+    axios.post(route('admin.parser.category.size-grid', {category_parser: props.category.id}), {
+        size_grid_id: sizeGridId,
+    }).then(() => {
+        ElMessage.success('Сохранено')
+    }).catch(() => {
+        ElMessage.error('Ошибка сохранения')
     })
 }
 

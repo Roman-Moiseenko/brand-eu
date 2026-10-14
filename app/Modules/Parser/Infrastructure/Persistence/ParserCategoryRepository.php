@@ -42,9 +42,10 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
             : new ParserCategory();
 
         $model->name = $category->name;
-        $model->slug = $category->slug;
+        $model->url = $category->url;
         $model->code = $category->code;
         $model->category_id = $category->categoryId;
+        $model->size_grid_id = $category->sizeGridId;
         $model->active = $category->isActive();
         $model->brand_id = $category->brandId;
 
@@ -196,6 +197,24 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         ParserCategory::whereIn('id', $ids)->update(['active' => $active]);
     }
 
+    public function bulkSetCategoryId(array $ids, ?int $categoryId): void
+    {
+        if (empty($ids)) {
+            return;
+        }
+
+        ParserCategory::whereIn('id', $ids)->update(['category_id' => $categoryId]);
+    }
+
+    public function bulkSetSizeGridId(array $ids, ?int $sizeGridId): void
+    {
+        if (empty($ids)) {
+            return;
+        }
+
+        ParserCategory::whereIn('id', $ids)->update(['size_grid_id' => $sizeGridId]);
+    }
+
     // ============================================================
     //  Hydrate — преобразование Eloquent Model -> Domain Entity
     // ============================================================
@@ -204,15 +223,17 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
     {
         $entity = new ParserCategoryEntity(
             name: $model->name,
-            slug: $model->slug ?? '',
             code: $model->code,
+            brandId: $model->brand_id ?? '',
             parentId: $model->parent_id,
         );
 
         $entity->id = $model->id;
+        $entity->url = $model->url;
         $entity->active = $model->active;
         $entity->brandId = $model->brand_id;
         $entity->categoryId = $model->category_id;
+        $entity->sizeGridId = $model->size_grid_id;
 
         // Nested Set поля
         $entity->left = $model->_lft ?? 0;

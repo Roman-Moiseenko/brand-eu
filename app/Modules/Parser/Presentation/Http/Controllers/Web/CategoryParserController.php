@@ -7,6 +7,7 @@ use App\Modules\Parser\Application\Actions\Brand\ListParserBrandQuery;
 use App\Modules\Parser\Application\Actions\Category\IndexParserCategoryUseCase;
 use App\Modules\Parser\Application\Actions\Category\ListParserCategoryByBrandQuery;
 use App\Modules\Parser\Application\Actions\Category\SetParserCategoryCatalogUseCase;
+use App\Modules\Parser\Application\Actions\Category\SetParserCategorySizeGridUseCase;
 use App\Modules\Parser\Application\Actions\Category\ViewParserCategoryUseCase;
 use App\Modules\Parser\Application\Actions\Product\ListAllProductByCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryIndexData;
@@ -31,6 +32,7 @@ class CategoryParserController extends Controller
         private readonly ListParserBrandQuery $listParserBrandQuery,
         private readonly ListParserCategoryByBrandQuery $listParserCategoryByBrandQuery,
         private readonly SetParserCategoryCatalogUseCase $setParserCategoryCatalogUseCase,
+        private readonly SetParserCategorySizeGridUseCase $setParserCategorySizeGridUseCase,
     )
     {
     }
@@ -73,15 +75,32 @@ class CategoryParserController extends Controller
         return response()->json(['message' => 'Поставлено в очередь']);
     }
 
-    public function setCatalog(ParserCategory $category_parser, Request $request, UserPermission $userPermission): RedirectResponse
+    public function setCatalog(ParserCategory $category_parser, Request $request, UserPermission $userPermission): JsonResponse
     {
+        $categoryId = $request->input('category_id');
+        $categoryId = is_numeric($categoryId) ? (int) $categoryId : null;
+
         $this->setParserCategoryCatalogUseCase->execute(
             $category_parser->id,
-            $request->integer('category_id'),
+            $categoryId,
             $userPermission,
         );
 
-        return redirect()->back()->with('success', 'Категория каталога привязана');
+        return response()->json(['message' => 'Категория каталога сохранена']);
+    }
+
+    public function setSizeGrid(ParserCategory $category_parser, Request $request, UserPermission $userPermission): JsonResponse
+    {
+        $sizeGridId = $request->input('size_grid_id');
+        $sizeGridId = is_numeric($sizeGridId) ? (int) $sizeGridId : null;
+
+        $this->setParserCategorySizeGridUseCase->execute(
+            $category_parser->id,
+            $sizeGridId,
+            $userPermission,
+        );
+
+        return response()->json(['message' => 'Размерная сетка сохранена']);
     }
 
     public function products(int $id, Request $request): JsonResponse

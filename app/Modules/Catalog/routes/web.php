@@ -206,6 +206,7 @@ Route::group([
         'prefix' => 'size-grid',
         'as' => 'size-grid.',
     ], function () {
+        Route::get('/list', [SizeGridController::class, 'list'])->name('list');
         Route::get('/dimensions', [SizeGridController::class, 'dimensions'])->name('dimensions');
     });
     Route::resource('size-grid', SizeGridController::class)

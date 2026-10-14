@@ -20,9 +20,9 @@ final class ParserCategoryEntity
         set => $this->name = $value;
     }
 
-    public string $slug {
-        get => $this->slug;
-        set => $this->slug = $value;
+    public string $url {
+        get => $this->url;
+        set => $this->url = $value;
     }
 
     /** Уникальный код категории для предотвращения дублирования парсинга */
@@ -54,6 +54,12 @@ final class ParserCategoryEntity
         set => $this->categoryId = $value;
     }
 
+    /** Связанная размерная сетка каталога (Catalog\SizeGrid::id) */
+    public ?int $sizeGridId = null {
+        get => $this->sizeGridId;
+        set => $this->sizeGridId = $value;
+    }
+
     public int $left = 0 {
         get => $this->left;
         set => $this->left = $value;
@@ -80,13 +86,14 @@ final class ParserCategoryEntity
 
     public function __construct(
         string $name,
-        string $slug,
         string $code,
+        int $brandId,
+
         ?int $parentId = null,
     ) {
         $this->name = $name;
-        $this->slug = $slug;
         $this->code = $code;
+        $this->brandId = $brandId;
         $this->parentId = $parentId;
     }
 

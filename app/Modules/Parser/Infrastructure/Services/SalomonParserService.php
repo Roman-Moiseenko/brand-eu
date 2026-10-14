@@ -10,7 +10,7 @@ class SalomonParserService implements ParserServiceInterface
 
     public function getListCategories(): array
     {
-        // TODO: Implement getListCategories() method.
+        return [' --- '];
     }
 
     public function addCategory($categoryData, ?int $parent_id = null): void

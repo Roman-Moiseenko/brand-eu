@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Catalog\Application\Actions\SizeGrid\CreateSizeGridUseCase;
 use App\Modules\Catalog\Application\Actions\SizeGrid\IndexSizeGridQuery;
 use App\Modules\Catalog\Application\Actions\SizeGrid\ListSizeGridDimensionsQuery;
+use App\Modules\Catalog\Application\Actions\SizeGrid\ListSizeGridQuery;
 use App\Modules\Catalog\Application\Actions\SizeGrid\RemoveSizeGridUseCase;
 use App\Modules\Catalog\Application\Actions\SizeGrid\UpdateSizeGridUseCase;
 use App\Modules\Catalog\Application\Actions\SizeGrid\ViewSizeGridQuery;
@@ -30,6 +31,7 @@ class SizeGridController extends Controller
         private readonly UpdateSizeGridUseCase $updateSizeGridUseCase,
         private readonly RemoveSizeGridUseCase $removeSizeGridUseCase,
         private readonly ListSizeGridDimensionsQuery $listSizeGridDimensionsQuery,
+        private readonly ListSizeGridQuery $listSizeGridQuery,
     ) {
     }
 
@@ -85,5 +87,10 @@ class SizeGridController extends Controller
     public function dimensions(): JsonResponse
     {
         return response()->json($this->listSizeGridDimensionsQuery->execute());
+    }
+
+    public function list(): JsonResponse
+    {
+        return response()->json($this->listSizeGridQuery->execute());
     }
 }

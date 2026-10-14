@@ -17,25 +17,20 @@ readonly class CreateParserCategoryUseCase
     {
     }
 
-    public function execute(ParserCategoryCreateData $dto, UserPermission $userPermission): ParserCategoryEntity
+    public function execute(ParserCategoryCreateData $dto): ParserCategoryEntity
     {
-        // Проверка прав доступа
-        if (!$userPermission->can('parser.category.create')) throw new AccessDeniedException();
+        $category = $this->categoryRepository->findByCode($dto->code);
 
 
-        $slug = new Slug($dto->name);
-
-        // Если slug занят, добавляем суффикс
-        if ($this->categoryRepository->existsSlug((string)$slug)) {
-            $slug = new Slug((string)$slug . '-' . uniqid());
-        }
+        if (!is_null($category)) return $category;
 
         $category = new ParserCategoryEntity(
             name: $dto->name,
-            slug: $slug,
             code: $dto->code,
+            brandId: $dto->brandId,
             parentId: $dto->parentId ?: null,
         );
+        $category->url = $dto->url;
 
         return $this->categoryRepository->save($category);
     }

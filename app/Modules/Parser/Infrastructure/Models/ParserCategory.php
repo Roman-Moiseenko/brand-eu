@@ -5,6 +5,7 @@ namespace App\Modules\Parser\Infrastructure\Models;
 use App\Modules\Base\Traits\ImageField;
 use App\Modules\Catalog\Infrastructure\Models\Brand;
 use App\Modules\Catalog\Infrastructure\Models\Category;
+use App\Modules\Catalog\Infrastructure\Models\SizeGrid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,13 +15,13 @@ use Kalnoy\Nestedset\NodeTrait;
 /**
  * @property int $id
  * @property string $name
- * @property string $slug
  * @property string $code уникальный для исключения двойного парсинга
  * @property int|null $category_id связанная категория каталога
+ * @property int|null $size_grid_id связанная размерная сетка каталога
  * @property bool $active
  * @property int $parent_id
  * @property int $brand_id
- * @property int $size_grid_id
+ * @property string $url
  *
  * @property int $_lft
  * @property int $_rgt
@@ -41,9 +42,11 @@ class ParserCategory extends Model
         'parent_id',
         'code',
         'category_id',
+        'size_grid_id',
         'active',
         'slug',
         'brand_id',
+        'url',
     ];
     protected $casts = [
         'active' => 'boolean',
@@ -57,6 +60,11 @@ class ParserCategory extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function sizeGrid(): BelongsTo
+    {
+        return $this->belongsTo(SizeGrid::class, 'size_grid_id', 'id');
     }
 
     public function products(): BelongsToMany

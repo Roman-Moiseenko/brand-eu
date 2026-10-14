@@ -165,7 +165,7 @@ class HttpPage
                     curl_setopt($curl, CURLOPT_PROXY, $this->parser->proxy_ip);
                     curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->parser->proxy_user);
                 }
-
+                curl_setopt($curl, CURLOPT_ENCODING, '');
                 $result["response"] = curl_exec($curl);
 
                 if (!curl_errno($curl)) {

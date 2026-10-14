@@ -16,8 +16,12 @@ class ParserCategoryCreateData extends Data
         public readonly string $name,
         #[Required, StringType, Max(255)]
         public readonly string $code,
+        #[Required, Numeric]
+        public readonly ?int   $brandId,
         #[Nullable, Numeric]
-        public readonly ?int $parentId,
+        public readonly ?int   $parentId,
+        #[Nullable, StringType, Max(255)]
+        public readonly string $url,
     )
     {
     }

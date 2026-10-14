@@ -20,6 +20,9 @@ use App\Modules\Parser\Presentation\Console\Commands\IkeaClearData;
 use App\Modules\Parser\Presentation\Console\Commands\IkeaProductCommand;
 use App\Modules\Parser\Presentation\Console\Commands\IkeaProductPhotoCommand;
 use App\Modules\Parser\Presentation\Console\Commands\IkeaRenameCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserBrandCategoryCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserTestBrandCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -146,6 +149,9 @@ class ParserServiceProvider extends ServiceProvider
             IkeaRenameCommand::class,
             IkeaCheckCommand::class,
             IkeaProductPhotoCommand::class,
+            ParserBrandCategoryCommand::class,
+            ParserBrandProductCommand::class,
+            ParserTestBrandCommand::class,
         ]);
     }
 

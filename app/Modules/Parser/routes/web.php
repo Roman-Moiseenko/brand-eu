@@ -20,6 +20,7 @@ Route::group([
         Route::get('/categories-by-brand/{brandId}', [CategoryParserController::class, 'categoriesByBrand'])->name('categories-by-brand');
         Route::get('/{category_parser}', [CategoryParserController::class, 'show'])->name('show');
         Route::post('/catalog/{category_parser}', [CategoryParserController::class, 'setCatalog'])->name('catalog');
+        Route::post('/size-grid/{category_parser}', [CategoryParserController::class, 'setSizeGrid'])->name('size-grid');
         Route::post('/parser-products/{category_parser}', [CategoryParserController::class, 'parser_products'])->name('parser-products');
         Route::get('/', [CategoryParserController::class, 'index'])->name('index');
         Route::get('/products/{id}', [CategoryParserController::class, 'products'])->name('products');

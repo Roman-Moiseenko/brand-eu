@@ -43,4 +43,10 @@ interface ParserCategoryRepositoryInterface
     public function toggleActive(int $id): void;
 
     public function bulkToggleActive(array $ids, bool $active): void;
+
+    /** @param int[] $ids */
+    public function bulkSetCategoryId(array $ids, ?int $categoryId): void;
+
+    /** @param int[] $ids */
+    public function bulkSetSizeGridId(array $ids, ?int $sizeGridId): void;
 }

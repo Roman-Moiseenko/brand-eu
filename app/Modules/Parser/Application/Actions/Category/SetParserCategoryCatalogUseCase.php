@@ -19,20 +19,30 @@ readonly class SetParserCategoryCatalogUseCase
 
     /**
      * Устанавливает связанную категорию каталога (Catalog\Category::id)
-     * для категории парсера.
+     * для категории парсера. Если передан null — связь сбрасывается.
      */
-    public function execute(int $parserCategoryId, int $categoryId, UserPermission $userPermission): ParserCategoryEntity
+    public function execute(int $parserCategoryId, ?int $categoryId, UserPermission $userPermission): ParserCategoryEntity
     {
         if (!$userPermission->can('parser.category.edit')) {
             throw new AccessDeniedException();
         }
 
         // Убеждаемся, что категория каталога существует (выбросит исключение, если нет)
-        $this->catalogCategoryRepository->getById($categoryId);
+        if ($categoryId !== null) {
+            $this->catalogCategoryRepository->getById($categoryId);
+        }
 
         $category = $this->categoryRepository->getById($parserCategoryId);
         $category->categoryId = $categoryId;
 
-        return $this->categoryRepository->save($category);
+        $saved = $this->categoryRepository->save($category);
+
+        // Распространяем на все дочерние категории
+        $descendantIds = $this->categoryRepository->getDescendantIds($parserCategoryId);
+        if (!empty($descendantIds)) {
+            $this->categoryRepository->bulkSetCategoryId($descendantIds, $categoryId);
+        }
+
+        return $saved;
     }
 }

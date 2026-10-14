@@ -12,10 +12,10 @@ class ParserCategoryIndexData extends Data
     public function __construct(
         public readonly int $id,
         public readonly string $name,
-        public readonly string $slug,
         public readonly bool $active,
         public readonly string $code,
         public readonly ?int $categoryId = null,
+        public readonly ?int $sizeGridId = null,
         /** @var ParserCategoryIndexData[] */
         public readonly array $children = [],
     ) {}
@@ -25,10 +25,10 @@ class ParserCategoryIndexData extends Data
         return new self(
             id: $category->id,
             name: $category->name,
-            slug: (string) $category->slug,
             active: $category->active,
             code: $category->code,
             categoryId: $category->categoryId,
+            sizeGridId: $category->sizeGridId,
             children: array_map(
                 fn(ParserCategoryEntity $child) => self::fromEntity($child),
                 $category->children
