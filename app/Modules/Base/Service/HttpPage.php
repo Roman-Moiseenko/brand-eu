@@ -35,7 +35,7 @@ class HttpPage
         return !is_null($this->cache);
     }
 
-    public function getPage(string $url, string $prefix = '', bool $not_proxy = false): ?string
+    public function getPage(string $url, string $prefix = '', bool $withProxy = true, bool $withEncode = false): ?string
     {
         $result = null;
         if ($this->isUseCache()) {
@@ -46,7 +46,7 @@ class HttpPage
                 $result = $val;
             } else {
                 //$res = array("error" => null, "response" => FALSE);
-                $res = $this->request($url, $not_proxy);
+                $res = $this->request($url, $withProxy, $withEncode);
                 if ($res['http_code'] != '200') {
                     //var_dump($res);
                     return null;
@@ -57,7 +57,7 @@ class HttpPage
                 }
             }
         } else {
-            $res = $this->request($url, $not_proxy);
+            $res = $this->request($url, $withProxy, $withEncode);
             if ($res['error'] === NULL) {
                 $result = $res["response"];
             }
@@ -133,26 +133,52 @@ class HttpPage
         return $result;
     }
 
-    protected function request($url, bool $not_proxy = false): array
+    protected function request($url, bool $withProxy = true, bool $withEncode = false): array
     {
-
+        $_url = '';
         $result = ["error" => null, "response" => FALSE, "http_code" => '200'];
+
+        $host = parse_url($_url . $url, PHP_URL_HOST) ?: 'default';
+        $cookieFile = sys_get_temp_dir() . '/cookies_' . md5($host) . '.txt';
+        $headers = [
+            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+            "Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Cache-Control: no-cache",
+            "Pragma: no-cache",
+            "Upgrade-Insecure-Requests: 1",
+            "Sec-Fetch-Dest: document",
+            "Sec-Fetch-Mode: navigate",
+            "Sec-Fetch-Site: none",
+            "Sec-Fetch-User: ?1",
+            "sec-ch-ua: \"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"",
+            "sec-ch-ua-mobile: ?0",
+            "sec-ch-ua-platform: \"Windows\"",
+        ];
+
+        /*
+
         $headers = [
             "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0",
-            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            //"Accept-Encoding: gzip, deflate",
+            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,* /*;q=0.8",
             "Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3",
             "Cache-Control: max-age=0",
             "Connection: keep-alive",
             "x-client-id: b6c117e5-ae61-4ef5-b4cc-e0b1e37f0631"
         ];
+        */
+
         if ($curl = curl_init()) {
-            $_url = '';
+            //$_url = '';
             if (count($this->parsdomains) > 0) {
                 $_url = array_shift($this->parsdomains);
                 $this->parsdomains[] = $_url;
             }
             try {
+
+
+
+
                 curl_setopt($curl, CURLOPT_URL, $_url . $url);
                 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
                 curl_setopt($curl, CURLOPT_TIMEOUT, 60);
@@ -161,11 +187,21 @@ class HttpPage
                 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
                 curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
-                if (!$not_proxy && !empty($this->parser->proxy_ip) && $this->parser->with_proxy) {
+              //  curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+                curl_setopt($curl, CURLOPT_ENCODING, ''); // gzip/deflate/br
+                curl_setopt($curl, CURLOPT_COOKIEJAR, $cookieFile);
+                curl_setopt($curl, CURLOPT_COOKIEFILE, $cookieFile);
+
+
+                if ($withProxy && !empty($this->parser->proxy_ip) && $this->parser->with_proxy) {
+                    //dd($this->parser->proxy_user);
+
                     curl_setopt($curl, CURLOPT_PROXY, $this->parser->proxy_ip);
                     curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->parser->proxy_user);
                 }
-                curl_setopt($curl, CURLOPT_ENCODING, '');
+                if ($withEncode) curl_setopt($curl, CURLOPT_ENCODING, '');
+
                 $result["response"] = curl_exec($curl);
 
                 if (!curl_errno($curl)) {

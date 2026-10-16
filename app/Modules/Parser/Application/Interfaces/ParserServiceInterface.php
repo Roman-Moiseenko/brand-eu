@@ -18,9 +18,9 @@ interface ParserServiceInterface
      * Парсим данные о категории и добавляем в базу
      * @param $categoryData
      * @param int|null $parent_id
-     * @return void
+     * @return bool
      */
-    public function addCategory($categoryData, ?int $parent_id = null): void;
+    public function addCategory($categoryData, ?int $parent_id = null): bool;
 
     /// Товары ///
     /**

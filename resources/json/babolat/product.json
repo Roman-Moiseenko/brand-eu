@@ -1,0 +1,378 @@
+{
+    "id_shop_default": "1",
+    "id_manufacturer": "1",
+    "id_supplier": "0",
+    "reference": "BM7 6MZ26121 4156 1",
+    "is_virtual": "0",
+    "delivery_in_stock": "",
+    "delivery_out_stock": "",
+    "id_category_default": "76",
+    "on_sale": "0",
+    "online_only": "0",
+    "ecotax": 0,
+    "minimal_quantity": 1,
+    "low_stock_threshold": null,
+    "low_stock_alert": "0",
+    "price": "409,99\u00a0z\u0142",
+    "unity": "szt.",
+    "unit_price_ratio": "1.000000",
+    "additional_shipping_cost": "0.000000",
+    "customizable": "0",
+    "text_fields": "0",
+    "uploadable_files": "0",
+    "redirect_type": "301-category",
+    "id_type_redirected": "0",
+    "available_for_order": "1",
+    "available_date": "2026-09-23",
+    "show_condition": "1",
+    "condition": "new",
+    "show_price": "1",
+    "indexed": "1",
+    "visibility": "both",
+    "cache_default_attribute": "23897",
+    "advanced_stock_management": "0",
+    "date_add": "2026-09-23 14:04:51",
+    "date_upd": "2026-10-14 12:42:58",
+    "pack_stock_type": "3",
+    "meta_description": "Niebieska bluza m\u0119ska z technicznej tkaniny - limitowana kolekcja Juana \"Wilka\" Lebrona. Lekki materia\u0142 (90% poliamid z recyklingu, 6% elastan) i tylna wentylacja daj\u0105 niezr\u00f3wnany komfort. R\u00f3\u017cowe detale, granatowy ko\u0142nierz oraz znak wilka na plecach.",
+    "meta_keywords": "",
+    "meta_title": "Babolat JACKET J. LEBRON, Legion Blue",
+    "link_rewrite": "babolat-jacket-j-lebron-legion-blue",
+    "name": "Babolat JACKET J. LEBRON, Legion Blue",
+    "description": "",
+    "description_short": "&lt;p&gt;Niebieska bluza m\u0119ska z technicznej tkaniny - limitowana kolekcja Juana \"Wilka\" Lebrona. Lekki materia\u0142 (90% poliamid z recyklingu, 6% elastan) i tylna wentylacja daj\u0105 niezr\u00f3wnany komfort. R\u00f3\u017cowe detale, granatowy ko\u0142nierz oraz znak wilka na plecach.&lt;\/p&gt;",
+    "available_now": "",
+    "available_later": "",
+    "id": 5942,
+    "id_product": 5942,
+    "out_of_stock": 2,
+    "new": 1,
+    "id_product_attribute": 23899,
+    "quantity_wanted": 1,
+    "extraContent": [],
+    "allow_oosp": 0,
+    "category": "meska-odziez-tenisowa",
+    "category_name": "M\u0119ska",
+    "link": "https:\/\/babolat-tenis.pl\/5942-babolat-jacket-j-lebron-legion-blue.html",
+    "attribute_price": 0,
+    "price_tax_exc": 333.325203,
+    "price_without_reduction": 409.99,
+    "reduction": 0,
+    "specific_prices": {
+        "id_specific_price": "486832",
+        "id_specific_price_rule": "0",
+        "id_cart": "0",
+        "id_product": "5942",
+        "id_shop": "0",
+        "id_shop_group": "0",
+        "id_currency": "0",
+        "id_country": "0",
+        "id_group": "1",
+        "id_customer": "0",
+        "id_product_attribute": "23899",
+        "price": 333.325203,
+        "from_quantity": "1",
+        "reduction": "0.000000",
+        "reduction_tax": "1",
+        "reduction_type": "amount",
+        "from": "0000-00-00 00:00:00",
+        "to": "0000-00-00 00:00:00",
+        "score": "34"
+    },
+    "quantity": 1,
+    "quantity_all_versions": 7,
+    "id_image": "pl-default",
+    "features": [
+        {
+            "name": "Kolekcja",
+            "value": "Padel",
+            "id_feature": "44",
+            "position": "3"
+        },
+        {
+            "name": "Sk\u0142ad",
+            "value": "90% poliamid z recyklingu, 6% elastan",
+            "id_feature": "5",
+            "position": "4"
+        },
+        {
+            "name": "Rodzaj ubioru",
+            "value": "Bluza",
+            "id_feature": "45",
+            "position": "11"
+        }
+    ],
+    "attachments": [],
+    "virtual": 0,
+    "pack": 0,
+    "packItems": [],
+    "nopackprice": 0,
+    "customization_required": false,
+    "attributes": {
+        "1": {
+            "id_attribute": "17",
+            "id_attribute_group": "1",
+            "name": "XXL",
+            "group": "Rozmiar",
+            "reference": "BM7 6MZ26121 4156 5",
+            "ean13": "3324922434819",
+            "isbn": "",
+            "upc": "",
+            "mpn": ""
+        },
+        "2": {
+            "id_attribute": "72",
+            "id_attribute_group": "2",
+            "name": "niebieski",
+            "group": "Kolor",
+            "reference": "BM7 6MZ26121 4156 5",
+            "ean13": "3324922434819",
+            "isbn": "",
+            "upc": "",
+            "mpn": ""
+        }
+    },
+    "rate": 23,
+    "tax_name": "PTU PL 23%",
+    "ecotax_rate": 0,
+    "unit_price": "409,99\u00a0z\u0142",
+    "customizations": {
+        "fields": []
+    },
+    "id_customization": 0,
+    "is_customizable": false,
+    "show_quantities": false,
+    "quantity_label": "Przedmioty",
+    "quantity_discounts": [],
+    "customer_group_discount": 0,
+    "images": [
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-small_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-medium_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-large_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17738-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "17738",
+            "cover": "1",
+            "position": "1",
+            "associatedVariants": []
+        },
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-small_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-medium_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-large_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17739-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/17739-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/17739-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/17739-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "17739",
+            "cover": null,
+            "position": "2",
+            "associatedVariants": []
+        },
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-small_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-medium_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-large_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/17740-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/17740-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/17740-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/17740-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "17740",
+            "cover": null,
+            "position": "3",
+            "associatedVariants": []
+        }
+    ],
+    "cover": {
+        "bySize": {
+            "cart_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "small_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-small_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 200,
+                "height": 200
+            },
+            "medium_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-medium_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 452,
+                "height": 452
+            },
+            "home_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-large_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 900,
+                "height": 900
+            },
+            "thickbox_default": {
+                "url": "https:\/\/babolat-tenis.pl\/17738-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+                "width": 1080,
+                "height": 1080
+            }
+        },
+        "small": {
+            "url": "https:\/\/babolat-tenis.pl\/17738-cart_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+            "width": 125,
+            "height": 125
+        },
+        "medium": {
+            "url": "https:\/\/babolat-tenis.pl\/17738-home_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+            "width": 600,
+            "height": 600
+        },
+        "large": {
+            "url": "https:\/\/babolat-tenis.pl\/17738-thickbox_default\/babolat-jacket-j-lebron-legion-blue.jpg",
+            "width": 1080,
+            "height": 1080
+        },
+        "legend": "",
+        "id_image": "17738",
+        "cover": "1",
+        "position": "1",
+        "associatedVariants": []
+    },
+    "has_discount": false,
+    "discount_type": "amount",
+    "discount_percentage": "0%",
+    "discount_percentage_absolute": "0%",
+    "discount_amount": "0,00\u00a0z\u0142",
+    "discount_amount_to_display": "-0,00\u00a0z\u0142",
+    "price_amount": 409.99,
+    "unit_price_full": "409,99\u00a0z\u0142 szt.",
+    "show_availability": true,
+    "availability_date": null,
+    "availability_message": "Ostatnie sztuki w magazynie",
+    "availability": "last_remaining_items"
+}

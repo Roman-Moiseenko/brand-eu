@@ -25,7 +25,7 @@ class NBParserService implements ParserServiceInterface
     }
     public function getListCategories(): array
     {
-        $page = $this->httpPage->getPage(self::URL_CATEGORIES);
+        $page = $this->httpPage->getPage(self::URL_CATEGORIES, '', true, false);
         $pattern = '/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s';
         if (! preg_match($pattern, $page, $matches)) {
             throw new \Exception('Тег __NEXT_DATA__ не найден на странице.');
@@ -48,11 +48,11 @@ class NBParserService implements ParserServiceInterface
         return [];
     }
 
-    public function addCategory($categoryData, ?int $parent_id = null): void
+    public function addCategory($categoryData, ?int $parent_id = null): bool
     {
         $brand = $this->brandRepository->getByName(self::BRAND_NAME);
         //if (!isset($categoryData['kind'])) dd($categoryData);
-        if ($categoryData['kind'] != 'product_category') return;
+        if ($categoryData['kind'] != 'product_category') return false;
 
         $dto = new ParserCategoryCreateData(
             name: $categoryData['title'],
@@ -68,9 +68,8 @@ class NBParserService implements ParserServiceInterface
             foreach ($categoryData['children'] as $child) {
                 $this->addCategory($child, $categoryEntity->id);
             }
-
-
         }
+        return true;
     }
 
     public function GetListProductsByCategory(string $categoryCode): array
