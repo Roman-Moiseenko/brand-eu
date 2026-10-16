@@ -30,7 +30,7 @@ class AdminCreateCommand extends Command
     {
         $name = $this->argument('name');
         $password = $this->argument('password');
-        $email = $name . '@nordihome.ru';
+        $email = $name . '@' . config('shop.domain');
         try {
             $dto = new AdminData(
                 email: $email,

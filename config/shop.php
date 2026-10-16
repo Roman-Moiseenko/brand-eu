@@ -3,6 +3,7 @@
 return [
     /* COMMON */
  //   'theme' => env('SHOP_THEME', ''),
+    'domain' => env('VITE_DOMAIN', ''),
     'yookassa-id' => env('YOOKASSA_SHOP_ID', ''),
     'yookassa-key' => env('YOOKASSA_KEY', ''),
     'telegram-chat-id' => env('TELEGRAM_CHAT_ID', ''),
@@ -71,4 +72,8 @@ return [
     's3_disk' => env('PHOTO_S3_DISK', 's3'),
     's3_url_prefix' => env('AWS_URL'), // например https://cdn.example.com
 
+    'mail' => [
+        'from' => env('MAIL_FROM_ADDRESS'),
+        'notification' => env('MAIL_NOTIFICATION'),
+    ],
 ];

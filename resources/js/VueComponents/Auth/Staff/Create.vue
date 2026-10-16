@@ -25,10 +25,10 @@ const form = reactive({
     positions: [],
     password: null,
 })
-
+const domain = import.meta.env.VITE_DOMAIN
 watch(login, (val) => {
     if (val && val.trim()) {
-        form.workEmail = `${val.trim()}@nordihome.ru`;
+        form.workEmail = `${val.trim()}@${domain}`;
     } else {
         form.workEmail = null;
     }

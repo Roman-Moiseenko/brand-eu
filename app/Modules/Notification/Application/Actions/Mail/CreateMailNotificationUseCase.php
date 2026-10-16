@@ -19,6 +19,7 @@ class CreateMailNotificationUseCase
     public function execute(LeadSourceData $leadData)
     {
         $mail = new FormBackMail($leadData);
-        Mail::mailer('system')->to('info@nordihome.ru')->send($mail);
+        $email = config('shop.mail.notification');
+        Mail::mailer('system')->to($email)->send($mail);
     }
 }

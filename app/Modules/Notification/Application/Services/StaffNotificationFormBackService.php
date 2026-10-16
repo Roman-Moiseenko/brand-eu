@@ -48,8 +48,8 @@ class StaffNotificationFormBackService
             $template = MailTemplateRegistry::get('lead.order');
         }
         //Отправляем письмо
-
-        Mail::mailer('system')->to('info@nordihome.ru')->send($mail);
+        $email = config('shop.mail.notification');
+        Mail::mailer('system')->to($email)->send($mail);
 
         //Отправляем телеграм
 

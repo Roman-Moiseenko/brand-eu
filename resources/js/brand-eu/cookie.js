@@ -14,7 +14,7 @@ window.$ = jQuery;
         // HTML уведомления
         var html = '' +
             '<div>' +
-            '  <p>Продолжая использовать сайт nordihome.ru Вы соглашаетесь на использование файлов cookie. ' +
+            '  <p>Продолжая использовать сайт  Вы соглашаетесь на использование файлов cookie. ' +
             'Более подробную информацию можно прочитать в разделе ' +
             '<a href="/page/politika-obrabotki-personalnyx-dannyx"><b>Политика конфиденциальности сайта</b></a></p>' +
             '  <button class="button cookie_accept">Принять</button>' +

@@ -140,7 +140,7 @@
                 >
                     <el-form-item label="Login" prop="name">
                         <el-input v-model="userForm.name" placeholder="ivanov" autocomplete="off" >
-                            <template #append>@nordihome.ru</template>
+                            <template #append>@{{ domain }}</template>
                         </el-input>
                     </el-form-item>
 
@@ -201,7 +201,7 @@ const props = defineProps({
         default: 'Карточка сотрудника',
     },
 })
-
+const domain = import.meta.env.VITE_DOMAIN
 const useAuth = useAuthStore();
 const saving = ref(false)
 
@@ -222,11 +222,11 @@ const initialForm = {
     notes: props.staff?.notes ?? '',
     terminated: props.staff?.terminated ?? false,
 }
-
+const domain = import.meta.env.VITE_DOMAIN
 const hasUser = computed(() => props.staff?.user !== null && props.staff?.user !== undefined)
 const initialUserForm = {
     active: props.staff?.user?.active ?? true,
-    name: props.staff?.user ? props.staff.user.email.replace('@nordihome.ru', '') : '',
+    name: props.staff?.user ? props.staff.user.email.replace('@' + domain, '') : '',
     password: '',
     roleNames: props.staff?.user?.roleNames ?? [],
 }
@@ -308,7 +308,7 @@ function onSaveAccess() {
 
     const formAccess = reactive({
         active: hasAccess.value,
-        email: userForm.value.name + '@nordihome.ru',
+        email: userForm.value.name + '@' + domain,
         password: passwordValue,
         roleNames: [...userForm.value.roleNames],
     })
