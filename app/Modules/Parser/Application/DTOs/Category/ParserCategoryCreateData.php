@@ -22,6 +22,8 @@ class ParserCategoryCreateData extends Data
         public readonly ?int   $parentId,
         #[Nullable, StringType, Max(255)]
         public readonly string $url,
+        #[Nullable, StringType, Max(255)]
+        public readonly string $lang = 'pl',
     )
     {
     }

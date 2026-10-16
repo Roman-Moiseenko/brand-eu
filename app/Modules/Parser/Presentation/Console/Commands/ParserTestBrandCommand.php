@@ -18,7 +18,7 @@ class ParserTestBrandCommand extends Command
         $this->info('Тестирование парсера');
         $brands = $brandRepository->getAll();
         $this->info('Найдено брендов ' . count($brands));
-
+        //$brands[] = $brandRepository->getByName('Babolat');
         foreach ($brands as $brand) {
             if (is_null($brand->parserClass)) continue;
 

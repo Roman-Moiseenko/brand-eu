@@ -20,6 +20,11 @@ final class ParserCategoryEntity
         set => $this->name = $value;
     }
 
+    public string $nameRu {
+        get => $this->nameRu;
+        set => $this->nameRu  = $value;
+    }
+
     public string $url {
         get => $this->url;
         set => $this->url = $value;

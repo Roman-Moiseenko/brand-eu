@@ -15,6 +15,7 @@ use Kalnoy\Nestedset\NodeTrait;
 /**
  * @property int $id
  * @property string $name
+ * @property string $name_ru
  * @property string $code уникальный для исключения двойного парсинга
  * @property int|null $category_id связанная категория каталога
  * @property int|null $size_grid_id связанная размерная сетка каталога
@@ -39,6 +40,7 @@ class ParserCategory extends Model
     protected $table = 'parser_categories';
     protected $fillable = [
         'name',
+        'name_ru',
         'parent_id',
         'code',
         'category_id',

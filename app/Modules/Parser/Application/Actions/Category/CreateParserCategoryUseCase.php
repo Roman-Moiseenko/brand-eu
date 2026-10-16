@@ -2,6 +2,7 @@
 
 namespace App\Modules\Parser\Application\Actions\Category;
 
+use App\Modules\Base\Service\TranslateService;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryCreateData;
 use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
@@ -13,6 +14,7 @@ readonly class CreateParserCategoryUseCase
 {
     public function __construct(
         private ParserCategoryRepositoryInterface $categoryRepository,
+        private TranslateService $translateService,
     )
     {
     }
@@ -31,6 +33,7 @@ readonly class CreateParserCategoryUseCase
             parentId: $dto->parentId ?: null,
         );
         $category->url = $dto->url;
+        $category->nameRu = $this->translateService->translate($dto->name, $dto->lang);
 
         return $this->categoryRepository->save($category);
     }

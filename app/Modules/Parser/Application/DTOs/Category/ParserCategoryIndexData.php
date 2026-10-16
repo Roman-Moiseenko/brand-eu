@@ -12,6 +12,7 @@ class ParserCategoryIndexData extends Data
     public function __construct(
         public readonly int $id,
         public readonly string $name,
+        public readonly string $nameRu,
         public readonly bool $active,
         public readonly string $code,
         public readonly ?int $categoryId = null,
@@ -25,6 +26,7 @@ class ParserCategoryIndexData extends Data
         return new self(
             id: $category->id,
             name: $category->name,
+            nameRu: $category->nameRu,
             active: $category->active,
             code: $category->code,
             categoryId: $category->categoryId,

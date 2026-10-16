@@ -5,7 +5,7 @@
         </div>
         <div class="ml-4" style="width: 300px;">
             <Link type="primary" :href="route('admin.parser.category.show', {category_parser: category.id})">{{
-                    category.name + ' (' + category.code + ')'
+                    category.name + ' (' + category.nameRu + ')'
                 }}
             </Link>
         </div>

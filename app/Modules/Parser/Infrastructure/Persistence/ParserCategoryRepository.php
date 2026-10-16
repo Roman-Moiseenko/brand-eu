@@ -10,6 +10,32 @@ use App\Modules\Parser\Infrastructure\Models\ParserCategory;
 
 class ParserCategoryRepository implements ParserCategoryRepositoryInterface
 {
+
+    public function save(ParserCategoryEntity $category): ParserCategoryEntity
+    {
+        $model = $category->id
+            ? ParserCategory::findOrFail($category->id)
+            : new ParserCategory();
+
+        $model->name = $category->name;
+        $model->name_ru = $category->nameRu;
+        $model->url = $category->url;
+        $model->code = $category->code;
+        $model->category_id = $category->categoryId;
+        $model->size_grid_id = $category->sizeGridId;
+        $model->active = $category->isActive();
+        $model->brand_id = $category->brandId;
+
+        if ($category->parentId !== null) {
+            $model->parent_id = $category->parentId;
+        } elseif ($category->id === null) {
+            $model->parent_id = null;
+        }
+
+        $model->save();
+
+        return $this->hydrate($model);
+    }
     /**
      * @return ParserCategoryEntity[]
      */
@@ -35,30 +61,6 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
         return $this->hydrate($model);
     }
 
-    public function save(ParserCategoryEntity $category): ParserCategoryEntity
-    {
-        $model = $category->id
-            ? ParserCategory::findOrFail($category->id)
-            : new ParserCategory();
-
-        $model->name = $category->name;
-        $model->url = $category->url;
-        $model->code = $category->code;
-        $model->category_id = $category->categoryId;
-        $model->size_grid_id = $category->sizeGridId;
-        $model->active = $category->isActive();
-        $model->brand_id = $category->brandId;
-
-        if ($category->parentId !== null) {
-            $model->parent_id = $category->parentId;
-        } elseif ($category->id === null) {
-            $model->parent_id = null;
-        }
-
-        $model->save();
-
-        return $this->hydrate($model);
-    }
 
     public function delete(int $id): void
     {
@@ -230,6 +232,7 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
 
         $entity->id = $model->id;
         $entity->url = $model->url;
+        $entity->nameRu = $model->name_ru;
         $entity->active = $model->active;
         $entity->brandId = $model->brand_id;
         $entity->categoryId = $model->category_id;
