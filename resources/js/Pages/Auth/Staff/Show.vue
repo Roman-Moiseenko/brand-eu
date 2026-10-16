@@ -201,7 +201,6 @@ const props = defineProps({
         default: 'Карточка сотрудника',
     },
 })
-const domain = import.meta.env.VITE_DOMAIN
 const useAuth = useAuthStore();
 const saving = ref(false)
 
