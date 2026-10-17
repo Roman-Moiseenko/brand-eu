@@ -19,13 +19,14 @@ class BabolatParserService implements ParserServiceInterface
     private int $brandId;
 
     public function __construct(
-        private readonly HttpPage $httpPage,
-        private readonly BrandRepositoryInterface $brandRepository,
+        private readonly HttpPage                    $httpPage,
+        private readonly BrandRepositoryInterface    $brandRepository,
         private readonly CreateParserCategoryUseCase $createParserCategoryUseCase,
     )
     {
 
     }
+
     public function getListCategories(): array
     {
         $html = Http::withHeaders([
@@ -48,10 +49,9 @@ class BabolatParserService implements ParserServiceInterface
             if (in_array($url, ['https://babolat-tenis.pl/', '/', '#', null, ''], true)) {
                 return;
             }
-            // NEW: пропускаем ссылки с GET-параметрами (фильтры)
-            if ($this->hasQuery($url)) {
-                return;
-            }
+
+            //if ($this->hasQuery($url)) return; // NEW: пропускаем ссылки с GET-параметрами (фильтры)
+
             $name = $this->cleanText(
                 $a->filter('.cbp-tab-title')->count()
                     ? $a->filter('.cbp-tab-title')->text()
@@ -59,8 +59,8 @@ class BabolatParserService implements ParserServiceInterface
             );
 
             $item = [
-                'name'     => $name,
-                'url'      => $url,
+                'name' => $name,
+                'url' => $url,
                 'children' => [],
             ];
 
@@ -68,29 +68,18 @@ class BabolatParserService implements ParserServiceInterface
             $li->filter('.cbp-menu-column-inner a.cbp-category-title')
                 ->each(function (Crawler $a2) use (&$item) {
                     $childUrl = $a2->attr('href');
-                    // NEW: пропускаем фильтры, но НЕ трогаем контейнеры (# и null)
-                    if ($this->hasQuery($childUrl)) {
-                        return;
-                    }
+
+                    //if ($this->hasQuery($url)) return; // NEW: пропускаем ссылки с GET-параметрами (фильтры)
                     $child = [
-                        'name'     => $this->cleanText($a2->text()),
-                        'url'      => ($childUrl === '#' || $childUrl === null) ? null : $childUrl,
+                        'name' => $this->cleanText($a2->text()),
+                        'url' => ($childUrl === '#' || $childUrl === null) ? null : $childUrl,
                         'children' => [],
                     ];
 
                     // .cbp-category-link-w — обёртка вокруг <a>
                     $linkW = $a2->getNode(0)->parentNode;
-
-                    // Вариант A: <ul> вложен внутрь .cbp-category-link-w
-                    $child['children'] = $this->subItemsInside($linkW);
-
-                    // Вариант B: <ul> стоит следующим сиблингом после .cbp-category-link-w
-                    if (empty($child['children'])) {
-                        $sibling = $this->nextElementSibling($linkW);
-                        if ($sibling && $sibling->nodeName === 'ul') {
-                            $child['children'] = $this->subItemsFromUl($sibling);
-                        }
-                    }
+                    $ul = $this->findSubUl($linkW);
+                    $child['children'] = $ul ? $this->subItemsFromUl($ul) : [];
 
                     $item['children'][] = $child;
                 });
@@ -139,10 +128,34 @@ class BabolatParserService implements ParserServiceInterface
         // TODO: Implement GetAvailability() method.
     }
 
-private function urlToSlug(string $url): string
+    private function urlToSlug(?string $url): ?string
     {
-        $path = parse_url($url, PHP_URL_PATH) ?? '';
-        return trim($path, '/');
+        if ($url === null || $url === '' || $url === '#') {
+            return null;
+        }
+
+        $parts = parse_url($url);
+        $slug  = trim($parts['path'] ?? '', '/');
+
+        // добавляем значения GET-параметров через дефис
+        if (!empty($parts['query'])) {
+            parse_str($parts['query'], $query);
+
+            // стабильный порядок: при повторных запусках slug не «прыгает»
+            ksort($query);
+
+            foreach ($query as $value) {
+                if (is_array($value)) {
+                    $value = implode('-', $value);
+                }
+                $value = trim((string) $value, '/');
+                if ($value !== '') {
+                    $slug .= '-' . $value;
+                }
+            }
+        }
+
+        return $slug === '' ? null : $slug;
     }
 
     /** 3-й уровень внутри .cbp-category-link-w */
@@ -151,7 +164,7 @@ private function urlToSlug(string $url): string
         foreach ($linkW->childNodes as $n) {
             if ($n->nodeType === XML_ELEMENT_NODE
                 && $n->nodeName === 'ul'
-                && str_contains((string) $n->getAttribute('class'), 'cbp-category-tree')
+                && str_contains((string)$n->getAttribute('class'), 'cbp-category-tree')
             ) {
                 return $this->subItemsFromUl($n);
             }
@@ -169,13 +182,10 @@ private function urlToSlug(string $url): string
         $crawler->filter('li > .cbp-category-link-w > a, li > a')
             ->each(function (Crawler $a) use (&$out) {
                 $url = $a->attr('href');
-                // NEW: пропускаем фильтры
-                if ($this->hasQuery($url)) {
-                    return;
-                }
+                //if ($this->hasQuery($url)) return; // NEW: пропускаем ссылки с GET-параметрами (фильтры)
                 $out[] = [
-                    'name'     => $this->cleanText($a->text()),
-                    'url'      => ($url === '#' || $url === null) ? null : $url,
+                    'name' => $this->cleanText($a->text()),
+                    'url' => ($url === '#' || $url === null) ? null : $url,
                     'children' => [],
                 ];
             });
@@ -198,11 +208,83 @@ private function urlToSlug(string $url): string
         $text = str_replace("\xC2\xA0", ' ', $text);
         return trim(preg_replace('/\s+/u', ' ', $text));
     }
+
     private function hasQuery(?string $url): bool
     {
         if ($url === null || $url === '' || $url === '#') {
             return false;
         }
         return parse_url($url, PHP_URL_QUERY) !== null;
+    }
+
+    private function findSubUl(\DOMNode $linkW): ?\DOMNode
+    {
+        // Вариант 1: <ul> внутри .cbp-category-link-w (BADMINTON, PADEL, SQUASH, OUTLET)
+        foreach ($linkW->childNodes as $n) {
+            if ($this->isCategoryTreeUl($n)) {
+                return $n;
+            }
+        }
+
+        // Вариант 2: <ul> следующим сиблингом .cbp-category-link-w (RAKIETY → KOLEKCJA)
+        $sib = $this->nextElementSibling($linkW);
+        if ($sib && $this->isCategoryTreeUl($sib)) {
+            return $sib;
+        }
+
+        // Вариант 3: <ul> в соседней .cbp-menu-column того же .row (ODZIEŻ)
+        $menuColumn = $this->closestAncestor(
+            $linkW,
+            fn(\DOMNode $n) => $n->nodeType === XML_ELEMENT_NODE
+                && $this->nodeHasClass($n, 'cbp-menu-column')
+        );
+        if (!$menuColumn) {
+            return null;
+        }
+
+        $nextCol = $this->nextElementSibling($menuColumn);
+        if (!$nextCol || !$this->nodeHasClass($nextCol, 'cbp-menu-column')) {
+            return null;
+        }
+
+        // Защита: если следующая колонка сама содержит ссылку-категорию —
+        // это не «наш» UL, а чужая категория, не склеиваем
+        $crawler = new Crawler($nextCol);
+        if ($crawler->filter('a.cbp-category-title')->count() > 0) {
+            return null;
+        }
+
+        foreach ($nextCol->getElementsByTagName('ul') as $ul) {
+            if ($this->isCategoryTreeUl($ul)) {
+                return $ul;
+            }
+        }
+
+        return null;
+    }
+
+    private function isCategoryTreeUl(\DOMNode $n): bool
+    {
+        return $n->nodeType === XML_ELEMENT_NODE
+            && $n->nodeName === 'ul'
+            && $this->nodeHasClass($n, 'cbp-category-tree');
+    }
+
+    private function nodeHasClass(\DOMNode $n, string $class): bool
+    {
+        return $n->nodeType === XML_ELEMENT_NODE
+            && in_array($class, preg_split('/\s+/', (string)$n->getAttribute('class')), true);
+    }
+
+    private function closestAncestor(\DOMNode $node, callable $predicate): ?\DOMNode
+    {
+        $p = $node->parentNode;
+        while ($p && $p->nodeType === XML_ELEMENT_NODE) {
+            if ($predicate($p)) {
+                return $p;
+            }
+            $p = $p->parentNode;
+        }
+        return null;
     }
 }

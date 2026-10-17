@@ -16,9 +16,9 @@ class ParserTestBrandCommand extends Command
     public function handle(BrandRepositoryInterface $brandRepository): void
     {
         $this->info('Тестирование парсера');
-        $brands = $brandRepository->getAll();
-        $this->info('Найдено брендов ' . count($brands));
-        //$brands[] = $brandRepository->getByName('Babolat');
+        //$brands = $brandRepository->getAll();
+        //$this->info('Найдено брендов ' . count($brands));
+        $brands[] = $brandRepository->getByName('Babolat');
         foreach ($brands as $brand) {
             if (is_null($brand->parserClass)) continue;
 
