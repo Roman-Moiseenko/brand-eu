@@ -87,6 +87,17 @@ class BrandRepository implements BrandRepositoryInterface
         return $this->hydrate($model);
     }
 
+    public function getBySlug(string $slug): ?BrandEntity
+    {
+        $model = Brand::where('slug', $slug)->first();
+
+        if (!$model) {
+            return null;
+        }
+
+        return $this->hydrate($model);
+    }
+
     /**
      * @return BrandEntity[]
      */

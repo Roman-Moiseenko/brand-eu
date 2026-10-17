@@ -12,6 +12,7 @@ use App\Modules\Parser\Application\Actions\Category\ViewParserCategoryUseCase;
 use App\Modules\Parser\Application\Actions\Product\ListAllProductByCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryIndexData;
 use App\Modules\Parser\Application\Services\ToggleCategoryWithProductsService;
+use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
 use App\Modules\Parser\Infrastructure\Jobs\LoadProductsIkeaJob;
 use App\Modules\Parser\Infrastructure\Models\ParserCategory;
 use App\Modules\Shared\Domain\Entities\UserPermission;
@@ -37,21 +38,23 @@ class CategoryParserController extends Controller
     {
     }
 
-    public function index(UserPermission $userPermission): Response
+    public function index(Request $request, UserPermission $userPermission): Response
     {
         $brands = $this->listParserBrandQuery->execute($userPermission);
 
+        $selectedBrand = $request->query('brand');
+        $selectedBrand = is_string($selectedBrand) && $selectedBrand !== '' ? $selectedBrand : null;
+
+        $categories = $this->listParserCategoryByBrandQuery->execute($selectedBrand, $userPermission);
+
         return Inertia::render('Parser/Category/Index', [
             'brands' => $brands,
-            'categories' => [],
+            'categories' => array_map(
+                fn(ParserCategoryEntity $category) => ParserCategoryIndexData::fromEntity($category),
+                $categories,
+            ),
+            'selectedBrand' => $selectedBrand,
         ]);
-    }
-
-    public function categoriesByBrand(int $brandId, UserPermission $userPermission): JsonResponse
-    {
-        $categories = $this->listParserCategoryByBrandQuery->execute($brandId, $userPermission);
-
-        return response()->json(ParserCategoryIndexData::collect($categories));
     }
 
     public function show(ParserCategory $category_parser, UserPermission $userPermission): Response

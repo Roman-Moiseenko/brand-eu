@@ -16,6 +16,7 @@ class BrandListData extends Data
         public readonly int $id,
         public readonly string $name,
         public readonly ?string $parser = null,
+        public readonly ?string $slug = null,
     )
     {
     }
@@ -26,6 +27,7 @@ class BrandListData extends Data
             id: $entity->id,
             name: $entity->name,
             parser: $entity->parserClass,
+            slug: (string) $entity->slug,
         );
     }
 

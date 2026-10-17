@@ -17,7 +17,7 @@
                     v-for="brand in brands"
                     :key="brand.id"
                     :label="brand.name"
-                    :value="brand.id"
+                    :value="brand.slug"
                 />
             </el-select>
         </div>
@@ -33,9 +33,8 @@
 
 <script setup lang="ts">
 
-import {Head} from "@inertiajs/vue3";
-import {inject, ref} from "vue";
-import axios from "axios";
+import {Head, router} from "@inertiajs/vue3";
+import {computed, inject, ref} from "vue";
 import ru from 'element-plus/dist/locale/ru.mjs'
 import CategoryChildren from "./Children.vue";
 import {route} from "ziggy-js";
@@ -46,6 +45,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    selectedBrand: {
+        type: String,
+        default: null,
+    },
     title: {
         type: String,
         default: 'Категории парсера',
@@ -53,19 +56,15 @@ const props = defineProps({
 })
 const $delete_entity = inject("$delete_entity")
 
-const selectedBrand = ref(null)
-const categories = ref([...(props.categories ?? [])])
+const selectedBrand = ref(props.selectedBrand ?? null)
+const categories = computed(() => props.categories ?? [])
 
-function onBrandChange(brandId) {
-    if (!brandId) {
-        categories.value = []
-        return
-    }
-
-    axios.get(route('admin.parser.category.categories-by-brand', {brandId}))
-        .then(response => {
-            categories.value = response.data
-        })
+function onBrandChange(slug) {
+    router.get(
+        route('admin.parser.category.index'),
+        slug ? {brand: slug} : {},
+        {preserveScroll: true, replace: true},
+    )
 }
 
 function handleDeleteEntity(id) {

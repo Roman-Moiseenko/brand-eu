@@ -24,6 +24,8 @@ interface BrandRepositoryInterface
 
     public function getByName(string $name): ?BrandEntity;
 
+    public function getBySlug(string $slug): ?BrandEntity;
+
     public function existsSlug(string $slug, ?int $excludeId = null): bool;
 
     /** @return BrandEntity[] */
