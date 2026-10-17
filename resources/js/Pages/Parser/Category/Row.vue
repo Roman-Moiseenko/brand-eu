@@ -22,6 +22,7 @@
                 clearable
                 size="small"
                 style="width: 220px;"
+                :disabled="categorySelectDisabled"
                 @change="onCategoryChange"
             >
                 <el-option
@@ -39,6 +40,7 @@
                 clearable
                 size="small"
                 style="width: 220px;"
+                :disabled="sizeGridSelectDisabled"
                 @change="onSizeGridChange"
             >
                 <el-option
@@ -130,6 +132,38 @@ const selectedSizeGridId = computed({
     set: (value) => {
         props.category.sizeGridId = value
     },
+})
+
+function hasValueInDescendants(node, key) {
+    if (!node || !Array.isArray(node.children)) {
+        return false
+    }
+
+    return node.children.some(child => {
+        const value = child[key]
+
+        if (value !== null && value !== undefined && value !== 0) {
+            return true
+        }
+
+        return hasValueInDescendants(child, key)
+    })
+}
+
+const categorySelectDisabled = computed(() => {
+    if (props.category.categoryId !== null && props.category.categoryId !== undefined) {
+        return false
+    }
+
+    return hasValueInDescendants(props.category, 'categoryId')
+})
+
+const sizeGridSelectDisabled = computed(() => {
+    if (props.category.sizeGridId !== null && props.category.sizeGridId !== undefined) {
+        return false
+    }
+
+    return hasValueInDescendants(props.category, 'sizeGridId')
 })
 
 function applyCategoryToTree(node, value) {
