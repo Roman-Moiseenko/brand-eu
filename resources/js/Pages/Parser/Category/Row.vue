@@ -1,5 +1,6 @@
 <template>
-    <div class="bg-white rounded-md flex items-center mb-1 p-2 border border-slate-200">
+    <div class="rounded-md flex items-center mb-1 p-2 border border-slate-200"
+         :class="rowWarning ? 'bg-red-100' : 'bg-white'">
         <div>
             <Active :active="category.active"/>
         </div>
@@ -84,15 +85,15 @@
         </div>
     </div>
     <div v-if="showChildren" class="pl-5 ml-2 mb-5 pb-2 pt-2">
-        <!--CategoryRow v-for="item in category.children" :category="item" @delete:category="handleDeleteEntity" /-->
         <CategoryChildren :category="category" @delete:category="handleDeleteEntity"
-                          :product_categories="product_categories"/>
+                          :product_categories="product_categories"
+                          :expand-all="expandAll"/>
     </div>
 </template>
 
 <script setup lang="ts">
 import {router, Link} from "@inertiajs/vue3";
-import {computed, inject, onActivated, reactive, ref} from "vue";
+import {computed, inject, onActivated, reactive, ref, watch} from "vue";
 import axios from "axios";
 import {ElMessage} from "element-plus";
 import CategoryChildren from "./Children.vue";
@@ -103,6 +104,10 @@ import {useCatalogStore} from "@Res/catalogStore.ts";
 const props = defineProps({
     category: Object,
     product_categories: Array,
+    expandAll: {
+        type: Boolean,
+        default: false,
+    },
 })
 const $emit = defineEmits(['delete:category'])
 
@@ -113,11 +118,15 @@ const form = reactive({
     name: null,
     parent_id: props.category.id,
 })
-const checkChildren = ref(false)
+const checkChildren = ref(props.expandAll)
 const isChildren = ref(props.category.children.length > 0)
 
 const showChildren = computed(() => {
-    return isChildren && checkChildren.value
+    return isChildren.value && checkChildren.value
+})
+
+watch(() => props.expandAll, (value) => {
+    checkChildren.value = value
 })
 
 const selectedCategoryId = computed({
@@ -132,6 +141,20 @@ const selectedSizeGridId = computed({
     set: (value) => {
         props.category.sizeGridId = value
     },
+})
+
+const rowWarning = computed(() => {
+    if (props.category.active !== true) {
+        return false
+    }
+
+    const hasCategory = props.category.categoryId !== null && props.category.categoryId !== undefined
+
+    if (hasCategory) {
+        return false
+    }
+
+    return !categorySelectDisabled.value
 })
 
 function hasValueInDescendants(node, key) {

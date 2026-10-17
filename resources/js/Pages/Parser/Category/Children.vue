@@ -1,5 +1,11 @@
 <template>
-    <CategoryRow v-for="item in children" :category="item" @delete:category="handleDeleteEntity"/>
+    <CategoryRow
+        v-for="item in children"
+        :key="item.id"
+        :category="item"
+        :expand-all="expandAll"
+        @delete:category="handleDeleteEntity"
+    />
 </template>
 <script setup lang="ts">
 import CategoryRow from "./Row.vue";
@@ -13,6 +19,10 @@ const props = defineProps({
     categories: {
         type: Object,
         default: null,
+    },
+    expandAll: {
+        type: Boolean,
+        default: false,
     },
 })
 const $emit = defineEmits(['delete:category'])

@@ -20,13 +20,21 @@
                     :value="brand.slug"
                 />
             </el-select>
+
+            <el-button class="ml-auto" size="small" @click="toggleExpandAll">
+                {{ expandAll ? 'Свернуть все' : 'Развернуть все' }}
+            </el-button>
         </div>
 
         <div v-if="selectedBrand === null" class="text-slate-400">
             Выберите бренд, чтобы увидеть категории.
         </div>
 
-        <CategoryChildren :categories="categories" @delete:category="handleDeleteEntity"/>
+        <CategoryChildren
+            :categories="categories"
+            :expand-all="expandAll"
+            @delete:category="handleDeleteEntity"
+        />
         <DeleteEntityModal name_entity="Категорию" />
     </el-config-provider>
 </template>
@@ -58,6 +66,12 @@ const $delete_entity = inject("$delete_entity")
 
 const selectedBrand = ref(props.selectedBrand ?? null)
 const categories = computed(() => props.categories ?? [])
+
+const expandAll = ref(false)
+
+function toggleExpandAll() {
+    expandAll.value = !expandAll.value
+}
 
 function onBrandChange(slug) {
     router.get(
