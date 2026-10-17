@@ -10,15 +10,16 @@ class ParserTestBrandCommand extends Command
 {
     use CreatesApplication;
 
-    protected $signature = 'parser:test';
-    protected $description = 'Тестирование парсера';
+    protected $signature = 'parser:category';
+    protected $description = 'Парсерим категории';
 
     public function handle(BrandRepositoryInterface $brandRepository): void
     {
+        //MAINDO Парсим категории.! Запуск ручной, сделать в админке
         $this->info('Тестирование парсера');
-        //$brands = $brandRepository->getAll();
-        //$this->info('Найдено брендов ' . count($brands));
-        $brands[] = $brandRepository->getByName('Babolat');
+        $brands = $brandRepository->getAll();
+        $this->info('Найдено брендов ' . count($brands));
+       // $brands[] = $brandRepository->getByName('Babolat');
         foreach ($brands as $brand) {
             if (is_null($brand->parserClass)) continue;
 
