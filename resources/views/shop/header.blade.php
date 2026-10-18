@@ -13,36 +13,11 @@
                     <img src="/images/icons/brand.svg" alt="Euro Sport Brand" class="img-fluid img-logo">
                     <div class="h-city-text">склады находятся в г.Калининград</div>
                 </a>
-
-                <div class="header-menu-buttons d-flex">
-                    <!-- Главные кнопки открываются по клику -->
-                    <button class="header-menu-buttons-item m-r_5" type="button" data-target="catalogMenu">
-                        <div class="header-menu-buttons-item-burger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div>Каталог</div>
-                    </button>
-                    <button class="header-menu-buttons-item" type="button" data-target="roomsMenu">
-                        <div class="header-menu-buttons-item-burger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div>Комнаты</div>
-                    </button>
-                </div>
-                <div class="header-menu-mobile-btn" id="menuToggle">
-                    <button class="menu-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <div>Каталог</div>
-                </div>
-                @include('shop.widgets.header.category')
-
+                <ul>
+                    @foreach($categoryTree as $category)
+                        @include('shop.widgets.header.menu-item', ['category' => $category])
+                    @endforeach
+                </ul>
             </div>
             <div class="menu-bottom-search flex-grow-1">
                 @include('shop.widgets.header.search')
@@ -89,17 +64,6 @@
             </div>
         </div>
     </nav>
-    <div class="top-menu">
-        @if(isset($menus['menu-header01']))
-            <ul id="menu-menyu-v-shapke" class="h-menu">
-                @foreach($menus['menu-header01']->items as $item)
-                    <li><a href="{{ $item->url }}">{{ $item->name }}</a></li>
-                @endforeach
-            </ul>
-        @else
-            Меню не найдено
-        @endif
-    </div>
 
 
     <nav class="menu-mobile">
@@ -117,7 +81,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <livewire:header.cart-mobile />
+                <livewire:header.cart-mobile/>
             </li>
 
             <li class="menu-item">
