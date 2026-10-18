@@ -148,7 +148,7 @@ body.no-scroll {
 }
 header {
     box-shadow: var(--bs-box-shadow-sm);
-    padding-bottom: 15px;
+    //padding-bottom: 15px;
 }
 .menu-bottom {
     height: auto;
@@ -813,7 +813,7 @@ header {
     display: inline-flex;
     align-items: center;
     padding: 10px 0;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.2;
     color: $black;

@@ -10,8 +10,7 @@
         <div class="menu-container container-xl">
             <div class="menu-bottom-catalog d-flex">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="/images/icons/brand.svg" alt="Euro Sport Brand" class="img-fluid img-logo">
-                    <div class="h-city-text">склады находятся в г.Калининград</div>
+                    <img src="/images/icons/logo.png" alt="Euro Sport Brand" class="img-fluid img-logo" style="width: 80px;">
                 </a>
                 <ul>
                     @foreach($categoryTree as $category)
