@@ -77,7 +77,7 @@ class NBParserService implements ParserServiceInterface
         // TODO: Implement GetListProductsByCategory() method.
     }
 
-    public function GetParserProduct($productData, $categoryId): ?ParserProductEntity
+    public function GetParserProduct($productData, $categoryId)
     {
         // TODO: Implement GetParserProduct() method.
     }

@@ -33,9 +33,9 @@ interface ParserServiceInterface
     /**
      * На основе спарсенных данных создает Product и ParserProduct
      * @param $productData - ссылка для спарсивания товара
-     * @return ParserProductEntity|null
+     *
      */
-    public function GetParserProduct($productData, $categoryId): ?ParserProductEntity;
+    public function GetParserProduct($productData, $categoryId);
 
     /**
      * Проверка доступности товара, чтоб не парсить все данные (в некоторых случаях парсинг всей страницы - NB)
