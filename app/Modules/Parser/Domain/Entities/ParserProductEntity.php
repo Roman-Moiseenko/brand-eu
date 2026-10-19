@@ -2,6 +2,8 @@
 
 namespace App\Modules\Parser\Domain\Entities;
 
+use AllowDynamicProperties;
+
 final class ParserProductEntity
 {
     // ======================== Идентификатор ========================
@@ -21,6 +23,10 @@ final class ParserProductEntity
         set => $this->brandId = $value;
     }
 
+    public ?int $categoryId = null {
+        get => $this->categoryId;
+        set => $this->categoryId = $value;
+    }
     // ======================== Основные поля ========================
 
     public string $name {

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $url
  * @property int $brand_id
  * @property int $product_id
+ * @property int $category_id
  * @property string $code
  * @property float $price_base
  * @property float $price_sell
@@ -50,6 +51,7 @@ class ParserProduct extends Model
         'product_id',
         'brand_id',
         'maker_id',
+        'category_id',
         'data',
         'name',
         'code',
@@ -66,9 +68,9 @@ class ParserProduct extends Model
         ]);
     }
 
-    public function category(): ?ParserCategory
+    public function category()
     {
-        return $this->categories()->first();
+        return $this->hasOne(ParserCategory::class, 'id', 'category_id');
     }
 
     public function sizes(): HasMany

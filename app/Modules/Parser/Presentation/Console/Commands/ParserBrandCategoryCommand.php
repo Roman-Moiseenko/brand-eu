@@ -10,23 +10,26 @@ class ParserBrandCategoryCommand extends Command
 {
     use CreatesApplication;
 
-    protected $signature = 'parser:categories-update';
+    protected $signature = 'parser:category';
     protected $description = 'Парсим все бренды на новые категории';
 
     public function handle(BrandRepositoryInterface $brandRepository): void
     {
+        $this->info('Парсим категории');
         $brands = $brandRepository->getAll();
-
+        $this->info('Найдено брендов ' . count($brands));
+        // $brands[] = $brandRepository->getByName('Babolat');
         foreach ($brands as $brand) {
             if (is_null($brand->parserClass)) continue;
 
-            //FixMe Запуск через Job
             $parser = $brand->parser();
             $categories = $parser->getListCategories(); //Долгая операция
+            $this->info('brand ' . $brand->name);
+
             foreach ($categories as $category) {
                 $parser->addCategory($category);
+                $this->info('category Добавлена');
             }
-            //<--
 
         }
     }

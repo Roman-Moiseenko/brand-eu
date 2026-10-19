@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Parser\Infrastructure\Jobs;
+namespace App\Modules\Parser\Infrastructure\Jobs\old;
 
 use App\Modules\Parser\Application\Services\StoreParserProductService;
 use Illuminate\Bus\Queueable;

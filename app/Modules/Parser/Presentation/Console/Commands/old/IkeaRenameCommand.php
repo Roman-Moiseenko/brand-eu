@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Modules\Parser\Presentation\Console\Commands;
+namespace App\Modules\Parser\Presentation\Console\Commands\old;
 
 use App\Console\CreatesApplication;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
-use App\Modules\Parser\Infrastructure\Jobs\RenameIkeaJob;
-use App\Modules\Parser\Infrastructure\Jobs\UpdateProductIkeaJob;
-use App\Modules\Parser\Infrastructure\Models\ParserProduct;
+use App\Modules\Parser\Infrastructure\Jobs\old\RenameIkeaJob;
 use App\Modules\Parser\Job\ParserAvailablePriceProduct;
 use Illuminate\Console\Command;
 use JetBrains\PhpStorm\Deprecated;

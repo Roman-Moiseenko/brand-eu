@@ -3,11 +3,20 @@
 namespace App\Modules\Parser\Infrastructure\Services;
 
 use App\Modules\Base\Service\HttpPage;
+use App\Modules\Base\Service\TranslateService;
+use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
+use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
+use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
+use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
 use App\Modules\Parser\Application\Actions\Category\CreateParserCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryCreateData;
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
+use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
+use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Infrastructure\Mappers\SizeMapper;
+use App\Modules\Shared\Domain\ValueObjects\Slug;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -22,6 +31,12 @@ class BabolatParserService implements ParserServiceInterface
         private readonly HttpPage                    $httpPage,
         private readonly BrandRepositoryInterface    $brandRepository,
         private readonly CreateParserCategoryUseCase $createParserCategoryUseCase,
+        private readonly ParserProductRepositoryInterface $parserProductRepository,
+        private readonly ParserCategoryRepositoryInterface $parserCategoryRepository,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly TranslateService   $translateService,
+        private readonly SetProductSizesUseCase $setProductSizesUseCase,
+        private readonly SizeMapper $sizeMapper,
     )
     {
 
@@ -113,14 +128,128 @@ class BabolatParserService implements ParserServiceInterface
 
     }
 
-    public function GetListProductsByCategory(string $categoryCode): array
+    public function GetListProductsByCategory(string $categoryUrl): array
     {
-        // TODO: Implement GetListProductsByCategory() method.
+        $html = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (compatible; Parser/1.0)',
+        ])->get($categoryUrl)->body();
+        $crawler = new Crawler($html);
+        // 1. товары текущей страницы
+        $links = $this->extractProductLinks($crawler, $categoryUrl);
+
+        // 2. уходим в рекурсию, если есть следующая страница
+        $nextUrl = $this->extractNextPageUrl($crawler, $categoryUrl);
+
+        if ($nextUrl !== null) {
+            $links = array_merge($links, $this->GetListProductsByCategory($nextUrl));
+        }
+
+        return $links;
     }
 
-    public function GetParserProduct($productData): ?ParserProductEntity
+    public function GetParserProduct($productData, $categoryId): ?ParserProductEntity
     {
-        // TODO: Implement GetParserProduct() method.
+        if (is_string($productData)) {
+            $html = \Illuminate\Support\Facades\Http::withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (compatible; Parser/1.0)',
+            ])->get($productData)->body();
+        } else {
+            $html = \Illuminate\Support\Facades\Http::withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (compatible; Parser/1.0)',
+            ])->get($productData[0])->body();
+        }
+
+        $crawler = new Crawler($html);
+
+        $node = $crawler->filter('div#product-details[data-product]')->first();
+
+        if ($node->count() === 0) {
+            return null;
+        }
+
+        $decoded = json_decode($node->attr('data-product'), true);
+
+        //По артикулу проверяем наличие товара в базе и в размерной сетке
+        $code = $decoded['reference'];
+        if ($this->parserProductRepository->existsByCode($code)) return null;
+        //Находим категорию парсера
+        $category = $this->parserCategoryRepository->getById($categoryId);
+
+        $name = $this->translateService->translate($decoded['name']);
+        //Создаем Товар
+        $product = new ProductEntity(
+            name: $name,
+            code: $code,
+            slug: new Slug($name),
+            mainCategoryId: $category->categoryId,
+            brandId: $category->brandId,
+        );
+        $product->description = $this->translateService->translate($decoded['description_short']);
+
+        $product = $this->productRepository->save($product);
+
+        $sizesForParser = [];
+        $sizes = $this->GetSizes($crawler);
+        if (!is_null($category->sizeGridId)) {
+
+            $dto = new UpdateProductSizesData($product->id, $category->sizeGridId);
+            $this->setProductSizesUseCase->execute($dto);
+            //TODO отключить все размеры в $product
+            foreach ($sizes as $size) {
+
+                $sizeProduct = $this->sizeMapper->map($size);
+                //TODO Найти размер, через Mapping и включить его в $product и получить его id
+
+                $sizesForParser[] = [
+                    'productSizeId' => '< Здесь id размера>',
+                    'sizeOriginal' => $size,
+                ];
+            }
+            //Есть ли размерная сетка ?
+
+            //TODO Получить товарную сетку и добавить в $product
+        }
+
+
+        //TODO Устанавливаем цену розницы и закупку
+
+        //TODO Загружаем Фото для товара
+
+
+
+
+        $parserProduct = new ParserProductEntity(
+            name: $decoded['name'],
+            code: $code
+        );
+        $parserProduct->brandId = $category->brandId;
+        $parserProduct->url = $productData;
+        $parserProduct->categoryId = $categoryId;
+
+        $parserProduct->priceSell = $decoded['price_without_reduction'] - $decoded['reduction'];
+        $parserProduct->priceBase = $decoded['price_without_reduction'];
+        $parserProduct->data = json_encode($decoded);
+        $parserProduct->productId = $product->id;
+
+        if (!is_null($category->sizeGridId)) {
+            //Есть ли размерная сетка ?
+
+            //TODO Получить товарную сетку и добавить в $parserProduct
+
+        }
+
+        $parserProduct = $this->parserProductRepository->save($parserProduct);
+
+
+        if (is_array($productData)) {
+
+            //TODO Копируем из связываем $parserProduct и $product
+            // для $product создаем модификацию
+        }
+
+
+        return $parserProduct;
+
     }
 
     public function GetAvailability($productCate): void
@@ -128,6 +257,7 @@ class BabolatParserService implements ParserServiceInterface
         // TODO: Implement GetAvailability() method.
     }
 
+    //////////////////////// Список категорий
     private function urlToSlug(?string $url): ?string
     {
         if ($url === null || $url === '' || $url === '#') {
@@ -135,7 +265,7 @@ class BabolatParserService implements ParserServiceInterface
         }
 
         $parts = parse_url($url);
-        $slug  = trim($parts['path'] ?? '', '/');
+        $slug = trim($parts['path'] ?? '', '/');
 
         // добавляем значения GET-параметров через дефис
         if (!empty($parts['query'])) {
@@ -148,7 +278,7 @@ class BabolatParserService implements ParserServiceInterface
                 if (is_array($value)) {
                     $value = implode('-', $value);
                 }
-                $value = trim((string) $value, '/');
+                $value = trim((string)$value, '/');
                 if ($value !== '') {
                     $slug .= '-' . $value;
                 }
@@ -209,13 +339,6 @@ class BabolatParserService implements ParserServiceInterface
         return trim(preg_replace('/\s+/u', ' ', $text));
     }
 
-    private function hasQuery(?string $url): bool
-    {
-        if ($url === null || $url === '' || $url === '#') {
-            return false;
-        }
-        return parse_url($url, PHP_URL_QUERY) !== null;
-    }
 
     private function findSubUl(\DOMNode $linkW): ?\DOMNode
     {
@@ -287,4 +410,159 @@ class BabolatParserService implements ParserServiceInterface
         }
         return null;
     }
+
+    //// Список товаров
+    private function extractProductLinks(Crawler $crawler, string $baseUrl): array
+    {
+        $groups = [];
+
+        // 1. Карточки товаров
+        $cards = $crawler->filter(
+            'div#js-product-list article.product-miniature, ' .
+            'div#js-product-list div.product-miniature, ' .
+            'article.product-miniature, div.product-miniature'
+        );
+
+        if ($cards->count() > 0) {
+            $cards->each(function (Crawler $card) use (&$groups, $baseUrl) {
+                $productLinks = $this->extractProductLinksFromNode($card, $baseUrl);
+
+                if (count($productLinks) === 0) {
+                    return;
+                }
+
+                // КЛЮЧЕВОЕ: строка для одного товара, массив для товара с вариантами
+                $groups[] = count($productLinks) === 1
+                    ? $productLinks[0]
+                    : $productLinks;
+            });
+
+            return $groups;
+        }
+
+        // 2. Fallback по прямым ссылкам — здесь вариантов не видно, каждый <a> = отдельный товар
+        foreach ([
+                     'div#js-product-list a.product-thumbnail',
+                     'div#js-product-list a[href*=".html"]',
+                     'div.product-miniature a.product-thumbnail',
+                     'div.product-miniature a[href*=".html"]',
+                 ] as $selector) {
+            $nodes = $crawler->filter($selector);
+            if ($nodes->count() > 0) {
+                $nodes->each(function (Crawler $node) use (&$groups, $baseUrl) {
+                    $href = $node->attr('href');
+                    if ($href) {
+                        $groups[] = $this->absoluteUrl($href, $baseUrl); // строка
+                    }
+                });
+                return $groups;
+            }
+        }
+
+        // 3. Fallback: JSON-LD ItemList — тоже плоские ссылки, по одной на товар
+        $crawler->filter('script[type="application/ld+json"]')->each(
+            function (Crawler $script) use (&$groups) {
+                $json = json_decode($script->text(), true);
+                if (!is_array($json) || ($json['@type'] ?? '') !== 'ItemList') {
+                    return;
+                }
+                foreach ($json['itemListElement'] ?? [] as $item) {
+                    if (!empty($item['url'])) {
+                        $groups[] = $item['url'];
+                    }
+                }
+            }
+        );
+
+        return $groups;
+    }
+    private function extractProductLinksFromNode(Crawler $product, string $baseUrl): array
+    {
+        // Основная ссылка: .product-thumbnail — стандарт PrestaShop.
+        // Fallback: первая .html-ссылка в DOM (в PrestaShop она идёт до .variant-links).
+        $main = $product->filter('a.product-thumbnail')->first();
+        if ($main->count() === 0) {
+            $main = $product->filter('a[href*=".html"]')->first();
+        }
+        if ($main->count() === 0) {
+            return [];
+        }
+
+        $mainHref = $main->attr('href');
+        if (!$mainHref) {
+            return [];
+        }
+        $mainUrl = $this->absoluteUrl($mainHref, $baseUrl);
+
+        // Варианты
+        $variants = [];
+        $product->filter('div.products-variants div.variant-links a')->each(
+            function (Crawler $a) use (&$variants, $baseUrl) {
+                $href = $a->attr('href');
+                if ($href) {
+                    $variants[] = $this->absoluteUrl($href, $baseUrl);
+                }
+            }
+        );
+
+        // 0 или 1 вариант → основная ссылка. 2+ → все варианты.
+        return count($variants) > 1 ? $variants : [$mainUrl];
+    }
+    private function extractNextPageUrl(Crawler $crawler, string $baseUrl): ?string
+    {
+        $next = $crawler->filter('nav.pagination a[rel="next"]');
+        if ($next->count() === 0) {
+            $next = $crawler->filter('link[rel="next"]');
+        }
+        if ($next->count() === 0) {
+            return null;
+        }
+        $href = $next->first()->attr('href');
+        return $href ? $this->absoluteUrl($href, $baseUrl) : null;
+    }
+
+    private function absoluteUrl(string $href, string $baseUrl): string
+    {
+        if (preg_match('#^https?://#i', $href)) {
+            return $href;
+        }
+
+        $parts = parse_url($baseUrl);
+        $scheme = $parts['scheme'] ?? 'https';
+        $host = $parts['host'] ?? '';
+
+        if (str_starts_with($href, '//')) {
+            return $scheme . ':' . $href;
+        }
+        if (str_starts_with($href, '/')) {
+            return $scheme . '://' . $host . $href;
+        }
+
+        $dir = rtrim(dirname($parts['path'] ?? '/'), '/');
+        return $scheme . '://' . $host . $dir . '/' . $href;
+    }
+
+    ///Карточка товара
+
+    public function GetSizes(Crawler $crawler): array
+    {
+        $ul = $crawler->filter('ul#group_1')->first();
+
+        if ($ul->count() === 0) {
+            return [];
+        }
+        return $ul->filter('li input.input-radio')
+            ->each(fn(Crawler $input) =>
+                trim($input->attr('title') ?? '')
+            );
+    }
 }
+/*
+
+                 // "9,5 / 44" → "44"; "XL" → "XL"
+                if (str_contains($title, '/')) {
+                    $parts = explode('/', $title);
+                    $title = trim(end($parts));
+                }
+ *
+ */

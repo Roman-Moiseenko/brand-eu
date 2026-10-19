@@ -9,7 +9,7 @@ use App\Modules\Parser\Application\Actions\Product\ToggleProductFragileUseCase;
 use App\Modules\Parser\Application\Actions\Product\ToggleProductSanctionedUseCase;
 use App\Modules\Parser\Application\DTOs\Product\ParserProductFilterData;
 use App\Modules\Parser\Application\Services\CreateProductFromParserService;
-use App\Modules\Parser\Infrastructure\Jobs\UpdateProductIkeaJob;
+use App\Modules\Parser\Infrastructure\Jobs\old\UpdateProductIkeaJob;
 use App\Modules\Shared\Domain\Entities\UserPermission;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

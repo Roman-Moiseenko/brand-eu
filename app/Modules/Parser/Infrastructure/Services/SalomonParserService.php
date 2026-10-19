@@ -18,12 +18,12 @@ class SalomonParserService implements ParserServiceInterface
         // TODO: Implement addCategory() method.
     }
 
-    public function GetListProductsByCategory(string $categoryCode): array
+    public function GetListProductsByCategory(string $categoryUrl): array
     {
         // TODO: Implement GetListProductsByCategory() method.
     }
 
-    public function GetParserProduct($productData): ?ParserProductEntity
+    public function GetParserProduct($productData, $categoryId): ?ParserProductEntity
     {
         // TODO: Implement GetParserProduct() method.
     }

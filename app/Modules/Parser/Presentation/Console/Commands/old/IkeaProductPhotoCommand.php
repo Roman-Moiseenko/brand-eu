@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Parser\Presentation\Console\Commands;
+namespace App\Modules\Parser\Presentation\Console\Commands\old;
 
 use App\Console\CreatesApplication;
 use App\Modules\Parser\Application\Services\LoadParserProductIkeaService;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
-use App\Modules\Parser\Infrastructure\Jobs\LoadProductPhotosIkeaJob;
+use App\Modules\Parser\Infrastructure\Jobs\old\LoadProductPhotosIkeaJob;
 use App\Modules\Shared\Application\Actions\GetGalleryThumbUseCase;
 use Illuminate\Console\Command;
 

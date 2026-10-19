@@ -13,15 +13,16 @@ use App\Modules\Parser\Infrastructure\Persistence\ParserCategoryRepository;
 use App\Modules\Parser\Infrastructure\Persistence\ParserLogRepository;
 use App\Modules\Parser\Infrastructure\Persistence\ParserProductRepository;
 use App\Modules\Parser\Infrastructure\Services\IkeaProductApi;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaAvailablePriceCommand;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaCategoryCommand;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaCheckCommand;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaClearData;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaProductCommand;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaProductPhotoCommand;
-use App\Modules\Parser\Presentation\Console\Commands\IkeaRenameCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaAvailablePriceCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaCategoryCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaCheckCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaClearData;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaProductCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaProductPhotoCommand;
+use App\Modules\Parser\Presentation\Console\Commands\old\IkeaRenameCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandCategoryCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserTest2BrandCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTestBrandCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
@@ -152,6 +153,7 @@ class ParserServiceProvider extends ServiceProvider
             ParserBrandCategoryCommand::class,
             ParserBrandProductCommand::class,
             ParserTestBrandCommand::class,
+            ParserTest2BrandCommand::class,
         ]);
     }
 

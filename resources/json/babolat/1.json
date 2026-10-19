@@ -1,0 +1,421 @@
+{
+    "id_shop_default": "1",
+    "id_manufacturer": "1",
+    "id_supplier": "0",
+    "reference": "BM7 6MF25071 4005 1",
+    "is_virtual": "0",
+    "delivery_in_stock": "",
+    "delivery_out_stock": "",
+    "id_category_default": "77",
+    "on_sale": "1",
+    "online_only": "0",
+    "ecotax": 0,
+    "minimal_quantity": 1,
+    "low_stock_threshold": null,
+    "low_stock_alert": "0",
+    "price": "109,00\u00a0z\u0142",
+    "unity": "szt.",
+    "unit_price_ratio": "1.000000",
+    "additional_shipping_cost": "0.000000",
+    "customizable": "0",
+    "text_fields": "0",
+    "uploadable_files": "0",
+    "redirect_type": "302-category",
+    "id_type_redirected": "0",
+    "available_for_order": "1",
+    "available_date": "2025-08-25",
+    "show_condition": "1",
+    "condition": "new",
+    "show_price": "1",
+    "indexed": "1",
+    "visibility": "both",
+    "cache_default_attribute": "21544",
+    "advanced_stock_management": "0",
+    "date_add": "2025-08-25 14:22:05",
+    "date_upd": "2026-10-14 12:43:53",
+    "pack_stock_type": "3",
+    "meta_description": "Granatowy bezr\u0119kawnik m\u0119ski z technicznej tkaniny - limitowana kolekcja Juana \"Wilka\" Lebrona - wielokrotnego #1 \u015bwiatowej listy padla. Granatowe logo Babolat i znak wilka - symbol gracza - na wysoko\u015bci klatki piersiowej.",
+    "meta_keywords": "",
+    "meta_title": "Babolat MUSCLE TANK J. LEBRON, Estate Blue Hthr",
+    "link_rewrite": "babolat-muscle-tank-j-lebron-estate-blue-hthr",
+    "name": "Babolat MUSCLE TANK J. LEBRON, Estate Blue Hthr",
+    "description": "",
+    "description_short": "&lt;p&gt;Granatowy bezr\u0119kawnik m\u0119ski z technicznej tkaniny - limitowana kolekcja Juana \"Wilka\" Lebrona - wielokrotnego #1 \u015bwiatowej listy padla. Granatowe logo Babolat i znak wilka - symbol gracza - na wysoko\u015bci klatki piersiowej.&lt;\/p&gt;",
+    "available_now": "",
+    "available_later": "",
+    "id": 5415,
+    "id_product": 5415,
+    "out_of_stock": 2,
+    "new": 0,
+    "id_product_attribute": 21544,
+    "quantity_wanted": 1,
+    "extraContent": [],
+    "allow_oosp": 0,
+    "category": "outlet-odziez-tenisowa-meska",
+    "category_name": "M\u0119ska",
+    "link": "https:\/\/babolat-tenis.pl\/5415-babolat-muscle-tank-j-lebron-estate-blue-hthr.html",
+    "attribute_price": 0,
+    "price_tax_exc": 88.617857,
+    "price_without_reduction": 179.99,
+    "reduction": 70.990036,
+    "specific_prices": {
+        "id_specific_price": "473616",
+        "id_specific_price_rule": "0",
+        "id_cart": "0",
+        "id_product": "5415",
+        "id_shop": "0",
+        "id_shop_group": "0",
+        "id_currency": "0",
+        "id_country": "0",
+        "id_group": "1",
+        "id_customer": "0",
+        "id_product_attribute": "21544",
+        "price": 146.333333,
+        "from_quantity": "1",
+        "reduction": "0.394411",
+        "reduction_tax": "1",
+        "reduction_type": "percentage",
+        "from": "2001-01-01 00:00:00",
+        "to": "2099-01-01 23:59:59",
+        "score": "34"
+    },
+    "quantity": 3,
+    "quantity_all_versions": 4,
+    "id_image": "pl-default",
+    "features": [
+        {
+            "name": "Kolekcja",
+            "value": "Padel",
+            "id_feature": "44",
+            "position": "3"
+        },
+        {
+            "name": "Sk\u0142ad",
+            "value": "100% poliester z recyklingu",
+            "id_feature": "5",
+            "position": "4"
+        },
+        {
+            "name": "Rodzaj ubioru",
+            "value": "Koszulka",
+            "id_feature": "45",
+            "position": "11"
+        }
+    ],
+    "attachments": [],
+    "virtual": 0,
+    "pack": 0,
+    "packItems": [],
+    "nopackprice": 0,
+    "customization_required": false,
+    "attributes": {
+        "1": {
+            "id_attribute": "13",
+            "id_attribute_group": "1",
+            "name": "S",
+            "group": "Rozmiar",
+            "reference": "BM7 6MF25071 4005 1",
+            "ean13": "3324922216675",
+            "isbn": "",
+            "upc": "",
+            "mpn": ""
+        }
+    },
+    "rate": 23,
+    "tax_name": "PTU PL 23%",
+    "ecotax_rate": 0,
+    "unit_price": "109,00\u00a0z\u0142",
+    "customizations": {
+        "fields": []
+    },
+    "id_customization": 0,
+    "is_customizable": false,
+    "show_quantities": false,
+    "quantity_label": "Przedmioty",
+    "quantity_discounts": [],
+    "customer_group_discount": 0,
+    "images": [
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-small_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-medium_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-large_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15575-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "15575",
+            "cover": "1",
+            "position": "1",
+            "associatedVariants": []
+        },
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-small_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-medium_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-large_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15574-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/15574-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/15574-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/15574-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "15574",
+            "cover": null,
+            "position": "2",
+            "associatedVariants": []
+        },
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-small_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-medium_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-large_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15577-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/15577-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/15577-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/15577-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "15577",
+            "cover": null,
+            "position": "3",
+            "associatedVariants": []
+        },
+        {
+            "bySize": {
+                "cart_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 125,
+                    "height": 125
+                },
+                "small_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-small_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 200,
+                    "height": 200
+                },
+                "medium_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-medium_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 452,
+                    "height": 452
+                },
+                "home_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 600,
+                    "height": 600
+                },
+                "large_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-large_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 900,
+                    "height": 900
+                },
+                "thickbox_default": {
+                    "url": "https:\/\/babolat-tenis.pl\/15576-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                    "width": 1080,
+                    "height": 1080
+                }
+            },
+            "small": {
+                "url": "https:\/\/babolat-tenis.pl\/15576-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "medium": {
+                "url": "https:\/\/babolat-tenis.pl\/15576-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large": {
+                "url": "https:\/\/babolat-tenis.pl\/15576-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 1080,
+                "height": 1080
+            },
+            "legend": "",
+            "id_image": "15576",
+            "cover": null,
+            "position": "4",
+            "associatedVariants": []
+        }
+    ],
+    "cover": {
+        "bySize": {
+            "cart_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 125,
+                "height": 125
+            },
+            "small_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-small_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 200,
+                "height": 200
+            },
+            "medium_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-medium_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 452,
+                "height": 452
+            },
+            "home_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 600,
+                "height": 600
+            },
+            "large_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-large_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 900,
+                "height": 900
+            },
+            "thickbox_default": {
+                "url": "https:\/\/babolat-tenis.pl\/15575-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+                "width": 1080,
+                "height": 1080
+            }
+        },
+        "small": {
+            "url": "https:\/\/babolat-tenis.pl\/15575-cart_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+            "width": 125,
+            "height": 125
+        },
+        "medium": {
+            "url": "https:\/\/babolat-tenis.pl\/15575-home_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+            "width": 600,
+            "height": 600
+        },
+        "large": {
+            "url": "https:\/\/babolat-tenis.pl\/15575-thickbox_default\/babolat-muscle-tank-j-lebron-estate-blue-hthr.jpg",
+            "width": 1080,
+            "height": 1080
+        },
+        "legend": "",
+        "id_image": "15575",
+        "cover": "1",
+        "position": "1",
+        "associatedVariants": []
+    },
+    "has_discount": true,
+    "discount_type": "percentage",
+    "discount_percentage": "-39,44%",
+    "discount_percentage_absolute": "39,44%",
+    "discount_amount": "70,99\u00a0z\u0142",
+    "discount_amount_to_display": "-70,99\u00a0z\u0142",
+    "price_amount": 109,
+    "unit_price_full": "109,00\u00a0z\u0142 szt.",
+    "show_availability": true,
+    "availability_date": null,
+    "availability_message": "",
+    "availability": "available"
+}

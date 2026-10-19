@@ -25,17 +25,17 @@ interface ParserServiceInterface
     /// Товары ///
     /**
      * Получаем данные о всех товарах в категории (код, ссылка в зависимости от сайта) массив данных $productData
-     * @param string $categoryCode
+     * @param string $categoryUrl
      * @return array
      */
-    public function GetListProductsByCategory(string $categoryCode): array;
+    public function GetListProductsByCategory(string $categoryUrl): array;
 
     /**
      * На основе спарсенных данных создает Product и ParserProduct
-     * @param $productData
+     * @param $productData - ссылка для спарсивания товара
      * @return ParserProductEntity|null
      */
-    public function GetParserProduct($productData): ?ParserProductEntity;
+    public function GetParserProduct($productData, $categoryId): ?ParserProductEntity;
 
     /**
      * Проверка доступности товара, чтоб не парсить все данные (в некоторых случаях парсинг всей страницы - NB)

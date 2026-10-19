@@ -13,7 +13,7 @@ use App\Modules\Parser\Application\Actions\Product\ListAllProductByCategoryUseCa
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryIndexData;
 use App\Modules\Parser\Application\Services\ToggleCategoryWithProductsService;
 use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
-use App\Modules\Parser\Infrastructure\Jobs\LoadProductsIkeaJob;
+use App\Modules\Parser\Infrastructure\Jobs\old\LoadProductsIkeaJob;
 use App\Modules\Parser\Infrastructure\Models\ParserCategory;
 use App\Modules\Shared\Domain\Entities\UserPermission;
 use Illuminate\Http\JsonResponse;

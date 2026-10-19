@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int $id
  * @property int $product_id ParserProduct
- * @property string $sizeOriginal;
+ * @property string $size_original;
  * @property string $size;
- * @property int $productSizeId; // id из товарного размера ProductSizeEntity
+ * @property int $product_size_id; // id из товарного размера ProductSizeEntity
  * @property bool $available;
  * @property string $url;
  * @property string $sku;

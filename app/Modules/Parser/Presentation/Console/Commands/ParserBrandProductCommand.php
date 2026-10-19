@@ -5,13 +5,14 @@ namespace App\Modules\Parser\Presentation\Console\Commands;
 use App\Console\CreatesApplication;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
+use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductJob;
 use Illuminate\Console\Command;
 
 class ParserBrandProductCommand extends Command
 {
     use CreatesApplication;
 
-    protected $signature = 'parser:products-update';
+    protected $signature = 'parser:products';
     protected $description = 'Парсим все бренды на новые товары';
 
     public function handle(
@@ -28,9 +29,11 @@ class ParserBrandProductCommand extends Command
 
             foreach ($categories as $category) {
                 //FixMe Запуск через Job
-                $products = $parser->GetListProductsByCategory($category->code);
+                $products = $parser->GetListProductsByCategory($category->url);
                 foreach ($products as $product) {
-                    $parser->GetParserProduct($product);
+                    LoadParserProductJob::dispatch($product, $brand->id);
+
+                    $parser->GetParserProduct($product, $category->id);
                 }
                 //<--
             }

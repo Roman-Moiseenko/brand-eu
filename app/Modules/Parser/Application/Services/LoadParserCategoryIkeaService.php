@@ -6,7 +6,7 @@ use App\Modules\Base\Service\HttpPage;
 use App\Modules\Base\Service\TranslateService;
 use App\Modules\Parser\Application\Actions\Category\CreateParserCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryCreateData;
-use App\Modules\Parser\Infrastructure\Jobs\LoadCategoryIkeaJob;
+use App\Modules\Parser\Infrastructure\Jobs\old\LoadCategoryIkeaJob;
 use App\Modules\Parser\Infrastructure\Persistence\ParserCategoryRepository;
 use App\Modules\Setting\Entity\Settings;
 use App\Modules\Shared\Application\DTOs\JobPhotoLoadData;

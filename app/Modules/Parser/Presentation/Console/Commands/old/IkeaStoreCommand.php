@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Modules\Parser\Presentation\Console\Commands;
+namespace App\Modules\Parser\Presentation\Console\Commands\old;
 
 use App\Console\CreatesApplication;
-use App\Modules\Parser\Infrastructure\Jobs\StoreProductIkeaJob;
-use App\Modules\Parser\Infrastructure\Jobs\UpdateProductIkeaJob;
+use App\Modules\Parser\Infrastructure\Jobs\old\StoreProductIkeaJob;
 use App\Modules\Parser\Infrastructure\Models\ParserProduct;
 use App\Modules\Parser\Job\ParserAvailablePriceProduct;
 use Illuminate\Console\Command;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Parser\Presentation\Console\Commands;
+namespace App\Modules\Parser\Presentation\Console\Commands\old;
 
 use App\Console\CreatesApplication;
 use App\Modules\Parser\Application\Services\LoadParserProductIkeaService;

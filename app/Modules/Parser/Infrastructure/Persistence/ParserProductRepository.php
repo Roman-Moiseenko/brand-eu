@@ -14,26 +14,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ParserProductRepository implements ParserProductRepositoryInterface
 {
-    public function getById(int $id): ParserProductEntity
-    {
-        $model = ParserProduct::with('sizes.productSize')->findOrFail($id);
-        return $this->hydrate($model);
-    }
-
-    public function getByCode(string $code): ?ParserProductEntity
-    {
-        $model = ParserProduct::with('sizes.productSize')->where('code', $code)->first();
-
-        if ($model === null) {
-            return null;
-        }
-        return $this->hydrate($model);
-    }
-
-    public function existsByCode(string $code): bool
-    {
-        return ParserProduct::where('code', $code)->exists();
-    }
 
     public function save(ParserProductEntity $product): ParserProductEntity
     {
@@ -50,6 +30,7 @@ class ParserProductRepository implements ParserProductRepositoryInterface
         $model->product_id = $product->productId;
         $model->brand_id = $product->brandId;
         $model->maker_id = $product->makerId;
+        $model->category_id = $product->categoryId;
         $model->data = $product->data !== '' ? $product->data : null;
 
         $model->save();
@@ -75,6 +56,30 @@ class ParserProductRepository implements ParserProductRepositoryInterface
         $model->refresh();
 
         return $this->hydrate($model);
+    }
+
+    public function getById(int $id): ParserProductEntity
+    {
+        $model = ParserProduct::with('sizes.productSize')->findOrFail($id);
+        return $this->hydrate($model);
+    }
+
+    public function getByCode(string $code): ?ParserProductEntity
+    {
+        $model = ParserProduct::with('sizes.productSize')->where('code', $code)->first();
+
+        if ($model === null) {
+            return null;
+        }
+        return $this->hydrate($model);
+    }
+
+    public function existsByCode(string $code): bool
+    {
+         $product = ParserProduct::where('code', $code)->exists();
+         if ($product) return true;
+
+         return ParserProductSizes::where('sku', $code)->exists();
     }
 
     public function getAll(): array
@@ -128,6 +133,33 @@ class ParserProductRepository implements ParserProductRepositoryInterface
         ParserProduct::whereIn('id', $productIds)->update(['availability' => $availability]);
     }
 
+    public function getFilteredPaginated(ParserProductFilterData &$filter): LengthAwarePaginator
+    {
+        $query = ParserProduct::with('sizes.productSize')->orderBy('name');
+        $filter->count = 0;
+        if ($filter->code !== null) {
+            $code = $filter->code;
+            $query->where(function ($q) use ($code) {
+                $q->whereRaw("LOWER(name) like LOWER('%$code%')")
+                    ->orWhere('code', 'like', "%$code%");
+            });
+            $filter->count++;
+        }
+
+        if ($filter->show !== null) {
+            match ($filter->show) {
+                'availability' => $query->where('availability', true),
+                'not_availability' => $query->where('availability', false),
+                default => null,
+            };
+            $filter->count++;
+        }
+
+        return $query->paginate($filter->perPage)
+            ->withQueryString()
+            ->through(fn(ParserProduct $model) => $this->hydrate($model));
+    }
+
     public function findAllByCategoryId(int $categoryId, int $perPage = 15, int $page = 1): LengthAwarePaginator
     {
         return ParserProduct::with('sizes.productSize')
@@ -153,6 +185,7 @@ class ParserProductRepository implements ParserProductRepositoryInterface
         $entity->makerId = $model->maker_id ?? '';
         $entity->data = $model->data ?? '';
         $entity->availability = (bool) ($model->availability ?? false);
+        $entity->categoryId = $model->category_id;
 
         $entity->sizes = $this->hydrateSizes($model);
 
@@ -186,32 +219,5 @@ class ParserProductRepository implements ParserProductRepositoryInterface
 
             return $entity;
         })->values()->toArray();
-    }
-
-    public function getFilteredPaginated(ParserProductFilterData &$filter): LengthAwarePaginator
-    {
-        $query = ParserProduct::with('sizes.productSize')->orderBy('name');
-        $filter->count = 0;
-        if ($filter->code !== null) {
-            $code = $filter->code;
-            $query->where(function ($q) use ($code) {
-                $q->whereRaw("LOWER(name) like LOWER('%$code%')")
-                    ->orWhere('code', 'like', "%$code%");
-            });
-            $filter->count++;
-        }
-
-        if ($filter->show !== null) {
-            match ($filter->show) {
-                'availability' => $query->where('availability', true),
-                'not_availability' => $query->where('availability', false),
-                default => null,
-            };
-            $filter->count++;
-        }
-
-        return $query->paginate($filter->perPage)
-            ->withQueryString()
-            ->through(fn(ParserProduct $model) => $this->hydrate($model));
     }
 }
