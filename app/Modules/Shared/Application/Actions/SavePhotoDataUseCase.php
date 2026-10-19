@@ -16,7 +16,7 @@ readonly class SavePhotoDataUseCase
     {
     }
 
-    public function execute(int $id, PhotoSaveData $dto, UserPermission $userPermission): void
+    public function execute(int $id, PhotoSaveData $dto): void
     {
         // Проверка прав доступа
         // if (!$userPermission->can('storage.photo.update')) throw new \DomainException('Доступ запрещён');

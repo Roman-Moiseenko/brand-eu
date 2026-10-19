@@ -2,6 +2,8 @@
 
 namespace App\Modules\Parser\Infrastructure\Services;
 
+use App\Modules\Catalog\Domain\Entities\ProductEntity;
+use App\Modules\Catalog\Infrastructure\Models\Product;
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Infrastructure\Services\Babolat\CategoryParserService;
@@ -100,24 +102,40 @@ class BabolatParserService implements ParserServiceInterface
     public function GetParserProduct($productData, $categoryId)
     {
         $url = is_array($productData) ? $productData[0] : $productData;
+        $productEntity =  $this->parserProduct($url, $categoryId);
+        if (is_null($productEntity)) return; //FixMe Данные не считываются - сделать лог
+        if (is_array($productData)) {
+
+            //TODO Если можификации еще нет, то Создать модификацию и добавить товар
+
+            for ($index = 1; $index < count($productData) - 1; $index++) {
+
+                $_productEntity =  $this->parserProduct($productData[$index], $categoryId);
+                if (is_null($_productEntity)) continue; //FixMe Данные не считываются - сделать лог
+
+                //TODO если $_productEntity нет в модификации, то добавляем
+            }
+        }
+    }
+
+    private function parserProduct($url, $categoryId):? ProductEntity
+    {
         $crawler = new Crawler($this->html($url));
 
         $node = $crawler->filter('div#product-details[data-product]')->first();
-        if ($node->count() === 0) {
-            return null;
-        }
+        if ($node->count() === 0) return null;
+
 
         $decoded = json_decode($node->attr('data-product'), true);
         $ul = $crawler->filter('ul#group_1')->first();
-
-        if ($ul->count() === 0) $sizes = [];
 
         $sizes = ($ul->count() === 0) ? [] : $ul->filter('li input.input-radio')
             ->each(fn(Crawler $input) => trim($input->attr('title') ?? '')
             );
 
-        $productEntity = $this->productParser->create($decoded, $sizes, $categoryId, $productData);
+        return $this->productParser->create($decoded, $sizes, $categoryId, $url);
     }
+
 
     public function GetAvailability($productCate): void
     {

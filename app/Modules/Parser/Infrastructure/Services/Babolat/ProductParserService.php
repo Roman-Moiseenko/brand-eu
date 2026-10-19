@@ -2,18 +2,25 @@
 
 namespace App\Modules\Parser\Infrastructure\Services\Babolat;
 
+use App\Modules\Accounting\Application\Actions\ProductPrice\SetPriceUseCase;
+use App\Modules\Accounting\Application\DTOs\ProductPrice\SetProductPriceData;
+use App\Modules\Accounting\Domain\ValueObjects\PriceType;
 use App\Modules\Base\Service\TranslateService;
 use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
 use App\Modules\Catalog\Domain\ValueObjects\Code;
+use App\Modules\Parser\Application\Services\CalculateParserPriceService;
 use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Mappers\SizeMapper;
+use App\Modules\Shared\Application\DTOs\JobPhotoLoadData;
+use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use App\Modules\Shared\Domain\ValueObjects\Slug;
+use App\Modules\Shared\Infrastructure\Job\LoadPhotoByUrlJob;
 
 readonly class ProductParserService
 {
@@ -24,18 +31,22 @@ readonly class ProductParserService
         private TranslateService                  $translateService,
         private SetProductSizesUseCase            $setProductSizesUseCase,
         private SizeMapper                        $sizeMapper,
-    ) {
+        private CalculateParserPriceService       $calculate,
+        private SetPriceUseCase $setPriceUseCase,
+    )
+    {
     }
 
     /**
      * Создаёт ProductEntity и ParserProductEntity из спарсенных данных.
      */
-    public function create(array $decoded, array $sizes, int $categoryId, $productData): ?ProductEntity
+    public function create(array $decoded, array $sizes, int $categoryId, $url): ProductEntity
     {
 
         //По артикулу проверяем наличие товара в базе и в размерной сетке
         $code = $decoded['reference'];
-        if ($this->parserProductRepository->existsByCode($code)) return null;
+
+        if (!is_null($prod = $this->productRepository->findByCode($code))) return $prod;
         //Находим категорию парсера
         $category = $this->parserCategoryRepository->getById($categoryId);
 
@@ -74,12 +85,34 @@ readonly class ProductParserService
             //TODO Получить товарную сетку и добавить в $product
         }
 
+        //Устанавливаем цену розницы и закупку
+        $prices = $this->calculate->execute($decoded['price_without_reduction']);
+        $dto = new SetProductPriceData($product->id, $prices->retail, PriceType::RETAIL);
+        $this->setPriceUseCase->execute($dto);
 
-        //TODO Устанавливаем цену розницы и закупку
+        $dto = new SetProductPriceData($product->id, $prices->minimal, PriceType::MINIMAL);
+        $this->setPriceUseCase->execute($dto);
 
-        //TODO Загружаем Фото для товара
+        $dto = new SetProductPriceData($product->id, $prices->cost, PriceType::COST);
+        $this->setPriceUseCase->execute($dto);
 
+        //Загружаем Фото для товара
+        $items = array_filter(array_map(function ($item) {
+            if (isset($item['large']['url"'])) return $item['large']['url"'];
+            return false;
+        }, $decoded['images']));
 
+        foreach ($items as $imageItem) {
+            $dtoPhoto = new JobPhotoLoadData(
+                imageableId: $product->id,
+                modelType: 'catalog.product',
+                type: 'gallery',
+                url: $imageItem['url'],
+                isProxy: false,
+                alt: $product->name,
+            );
+            LoadPhotoByUrlJob::dispatch($dtoPhoto)->onQueue(QueueName::PHOTO);
+        }
 
 
         $parserProduct = new ParserProductEntity(
@@ -87,7 +120,7 @@ readonly class ProductParserService
             code: $code
         );
         $parserProduct->brandId = $category->brandId;
-        $parserProduct->url = $productData;
+        $parserProduct->url = $url;
         $parserProduct->categoryId = $categoryId;
 
         $parserProduct->priceSell = $decoded['price_without_reduction'] - $decoded['reduction'];
@@ -98,19 +131,11 @@ readonly class ProductParserService
         if (!is_null($category->sizeGridId)) {
             //Есть ли размерная сетка ?
 
-            //TODO Получить товарную сетку и добавить в $parserProduct
+            //TODO Получить товарную сетку и добавить в $parserProduct из $sizesForParser
 
         }
 
         $parserProduct = $this->parserProductRepository->save($parserProduct);
-
-
-        if (is_array($productData)) {
-
-            //TODO Копируем из связываем $parserProduct и $product
-            // для $product создаем модификацию
-        }
-
 
 
         return $product;

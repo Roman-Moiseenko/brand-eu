@@ -22,7 +22,7 @@ readonly class UploadPhotoUseCase
     {
     }
 
-    public function execute(PhotoUploadData $dto, UserPermission $userPermission): PhotoEntity
+    public function execute(PhotoUploadData $dto): PhotoEntity
     {
         // Проверка прав доступа
         // if (!$userPermission->can('storage.photo.upload')) throw new \DomainException('Доступ запрещён');
