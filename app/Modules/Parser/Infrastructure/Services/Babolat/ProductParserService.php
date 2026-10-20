@@ -66,23 +66,19 @@ readonly class ProductParserService
         $sizesForParser = [];
 
         if (!is_null($category->sizeGridId)) {
-
             $dto = new UpdateProductSizesData($product->id, $category->sizeGridId);
             $this->setProductSizesUseCase->execute($dto);
             //TODO отключить все размеры в $product
             foreach ($sizes as $size) {
 
-                $sizeProduct = $this->sizeMapper->map($size);
-                //TODO Найти размер, через Mapping и включить его в $product и получить его id
+                $sizeProduct = $this->sizeMapper->map($size); //через Mapping получаем размер по нашей сетке
+                //TODO Найти размер и включить его в $product и получить его id
 
                 $sizesForParser[] = [
                     'productSizeId' => '< Здесь id размера>',
                     'sizeOriginal' => $size,
                 ];
             }
-            //Есть ли размерная сетка ?
-
-            //TODO Получить товарную сетку и добавить в $product
         }
 
         //Устанавливаем цену розницы и закупку
@@ -131,11 +127,11 @@ readonly class ProductParserService
         if (!is_null($category->sizeGridId)) {
             //Есть ли размерная сетка ?
 
-            //TODO Получить товарную сетку и добавить в $parserProduct из $sizesForParser
+            //TODO добавить размеры (ParserProductSize) в $parserProduct из $sizesForParser
 
         }
 
-        $parserProduct = $this->parserProductRepository->save($parserProduct);
+        $this->parserProductRepository->save($parserProduct);
 
 
         return $product;

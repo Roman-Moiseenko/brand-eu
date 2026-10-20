@@ -11,6 +11,7 @@ use App\Modules\Parser\Infrastructure\Services\Babolat\ProductListParserService;
 use App\Modules\Parser\Infrastructure\Services\Babolat\ProductParserService;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
+use function Symfony\Component\Translation\t;
 
 class BabolatParserService implements ParserServiceInterface
 {
@@ -129,13 +130,92 @@ class BabolatParserService implements ParserServiceInterface
         $decoded = json_decode($node->attr('data-product'), true);
         $ul = $crawler->filter('ul#group_1')->first();
 
-        $sizes = ($ul->count() === 0) ? [] : $ul->filter('li input.input-radio')
+        $sizes =($ul->count() === 0) ? [] : $ul->filter('li input.input-radio')
             ->each(fn(Crawler $input) => trim($input->attr('title') ?? '')
             );
 
         return $this->productParser->create($decoded, $sizes, $categoryId, $url);
     }
 
+    public function GetSizeLinks(string $productUrl): array
+    {
+        $html = Http::withHeaders(['User-Agent' => 'Mozilla/5.0'])->get($productUrl)->body();
+        $crawler = new Crawler($html);
+
+        // 1. Собираем названия размеров из HTML (эта часть работает)
+        $sizeNames = [];
+        $crawler->filter('ul#group_1 li input.input-radio')->each(function (Crawler $input) use (&$sizeNames) {
+            $sizeNames[(string)$input->attr('value')] = trim($input->attr('title') ?? '');
+        });
+
+        // 2. Достаём ID товара и static_token
+        preg_match('~/(\d+)-~', parse_url($productUrl, PHP_URL_PATH), $m);
+        $idProduct = (int)($m[1] ?? 0);
+
+        $token = null;
+        $crawler->filter('script:contains("static_token")')->each(function (Crawler $script) use (&$token) {
+            if (preg_match('/"static_token":"([^"]+)"/', $script->text(), $tm)) {
+                $token = $tm[1];
+            }
+        });
+
+        if (!$idProduct || !$token) return [];
+
+        // 3. Запрашиваем комбинации у сервера
+        $response = Http::asForm()->post('https://babolat-tenis.pl/index.php?controller=product&action=getCombinations', [
+            'id_product'   => $idProduct,
+            'static_token' => $token,
+        ]);
+
+        if (!$response->successful()) return [];
+        $combinations = $response->json('combinations') ?? [];
+
+        // 4. Сопоставляем id_attribute размера с id_product_attribute
+        $sizeUrls = [];
+        $baseUrl  = explode('#', $productUrl)[0];
+        $colorPart = '';
+        if (preg_match('~(/[^/]+-kolor-[^/]+)$~', $productUrl, $cm)) {
+            $colorPart = $cm[1]; // сохраняем текущий цвет, например /119-kolor-granatowy
+        }
+
+        foreach ($combinations as $comb) {
+            $sizeAttrId = null;
+            foreach (($comb['attributes'] ?? []) as $attr) {
+                if (isset($sizeNames[$attr])) { // значение атрибута совпадает с value из input
+                    $sizeAttrId = $attr;
+                    break;
+                }
+            }
+            if ($sizeAttrId === null || isset($sizeUrls[$sizeAttrId])) continue;
+
+            $idCombination = $comb['id_product_attribute'] ?? null;
+            if (!$idCombination) continue;
+
+            // Формируем URL: используем id_product_attribute из ответа
+            $sizeSlug = $this->slugifyAttrName($sizeNames[$sizeAttrId]);
+            $hash = "{$sizeAttrId}-rozmiar-{$sizeSlug}_{$idCombination}";
+            $sizeUrls[$sizeAttrId] = $baseUrl . '#/' . $hash . $colorPart;
+        }
+
+        // 5. Возвращаем результат
+        $sizes = [];
+        foreach ($sizeNames as $idAttr => $name) {
+            $sizes[] = [
+                'size' => $name,
+                'url'  => $sizeUrls[$idAttr] ?? null,
+            ];
+        }
+        return $sizes;
+    }
+
+    private function slugifyAttrName(string $name): string
+    {
+        $name = strtr($name, ['ą'=>'a','ć'=>'c','ę'=>'e','ł'=>'l','ń'=>'n','ó'=>'o','ś'=>'s','ź'=>'z','ż'=>'z']);
+        $name = mb_strtolower($name);
+        $name = str_replace([',', '.'], '', $name); // 8,5 → 85
+        $name = str_replace('/', '_', $name);        // 8/42 → 8_42
+        return trim(preg_replace('/[^a-z0-9_]+/', '_', $name), '_');
+    }
 
     public function GetAvailability($productCate): void
     {
