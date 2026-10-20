@@ -15,6 +15,13 @@ class ParserTestBrandCommand extends Command
     protected $description = 'Парсим категории';
 
     const string URL = 'https://babolat-tenis.pl/5835-23345-babolat-jet-mach-4-all-court-men-dark-blue-white.html#/42-rozmiar-8_42/119-kolor-granatowy';
+
+    const array URLS = [
+        "https://babolat-tenis.pl/135-266-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/79-kolor-bialy",
+        "https://babolat-tenis.pl/135-267-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/76-kolor-czerwony",
+        "https://babolat-tenis.pl/135-268-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/75-kolor-czarny",
+        "https://babolat-tenis.pl/135-270-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/72-kolor-niebieski",
+    ];
     const int Category = 21;
 
     public function handle(
