@@ -96,4 +96,9 @@ final class ParserProductEntity
         get => $this->sizes;
         set => $this->sizes = $value;
     }
+
+    public function addSize(ParserProductSizeEntity $size): void
+    {
+        $this->sizes = [...$this->sizes, $size];
+    }
 }

@@ -211,6 +211,7 @@ function onFullDelete(row) {
 }
 
 function onEdit(row: { id: any; }) {
+    console.log(row);
     router.visit(route('admin.catalog.product.edit', {id: row.id}), {
         method: "get",
         preserveState: true,

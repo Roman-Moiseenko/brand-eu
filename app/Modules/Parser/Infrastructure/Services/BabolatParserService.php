@@ -107,7 +107,7 @@ class BabolatParserService implements ParserServiceInterface
         if (is_null($productEntity)) return; //FixMe Данные не считываются - сделать лог
         if (is_array($productData)) {
 
-            //TODO Если можификации еще нет, то Создать модификацию и добавить товар
+            //TODO Если модификации еще нет, то Создать модификацию и добавить товар
 
             for ($index = 1; $index < count($productData) - 1; $index++) {
 
@@ -117,6 +117,7 @@ class BabolatParserService implements ParserServiceInterface
                 //TODO если $_productEntity нет в модификации, то добавляем
             }
         }
+        return $productEntity;
     }
 
     private function parserProduct($url, $categoryId):? ProductEntity

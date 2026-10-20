@@ -16,14 +16,15 @@ Breadcrumbs::for('admin.catalog.product.create', function (BreadcrumbTrail $trai
     $trail->parent('admin.catalog.product.index');
     $trail->push('Добавить новый', route('admin.catalog.product.create'));
 });
-Breadcrumbs::for('admin.catalog.product.show', function (BreadcrumbTrail $trail, Product $product) {
+Breadcrumbs::for('admin.catalog.product.show', function (BreadcrumbTrail $trail, int $id) {
+    $product = Product::find($id);
     $trail->parent('admin.catalog.product.index');
     $trail->push($product->name, route('admin.catalog.product.show', $product));
 });
 Breadcrumbs::for('admin.catalog.product.edit', function (BreadcrumbTrail $trail, int $id) {
-    $product = Product::find($id);
-    $trail->parent('admin.catalog.product.show', $product);
-    $trail->push('Редактировать', route('admin.catalog.product.edit', $product));
+  //  $product = Product::find($id);
+    $trail->parent('admin.catalog.product.show', $id);
+    $trail->push('Редактировать', route('admin.catalog.product.edit', $id));
 });
 Breadcrumbs::for('admin.catalog.product.update', function (BreadcrumbTrail $trail, Product $product) {
     $trail->parent('admin.catalog.product.index');

@@ -16,17 +16,13 @@ class ParserTestBrandCommand extends Command
 
     const string URL = 'https://babolat-tenis.pl/5835-23345-babolat-jet-mach-4-all-court-men-dark-blue-white.html#/42-rozmiar-8_42/119-kolor-granatowy';
     const int Category = 21;
+
     public function handle(
         BrandRepositoryInterface          $brandRepository,
         ParserCategoryRepositoryInterface $categoryRepository,
     ): void
     {
-
-
-
-
-
-        $this->info('Парсим категории');
+        $this->info('Парсим товар');
         //$brands = $brandRepository->getAll();
         //$this->info('Найдено брендов ' . count($brands));
         $brand = $brandRepository->getByName('Babolat');

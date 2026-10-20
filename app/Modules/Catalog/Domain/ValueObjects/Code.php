@@ -18,7 +18,7 @@ final class Code
         }
 
         $this->code = $code;
-        $this->codeSearch = str_replace(['-', ',', '.', '_', ':'], '', $code);
+        $this->codeSearch = str_replace(['-', ',', '.', '_', ':', ' '], '', $code);
     }
 
     /**
