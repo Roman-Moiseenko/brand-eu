@@ -1,17 +1,13 @@
 <?php
 
 namespace App\Modules\Parser\Infrastructure\Services;
-
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
-use App\Modules\Catalog\Infrastructure\Models\Product;
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
-use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Infrastructure\Services\Babolat\CategoryParserService;
 use App\Modules\Parser\Infrastructure\Services\Babolat\ProductListParserService;
 use App\Modules\Parser\Infrastructure\Services\Babolat\ProductParserService;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use function Symfony\Component\Translation\t;
 
 class BabolatParserService implements ParserServiceInterface
 {
@@ -100,21 +96,21 @@ class BabolatParserService implements ParserServiceInterface
         );
     }
 
-    public function GetParserProduct($productData, $categoryId)
+    public function GetParserProduct($productData, $categoryId):? ProductEntity
     {
         $url = is_array($productData) ? $productData[0] : $productData;
         $productEntity =  $this->parserProduct($url, $categoryId);
-        if (is_null($productEntity)) return; //FixMe Данные не считываются - сделать лог
-        if (is_array($productData)) {
+        if (is_null($productEntity)) return null; //FixMe Данные не считываются - сделать лог
+        if (is_array($productData)) { //Товаров несколько, они по цветам
 
-            //TODO Если модификации еще нет, то Создать модификацию и добавить товар
+            //TODO Если модификации еще нет, то Создать модификацию по атрибуту "Цвет" и добавить товар
 
             for ($index = 1; $index < count($productData) - 1; $index++) {
 
                 $_productEntity =  $this->parserProduct($productData[$index], $categoryId);
                 if (is_null($_productEntity)) continue; //FixMe Данные не считываются - сделать лог
 
-                //TODO если $_productEntity нет в модификации, то добавляем
+                //TODO если $_productEntity нет в модификации, то добавляем товар в модификацию с $productEntity
             }
         }
         return $productEntity;

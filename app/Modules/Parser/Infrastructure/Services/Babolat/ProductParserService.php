@@ -8,11 +8,14 @@ use App\Modules\Accounting\Domain\ValueObjects\PriceType;
 use App\Modules\Base\Service\TranslateService;
 use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
+use App\Modules\Catalog\Application\Services\AttachAttributeProductService;
+use App\Modules\Catalog\Application\Services\AttachVariantAttributeService;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Entities\ProductSizeEntity;
 use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\SizeGridRepositoryInterface;
+use App\Modules\Catalog\Domain\ValueObjects\AttributeName;
 use App\Modules\Catalog\Domain\ValueObjects\Code;
 use App\Modules\Parser\Application\Services\CalculateParserPriceService;
 use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
@@ -39,7 +42,8 @@ readonly class ProductParserService
         private SetProductSizesUseCase            $setProductSizesUseCase,
         private SizeMapper                        $sizeMapper,
         private CalculateParserPriceService       $calculate,
-        private SetPriceUseCase $setPriceUseCase,
+        private SetPriceUseCase                   $setPriceUseCase,
+        private AttachVariantAttributeService $attachVariantAttributeService,
     )
     {
     }
@@ -125,8 +129,17 @@ readonly class ProductParserService
         $dto = new SetProductPriceData($product->id, $prices->cost, PriceType::COST);
         $this->setPriceUseCase->execute($dto);
 
+        //Устанавливаем цвет, как атрибут
+        if (isset($decoded['attributes']['2'])) {
+            $attribute = $decoded['attributes']['2'];
+            if ($attribute['group'] == 'Kolor') {
+                $color = $this->translateService->translate($attribute['name']);
+                $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
+            }
 
-    //    \Log::info(json_encode($decoded['images']));
+        }
+
+        //    \Log::info(json_encode($decoded['images']));
         //Загружаем Фото для товара
         $items = array_filter(array_map(function ($item) {
             if (isset($item['large']['url'])) return $item['large']['url'];
@@ -135,7 +148,7 @@ readonly class ProductParserService
         }, $decoded['images']));
         //\Log::info(json_encode($items));
 
-       // dd($decoded['images']);
+        // dd($decoded['images']);
         foreach ($items as $imageItem) {
             $dtoPhoto = new JobPhotoLoadData(
                 imageableId: $product->id,
