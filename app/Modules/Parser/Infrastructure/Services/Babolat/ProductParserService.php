@@ -10,8 +10,10 @@ use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseC
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
 use App\Modules\Catalog\Application\Services\AttachAttributeProductService;
 use App\Modules\Catalog\Application\Services\AttachVariantAttributeService;
+use App\Modules\Catalog\Domain\Entities\AttributeVariantEntity;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Entities\ProductSizeEntity;
+use App\Modules\Catalog\Domain\Interfaces\AttributeRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\SizeGridRepositoryInterface;
@@ -43,7 +45,8 @@ readonly class ProductParserService
         private SizeMapper                        $sizeMapper,
         private CalculateParserPriceService       $calculate,
         private SetPriceUseCase                   $setPriceUseCase,
-        private AttachVariantAttributeService $attachVariantAttributeService,
+        private AttachVariantAttributeService     $attachVariantAttributeService,
+        private AttributeRepositoryInterface      $attributeRepository,
     )
     {
     }
@@ -54,13 +57,38 @@ readonly class ProductParserService
     public function create(array $decoded, array $sizes, int $categoryId, $url): ProductEntity
     {
         //По артикулу проверяем наличие товара в базе и в размерной сетке
-        $code = $decoded['reference'];
+        $code = $decoded['attributes']['1']['reference']
+            ?? $decoded['attributes']['2']['reference']
+            ?? $decoded['reference']
+            ?? null;
 
         if (!is_null($prod = $this->productRepository->findByCode($code))) return $prod;
         //Находим категорию парсера
         $category = $this->parserCategoryRepository->getById($categoryId);
 
         $name = $this->translateService->translate($decoded['name']);
+
+        $color = '';
+        //Получаем цвет
+        if (isset($decoded['attributes']['2'])) {
+            $attribute = $decoded['attributes']['2'];
+            if ($attribute['group'] == 'Kolor') {
+                $color = $this->translateService->translate($attribute['name']);
+            }
+        }
+        //Проверяем цвет в товаре
+        $attributeColor = $this->attributeRepository->findByName(AttributeName::COLOR);
+        $variants = array_map(function (AttributeVariantEntity $entity) {
+            return $entity->name;
+        }, $attributeColor->variants);
+        $pattern = '/' . implode('|', array_map('preg_quote', $variants)) . '/iu';
+        if (!preg_match($pattern, $name, $m)) {
+            $name = $name . ', ' . $color;
+        }
+
+
+        //TODO Получить все Если в имени нет цвета из базы, то $name = $name . ', ' . $color;
+
         //Создаем Товар
         $product = new ProductEntity(
             name: $name,
@@ -70,8 +98,21 @@ readonly class ProductParserService
             brandId: $category->brandId,
         );
         $product->description = $this->translateService->translate($decoded['description_short']);
-
         $product = $this->productRepository->save($product);
+
+        //Устанавливаем цвет, как атрибут, если есть
+        if (!empty($color)) $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
+
+
+     /*   if (isset($decoded['attributes']['2'])) {
+            $attribute = $decoded['attributes']['2'];
+            if ($attribute['group'] == 'Kolor') {
+                $color = $this->translateService->translate($attribute['name']);
+                $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
+            }
+        }
+*/
+
 
         $sizesForParser = [];
 
@@ -129,15 +170,6 @@ readonly class ProductParserService
         $dto = new SetProductPriceData($product->id, $prices->cost, PriceType::COST);
         $this->setPriceUseCase->execute($dto);
 
-        //Устанавливаем цвет, как атрибут
-        if (isset($decoded['attributes']['2'])) {
-            $attribute = $decoded['attributes']['2'];
-            if ($attribute['group'] == 'Kolor') {
-                $color = $this->translateService->translate($attribute['name']);
-                $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
-            }
-
-        }
 
         //    \Log::info(json_encode($decoded['images']));
         //Загружаем Фото для товара
@@ -174,6 +206,7 @@ readonly class ProductParserService
         $parserProduct->priceBase = $decoded['price_without_reduction'];
         $parserProduct->data = json_encode($decoded);
         $parserProduct->productId = $product->id;
+        $parserProduct->makerId = $decoded['reference'];
 
         if (!is_null($category->sizeGridId)) {
             //Есть ли размерная сетка ?

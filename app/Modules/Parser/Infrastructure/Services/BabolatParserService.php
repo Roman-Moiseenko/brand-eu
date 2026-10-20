@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Modules\Parser\Infrastructure\Services;
+use App\Modules\Catalog\Application\Services\ModificationValuesResolver;
+use App\Modules\Catalog\Domain\Entities\ModificationEntity;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
+use App\Modules\Catalog\Domain\Interfaces\AttributeRepositoryInterface;
+use App\Modules\Catalog\Domain\Interfaces\ModificationRepositoryInterface;
+use App\Modules\Catalog\Domain\ValueObjects\AttributeName;
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
 use App\Modules\Parser\Infrastructure\Services\Babolat\CategoryParserService;
 use App\Modules\Parser\Infrastructure\Services\Babolat\ProductListParserService;
@@ -14,9 +19,12 @@ class BabolatParserService implements ParserServiceInterface
     private const string URL_CATEGORIES = 'https://babolat-tenis.pl';
 
     public function __construct(
-        private readonly CategoryParserService    $categoryParser,
-        private readonly ProductListParserService $productListParser,
-        private readonly ProductParserService     $productParser,
+        private readonly CategoryParserService           $categoryParser,
+        private readonly ProductListParserService        $productListParser,
+        private readonly ProductParserService            $productParser,
+        private readonly ModificationRepositoryInterface $modificationRepository,
+        private readonly AttributeRepositoryInterface    $attributeRepository,
+        private readonly ModificationValuesResolver      $modificationValuesResolver,
     )
     {
     }
@@ -98,19 +106,32 @@ class BabolatParserService implements ParserServiceInterface
 
     public function GetParserProduct($productData, $categoryId):? ProductEntity
     {
+        \Log::info(json_encode($productData));
+
         $url = is_array($productData) ? $productData[0] : $productData;
         $productEntity =  $this->parserProduct($url, $categoryId);
         if (is_null($productEntity)) return null; //FixMe Данные не считываются - сделать лог
         if (is_array($productData)) { //Товаров несколько, они по цветам
 
-            //TODO Если модификации еще нет, то Создать модификацию по атрибуту "Цвет" и добавить товар
+            //Ищем модификацию по базовому товару. Если её ещё нет — создаём по атрибуту "Цвет"
+            $modification = $this->modificationByProduct($productEntity->id);
+            if ($modification === null) {
+                $modification = $this->createModificationByColor($productEntity);
+            }
 
-            for ($index = 1; $index < count($productData) - 1; $index++) {
-
+            for ($index = 1; $index < count($productData); $index++) {
                 $_productEntity =  $this->parserProduct($productData[$index], $categoryId);
                 if (is_null($_productEntity)) continue; //FixMe Данные не считываются - сделать лог
 
-                //TODO если $_productEntity нет в модификации, то добавляем товар в модификацию с $productEntity
+                //Если товара ещё нет в модификации — добавляем его
+                if (!isset($modification->products[$_productEntity->id])) {
+                    $values = $this->modificationValuesResolver->forProduct(
+                        productId: $_productEntity->id,
+                        attributes: $modification->attributes,
+                    );
+                    $modification->addProduct($_productEntity->id, $values->toArray());
+                    $modification = $this->modificationRepository->save($modification);
+                }
             }
         }
         return $productEntity;
@@ -132,6 +153,45 @@ class BabolatParserService implements ParserServiceInterface
             );
 
         return $this->productParser->create($decoded, $sizes, $categoryId, $url);
+    }
+
+    /**
+     * Найти модификацию, в которую уже входит товар. Если товар не в модификации — null.
+     */
+    private function modificationByProduct(int $productId): ?ModificationEntity
+    {
+        $viewData = $this->modificationRepository->findViewDataByProductId($productId);
+
+        return $viewData === null
+            ? null
+            : $this->modificationRepository->getById($viewData->id);
+    }
+
+    /**
+     * Создать модификацию по атрибуту "Цвет" и добавить в неё базовый товар.
+     */
+    private function createModificationByColor(ProductEntity $product): ?ModificationEntity
+    {
+        $color = $this->attributeRepository->findByName(AttributeName::COLOR);
+        if ($color === null || $color->id === null) {
+            return null;
+        }
+
+        $attributes = [$color->id];
+
+        $entity = ModificationEntity::create(
+            name: $product->name,
+            attributes: $attributes,
+        );
+
+        $values = $this->modificationValuesResolver->forProduct(
+            productId: $product->id,
+            attributes: $attributes,
+        );
+
+        $entity->addProduct($product->id, $values->toArray(), primary: true);
+
+        return $this->modificationRepository->save($entity);
     }
 
     public function GetSizeLinks(string $productUrl): array

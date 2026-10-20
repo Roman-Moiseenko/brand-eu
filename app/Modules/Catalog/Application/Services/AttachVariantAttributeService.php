@@ -32,6 +32,7 @@ final readonly class AttachVariantAttributeService
      */
     public function execute(int $productId, array $values, AttributeName $attributeName): void
     {
+
         if (!$this->productRepository->exists($productId)) {
             return;
         }

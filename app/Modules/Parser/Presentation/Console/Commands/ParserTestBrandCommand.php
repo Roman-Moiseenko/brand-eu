@@ -15,7 +15,7 @@ class ParserTestBrandCommand extends Command
     protected $description = 'Парсим категории';
 
     const string URL = 'https://babolat-tenis.pl/5835-23345-babolat-jet-mach-4-all-court-men-dark-blue-white.html#/42-rozmiar-8_42/119-kolor-granatowy';
-
+    const string URL2 = 'https://babolat-tenis.pl/3436-pilki-babolat-gold-academy-worek-72-szt.html';
     const array URLS = [
         "https://babolat-tenis.pl/135-266-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/79-kolor-bialy",
         "https://babolat-tenis.pl/135-267-naciag-babolat-ifeel-68-102-m.html#/54-rozmiar-068/76-kolor-czerwony",
@@ -37,12 +37,12 @@ class ParserTestBrandCommand extends Command
 
 
         $product = $parser->GetParserProduct(
-            self::URL,
+            self::URL2,
             self::Category);
 
         dd($product);
         return;
-
+/*
         $categories = $categoryRepository->getActiveLeaves($brand->id);
 
         foreach ($categories as $category) {
@@ -50,5 +50,6 @@ class ParserTestBrandCommand extends Command
             $products = $parser->GetListProductsByCategory($category->url);
             dd($products);
         }
+        */
     }
 }
