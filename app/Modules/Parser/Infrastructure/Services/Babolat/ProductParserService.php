@@ -55,7 +55,7 @@ readonly class ProductParserService
     /**
      * Создаёт ProductEntity и ParserProductEntity из спарсенных данных.
      */
-    public function create(array $decoded, array $sizes, int $categoryId, $url): ProductEntity
+    public function create(array $decoded, array $sizes, int $categoryId, $url): ?ProductEntity
     {
         //По артикулу проверяем наличие товара в базе и в размерной сетке
         $code = $decoded['attributes']['1']['reference']
@@ -66,6 +66,16 @@ readonly class ProductParserService
         if (!is_null($prod = $this->productRepository->findByCode($code))) return $prod;
         //Находим категорию парсера
         $category = $this->parserCategoryRepository->getById($categoryId);
+
+        if ($category->categoryId === null) {
+            \Log::warning('Пропуск товара: категория парсера не привязана к категории каталога', [
+                'parser_category_id' => $categoryId,
+                'product_name' => $decoded['name'] ?? null,
+            ]);
+
+            return null;
+        }
+
         $name = $this->translateService->translate($decoded['name']);
 
         $color = '';
@@ -81,9 +91,14 @@ readonly class ProductParserService
         $variants = array_map(function (AttributeVariantEntity $entity) {
             return $entity->name;
         }, $attributeColor->variants);
-        $pattern = '/' . implode('|', array_map('preg_quote', $variants)) . '/iu';
-        if (!preg_match($pattern, $name, $m)) {
-            $name = $name . ', ' . $color;
+        if ($variants !== []) {
+            $pattern = '/' . implode('|', array_map(
+                fn (string $variant) => preg_quote($variant, '/'),
+                $variants
+            )) . '/iu';
+            if (!preg_match($pattern, $name, $m)) {
+                $name = $name . ', ' . $color;
+            }
         }
         //Создаем Товар
         $product = new ProductEntity(
