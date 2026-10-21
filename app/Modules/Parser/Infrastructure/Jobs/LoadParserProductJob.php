@@ -15,7 +15,7 @@ class LoadParserProductJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
-        private readonly string $urlProduct,
+        private readonly string|array $urlProduct,
         private readonly int $brandId,
         private readonly int $categoryId,
     )

@@ -92,6 +92,8 @@ class BabolatParserService implements ParserServiceInterface
 
     public function GetListProductsByCategory(string $categoryUrl): array
     {
+        $categoryUrl = $this->toAbsoluteUrl($categoryUrl);
+
         return $this->productListParser->list(
             $categoryUrl,
             function(string $url) {
@@ -106,7 +108,7 @@ class BabolatParserService implements ParserServiceInterface
 
     public function GetParserProduct($productData, $categoryId):? ProductEntity
     {
-        \Log::info(json_encode($productData));
+       // \Log::info(json_encode($productData));
 
         $url = is_array($productData) ? $productData[0] : $productData;
         $productEntity =  $this->parserProduct($url, $categoryId);
@@ -506,6 +508,18 @@ class BabolatParserService implements ParserServiceInterface
         }
         $href = $next->first()->attr('href');
         return $href ? $this->absoluteUrl($href, $baseUrl) : null;
+    }
+
+    private function toAbsoluteUrl(string $url): string
+    {
+        if (preg_match('#^https?://#i', $url)) {
+            return $url;
+        }
+        if (str_starts_with($url, '//')) {
+            return 'https:' . $url;
+        }
+
+        return rtrim(self::URL_CATEGORIES, '/') . '/' . ltrim($url, '/');
     }
 
     private function absoluteUrl(string $href, string $baseUrl): string
