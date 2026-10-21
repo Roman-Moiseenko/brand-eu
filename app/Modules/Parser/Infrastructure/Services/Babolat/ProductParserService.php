@@ -25,6 +25,7 @@ use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductSizeEntity;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Infrastructure\Jobs\LoadPublishedProductJob;
 use App\Modules\Parser\Infrastructure\Mappers\SizeMapper;
 use App\Modules\Shared\Application\DTOs\JobPhotoLoadData;
 use App\Modules\Shared\Domain\ValueObjects\PhotoType;
@@ -76,7 +77,7 @@ readonly class ProductParserService
                 $color = $this->translateService->translate($attribute['name']);
             }
         }
-        //Проверяем цвет в товаре
+        //Проверяем цвет в названии товара, и по возможности добавляем
         $attributeColor = $this->attributeRepository->findByName(AttributeName::COLOR);
         $variants = array_map(function (AttributeVariantEntity $entity) {
             return $entity->name;
@@ -85,9 +86,6 @@ readonly class ProductParserService
         if (!preg_match($pattern, $name, $m)) {
             $name = $name . ', ' . $color;
         }
-
-
-        //TODO Получить все Если в имени нет цвета из базы, то $name = $name . ', ' . $color;
 
         //Создаем Товар
         $product = new ProductEntity(
@@ -102,16 +100,6 @@ readonly class ProductParserService
 
         //Устанавливаем цвет, как атрибут, если есть
         if (!empty($color)) $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
-
-
-     /*   if (isset($decoded['attributes']['2'])) {
-            $attribute = $decoded['attributes']['2'];
-            if ($attribute['group'] == 'Kolor') {
-                $color = $this->translateService->translate($attribute['name']);
-                $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
-            }
-        }
-*/
 
 
         $sizesForParser = [];
@@ -170,17 +158,12 @@ readonly class ProductParserService
         $dto = new SetProductPriceData($product->id, $prices->cost, PriceType::COST);
         $this->setPriceUseCase->execute($dto);
 
-
-        //    \Log::info(json_encode($decoded['images']));
         //Загружаем Фото для товара
         $items = array_filter(array_map(function ($item) {
             if (isset($item['large']['url'])) return $item['large']['url'];
             return false;
 
         }, $decoded['images']));
-        //\Log::info(json_encode($items));
-
-        // dd($decoded['images']);
         foreach ($items as $imageItem) {
             $dtoPhoto = new JobPhotoLoadData(
                 imageableId: $product->id,
@@ -192,6 +175,8 @@ readonly class ProductParserService
             );
             LoadPhotoByUrlJob::dispatch($dtoPhoto)->onQueue(QueueName::PHOTO);
         }
+        //После загрузки фото, публикуем товар
+        LoadPublishedProductJob::dispatch($product->id)->onQueue(QueueName::PHOTO);
 
 
         $parserProduct = new ParserProductEntity(
