@@ -66,7 +66,6 @@ readonly class ProductParserService
         if (!is_null($prod = $this->productRepository->findByCode($code))) return $prod;
         //Находим категорию парсера
         $category = $this->parserCategoryRepository->getById($categoryId);
-
         $name = $this->translateService->translate($decoded['name']);
 
         $color = '';
@@ -86,7 +85,6 @@ readonly class ProductParserService
         if (!preg_match($pattern, $name, $m)) {
             $name = $name . ', ' . $color;
         }
-
         //Создаем Товар
         $product = new ProductEntity(
             name: $name,
@@ -97,10 +95,8 @@ readonly class ProductParserService
         );
         $product->description = $this->translateService->translate($decoded['description_short']);
         $product = $this->productRepository->save($product);
-
         //Устанавливаем цвет, как атрибут, если есть
         if (!empty($color)) $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
-
 
         $sizesForParser = [];
 
@@ -178,7 +174,7 @@ readonly class ProductParserService
         //После загрузки фото, публикуем товар
         LoadPublishedProductJob::dispatch($product->id)->onQueue(QueueName::PHOTO);
 
-
+        //Создам Парсер-товар
         $parserProduct = new ParserProductEntity(
             name: $decoded['name'],
             code: $code
@@ -186,16 +182,13 @@ readonly class ProductParserService
         $parserProduct->brandId = $category->brandId;
         $parserProduct->url = $url;
         $parserProduct->categoryId = $categoryId;
-
         $parserProduct->priceSell = $decoded['price_without_reduction'] - $decoded['reduction'];
         $parserProduct->priceBase = $decoded['price_without_reduction'];
         $parserProduct->data = json_encode($decoded);
         $parserProduct->productId = $product->id;
         $parserProduct->makerId = $decoded['reference'];
 
-        if (!is_null($category->sizeGridId)) {
-            //Есть ли размерная сетка ?
-
+        if (!is_null($category->sizeGridId)) {//Есть ли размерная сетка ?
             //Добавляем размеры (ParserProductSize) в $parserProduct из $sizesForParser
             foreach ($sizesForParser as $sizeForParser) {
                 $parserSize = new ParserProductSizeEntity();
@@ -207,9 +200,7 @@ readonly class ProductParserService
                 $parserProduct->addSize($parserSize);
             }
         }
-
         $this->parserProductRepository->save($parserProduct);
-
 
         return $product;
     }

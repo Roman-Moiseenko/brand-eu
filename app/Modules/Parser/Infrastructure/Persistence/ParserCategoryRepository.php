@@ -152,7 +152,11 @@ class ParserCategoryRepository implements ParserCategoryRepositoryInterface
             ->unique()
             ->toArray();
 
-        return ParserCategory::where('active', true)
+        $categoriesQuery = ParserCategory::where('active', true);
+
+        if (!is_null($brandId)) $categoriesQuery->where('brand_id', $brandId);
+
+        return $categoriesQuery
             ->whereNotIn('id', $parentIds)
             ->defaultOrder()
             ->get()

@@ -28,7 +28,6 @@ class ParserBrandProductCommand extends Command
             $this->info('Запускаем бренд ' . $brand->name);
             if (is_null($brand->parserClass)) continue;
             $categories = $categoryRepository->getActiveLeaves($brand->id);  //быстрая операция, запрос в БД
-
             foreach ($categories as $category) {
                 $this->info('Категория ' . $category->nameRu);
                 if (!empty($category->url)) LoadParserProductsJob::dispatch($category->url, $brand->id, $category->id);
