@@ -185,32 +185,74 @@
     background: $green;
 }
 //КАРТОЧКА ТОВАРА В СПИСКЕ
+.products .row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+    > div {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}
 .product-card {
     overflow: hidden;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
     >.image {
         overflow: hidden;
         position: relative;
         border-radius:$border-radius_12;
+        flex-shrink: 0;
         img {
             width: 100%;
         }
         .product-card-image-main {}
         .product-card-image-hover {}
     }
-    >.sizes {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        span {
-            border: 1px solid #656565;
-            color: #3a3a3a;
-            padding: 3px;
-            margin: 0 1px;
-            font-size: 12px;
+    >.product-card-options {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 6px;
+        .product-card-modifications {
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            a {
+                line-height: 0;
+                display: inline-block;
+            }
+            img {
+                display: block;
+            }
+        }
+        .sizes {
+            min-height: 24px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            span {
+                border: 1px solid #656565;
+                color: #3a3a3a;
+                padding: 3px;
+                margin: 0 1px;
+                font-size: 12px;
+            }
         }
     }
-
-
+    >.product-card-footer {
+        margin-top: auto;
+        flex-shrink: 0;
+    }
 }
 .product-card-review {
     margin-top: 10px;

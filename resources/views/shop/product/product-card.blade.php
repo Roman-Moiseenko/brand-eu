@@ -38,22 +38,24 @@
         </div>
 
 
-        @if(!empty($product->modifications))
-            <div class="d-flex">
-                @foreach($product->modifications as $modification)
-                <a href="{{ route('shop.product.view', $modification->slug) }}" title="{{ $modification->name }}" class="me-1">
-                    <img src="{{ !empty($modification->variantImage) ? $modification->variantImage : $modification->image->src }}" width="40"/>
-                </a>
-                @endforeach
-            </div>
-        @endif
-        @if(!empty($product->sizes))
-            <div class="d-flex sizes">
-                @foreach($product->sizes as $size)
-                    <span>{{ $size }}</span>
-                @endforeach
-            </div>
-        @endif
+        <div class="product-card-options">
+            @if(!empty($product->modifications))
+                <div class="d-flex product-card-modifications">
+                    @foreach($product->modifications as $modification)
+                        <a href="{{ route('shop.product.view', $modification->slug) }}" title="{{ $modification->name }}" class="me-1">
+                            <img src="{{ !empty($modification->variantImage) ? $modification->variantImage : $modification->image->src }}" width="40"/>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+            @if(!empty($product->sizes))
+                <div class="d-flex sizes">
+                    @foreach($product->sizes as $size)
+                        <span>{{ $size }}</span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
         <div class="product-card-review">
             <div>
                 <a class="e-click" data-product="{{ $product->id }}"
@@ -84,22 +86,24 @@
                title="{{ $product->name }}">{{ $product->name }}</a>
         </div>
         <div class="short-description">{!! $product->short !!}</div>
-        <div class="product-card-info">
-            @if($product->is_sale)
-                @if(!$product->promotion->has)
-                    {{ price($product->price) }}
+        <div class="product-card-footer">
+            <div class="product-card-info">
+                @if($product->is_sale)
+                    @if(!$product->promotion->has)
+                        {{ price($product->price) }}
+                    @else
+                        <span class="discount-price">{{ price($product->promotion->price) }}</span><span
+                            class="base-price">{{ price($product->price) }}</span>
+                    @endif
                 @else
-                    <span class="discount-price">{{ price($product->promotion->price) }}</span><span
-                        class="base-price">{{ price($product->price) }}</span>
+                    {{ price($product->price) }}
                 @endif
-            @else
-                {{ price($product->price) }}
-            @endif
-        </div>
-        <div>
-            <button class="to-cart btn btn-black e-add{{ $product->in_cart ? ' in-cart' : '' }}" data-product="{{ $product->id }}">
-                {{ $product->in_cart ? 'В Корзине' : 'В Корзину' }}
-            </button>
+            </div>
+            <div>
+                <button class="to-cart btn btn-black e-add{{ $product->in_cart ? ' in-cart' : '' }}" data-product="{{ $product->id }}">
+                    {{ $product->in_cart ? 'В Корзине' : 'В Корзину' }}
+                </button>
+            </div>
         </div>
 
     </div>
