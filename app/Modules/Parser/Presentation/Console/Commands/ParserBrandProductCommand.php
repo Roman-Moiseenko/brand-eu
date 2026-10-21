@@ -6,6 +6,7 @@ use App\Console\CreatesApplication;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductJob;
+use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductsJob;
 use Illuminate\Console\Command;
 
 class ParserBrandProductCommand extends Command
@@ -20,22 +21,17 @@ class ParserBrandProductCommand extends Command
         ParserCategoryRepositoryInterface $categoryRepository,
     ): void
     {
-        $brands = $brandRepository->getAll();
-
+        //$brands = $brandRepository->getAll();
+        $brand = $brandRepository->getByName('Babolat');
+        $brands[] = $brand;
         foreach ($brands as $brand) {
+            $this->info('Запускаем бренд ' . $brand->name);
             if (is_null($brand->parserClass)) continue;
             $categories = $categoryRepository->getActiveLeaves($brand->id);  //быстрая операция, запрос в БД
-            $parser = $brand->parser();
 
             foreach ($categories as $category) {
-                //FixMe Запуск через Job
-                $products = $parser->GetListProductsByCategory($category->url);
-                foreach ($products as $product) {
-                    LoadParserProductJob::dispatch($product, $brand->id);
-
-                    $parser->GetParserProduct($product, $category->id);
-                }
-                //<--
+                $this->info('Категория ' . $category->nameRu);
+                if (!empty($category->url)) LoadParserProductsJob::dispatch($category->url, $brand->id, $category->id);
             }
 
         }

@@ -25,16 +25,7 @@
             </div>
             <br>
         @endif
-        @if(!is_null($secondInfo))
-            <div class="children">
-                <a href="{{ $secondInfo->back->url}}" class="heading">{{ $secondInfo->back->name }}</a>
-                @foreach($secondInfo->children as $child)
-                    <div class="f-z_16 m-l_10">
-                        <a href="{{ route('shop.' . $secondInfo->entity. '.view', $child->slug) }}">{{ $child->name }}</a>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+
         <x-widget.numeric name="price" min-value="{{ $filters->minPrice }}" max-value="{{ $filters->maxPrice }}"
                           current-min="{{ isset($request['price']) ? $request['price'][0] : '' }}"
                           current-max="{{ isset($request['price']) ? $request['price'][1] : '' }}"

@@ -75,7 +75,6 @@ $total = $pageData->paginator->total;
             @include('shop.product.filter',
                      [
                          'mainInfo' => $pageData->mainInfo,
-                         'secondInfo' => $pageData->secondInfo,
                          'filters' => $pageData->filters,
                      ])
             <div class="list">
