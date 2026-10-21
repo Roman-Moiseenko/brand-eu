@@ -31,6 +31,10 @@ class ProductCardData
         public bool                 $is_wish,
         public bool                 $in_cart,
         public string $short,
+        /** @var string[] $sizes */
+        public array $sizes = [],
+        /** @var ProductModificationData[] $modifications */
+        public array $modifications = [],
     )
     {
     }
@@ -59,6 +63,7 @@ class ProductCardData
             is_wish: $item['is_wish'],
             in_cart: $item['in_cart'],
             short: $item['short'],
+            sizes: $item['sizes'] ?? [],
         );
     }
 }

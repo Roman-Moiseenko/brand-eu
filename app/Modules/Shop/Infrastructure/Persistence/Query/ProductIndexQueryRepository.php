@@ -56,6 +56,30 @@ class ProductIndexQueryRepository
         );
     }
 
+    /**
+     * Возвращает отфильтрованные и отсортированные ID товаров без пагинации.
+     * Используется для последующего сворачивания модификаций до базового товара.
+     *
+     * @param array $filters
+     * @param int[] $allIds
+     * @return int[]
+     */
+    public function getFilteredSortedProductIds(array $filters, array $allIds): array
+    {
+        if (empty($allIds)) {
+            return [];
+        }
+
+        $query = Product::whereIn('id', $allIds);
+
+        $this->attributeQueryRepository->applyFilters($query, $filters);
+        $this->attributeQueryRepository->applySorting($query, $filters['order'] ?? '');
+
+        return $query->pluck('id')
+            ->map(fn($id) => (int) $id)
+            ->all();
+    }
+
 
     /**
      * Основной метод загрузки товаров по id списком
@@ -192,6 +216,9 @@ class ProductIndexQueryRepository
             ->get()
             ->keyBy('product_id');
 
+        // Активные размеры товаров (ось 'size' размерной сетки).
+        $sizesByProduct = $this->loadActiveSizes($ids);
+
         $result = [];
         foreach ($products as $item) {
             $imageData = $this->buildImageDataFromRow($item, '1');
@@ -233,6 +260,7 @@ class ProductIndexQueryRepository
                 'is_wish' => (bool)$item->is_wish,
                 'in_cart' => (bool)$item->in_cart,
                 'short' => $item->short,
+                'sizes' => array_values($sizesByProduct[$item->id] ?? []),
             ];
         }
         return $result;
@@ -384,6 +412,46 @@ class ProductIndexQueryRepository
             'title' => $title,
             'description' => $description,
         ];
+    }
+
+    /**
+     * Активные размеры товаров (ось 'size' размерной сетки).
+     *
+     * Для двухосевой сетки (size + width) возвращаются только уникальные
+     * значения оси 'size', присутствующие хотя бы в одной полноте.
+     *
+     * @param int[] $ids
+     * @return array<int, array<int, string>>
+     */
+    private function loadActiveSizes(array $ids): array
+    {
+        $rows = DB::table('products_sizes')
+            ->whereIn('product_id', $ids)
+            ->where('is_active', true)
+            ->orderBy('id')
+            ->get(['product_id', 'values']);
+
+        $sizesByProduct = [];
+
+        foreach ($rows as $row) {
+            $values = is_array($row->values)
+                ? $row->values
+                : json_decode($row->values, true);
+
+            $size = $values['size'] ?? null;
+            if ($size === null || $size === '') {
+                continue;
+            }
+
+            $productId = (int) $row->product_id;
+            $sizesByProduct[$productId] ??= [];
+
+            if (!in_array($size, $sizesByProduct[$productId], true)) {
+                $sizesByProduct[$productId][] = $size;
+            }
+        }
+
+        return $sizesByProduct;
     }
 
     private function formatReviewCount(int $count): string

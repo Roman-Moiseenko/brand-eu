@@ -7,6 +7,7 @@ use App\Modules\Shop\Application\DTOs\ClientContext;
 use App\Modules\Shop\Application\DTOs\Entities\ProductCardData;
 use App\Modules\Shop\Application\DTOs\PageElements\OgImage;
 use App\Modules\Shop\Application\DTOs\Pages\ProductViewPageData;
+use App\Modules\Shop\Application\Services\ProductModificationResolver;
 use App\Modules\Shop\Application\Services\RegionalPriceCalculator;
 use App\Modules\Shop\Infrastructure\Persistence\Builders\SchemaBuilder;
 use App\Modules\Shop\Infrastructure\Persistence\Query\EquivalentViewQueryRepository;
@@ -23,6 +24,7 @@ readonly class ProductViewQuery
         private SeoAdapter                    $seoAdapter,
         private EquivalentViewQueryRepository $equivalentRepository,
         private ProductIndexQueryRepository   $indexQueryRepository,
+        private ProductModificationResolver   $modificationResolver,
         private GetWebSettingsUseCase         $webSettingsUseCase,
         private RegionalPriceCalculator       $regionalPriceCalculator,
     )
@@ -63,12 +65,16 @@ readonly class ProductViewQuery
             ),
             $equivalents
         );
+
+        $modification = $this->modificationResolver->resolveForProduct($product->id, $clientContext);
+
         return new ProductViewPageData(
             product: $product,
             meta: $meta->asProduct(),
             schema: $schema,
             attributes: $attributes,
             equivalents: $equivalentCards,
+            modification: $modification,
         );
     }
 }

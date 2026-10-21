@@ -188,6 +188,29 @@
 .product-card {
     overflow: hidden;
     text-align: center;
+    >.image {
+        overflow: hidden;
+        position: relative;
+        border-radius:$border-radius_12;
+        img {
+            width: 100%;
+        }
+        .product-card-image-main {}
+        .product-card-image-hover {}
+    }
+    >.sizes {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        span {
+            border: 1px solid #656565;
+            color: #3a3a3a;
+            padding: 3px;
+            margin: 0 1px;
+            font-size: 12px;
+        }
+    }
+
+
 }
 .product-card-review {
     margin-top: 10px;
@@ -197,14 +220,7 @@
     justify-content: space-between;
 }
 
-.product-card-image {
-    overflow: hidden;
-    position: relative;
-    border-radius:$border-radius_12;
-    img {
-        width: 100%;
-    }
-}
+
 .product-card-image-hover {
     position: absolute;
     top: 0;

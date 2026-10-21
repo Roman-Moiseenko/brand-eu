@@ -6,6 +6,7 @@ namespace App\Modules\Shop\Presentation\Http\Controllers\Web;
 
 use App\Modules\Shop\Application\Queries\Category\CategoryIndexQuery;
 use App\Modules\Shop\Application\Queries\Category\CategoryPageQuery;
+use App\Modules\Shop\Application\Queries\Category\NoveltyPageQuery;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -16,6 +17,7 @@ class CatalogController extends ShopAbstractController
 {
     public function __construct(
         private readonly CategoryPageQuery $categoryPageQuery,
+        private readonly NoveltyPageQuery $noveltyPageQuery,
         private readonly CategoryIndexQuery $categoryIndexQuery,
     )
     {
@@ -32,13 +34,8 @@ class CatalogController extends ShopAbstractController
 
     public function view(Request $request, $slug): View|Factory|\Illuminate\View\View
     {
-        //$start = microtime(true);
-
         $data = $this->categoryPageQuery->execute($slug, $request->all(), $this->getClient($request));
         if (is_null($data)) abort(404, 'Категория не найдена');
-
-       // $time = (microtime(true) - $start);
-   //     \Log::info("CategoryPageQuery::execute время: " . number_format($time, 3, '.', '') . " сек");
 
         return view('shop.product.index', [
             'pageData' => $data,
@@ -48,14 +45,11 @@ class CatalogController extends ShopAbstractController
 
     public function novelty(Request $request): View|Factory|\Illuminate\View\View
     {
-        $data = $this->categoryPageQuery->executeNew($request->all(),
-            $this->getClient($request));
+        $data = $this->noveltyPageQuery->execute($request->all(), $this->getClient($request));
 
         return view('shop.product.novelty', [
             'pageData' => $data,
             'request' => $request->all(),
         ]);
     }
-
-
 }

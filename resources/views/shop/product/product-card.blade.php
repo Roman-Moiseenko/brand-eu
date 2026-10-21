@@ -5,7 +5,7 @@
 
 <div>
     <div class="product-card e-impressions" data-product="{{ $product->id }}">
-        <div class="product-card-image">
+        <div class="image">
             <a class="e-click" data-product="{{ $product->id }}"
                href="{{ route('shop.product.view', $product->slug) }}">
                 <img class="product-card-image-main"
@@ -36,6 +36,24 @@
 
             </a>
         </div>
+
+
+        @if(!empty($product->modifications))
+            <div class="d-flex">
+                @foreach($product->modifications as $modification)
+                <a href="{{ route('shop.product.view', $modification->slug) }}" title="{{ $modification->name }}" class="me-1">
+                    <img src="{{ !empty($modification->variantImage) ? $modification->variantImage : $modification->image->src }}" width="40"/>
+                </a>
+                @endforeach
+            </div>
+        @endif
+        @if(!empty($product->sizes))
+            <div class="d-flex sizes">
+                @foreach($product->sizes as $size)
+                    <span>{{ $size }}</span>
+                @endforeach
+            </div>
+        @endif
         <div class="product-card-review">
             <div>
                 <a class="e-click" data-product="{{ $product->id }}"
