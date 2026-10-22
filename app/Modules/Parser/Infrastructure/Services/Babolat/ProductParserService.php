@@ -2,13 +2,9 @@
 
 namespace App\Modules\Parser\Infrastructure\Services\Babolat;
 
-use App\Modules\Accounting\Application\Actions\ProductPrice\SetPriceUseCase;
-use App\Modules\Accounting\Application\DTOs\ProductPrice\SetProductPriceData;
-use App\Modules\Accounting\Domain\ValueObjects\PriceType;
 use App\Modules\Base\Service\TranslateService;
 use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
-use App\Modules\Catalog\Application\Services\AttachAttributeProductService;
 use App\Modules\Catalog\Application\Services\AttachVariantAttributeService;
 use App\Modules\Catalog\Domain\Entities\AttributeVariantEntity;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
@@ -19,19 +15,16 @@ use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\SizeGridRepositoryInterface;
 use App\Modules\Catalog\Domain\ValueObjects\AttributeName;
 use App\Modules\Catalog\Domain\ValueObjects\Code;
-use App\Modules\Parser\Application\Services\CalculateParserPriceService;
-use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductSizeEntity;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Jobs\LoadPublishedProductJob;
 use App\Modules\Parser\Infrastructure\Mappers\SizeMapper;
-use App\Modules\Shared\Application\DTOs\JobPhotoLoadData;
-use App\Modules\Shared\Domain\ValueObjects\PhotoType;
+use App\Modules\Parser\Infrastructure\Services\Common\CalculateParserPriceService;
+use App\Modules\Parser\Infrastructure\Services\Common\PhotosProductService;
 use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use App\Modules\Shared\Domain\ValueObjects\Slug;
-use App\Modules\Shared\Infrastructure\Job\LoadPhotoByUrlJob;
 
 readonly class ProductParserService
 {
@@ -45,9 +38,9 @@ readonly class ProductParserService
         private SetProductSizesUseCase            $setProductSizesUseCase,
         private SizeMapper                        $sizeMapper,
         private CalculateParserPriceService       $calculate,
-        private SetPriceUseCase                   $setPriceUseCase,
         private AttachVariantAttributeService     $attachVariantAttributeService,
         private AttributeRepositoryInterface      $attributeRepository,
+        private PhotosProductService              $photosProductService,
     )
     {
     }
@@ -131,7 +124,6 @@ readonly class ProductParserService
 
             foreach ($sizes as $size) {
                 $sizeProduct = $this->sizeMapper->map($size); //через Mapping получаем размер по нашей сетке
-
                 //Находим размер товара и включаем его
                 $sizeEntity = null;
                 foreach ($productSizes as $productSize) {
@@ -140,34 +132,20 @@ readonly class ProductParserService
                         break;
                     }
                 }
-
-                if ($sizeEntity === null) {
-                    continue;
-                }
-
+                if ($sizeEntity === null) continue;
                 $desiredActive[$sizeEntity->key()] = true;
-
-                $sizesForParser[] = [
-                    'productSizeId' => $sizeEntity->id,
-                    'sizeOriginal' => $size,
-                    'size' => $sizeProduct,
-                ];
+                $sizesForParser[] = ParserProductSizeEntity::create(
+                   productSizeId: $sizeEntity->id,
+                    sizeOriginal: $size,
+                    size: $sizeProduct,
+                );
             }
-
             //Применяем размерный ряд: включены только спарсенные размеры
             $this->productSizeRepository->rebuildForProduct($product->id, $grid, $desiredActive);
         }
 
         //Устанавливаем цену розницы и закупку
-        $prices = $this->calculate->execute($decoded['price_without_reduction']);
-        $dto = new SetProductPriceData($product->id, $prices->retail, PriceType::RETAIL);
-        $this->setPriceUseCase->execute($dto);
-
-        $dto = new SetProductPriceData($product->id, $prices->minimal, PriceType::MINIMAL);
-        $this->setPriceUseCase->execute($dto);
-
-        $dto = new SetProductPriceData($product->id, $prices->cost, PriceType::COST);
-        $this->setPriceUseCase->execute($dto);
+        $this->calculate->execute($decoded['price_without_reduction'], $product->id);
 
         //Загружаем Фото для товара
         $items = array_filter(array_map(function ($item) {
@@ -175,17 +153,7 @@ readonly class ProductParserService
             return false;
 
         }, $decoded['images']));
-        foreach ($items as $imageItem) {
-            $dtoPhoto = new JobPhotoLoadData(
-                imageableId: $product->id,
-                modelType: 'catalog.product',
-                type: PhotoType::GALLERY,
-                url: $imageItem,
-                isProxy: false,
-                alt: $product->name,
-            );
-            LoadPhotoByUrlJob::dispatch($dtoPhoto)->onQueue(QueueName::PHOTO);
-        }
+        $this->photosProductService->execute($items, $product->id, $product->name);
         //После загрузки фото, публикуем товар
         LoadPublishedProductJob::dispatch($product->id)->onQueue(QueueName::PHOTO);
 
@@ -203,16 +171,9 @@ readonly class ProductParserService
         $parserProduct->productId = $product->id;
         $parserProduct->makerId = $decoded['reference'];
 
-        if (!is_null($category->sizeGridId)) {//Есть ли размерная сетка ?
-            //Добавляем размеры (ParserProductSize) в $parserProduct из $sizesForParser
+        if (!is_null($category->sizeGridId)) {//Есть ли размерная сетка, добавляем $sizesForParser
             foreach ($sizesForParser as $sizeForParser) {
-                $parserSize = new ParserProductSizeEntity();
-                $parserSize->sizeOriginal = $sizeForParser['sizeOriginal'];
-                $parserSize->size = $sizeForParser['size'];
-                $parserSize->productSizeId = $sizeForParser['productSizeId'];
-                $parserSize->available = true;
-
-                $parserProduct->addSize($parserSize);
+                $parserProduct->addSize($sizeForParser);
             }
         }
         $this->parserProductRepository->save($parserProduct);

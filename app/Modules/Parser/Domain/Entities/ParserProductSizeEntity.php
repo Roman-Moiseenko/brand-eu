@@ -61,4 +61,25 @@ final class ParserProductSizeEntity
         get => $this->values;
         set => $this->values = $value;
     }
+
+    public static function create(
+        int $productSizeId,
+        string $sizeOriginal,
+        string $size,
+        string $sku = '',
+        float $price = 0,
+        string $url = '',
+        bool $available = true
+    ): self
+    {
+        $entity = new self();
+        $entity->productSizeId = $productSizeId;
+        $entity->sizeOriginal = $sizeOriginal;
+        $entity->size = $size;
+        $entity->sku = $sku;
+        $entity->price = $price;
+        $entity->available = $available;
+        $entity->url = $url;
+        return $entity;
+    }
 }

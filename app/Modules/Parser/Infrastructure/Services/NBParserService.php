@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 class NBParserService implements ParserServiceInterface
 {
-        private const string URL_CATEGORIES = 'https://newbalance.pl';
+        public const string URL_CATEGORIES = 'https://newbalance.pl';
         private const string BRAND_NAME = 'New Balance';
 
         private int $brandId;
