@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $product_id
+ * @property int|null $products_sizes_id
  * @property int $quantity
  * @property int $reserve
  * @property Carbon $updated_at
@@ -23,6 +24,7 @@ class Stock extends Model
 
     protected $fillable = [
         'product_id',
+        'products_sizes_id',
         'quantity',
         'reserve',
         'updated_at'

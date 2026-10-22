@@ -18,7 +18,7 @@ class YandexTranslate
         $post_data = [
             "sourceLanguageCode" => $source_language,
             "targetLanguageCode" => $target_language,
-            "texts" => $text,
+            "texts" => [$text],
             "folderId" => $folder_id,
         ];
         $data_json = json_encode($post_data);
@@ -30,7 +30,6 @@ class YandexTranslate
         curl_setopt($curl, CURLOPT_POST, true);
         $result = json_decode(curl_exec($curl), true);
         curl_close($curl);
-
         return $result['translations'][0]['text'];
     }
 }
