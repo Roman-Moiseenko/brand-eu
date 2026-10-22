@@ -5,6 +5,7 @@ namespace App\Modules\Parser\Presentation\Console\Commands;
 use App\Console\CreatesApplication;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
+use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductsJob;
 use Illuminate\Console\Command;
 
 class ParserTestBrandCommand extends Command
@@ -15,7 +16,7 @@ class ParserTestBrandCommand extends Command
     protected $description = 'Парсим категории';
 //NEW BALANCE
     const int Category_NB = 33;
-    const string URL_NB = 'meskie/obuwie/klasyczne/seria_574';
+    const string URL_NB = 'meskie/obuwie/klasyczne/';
 
 ///BABOLAT
     const string URL = 'https://babolat-tenis.pl/5835-23345-babolat-jet-mach-4-all-court-men-dark-blue-white.html#/42-rozmiar-8_42/119-kolor-granatowy';
@@ -38,22 +39,22 @@ class ParserTestBrandCommand extends Command
         //$this->info('Найдено брендов ' . count($brands));
         $brand = $brandRepository->getByName('New Balance');
         $parser = $brand->parser();
+        $categories = $categoryRepository->getActiveLeaves($brand->id);
+        //$products = $parser->GetListProductsByCategory(self::URL_NB);
 
-        $products = $parser->GetListProductsByCategory(self::URL_NB);
+        $categories = $categoryRepository->getActiveLeaves($brand->id);  //быстрая операция, запрос в БД
+        foreach ($categories as $category) {
+            $this->info('Категория ' . $category->nameRu);
+            $products = $parser->GetListProductsByCategory($category->url);
+            foreach ($products as $product) {
+                $productEntity = $parser->GetParserProduct($product, $category->id);
+                dd($productEntity);
+            }
 
-        foreach ($products as $product) {
-            $productEntity = $parser->GetParserProduct(
-                $product,
-                self::Category_NB);
-            \Log::info(json_encode($productEntity));
 
         }
 
-        $product = $parser->GetParserProduct(
-            self::URL2,
-            self::Category);
 
-        dd($product);
         return;
         /*
                 $categories = $categoryRepository->getActiveLeaves($brand->id);
