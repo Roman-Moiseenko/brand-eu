@@ -13,7 +13,11 @@ class ParserTestBrandCommand extends Command
 
     protected $signature = 'parser:test';
     protected $description = 'Парсим категории';
+//NEW BALANCE
+    const int Category_NB = 33;
+    const string URL_NB = 'meskie/obuwie/klasyczne/seria_574';
 
+///BABOLAT
     const string URL = 'https://babolat-tenis.pl/5835-23345-babolat-jet-mach-4-all-court-men-dark-blue-white.html#/42-rozmiar-8_42/119-kolor-granatowy';
     const string URL2 = 'https://babolat-tenis.pl/3436-pilki-babolat-gold-academy-worek-72-szt.html';
     const array URLS = [
@@ -32,9 +36,18 @@ class ParserTestBrandCommand extends Command
         $this->info('Парсим товар');
         //$brands = $brandRepository->getAll();
         //$this->info('Найдено брендов ' . count($brands));
-        $brand = $brandRepository->getByName('Babolat');
+        $brand = $brandRepository->getByName('New Balance');
         $parser = $brand->parser();
 
+        $products = $parser->GetListProductsByCategory(self::URL_NB);
+
+        foreach ($products as $product) {
+            $productEntity = $parser->GetParserProduct(
+                $product,
+                self::Category_NB);
+            \Log::info(json_encode($productEntity));
+
+        }
 
         $product = $parser->GetParserProduct(
             self::URL2,
@@ -42,14 +55,14 @@ class ParserTestBrandCommand extends Command
 
         dd($product);
         return;
-/*
-        $categories = $categoryRepository->getActiveLeaves($brand->id);
+        /*
+                $categories = $categoryRepository->getActiveLeaves($brand->id);
 
-        foreach ($categories as $category) {
-            $this->info($category->url);
-            $products = $parser->GetListProductsByCategory($category->url);
-            dd($products);
-        }
-        */
+                foreach ($categories as $category) {
+                    $this->info($category->url);
+                    $products = $parser->GetListProductsByCategory($category->url);
+                    dd($products);
+                }
+                */
     }
 }

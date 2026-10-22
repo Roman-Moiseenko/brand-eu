@@ -1,0 +1,1199 @@
+{
+    "id": "3218244",
+    "name": "Buty unisex New Balance U5742CH \u2013 be\u017cowe",
+    "pictures": [
+        "{imageSafeUri}\/d11dd608e0d9c98c7c8f33d5f43ce16b.png",
+        "{imageSafeUri}\/62e05753738a923d1d5023a8c090e13b.png",
+        "{imageSafeUri}\/8bd42a3395b5cf72d6086e13fff15b86.png",
+        "{imageSafeUri}\/67d6a8d9c0be0f4fda8cd1347363ee69.png",
+        "{imageSafeUri}\/22ef90dd4f3f8bd1aaa1ba339e66463c.png",
+        "{imageSafeUri}\/b74404e9b4caf92ef7099b17dead556f.png",
+        "{imageSafeUri}\/3ad7883aa8adce379a65f5db262bdd8e.png",
+        "{imageSafeUri}\/03885234372f5245900b37ad3a58053c.png"
+    ],
+    "reviewStats": {
+        "scoreCount": 0,
+        "averageScore": 0,
+        "totalScore": 0,
+        "percentageScore": 0
+    },
+    "variants": [
+        {
+            "id": "5054204",
+            "option": "36 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.040",
+            "skus": [
+                "#pv-5054204"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6559",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "36"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054205",
+            "option": "37 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.045",
+            "skus": [
+                "#pv-5054205"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6560",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "37"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054206",
+            "option": "37.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.050",
+            "skus": [
+                "#pv-5054206"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6561",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "37.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054207",
+            "option": "38 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.055",
+            "skus": [
+                "#pv-5054207"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6562",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "38"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054208",
+            "option": "38.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.060",
+            "skus": [
+                "#pv-5054208"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6563",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "38.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054209",
+            "option": "39.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.065",
+            "skus": [
+                "#pv-5054209"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6565",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "39.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054210",
+            "option": "40 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.070",
+            "skus": [
+                "#pv-5054210"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6566",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "40"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054211",
+            "option": "40.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.075",
+            "skus": [
+                "#pv-5054211"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6567",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "40.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054212",
+            "option": "41.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.080",
+            "skus": [
+                "#pv-5054212"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6569",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "41.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054213",
+            "option": "42 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.085",
+            "skus": [
+                "#pv-5054213"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6570",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "42"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054214",
+            "option": "42.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.090",
+            "skus": [
+                "#pv-5054214"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6571",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "42.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054215",
+            "option": "43 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.095",
+            "skus": [
+                "#pv-5054215"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6572",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "43"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054216",
+            "option": "44 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.100",
+            "skus": [
+                "#pv-5054216"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6574",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "44"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054217",
+            "option": "44.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.105",
+            "skus": [
+                "#pv-5054217"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6575",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "44.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054218",
+            "option": "45 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.110",
+            "skus": [
+                "#pv-5054218"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": true,
+                "message": {
+                    "content": "Dost\u0119pny",
+                    "type": "success"
+                }
+            },
+            "options": [
+                {
+                    "id": "6576",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "45"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054219",
+            "option": "45.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.115",
+            "skus": [
+                "#pv-5054219"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6577",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "45.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054220",
+            "option": "46.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.120",
+            "skus": [
+                "#pv-5054220"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6579",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "46.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        },
+        {
+            "id": "5054221",
+            "option": "47.5 Standardowa (D)",
+            "ean": "",
+            "warehouseSymbol": "NBU5742CH.D.130",
+            "skus": [
+                "#pv-5054221"
+            ],
+            "prices": {
+                "sellPrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "listPrice": null,
+                "basePrice": {
+                    "gross": 529.99,
+                    "nett": 430.89,
+                    "currency": "PLN",
+                    "vat": null,
+                    "vatValue": 23
+                },
+                "omnibusPrice": null,
+                "pricesPerUnit": []
+            },
+            "availability": {
+                "buyable": false,
+                "message": {
+                    "content": "<span class=\"tcl\" data-tcl=\"true\" style=\"color:#CF0A2C;font-weight:800;\">Produkt wyprzedany<\/span>",
+                    "type": "danger"
+                }
+            },
+            "options": [
+                {
+                    "id": "6581",
+                    "groupId": "32",
+                    "name": "Rozmiar",
+                    "value": "47.5"
+                },
+                {
+                    "id": "6985",
+                    "groupId": "46",
+                    "name": "Szeroko\u015b\u0107",
+                    "value": "Standardowa (D)"
+                }
+            ]
+        }
+    ],
+    "niceUrl": "buty_unisex_new_balance_u5742ch_bezowe",
+    "picturesCategories": [
+        {
+            "slug": "--empty--",
+            "pictures": []
+        },
+        {
+            "slug": "newbalance",
+            "pictures": [
+                {
+                    "filename": "{imageSafeUri}\/d11dd608e0d9c98c7c8f33d5f43ce16b.png",
+                    "description": null
+                },
+                {
+                    "filename": "{imageSafeUri}\/62e05753738a923d1d5023a8c090e13b.png",
+                    "description": null
+                },
+                {
+                    "filename": "{imageSafeUri}\/8bd42a3395b5cf72d6086e13fff15b86.png",
+                    "description": null
+                },
+                {
+                    "filename": "{imageSafeUri}\/67d6a8d9c0be0f4fda8cd1347363ee69.png",
+                    "description": null
+                },
+                {
+                    "filename": "{imageSafeUri}\/22ef90dd4f3f8bd1aaa1ba339e66463c.png",
+                    "description": null
+                },
+                {
+                    "filename": "{imageSafeUri}\/b74404e9b4caf92ef7099b17dead556f.png",
+                    "description": null
+                }
+            ]
+        },
+        {
+            "slug": "comparer",
+            "pictures": [
+                {
+                    "filename": "{imageSafeUri}\/3ad7883aa8adce379a65f5db262bdd8e.png",
+                    "description": null
+                }
+            ]
+        },
+        {
+            "slug": "hover",
+            "pictures": [
+                {
+                    "filename": "{imageSafeUri}\/03885234372f5245900b37ad3a58053c.png",
+                    "description": null
+                }
+            ]
+        }
+    ],
+    "flags": [
+        {
+            "id": "2",
+            "name": "Nowo\u015b\u0107",
+            "symbol": "new"
+        }
+    ],
+    "prices": {
+        "sellPrice": {
+            "gross": 529.99,
+            "nett": 430.89,
+            "currency": "PLN",
+            "vat": null,
+            "vatValue": 23
+        },
+        "listPrice": null,
+        "basePrice": {
+            "gross": 529.99,
+            "nett": 430.89,
+            "currency": "PLN",
+            "vat": null,
+            "vatValue": 23
+        },
+        "omnibusPrice": null,
+        "pricesPerUnit": []
+    },
+    "producer": {
+        "id": 911,
+        "name": "New Balance",
+        "description": null
+    },
+    "categoryPath": [
+        {
+            "id": "13026",
+            "name": "M\u0119skie",
+            "niceUrl": "meskie"
+        },
+        {
+            "id": "13031",
+            "name": "Obuwie",
+            "niceUrl": "meskie\/obuwie"
+        },
+        {
+            "id": "13043",
+            "name": "Klasyczne",
+            "niceUrl": "meskie\/obuwie\/klasyczne"
+        },
+        {
+            "id": "13164",
+            "name": "Seria 574",
+            "niceUrl": "meskie\/obuwie\/klasyczne\/seria_574"
+        }
+    ],
+    "categories": [
+        {
+            "id": "13164",
+            "name": "Seria 574",
+            "niceUrl": "meskie\/obuwie\/klasyczne\/seria_574"
+        },
+        {
+            "id": "13181",
+            "name": "Seria 574",
+            "niceUrl": "damskie\/obuwie\/klasyczne\/seria_574"
+        }
+    ],
+    "properties": [
+        {
+            "name": "Model",
+            "symbol": "model",
+            "value": {
+                "type": "text_line",
+                "dataList": [
+                    "U5742CH "
+                ]
+            }
+        },
+        {
+            "name": "Dla kogo",
+            "symbol": "sex",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": [
+                    "Dla niej",
+                    "Dla niego",
+                    "Dla ka\u017cdego"
+                ]
+            }
+        },
+        {
+            "name": "P\u0142e\u0107",
+            "symbol": "for_kids",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Materia\u0142",
+            "symbol": "material",
+            "value": {
+                "type": "text_line",
+                "dataList": [
+                    "Zamsz\/Materia\u0142 syntetyczny\/Materia\u0142 tekstylny"
+                ]
+            }
+        },
+        {
+            "name": "Kategoria",
+            "symbol": "kategoria",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": [
+                    "Obuwie"
+                ]
+            }
+        },
+        {
+            "name": "Feed Gender",
+            "symbol": "feed_gender",
+            "value": {
+                "type": "choice",
+                "dataList": [
+                    "male"
+                ]
+            }
+        },
+        {
+            "name": "Szeroko\u015b\u0107",
+            "symbol": "width",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Kolor",
+            "symbol": "color_detailed",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": [
+                    "Be\u017cowy"
+                ]
+            }
+        },
+        {
+            "name": "Produkt ocieplany",
+            "symbol": "produktocieplany",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Rodzaj zapi\u0119cia",
+            "symbol": "closure_type",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Nag\u0142\u00f3wek",
+            "symbol": "run_headline",
+            "value": {
+                "type": "text_line",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Amortyzacja",
+            "symbol": "cushioning",
+            "value": {
+                "type": "choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Technologia",
+            "symbol": "technology",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Przeznaczenie",
+            "symbol": "purpose",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Waga",
+            "symbol": "weight",
+            "value": {
+                "type": "text_line",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Rodzaj stopy",
+            "symbol": "foot_type",
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Drop",
+            "symbol": null,
+            "value": {
+                "type": "multiple_choice",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Odpowiednik",
+            "symbol": "related_gender_version",
+            "value": {
+                "type": "text_line",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Nazwa listing",
+            "symbol": "listing_name",
+            "value": {
+                "type": "text_line",
+                "dataList": null
+            }
+        },
+        {
+            "name": "Nag\u0142\u00f3wek H1",
+            "symbol": "h1_title",
+            "value": {
+                "type": "text_line",
+                "dataList": null
+            }
+        }
+    ]
+}

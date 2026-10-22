@@ -3,11 +3,15 @@
 namespace App\Modules\Parser\Infrastructure\Services;
 
 use App\Modules\Base\Service\HttpPage;
+use App\Modules\Base\Service\TranslateService;
+use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Parser\Application\Actions\Category\CreateParserCategoryUseCase;
 use App\Modules\Parser\Application\DTOs\Category\ParserCategoryCreateData;
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
+use App\Modules\Parser\Infrastructure\Services\NB\ProductParserService;
+use Illuminate\Support\Facades\Log;
 
 class NBParserService implements ParserServiceInterface
 {
@@ -19,6 +23,7 @@ class NBParserService implements ParserServiceInterface
         private readonly HttpPage $httpPage,
         private readonly BrandRepositoryInterface $brandRepository,
         private readonly CreateParserCategoryUseCase $createParserCategoryUseCase,
+        private readonly ProductParserService $productParserService,
     )
     {
 
@@ -74,12 +79,67 @@ class NBParserService implements ParserServiceInterface
 
     public function GetListProductsByCategory(string $categoryUrl): array
     {
-        // TODO: Implement GetListProductsByCategory() method.
+        $url = self::URL_CATEGORIES . '/' . $categoryUrl;
+
+        $dataProducts = $this->parserProductsByUrl($url, true);
+        return array_map(function ($product) {
+            return $product['niceUrl'];
+        }, $dataProducts);
     }
 
-    public function GetParserProduct($productData, $categoryId)
+    private function parserProductsByUrl(string $url, bool $is_first_page = true)
     {
-        // TODO: Implement GetParserProduct() method.
+        $data = $this->httpPage->getPage($url, '', false);
+        $queries = $this->getQueries($data);
+        $data = [];
+        foreach ($queries as $query) {
+            if (isset($query['state']['data']['products']))
+                $data = $query['state']['data']['products'];
+        }
+        $products = $data['items'];
+        if (!$is_first_page) return $products; //Уже обрабатывается пагинация
+        $pagination = $data['pagination']['lastPage'];
+        for ($i = 2; $i <= $pagination; $i++) {
+            $products = array_merge(
+                $products,
+                $this->parserProductsByUrl($url . '?page=' . $i, false)
+            );
+        }
+
+        return $products;
+    }
+    private function getQueries(string $data)
+    {
+        $begin = strpos($data, '<script id="__NEXT_DATA__" type="application/json">');
+        $text = substr($data, $begin + strlen('<script id="__NEXT_DATA__" type="application/json">'));
+        $end = strpos($text, '</script>');
+        $newData = substr($text, 0, $end);
+        $array = json_decode($newData, true);
+
+        try {
+            return $array['props']['pageProps']['dehydratedState']['queries'];
+        } catch (\Throwable $e) {
+            Log::info(json_encode($array['props']['pageProps']));
+            return [];
+        }
+
+    }
+
+
+    public function GetParserProduct($productData, $categoryId):? ProductEntity
+    {
+
+        $url = self::URL_CATEGORIES . '/' . $productData;
+        $data = $this->httpPage->getPage($url, '', false);
+        $queries = $this->getQueries($data);
+        $decoded = [];
+        foreach ($queries as $query) {
+            if (isset($query['state']['data']['product']))
+                $decoded = $query['state']['data']['product'];
+        }
+        if (empty($decoded)) return null;
+
+        return $this->productParserService->create($decoded, $categoryId, $url);
     }
 
     public function GetAvailability($productCate): void

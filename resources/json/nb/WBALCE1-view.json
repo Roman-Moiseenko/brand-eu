@@ -1,0 +1,1097 @@
+{
+    "state": {
+        "data": {
+            "product": {
+                "id": "3215245",
+                "name": "Buty damskie New Balance Fresh Foam x Balos v1 WBALCE1 – pomarańczowe",
+                "code": "",
+                "niceUrl": "buty_damskie_new_balance_fresh_foam_x_balos_v1_wbalce1_pomaranczowe",
+                "picturesCategories": [
+                    {
+                        "slug": "--empty--",
+                        "pictures": []
+                    },
+                    {
+                        "slug": "newbalance",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/074755e33998a193e40b8a95c791a567.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/9126baae18ac0cd09343794112ae3fb9.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/f7fd41d2209797ad4691666fb4305b51.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/74939b9f83b4eb65d1717cf239309bd8.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/41af513008a15eb0fb5fdbe0d65e9372.png",
+                                "description": null
+                            }
+                        ]
+                    },
+                    {
+                        "slug": "comparer",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/f09664d8d0e57b568f8730c2f412d685.png",
+                                "description": null
+                            }
+                        ]
+                    },
+                    {
+                        "slug": "hover",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/65085917620a72dc71b3f5dd401d6e7a.png",
+                                "description": null
+                            }
+                        ]
+                    }
+                ],
+                "description": "\u003ch2 style=\"font-size: 18px;\"\u003eButy damskie New Balance Fresh Foam x Balos v1 \u003cspan class=\"caps\"\u003eWBAL\u003c/span\u003e – pomarańczowe\u003c/h2\u003e\n\n\u003cp\u003e\u003cstrong\u003eDamskie buty do biegania\u003c/strong\u003e New Balance Fresh Foam X Balos.\u003cbr /\u003e\n\nModel został zaprojektowany z myślą o biegaczach poszukujących wysokiego poziomu amortyzacji.\u003cbr /\u003e\n\nInnowacyjna konstrukcja podeszwy środkowej z mieszanką \u003cspan style=\"color:#e21836;\"\u003epianki \u003cspan class=\"caps\"\u003ePEBA\u003c/span\u003e\u003c/span\u003e i wyraźnym profilem rocker zapewnia płynne i efektywne przetaczanie stopy podczas biegu. \u003cbr /\u003e\n\nZa amortyzację odpowiada pianka \u003cspan style=\"color:#e21836;\"\u003eFresh Foam\u003csup\u003eX\u003c/sup\u003e\u003c/span\u003e, która charakteryzuje się również wysoką odpornością na odkształcenia.\u003cbr /\u003e\n\nPrzewiewna cholewka wykonana z siateczki Creel zapewnia doskonałą wentylację.\u003cbr /\u003e\n\nPodeszwa zewnętrzna z \u003cspan style=\"color:#e21836;\"\u003epianki \u003cspan class=\"caps\"\u003eEVA\u003c/span\u003e\u003c/span\u003e dostarcza lekkiego wsparcia, dostosowując się do podłoża i zapewniając płynne przetaczanie stopy. \u003cbr /\u003e\n\n\u003cstrong\u003eDamskie buty do biegania\u003c/strong\u003e New Balance Fresh Foam X Balos będą idealne dla osób poszukujących modeli treningowych, które sprawdzą się zarówno podczas codziennych biegów, jak i dłuższych dystansów.\u003cbr /\u003e\n\nW zestawieniu ze \u003ca href=\"https://nbsklep.pl/sport/bieganie/odziez/damskie\" target=\"_blank\"\u003e\u003cspan style=\"color:#e21836;\"\u003esportową odzieżą\u003c/span\u003e\u003c/a\u003e stworzą idealny zestaw na trening.\u003cbr /\u003e\n\u003cbr /\u003e\n\n\n\u003cp\u003eSpecyfikacja: \u003cbr /\u003e\n- Waga: 206.7 g (rozmiar 37.5 EU)\u003cbr /\u003e\n- Drop: 6 mm\u003cbr /\u003e\n- Odblaskowe elementy na cholewce\u003cbr /\u003e\n\u003cbr /\u003e\n\u003c/p\u003e\n\n\nTechnologie:\u003cbr /\u003e\n\n\u003cspan style=\"color:#e21836;\"\u003eFresh Foam\u003csup\u003eX\u003c/sup\u003e\u003c/span\u003e – innowacyjna lekka pianka amortyzująca o wysokiej odporności na odkształcenia.\u003cbr /\u003e\n\nDzięki odpowiedniej strukturze zapewnia miękkość oraz odpowiednią ochronę stawów podczas dłuższych treningów.\u003c/p\u003e\u003cp id=\"directive_liability\"\u003ePodmiot odpowiedzialny:\u003cbr /\u003e\nNew Balance Europe BV\u003cbr /\u003e\nA-Factorij, Pilotenstraat 35 – 45\u003cbr /\u003e\n1059 CH Amsterdam\u003cbr /\u003e\nNetherlands\u003c/p\u003e",
+                "producer": {
+                    "id": 911,
+                    "name": "New Balance",
+                    "description": null,
+                    "niceUrl": "new_balance"
+                },
+                "flags": [
+                    {
+                        "id": "1",
+                        "name": "Promocja",
+                        "symbol": "promotion"
+                    }
+                ],
+                "prices": {
+                    "sellPrice": {
+                        "gross": 569.99,
+                        "nett": 463.41,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "listPrice": null,
+                    "basePrice": {
+                        "gross": 1049.99,
+                        "nett": 853.65,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "omnibusPrice": {
+                        "gross": 629.99,
+                        "nett": 512.19,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "pricesPerUnit": []
+                },
+                "properties": [
+                    {
+                        "name": "Model",
+                        "symbol": "model",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": [
+                                "WBALCE1 "
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Dla kogo",
+                        "symbol": "sex",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Dla niej"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Płeć",
+                        "symbol": "for_kids",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Materiał",
+                        "symbol": "material",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": [
+                                "Materiał syntetyczny/Siateczka"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Kategoria",
+                        "symbol": "kategoria",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Obuwie"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Feed Gender",
+                        "symbol": "feed_gender",
+                        "value": {
+                            "type": "choice",
+                            "dataList": [
+                                "female"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Szerokość",
+                        "symbol": "width",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": true
+                    },
+                    {
+                        "name": "Kolor",
+                        "symbol": "color_detailed",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Pomarańczowy"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Produkt ocieplany",
+                        "symbol": "produktocieplany",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Rodzaj zapięcia",
+                        "symbol": "closure_type",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": true
+                    },
+                    {
+                        "name": "Nagłówek",
+                        "symbol": "run_headline",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Amortyzacja",
+                        "symbol": "cushioning",
+                        "value": {
+                            "type": "choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Technologia",
+                        "symbol": "technology",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Przeznaczenie",
+                        "symbol": "purpose",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Waga",
+                        "symbol": "weight",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Rodzaj stopy",
+                        "symbol": "foot_type",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Drop",
+                        "symbol": null,
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "6 mm"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Odpowiednik",
+                        "symbol": "related_gender_version",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Nazwa listing",
+                        "symbol": "listing_name",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Nagłówek H1",
+                        "symbol": "h1_title",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    }
+                ],
+                "variants": [
+                    {
+                        "id": "4929427",
+                        "option": "35 Standardowa (D)",
+                        "ean": "198686634920",
+                        "warehouseSymbol": "NBWBALCE1.B.050",
+                        "skus": [
+                            "#pv-4929427"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6557",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "35"
+                            },
+                            {
+                                "id": "6985",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (D)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929218",
+                        "option": "36 Standardowa (B)",
+                        "ean": "198686634937",
+                        "warehouseSymbol": "NBWBALCE1.B.055",
+                        "skus": [
+                            "#pv-4929218"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6559",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "36"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929219",
+                        "option": "36.5 Standardowa (B)",
+                        "ean": "198686634944",
+                        "warehouseSymbol": "NBWBALCE1.B.060",
+                        "skus": [
+                            "#pv-4929219"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6740",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "36.5"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929220",
+                        "option": "37 Standardowa (B)",
+                        "ean": "198686634951",
+                        "warehouseSymbol": "NBWBALCE1.B.065",
+                        "skus": [
+                            "#pv-4929220"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6560",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "37"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929221",
+                        "option": "37.5 Standardowa (B)",
+                        "ean": "198686634968",
+                        "warehouseSymbol": "NBWBALCE1.B.070",
+                        "skus": [
+                            "#pv-4929221"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6561",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "37.5"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929222",
+                        "option": "38 Standardowa (B)",
+                        "ean": "198686634975",
+                        "warehouseSymbol": "NBWBALCE1.B.075",
+                        "skus": [
+                            "#pv-4929222"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6562",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "38"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929223",
+                        "option": "39 Standardowa (B)",
+                        "ean": "198686634982",
+                        "warehouseSymbol": "NBWBALCE1.B.080",
+                        "skus": [
+                            "#pv-4929223"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6564",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "39"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929224",
+                        "option": "40 Standardowa (B)",
+                        "ean": "198686634999",
+                        "warehouseSymbol": "NBWBALCE1.B.085",
+                        "skus": [
+                            "#pv-4929224"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6566",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "40"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929225",
+                        "option": "40.5 Standardowa (B)",
+                        "ean": "198686635002",
+                        "warehouseSymbol": "NBWBALCE1.B.090",
+                        "skus": [
+                            "#pv-4929225"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6567",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "40.5"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929226",
+                        "option": "41 Standardowa (B)",
+                        "ean": "198686635019",
+                        "warehouseSymbol": "NBWBALCE1.B.095",
+                        "skus": [
+                            "#pv-4929226"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6568",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "41"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4929227",
+                        "option": "41.5 Standardowa (B)",
+                        "ean": "198686635026",
+                        "warehouseSymbol": "NBWBALCE1.B.100",
+                        "skus": [
+                            "#pv-4929227"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 569.99,
+                                "nett": 463.41,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 1049.99,
+                                "nett": 853.65,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "6569",
+                                "groupId": "32",
+                                "name": "Rozmiar",
+                                "value": "41.5"
+                            },
+                            {
+                                "id": "6991",
+                                "groupId": "46",
+                                "name": "Szerokość",
+                                "value": "Standardowa (B)"
+                            }
+                        ]
+                    }
+                ],
+                "reviews": [],
+                "categories": [
+                    {
+                        "id": "13159",
+                        "name": "NEUTRALNE / SUPINACJA",
+                        "niceUrl": "damskie/obuwie/biegowe/neutralne_supinacja"
+                    },
+                    {
+                        "id": "13072",
+                        "name": "Treningowe",
+                        "niceUrl": "damskie/obuwie/treningowe"
+                    },
+                    {
+                        "id": "13514",
+                        "name": "Damskie",
+                        "niceUrl": "sport/bieganie/obuwie/damskie"
+                    },
+                    {
+                        "id": "14101",
+                        "name": "Buty treningowe",
+                        "niceUrl": "bieganie/aktywnosc/buty_treningowe"
+                    },
+                    {
+                        "id": "14105",
+                        "name": "Wszystkie buty biegowe",
+                        "niceUrl": "bieganie/buty_biegowe/wszystkie_buty_biegowe"
+                    },
+                    {
+                        "id": "14100",
+                        "name": "Buty do nawierzchni twardej",
+                        "niceUrl": "bieganie/aktywnosc/buty_do_nawierzchni_twardej"
+                    }
+                ],
+                "reviewStats": {
+                    "scoreCount": 0,
+                    "totalScore": 0,
+                    "averageScore": 0,
+                    "percentageScore": 0
+                },
+                "sizeTable": {
+                    "type": "json",
+                    "instructions": "\u003cp\u003eTabela obuwia damskiego New Balance.\u003c/p\u003e\n\n\u003cp\u003eOznaczenia:\u003cbr /\u003e\nEU – rozmiar europejski\u003cbr /\u003e\nUS – rozmiar amerykański\u003cbr /\u003e\nCM – przybliżona długość wkładki podawana przez producenta\u003cbr /\u003e\nB – szerokość standardowa\u003cbr /\u003e\nD – szerokość powiększona\u003c/p\u003e",
+                    "json": [
+                        [
+                            "EU",
+                            "35",
+                            "36",
+                            "36,5",
+                            "37",
+                            "37,5",
+                            "38",
+                            "39",
+                            "40",
+                            "40,5",
+                            "41",
+                            "41,5",
+                            "42,5",
+                            "43",
+                            "43,5"
+                        ],
+                        [
+                            "US",
+                            "5",
+                            "5,5",
+                            "6",
+                            "6,5",
+                            "7",
+                            "7,5",
+                            "8",
+                            "8,5",
+                            "9",
+                            "9,5",
+                            "10",
+                            "10,5",
+                            "11",
+                            "11,5"
+                        ],
+                        [
+                            "CM",
+                            "22",
+                            "22,5",
+                            "23",
+                            "23,5",
+                            "24",
+                            "24,5",
+                            "25",
+                            "25,5",
+                            "26",
+                            "26,5",
+                            "27",
+                            "27,5",
+                            "28",
+                            "28,5"
+                        ],
+                        [
+                            "B (mm)",
+                            "90",
+                            "92",
+                            "93",
+                            "95",
+                            "96",
+                            "98",
+                            "100",
+                            "102",
+                            "103",
+                            "105",
+                            "106",
+                            "109",
+                            "-",
+                            "-"
+                        ],
+                        [
+                            "D (mm)",
+                            "98",
+                            "100",
+                            "101",
+                            "103",
+                            "104",
+                            "106",
+                            "107",
+                            "109",
+                            "110",
+                            "112",
+                            "113",
+                            "117",
+                            "-",
+                            "-"
+                        ]
+                    ]
+                },
+                "availability": {
+                    "buyable": true,
+                    "message": {
+                        "content": "Dostępny",
+                        "type": "success"
+                    },
+                    "shippingWithin": {
+                        "type": "days",
+                        "value": "1",
+                        "whenPlacedTo": null
+                    },
+                    "stock": {
+                        "amount": 96,
+                        "unit": "para"
+                    },
+                    "suppliersStock": {
+                        "amount": 0,
+                        "unit": "96"
+                    }
+                },
+                "categoryPath": [
+                    {
+                        "id": "13029",
+                        "name": "Damskie",
+                        "niceUrl": "damskie",
+                        "isVisibleInMenu": true
+                    },
+                    {
+                        "id": "13066",
+                        "name": "Obuwie",
+                        "niceUrl": "damskie/obuwie",
+                        "isVisibleInMenu": true
+                    },
+                    {
+                        "id": "13070",
+                        "name": "Biegowe",
+                        "niceUrl": "damskie/obuwie/biegowe",
+                        "isVisibleInMenu": true
+                    },
+                    {
+                        "id": "13159",
+                        "name": "NEUTRALNE / SUPINACJA",
+                        "niceUrl": "damskie/obuwie/biegowe/neutralne_supinacja",
+                        "isVisibleInMenu": true
+                    }
+                ],
+                "allowDiscounts": true
+            }
+        },
+        "dataUpdateCount": 1,
+        "dataUpdatedAt": 1792691458772,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "fetchFailureCount": 0,
+        "fetchMeta": null,
+        "isInvalidated": false,
+        "status": "success",
+        "fetchStatus": "idle"
+    },
+    "queryKey": [
+        "product",
+        {
+            "id": "3215245"
+        }
+    ],
+    "queryHash": "[\"product\",{\"id\":\"3215245\"}]"
+}

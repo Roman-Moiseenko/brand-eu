@@ -1,0 +1,650 @@
+{
+    "state": {
+        "data": {
+            "product": {
+                "id": "3215925",
+                "name": "Bezrękawnik damski New Balance WV53500TOF – beżowy",
+                "code": "",
+                "niceUrl": "bezrekawnik_damski_new_balance_wv53500tof_bezowy",
+                "picturesCategories": [
+                    {
+                        "slug": "--empty--",
+                        "pictures": []
+                    },
+                    {
+                        "slug": "newbalance",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/35116ba7928a53f8886120987721e9eb.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/7128a74fe8561ebe466548093ae77dcb.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/c12f27e06ba0ee7d256da875556680e7.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/c97d2e901b12969386c20da0024e8a9e.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/13dcae0deeb45a4c5d27c0c7b4f476ca.png",
+                                "description": null
+                            },
+                            {
+                                "filename": "{imageSafeUri}/e9beb28c4ac34ca83b806559659f805d.png",
+                                "description": null
+                            }
+                        ]
+                    },
+                    {
+                        "slug": "comparer",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/8d45c62c60ae11dfad6fa4c23c6a5eb0.png",
+                                "description": null
+                            }
+                        ]
+                    },
+                    {
+                        "slug": "stylizacje",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/e16e71733abd8942d8bf14fe8a2827a8.png",
+                                "description": null
+                            }
+                        ]
+                    },
+                    {
+                        "slug": "hover",
+                        "pictures": [
+                            {
+                                "filename": "{imageSafeUri}/426c876b61f68aea30fd391cd3147bfd.png",
+                                "description": null
+                            }
+                        ]
+                    }
+                ],
+                "description": "\u003ch2 style=\"font-size: 18px;\"\u003eBezrękawnik damski New Balance V53500 – beżowy\u003c/h2\u003e\n\n\u003cp\u003e\u003cstrong\u003eDamski bezrękawnik\u003c/strong\u003e z logotypem NB umieszczonym na piersi.\u003cbr /\u003e\n\nOdzież uszyto ze sztruksowego materiału.\u003cbr /\u003e\n\nKieszenie boczne umożliwiają przechowanie drobnych przedmiotów. \u003cbr /\u003e\n\nWysoka stójka pod szyją stanowi dodatkową ochronę przed zimnem.\u003cbr /\u003e\n\n\u003cstrong\u003eDamski bezrękawnik\u003c/strong\u003e doskonale uzupełni \u003ca href=\"/damskie/odziez/bluzy\"\u003e\u003cspan style=\"color:#e21836;\"\u003edresowe bluzy\u003c/span\u003e\u003c/a\u003e i \u003ca href=\"/damskie/obuwie\"\u003e\u003cspan style=\"color:#e21836;\"\u003esneakersy dla kobiet\u003c/span\u003e\u003c/a\u003e. \u003cbr /\u003e\n\u003cbr /\u003e\n\n\n\u003cp\u003eSpecyfikacja:\u003cbr /\u003e\n- Materiał: 90% poliester z recyklingu, 10% nylon\u003cbr /\u003e\n- Kieszenie boczne\u003c/p\u003e\n\n\u003c/p\u003e\u003cp id=\"directive_liability\"\u003ePodmiot odpowiedzialny:\u003cbr /\u003e\nNew Balance Europe BV\u003cbr /\u003e\nA-Factorij, Pilotenstraat 35 – 45\u003cbr /\u003e\n1059 CH Amsterdam\u003cbr /\u003e\nNetherlands\u003c/p\u003e",
+                "producer": {
+                    "id": 911,
+                    "name": "New Balance",
+                    "description": null,
+                    "niceUrl": "new_balance"
+                },
+                "flags": [
+                    {
+                        "id": "1",
+                        "name": "Promocja",
+                        "symbol": "promotion"
+                    }
+                ],
+                "prices": {
+                    "sellPrice": {
+                        "gross": 299.99,
+                        "nett": 243.89,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "listPrice": null,
+                    "basePrice": {
+                        "gross": 629.99,
+                        "nett": 512.19,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "omnibusPrice": {
+                        "gross": 349.99,
+                        "nett": 284.54,
+                        "currency": "PLN",
+                        "vat": null,
+                        "vatValue": 23
+                    },
+                    "pricesPerUnit": []
+                },
+                "properties": [
+                    {
+                        "name": "Model",
+                        "symbol": "model",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": [
+                                "WV53500TOF "
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Dla kogo",
+                        "symbol": "sex",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Dla niej"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Płeć",
+                        "symbol": "for_kids",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Materiał",
+                        "symbol": "material",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": [
+                                "Poliester/Nylon"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Kategoria",
+                        "symbol": "kategoria",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Odzież"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Feed Gender",
+                        "symbol": "feed_gender",
+                        "value": {
+                            "type": "choice",
+                            "dataList": [
+                                "female"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Szerokość",
+                        "symbol": "width",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": true
+                    },
+                    {
+                        "name": "Kolor",
+                        "symbol": "color_detailed",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": [
+                                "Beżowy"
+                            ]
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Produkt ocieplany",
+                        "symbol": "produktocieplany",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Rodzaj zapięcia",
+                        "symbol": "closure_type",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": true
+                    },
+                    {
+                        "name": "Nagłówek",
+                        "symbol": "run_headline",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Amortyzacja",
+                        "symbol": "cushioning",
+                        "value": {
+                            "type": "choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Technologia",
+                        "symbol": "technology",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Przeznaczenie",
+                        "symbol": "purpose",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Waga",
+                        "symbol": "weight",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Rodzaj stopy",
+                        "symbol": "foot_type",
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Drop",
+                        "symbol": null,
+                        "value": {
+                            "type": "multiple_choice",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Odpowiednik",
+                        "symbol": "related_gender_version",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Nazwa listing",
+                        "symbol": "listing_name",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    },
+                    {
+                        "name": "Nagłówek H1",
+                        "symbol": "h1_title",
+                        "value": {
+                            "type": "text_line",
+                            "dataList": null
+                        },
+                        "isPrivileged": false
+                    }
+                ],
+                "variants": [
+                    {
+                        "id": "5026645",
+                        "option": "XS",
+                        "ean": "198686050140",
+                        "warehouseSymbol": "NBWV53500TOF.XS",
+                        "skus": [
+                            "#pv-5026645"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 299.99,
+                                "nett": 243.89,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 349.99,
+                                "nett": 284.54,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "7144",
+                                "groupId": "52",
+                                "name": "Rozmiar",
+                                "value": "XS"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5026646",
+                        "option": "S",
+                        "ean": "198686050126",
+                        "warehouseSymbol": "NBWV53500TOF.S",
+                        "skus": [
+                            "#pv-5026646"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 299.99,
+                                "nett": 243.89,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 349.99,
+                                "nett": 284.54,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "7145",
+                                "groupId": "52",
+                                "name": "Rozmiar",
+                                "value": "S"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5026647",
+                        "option": "M",
+                        "ean": "198686050119",
+                        "warehouseSymbol": "NBWV53500TOF.M",
+                        "skus": [
+                            "#pv-5026647"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 299.99,
+                                "nett": 243.89,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 349.99,
+                                "nett": 284.54,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "7146",
+                                "groupId": "52",
+                                "name": "Rozmiar",
+                                "value": "M"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5026648",
+                        "option": "L",
+                        "ean": "198686050102",
+                        "warehouseSymbol": "NBWV53500TOF.L",
+                        "skus": [
+                            "#pv-5026648"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 299.99,
+                                "nett": 243.89,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 349.99,
+                                "nett": 284.54,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "7147",
+                                "groupId": "52",
+                                "name": "Rozmiar",
+                                "value": "L"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5026649",
+                        "option": "XL",
+                        "ean": "198686050133",
+                        "warehouseSymbol": "NBWV53500TOF.XL",
+                        "skus": [
+                            "#pv-5026649"
+                        ],
+                        "prices": {
+                            "sellPrice": {
+                                "gross": 299.99,
+                                "nett": 243.89,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "listPrice": null,
+                            "basePrice": {
+                                "gross": 629.99,
+                                "nett": 512.19,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "omnibusPrice": {
+                                "gross": 349.99,
+                                "nett": 284.54,
+                                "currency": "PLN",
+                                "vat": null,
+                                "vatValue": 23
+                            },
+                            "pricesPerUnit": []
+                        },
+                        "availability": {
+                            "buyable": true,
+                            "message": {
+                                "content": "Dostępny",
+                                "type": "success"
+                            }
+                        },
+                        "options": [
+                            {
+                                "id": "7148",
+                                "groupId": "52",
+                                "name": "Rozmiar",
+                                "value": "XL"
+                            }
+                        ]
+                    }
+                ],
+                "reviews": [
+                    {
+                        "id": "16096ec6-8bf5-11f1-8323-b66c08872c1a",
+                        "scores": [
+                            {
+                                "reviewId": "2d24debe-0f32-11ed-b644-9e80cda4db75",
+                                "scoreType": {
+                                    "id": "2d24debe-0f32-11ed-b644-9e80cda4db75",
+                                    "name": "Ogólna",
+                                    "minValue": 1,
+                                    "maxValue": 5,
+                                    "step": 1,
+                                    "isDefault": true
+                                },
+                                "value": 4
+                            }
+                        ],
+                        "customerFirstName": "Anna",
+                        "customerLastName": null,
+                        "title": null,
+                        "content": "Velmi pěkná vesta, jedinou nevýhodou je šustící podšívka. Ale stejně to nechám být. Je velmi hezká.\nAnne",
+                        "createdAt": 1781533978
+                    }
+                ],
+                "categories": [
+                    {
+                        "id": "13959",
+                        "name": "Bezrękawniki",
+                        "niceUrl": "damskie/odziez/bezrekawniki"
+                    }
+                ],
+                "reviewStats": {
+                    "scoreCount": 1,
+                    "totalScore": 4,
+                    "averageScore": 4,
+                    "percentageScore": 80
+                },
+                "sizeTable": null,
+                "availability": {
+                    "buyable": true,
+                    "message": {
+                        "content": "Dostępny",
+                        "type": "success"
+                    },
+                    "shippingWithin": {
+                        "type": "days",
+                        "value": "1",
+                        "whenPlacedTo": null
+                    },
+                    "stock": {
+                        "amount": 30,
+                        "unit": "szt"
+                    },
+                    "suppliersStock": {
+                        "amount": 0,
+                        "unit": "30"
+                    }
+                },
+                "categoryPath": [
+                    {
+                        "id": "13029",
+                        "name": "Damskie",
+                        "niceUrl": "damskie",
+                        "isVisibleInMenu": true
+                    },
+                    {
+                        "id": "13949",
+                        "name": "Odzież",
+                        "niceUrl": "damskie/odziez",
+                        "isVisibleInMenu": true
+                    },
+                    {
+                        "id": "13959",
+                        "name": "Bezrękawniki",
+                        "niceUrl": "damskie/odziez/bezrekawniki",
+                        "isVisibleInMenu": true
+                    }
+                ],
+                "allowDiscounts": true
+            }
+        },
+        "dataUpdateCount": 1,
+        "dataUpdatedAt": 1792682511430,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "fetchFailureCount": 0,
+        "fetchMeta": null,
+        "isInvalidated": false,
+        "status": "success",
+        "fetchStatus": "idle"
+    },
+    "queryKey": [
+        "product",
+        {
+            "id": "3215925"
+        }
+    ],
+    "queryHash": "[\"product\",{\"id\":\"3215925\"}]"
+}
