@@ -22,41 +22,5 @@
                 </div>
             @endforeach
         @endforeach
-
-        <div class="group">Габариты</div>
-        <div class="attribute">
-            <div class="row">
-                <div class="col-6 col-lg-4">
-                    <div class="name">{{ $dimensions->captions[0] }}</div>
-                </div>
-                <div class="col-6 col-lg-4">
-                    <div class="values">{{ $dimensions->height }} см</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="attribute">
-            <div class="row">
-                <div class="col-6 col-lg-4">
-                    <div class="name">{{ $dimensions->captions[1] }}</div>
-                </div>
-                <div class="col-6 col-lg-4">
-                    <div class="values">{{ $dimensions->width }} см</div>
-                </div>
-            </div>
-        </div>
-        <!-- -->
-        @if(!empty($dimensions->captions[2]))
-            <div class="attribute">
-                <div class="row">
-                    <div class="col-6 col-lg-4">
-                        <div class="name">{{ $dimensions->captions[2] }}</div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="values">{{ $dimensions->depth }} см</div>
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
 @endif

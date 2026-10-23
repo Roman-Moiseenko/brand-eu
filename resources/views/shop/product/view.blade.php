@@ -127,15 +127,8 @@
                     <div class="product-card-to-cart">
                         @if($product->is_sale)
                             <button class="to-cart btn btn-black e-add{{ $product->in_cart ? ' in-cart' : '' }}"
-                                    data-product="{{ $product->id }}">
+                                    data-product="{{ $product->id }}" data-options="{{ '' }}">
                                 {{ $product->in_cart ? 'В Корзине' : 'В Корзину' }}
-                            </button>
-                            <button class="one-click btn btn-orange"
-                                    type="button" data-bs-toggle="modal"
-                                    data-bs-target="#buy-click"
-                                    onclick="document.getElementById('one-click-product-id').value={{$product->id}};
-                                    document.getElementById('button-buy-click').setAttribute('data-product', {{$product->id}});"
-                            >Купить в 1 клик
                             </button>
                         @else
                             <button type="button" class="btn btn-secondary" disabled>Снят с продажи</button>
@@ -145,22 +138,6 @@
                     <div class="short-description">
                         {!! $product->short !!}
                     </div>
-                    <!--h3 class="m-b_10 f-w_700 f-z_18">Размеры:</h3>
-                    <ul>
-                        <li>Высота: 93 см</li>
-                        <li>Ширина/Диаметр: 58 см</li>
-                        <li>Длина/Глубина: 35 см</li>
-                    </ul>
-                    <div class="product-materials m-t_20 accordion accordion_1">
-                        <h3 class="m-b_10 f-w_700 f-z_18 accordion-heading">Материалы и уход <span></span></h3>
-                        <div class="accordion-text"><p>массив березы, клей</p>
-                            <p><strong>Уход<br>
-                                </strong>Протрите сухой тканью.</p>
-                            <p>Для лучшего качества затяните винты, если это необходимо.</p>
-                            <p>Для ухода рекомендуем масло для дерева VARDA.</p></div>
-                    </div>
-                    <h3 class="m-t_20 m-b_10 f-w_700 f-z_18">Цвета:</h3>
-                    <div>Натуральный</div-->
                     @include('shop.product.__modification', ['modification' => $pageData->modification, 'current_id' => $product->id])
                     @include('shop.product.__related', ['related' => $pageData->related])
 
@@ -185,7 +162,6 @@
 
     @include('shop.product._attribute', [
         'productAttributes' => $pageData->attributes,
-        'dimensions' => $product->dimensions,
     ])
 
     @include('shop.product._equivalent', ['equivalents' => $pageData->equivalents])
