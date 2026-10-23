@@ -14,7 +14,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SeriesRepository implements SeriesRepositoryInterface
 {
-    public function getAll(int $perPage = 15, int $page = 1): LengthAwarePaginator
+
+    public function getAll(): array
+    {
+        return Series::orderBy('name')
+            ->get()
+            ->map(fn(Series $model) => $this->hydrate($model))
+            ->toArray();
+    }
+
+    public function getAllPagination(int $perPage = 15, int $page = 1): LengthAwarePaginator
     {
         return Series::orderBy('name')
             ->paginate($perPage, ['*'], 'page', $page)
@@ -166,4 +175,5 @@ class SeriesRepository implements SeriesRepositoryInterface
 
         return $entity;
     }
+
 }

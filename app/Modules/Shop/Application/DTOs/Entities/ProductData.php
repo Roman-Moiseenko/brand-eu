@@ -42,6 +42,8 @@ class ProductData
         public bool                 $only_on_order,
         public int                  $quantity = 1,
 
+        public array                $sizes = [],
+
 
     )
     {

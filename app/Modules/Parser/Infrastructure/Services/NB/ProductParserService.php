@@ -5,6 +5,7 @@ namespace App\Modules\Parser\Infrastructure\Services\NB;
 use App\Modules\Accounting\Application\Actions\ProductPrice\SetPriceUseCase;
 use App\Modules\Base\Service\TranslateService;
 use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
+use App\Modules\Catalog\Application\Actions\Series\FindSeriesByNameProductQuery;
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
 use App\Modules\Catalog\Application\Services\AttachVariantAttributeService;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
@@ -12,6 +13,7 @@ use App\Modules\Catalog\Domain\Entities\ProductSizeEntity;
 use App\Modules\Catalog\Domain\Interfaces\AttributeRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
+use App\Modules\Catalog\Domain\Interfaces\SeriesRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\SizeGridRepositoryInterface;
 use App\Modules\Catalog\Domain\ValueObjects\AttributeName;
 use App\Modules\Catalog\Domain\ValueObjects\Code;
@@ -43,6 +45,8 @@ class ProductParserService
         private AttachVariantAttributeService     $attachVariantAttributeService,
         private AttributeRepositoryInterface      $attributeRepository,
         private PhotosProductService              $photosProductService,
+        private SeriesRepositoryInterface         $seriesRepository,
+        private FindSeriesByNameProductQuery      $findSeriesByNameProductQuery,
     )
     {
     }
@@ -196,6 +200,12 @@ class ProductParserService
                 ->values()
                 ->all();
         $this->photosProductService->execute($items, $product->id, $product->name);
+        //Ищем серию
+
+        $series = $this->findSeriesByNameProductQuery->execute($product->name);
+        if (!is_null($series)) {
+            $this->seriesRepository->attachProducts($series->id, [$product->id]);
+        }
 
         //После загрузки фото, публикуем товар
         LoadPublishedProductJob::dispatch($product->id)->onQueue(QueueName::PHOTO);
@@ -245,6 +255,11 @@ class ProductParserService
 
     function stripAnchors(string $html): string
     {
+        $html = preg_replace(
+            '~<p\b[^>]*\bid\s*=\s*["\']directive_liability["\'][^>]*>.*?</p>~is',
+            '',
+            $html
+        );
         return preg_replace('/<\/?a\b[^>]*>/i', '', $html);
     }
 }

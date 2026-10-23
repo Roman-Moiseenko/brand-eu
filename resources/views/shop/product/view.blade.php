@@ -108,6 +108,11 @@
                             @else
                                 {{ price($product->price) }}
                             @endif
+                            @if(!empty($product->sizes))
+
+                            @endif
+
+
                             <div class="count-product">
                                 @if($product->is_sale)
                                     @if($product->quantity > 0)

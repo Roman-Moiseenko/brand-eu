@@ -78,7 +78,7 @@ class MetaSeeder extends Seeder
             entity: 'catalog.room',
         );
         $this->useCase->execute($dto);
-        $dto = new MetaTemplateCreateData(
+     /*   $dto = new MetaTemplateCreateData(
             class: ParserProduct::class,
             entity: 'parser.product',
         );
@@ -89,5 +89,6 @@ class MetaSeeder extends Seeder
             entity: 'parser.category',
         );
         $this->useCase->execute($dto);
+        */
     }
 }

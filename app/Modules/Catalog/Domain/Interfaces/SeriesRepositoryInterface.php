@@ -10,7 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface SeriesRepositoryInterface
 {
-    public function getAll(int $perPage = 15, int $page = 1): LengthAwarePaginator;
+    public function getAllPagination(int $perPage = 15, int $page = 1): LengthAwarePaginator;
+
+    /**
+     * @return SeriesEntity[]
+     */
+    public function getAll(): array;
 
     public function getById(int $id): SeriesEntity;
 
