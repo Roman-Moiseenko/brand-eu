@@ -851,3 +851,77 @@
         height: 25px;
     }
 }
+
+//РАЗМЕРЫ ТОВАРА НА СТРАНИЦЕ ТОВАРА
+.product-sizes {
+    margin-top: 10px;
+
+    .product-sizes-error {
+        color: $red;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .product-sizes-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .product-size-btn {
+        min-width: 44px;
+        height: 44px;
+        padding: 4px 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bs-white);
+        border: 1px solid #656565;
+        border-radius: $border-radius_4;
+        color: #3a3a3a;
+        font-size: 14px;
+        cursor: pointer;
+        transition: border 0.15s ease, background 0.15s ease;
+
+        &:hover {
+            border-color: #3a3a3a;
+        }
+
+        &.active {
+            background: #e5e5e5;
+            border: 2px solid #3a3a3a;
+        }
+    }
+
+    .product-widths {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .product-width-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 6px 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bs-white);
+        border: 1px solid #656565;
+        border-radius: $border-radius_4;
+        color: #3a3a3a;
+        font-size: 14px;
+        cursor: pointer;
+        transition: border 0.15s ease, background 0.15s ease;
+
+        &:hover {
+            border-color: #3a3a3a;
+        }
+
+        &.active {
+            background: #e5e5e5;
+            border: 2px solid #3a3a3a;
+        }
+    }
+}

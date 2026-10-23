@@ -42,6 +42,18 @@ class ProductData
         public bool                 $only_on_order,
         public int                  $quantity = 1,
 
+        /**
+         * Доступные размеры товара (products_sizes с is_active = true).
+         *
+         * Одна ось: массив ProductSizeData.
+         * Две оси: массив ProductSizeWidthData (сгруппировано по ширине).
+         *
+         * @var \App\Modules\Shop\Application\DTOs\Elements\ProductSizeData[]|\App\Modules\Shop\Application\DTOs\Elements\ProductSizeWidthData[]
+         */
+        public array                $sizes = [],
+        /** Признак двухосной размерной сетки (size + width). */
+        public bool                 $twoAxes = false,
+
     )
     {
 

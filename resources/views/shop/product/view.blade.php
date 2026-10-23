@@ -109,7 +109,35 @@
                                 {{ price($product->price) }}
                             @endif
                             @if(!empty($product->sizes))
+                                <div class="product-sizes" data-two-axes="{{ $product->twoAxes ? '1' : '0' }}">
+                                    <div class="product-sizes-error" style="display: none;">Пожалуйста выберите размер</div>
 
+                                    @if(!$product->twoAxes)
+                                        <div class="product-sizes-list">
+                                            @foreach($product->sizes as $size)
+                                                <button type="button" class="product-size-btn"
+                                                        data-product-size-id="{{ $size->productSizeId }}">{{ $size->value }}</button>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        @foreach($product->sizes as $width)
+                                            <div class="product-sizes-list" data-width-value="{{ $width->value }}">
+                                                @foreach($width->items as $size)
+                                                    <button type="button" class="product-size-btn"
+                                                            data-product-size-id="{{ $size->productSizeId }}">{{ $size->value }}</button>
+                                                @endforeach
+                                            </div>
+                                        @endforeach
+                                        <div class="product-widths">
+                                            @foreach($product->sizes as $width)
+                                                <button type="button" class="product-width-btn"
+                                                        data-width-value="{{ $width->value }}">
+                                                    {{ $width->label && $width->label !== $width->value ? $width->label . ' (' . $width->value . ')' : $width->value }}
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
                             @endif
 
 
