@@ -32,7 +32,6 @@ class ParserBrandProductCommand extends Command
                 $this->info('Категория ' . $category->nameRu);
                 if (!empty($category->url)) LoadParserProductsJob::dispatch($category->url, $brand->id, $category->id);
             }
-
         }
     }
 }

@@ -118,7 +118,6 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="f-z_14 m-b_20">Уточняйте наличие товара на данный момент</div>
                     </div>
                     <div class="product-card-to-cart">
                         @if($product->is_sale)
@@ -160,12 +159,7 @@
                     @include('shop.product.__modification', ['modification' => $pageData->modification, 'current_id' => $product->id])
                     @include('shop.product.__related', ['related' => $pageData->related])
 
-                    <div class="view-specifications">
-                        @include('shop.widgets.dimensions',
-                                ['dimensions' => $product->dimensions,
-                                'isRegion' => $product->isRegion,
-                                'isDelivery' => $product->isDelivery])
-                    </div>
+
 
                 </div>
             </div>
@@ -183,12 +177,6 @@
         {!! $product->description !!}
     </div>
 
-    @if(!empty($product->care))
-        <div class="box-card">
-            <h2 id="care">Материалы и уход за товаром</h2>
-            {!! $product->care !!}
-        </div>
-    @endif
 
     @include('shop.product._attribute', [
         'productAttributes' => $pageData->attributes,
@@ -244,7 +232,6 @@
 @endsection
 
 @section('bottom-content')
-    @include ('shop.product._block-more-products')
-    @include('shop.widgets.map')
+
 @endsection
 

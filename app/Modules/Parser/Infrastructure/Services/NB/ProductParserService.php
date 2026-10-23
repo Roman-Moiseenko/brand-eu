@@ -52,7 +52,7 @@ class ProductParserService
         //Считываем параметры
         $properties = $decoded['properties'];
         $model = '';
-        $for = [];
+        $whom = [];
         $material = [];
         $gender = [];
         $color = '';
@@ -65,7 +65,7 @@ class ProductParserService
 
         foreach ($properties as $property) {
             if ($property['symbol'] == 'model') $model = $property['value']['dataList'][0]; //Модель
-            if ($property['symbol'] == 'sex') $for = array_map(function ($item) { //Для кого
+            if ($property['symbol'] == 'sex') $whom = array_map(function ($item) { //Для кого
                 return $this->translateService->translate($item);
             }, $property['value']['dataList']);
             if ($property['symbol'] == 'material') $material = array_map(function ($item) { //Материал
@@ -78,13 +78,13 @@ class ProductParserService
             //Для спортивных моделей
             if ($property['symbol'] == 'purpose' && !is_null($property['value']['dataList'])) //Поверхность
                 $purpose = $this->translateService->translate($property['value']['dataList'][0]);
-            if ($property['symbol'] == 'technology' && !is_null($property['value']['dataList'])) //Поверхность
+            if ($property['symbol'] == 'technology' && !is_null($property['value']['dataList'])) //Технология
                 $technology = $property['value']['dataList'][0];
-            if ($property['symbol'] == 'weight' && !is_null($property['value']['dataList'])) //Поверхность
+            if ($property['symbol'] == 'weight' && !is_null($property['value']['dataList'])) //Вес
                 $weight = $property['value']['dataList'][0];
-            if ($property['symbol'] == 'foot_type' && !is_null($property['value']['dataList'])) //Поверхность
+            if ($property['symbol'] == 'foot_type' && !is_null($property['value']['dataList'])) //Тип стопы
                 $foot_type = $property['value']['dataList'][0];
-            if ($property['name'] == 'Drop' && !is_null($property['value']['dataList'])) //Поверхность
+            if ($property['name'] == 'Drop' && !is_null($property['value']['dataList'])) //Подъем
                 $Drop = $property['value']['dataList'][0];
         }
         if (empty($model)) return null;
@@ -98,7 +98,6 @@ class ProductParserService
                 'parser_category_id' => $categoryId,
                 'product_name' => $decoded['name'] ?? null,
             ]);
-
             return null;
         }
 
@@ -112,10 +111,16 @@ class ProductParserService
             mainCategoryId: $category->categoryId,
             brandId: $category->brandId,
         );
-        $product->description = $this->translateService->translate($decoded['description']);
+
+        $description = $this->stripAnchors($decoded['description']);
+
+        $product->description = $this->translateService->translate($description);
         $product = $this->productRepository->save($product);
         //Устанавливаем цвет, как атрибут, если есть
         if (!empty($color)) $this->attachVariantAttributeService->execute($product->id, [$color], AttributeName::color());
+        if (!empty($material)) $this->attachVariantAttributeService->execute($product->id, $material, AttributeName::material());
+
+        if (!empty($whom)) $this->attachVariantAttributeService->execute($product->id, $whom, AttributeName::whom());
 
         //Размерная сетка
         $sizesForParser = [];
@@ -236,5 +241,10 @@ class ProductParserService
         }
 
         return $width;
+    }
+
+    function stripAnchors(string $html): string
+    {
+        return preg_replace('/<\/?a\b[^>]*>/i', '', $html);
     }
 }
