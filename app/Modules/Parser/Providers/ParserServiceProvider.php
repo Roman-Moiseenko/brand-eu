@@ -22,6 +22,7 @@ use App\Modules\Parser\Presentation\Console\Commands\old\IkeaProductPhotoCommand
 use App\Modules\Parser\Presentation\Console\Commands\old\IkeaRenameCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandCategoryCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserNBSeriesCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTest2BrandCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTestBrandCommand;
 use Illuminate\Support\Facades\Blade;
@@ -154,6 +155,7 @@ class ParserServiceProvider extends ServiceProvider
             ParserBrandProductCommand::class,
             ParserTestBrandCommand::class,
             ParserTest2BrandCommand::class,
+            ParserNBSeriesCommand::class,
         ]);
     }
 

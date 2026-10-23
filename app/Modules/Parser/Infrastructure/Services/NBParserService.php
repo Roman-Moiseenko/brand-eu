@@ -4,6 +4,7 @@ namespace App\Modules\Parser\Infrastructure\Services;
 
 use App\Modules\Base\Service\HttpPage;
 use App\Modules\Base\Service\TranslateService;
+use App\Modules\Catalog\Application\Actions\Series\FindOrCreateSeriesUseCase;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Parser\Application\Actions\Category\CreateParserCategoryUseCase;
@@ -24,6 +25,7 @@ class NBParserService implements ParserServiceInterface
         private readonly BrandRepositoryInterface $brandRepository,
         private readonly CreateParserCategoryUseCase $createParserCategoryUseCase,
         private readonly ProductParserService $productParserService,
+        private readonly FindOrCreateSeriesUseCase $findOrCreateSeriesUseCase,
     )
     {
 
@@ -145,5 +147,31 @@ class NBParserService implements ParserServiceInterface
     public function GetAvailability($productCate): void
     {
         // TODO: Implement GetAvailability() method.
+    }
+
+    public function GetSeries(): void
+    {
+        $data = $this->httpPage->getPage('https://newbalance.pl/meskie', '', false);
+        $queries = $this->getQueries($data);
+        foreach ($queries as $query) {
+            if (isset($query['state']['data']['products']))
+                $data = $query['state']['data']['products'];
+        }
+        $filters = $data['filters'];
+
+        $series = [];
+        foreach ($filters as $filter) {
+            if ($filter['name'] == 'Seria') {
+                $series = array_map(function ($item) {
+                    return $item['value'];
+                }, $filter['attributes']);
+                break;
+            }
+        }
+
+        foreach ($series as $serie) {
+            $this->findOrCreateSeriesUseCase->execute($serie);
+        }
+
     }
 }
