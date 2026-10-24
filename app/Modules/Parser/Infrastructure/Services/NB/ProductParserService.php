@@ -58,9 +58,9 @@ class ProductParserService
         $model = '';
         $whom = [];
         $material = [];
-        $gender = [];
         $color = '';
 
+        $gender = [];
         $purpose = '';
         $technology = '';
         $weight = '';
@@ -68,17 +68,18 @@ class ProductParserService
         $Drop = '';
 
         foreach ($properties as $property) {
-            if ($property['symbol'] == 'model') $model = $property['value']['dataList'][0]; //Модель
-            if ($property['symbol'] == 'sex') $whom = array_map(function ($item) { //Для кого
-                return $this->translateService->translate($item);
-            }, $property['value']['dataList']);
-            if ($property['symbol'] == 'material') $material = array_map(function ($item) { //Материал
-                return $this->translateService->translate($item);
-            }, $property['value']['dataList']);
-
-            if ($property['symbol'] == 'color_detailed') //Цвет
+            if ($property['symbol'] == 'model' && !is_null($property['value']['dataList']))
+                $model = $property['value']['dataList'][0]; //Модель
+            if ($property['symbol'] == 'sex' && !is_null($property['value']['dataList']))
+                $whom = array_map(function ($item) { //Для кого
+                    return $this->translateService->translate($item);
+                }, $property['value']['dataList']);
+            if ($property['symbol'] == 'material' && !is_null($property['value']['dataList']))
+                $material = array_map(function ($item) { //Материал
+                    return $this->translateService->translate($item);
+                }, $property['value']['dataList']);
+            if ($property['symbol'] == 'color_detailed' && !is_null($property['value']['dataList'])) //Цвет
                 $color = $this->translateService->translate($property['value']['dataList'][0]);
-
             //Для спортивных моделей
             if ($property['symbol'] == 'purpose' && !is_null($property['value']['dataList'])) //Поверхность
                 $purpose = $this->translateService->translate($property['value']['dataList'][0]);
@@ -91,7 +92,13 @@ class ProductParserService
             if ($property['name'] == 'Drop' && !is_null($property['value']['dataList'])) //Подъем
                 $Drop = $property['value']['dataList'][0];
         }
-        if (empty($model)) return null;
+        if (empty($model)) {
+            \Log::warning('Пропуск товара: $model = null', [
+                'parser_category_id' => $categoryId,
+                'product_name' => $decoded['name'] ?? null,
+            ]);
+            return null;
+        }
 
         if (!is_null($prod = $this->productRepository->findByCode($model))) return $prod;
         //Находим категорию парсера

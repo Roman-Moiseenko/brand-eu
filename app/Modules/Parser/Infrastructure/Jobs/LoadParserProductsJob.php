@@ -16,8 +16,8 @@ class LoadParserProductsJob implements ShouldQueue
 
     public function __construct(
         private readonly string $urlCategory,
-        private readonly int $brandId,
-        private readonly int $categoryId,
+        private readonly int    $brandId,
+        private readonly int    $categoryId,
     )
     {
     }
@@ -32,9 +32,14 @@ class LoadParserProductsJob implements ShouldQueue
 
         $products = $parser->GetListProductsByCategory($this->urlCategory);
         foreach ($products as $product) {
+            if ($product === null || $product === '' || $product === []) {
+                logger()->warning('Parser returned empty product', [
+                    'brand_id' => $this->brandId,
+                    'category_id' => $this->categoryId,
+                ]);
+                continue;
+            }
             LoadParserProductJob::dispatch($product, $brand->id, $this->categoryId);
-
         }
-
     }
 }

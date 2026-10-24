@@ -14,7 +14,6 @@ use App\Modules\Content\Infrastructure\Models\Page;
 use App\Modules\Content\Infrastructure\Models\Post;
 use App\Modules\Discount\Infrastructure\Models\Promotion;
 use App\Modules\Output\Infrastructure\Models\Feed;
-use App\Modules\Parser\Infrastructure\Models\ParserCategory;
 use App\Modules\Shop\Application\Interfaces\BreadcrumbProviderInterface;
 use App\Modules\Shop\Console\Commands\ForgetShopCacheCommand;
 use App\Modules\Shop\Console\Commands\WarmShopCacheCommand;
@@ -22,7 +21,6 @@ use App\Modules\Shop\Infrastructure\Observers\CategoryCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\ContactCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\FeedCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\GroupProductCacheObserver;
-use App\Modules\Shop\Infrastructure\Observers\IkeaCategoryCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\MenuCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\MenuItemCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\PageCacheObserver;
@@ -31,9 +29,9 @@ use App\Modules\Shop\Infrastructure\Observers\ProductCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\PromotionProductCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\RoomCacheObserver;
 use App\Modules\Shop\Infrastructure\Services\BreadcrumbService;
+use App\Modules\Shop\Presentation\Http\ViewComposers\BrandComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\CategoryComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\ClientComposer;
-use App\Modules\Shop\Presentation\Http\ViewComposers\IkeaComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\MenuComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\RoomComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\WebComposer;
@@ -117,15 +115,15 @@ class ShopServiceProvider extends ServiceProvider
 
         View::composer($storefront, CategoryComposer::class);
         View::composer($storefront, ClientComposer::class); //shop.*
+        View::composer($storefront, BrandComposer::class);
         View::composer($storefront, RoomComposer::class);
         View::composer($storefront, WebComposer::class);
-        View::composer('shop.ikea.*', IkeaComposer::class);
         View::composer($storefront, MenuComposer::class);
         View::composer($storefront, AnalyticsComposer::class);
 
         Category::observe(CategoryCacheObserver::class);
         Room::observe(RoomCacheObserver::class);
-        ParserCategory::observe(IkeaCategoryCacheObserver::class);
+       // ParserCategory::observe(IkeaCategoryCacheObserver::class);
         Menu::observe(MenuCacheObserver::class);
         MenuItem::observe(MenuItemCacheObserver::class);
         Contact::observe(ContactCacheObserver::class);

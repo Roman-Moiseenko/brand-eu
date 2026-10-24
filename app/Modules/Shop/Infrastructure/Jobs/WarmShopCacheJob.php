@@ -14,9 +14,6 @@ use App\Modules\Shop\Application\DTOs\ClientContext;
 use App\Modules\Shop\Application\Queries\Category\CategoryIndexQuery;
 use App\Modules\Shop\Application\Queries\Category\CategoryPageQuery;
 use App\Modules\Shop\Application\Queries\Category\GetCategoryTreeQuery;
-use App\Modules\Shop\Application\Queries\Ikea\GetIkeaTreeQuery;
-use App\Modules\Shop\Application\Queries\Ikea\IkeaIndexQuery;
-use App\Modules\Shop\Application\Queries\Ikea\IkeaViewQuery;
 use App\Modules\Shop\Application\Queries\Menu\GetMenusQuery;
 use App\Modules\Shop\Application\Queries\Page\PageViewQuery;
 use App\Modules\Shop\Application\Queries\Promotion\PromotionPageQuery;
@@ -46,14 +43,11 @@ class WarmShopCacheJob implements ShouldQueue
     public function handle(
         GetCategoryTreeQuery  $categoryTreeQuery,
         GetRoomTreeQuery      $roomTreeQuery,
-        GetIkeaTreeQuery      $ikeaTreeQuery,
         CategoryIndexQuery    $categoryIndexQuery,
         RoomIndexQuery        $roomIndexQuery,
-        IkeaIndexQuery        $ikeaIndexQuery,
         GetMenusQuery         $menusQuery,
         CategoryPageQuery     $categoryPageQuery,
         RoomPageQuery         $roomPageQuery,
-        IkeaViewQuery         $ikeaViewQuery,
         PromotionPageQuery    $promotionPageQuery,
         PageViewQuery         $pageViewQuery,
     ): void {
@@ -63,10 +57,8 @@ class WarmShopCacheJob implements ShouldQueue
         // 1. Глобальные кеши: деревья, индексные страницы, меню.
         $this->run(fn() => $categoryTreeQuery->execute(), 'category_tree');
         $this->run(fn() => $roomTreeQuery->execute(), 'room_tree');
-        $this->run(fn() => $ikeaTreeQuery->execute(), 'ikea_tree');
         $this->run(fn() => $categoryIndexQuery->execute(), 'category_index_page');
         $this->run(fn() => $roomIndexQuery->execute(), 'room_index_page');
-        $this->run(fn() => $ikeaIndexQuery->execute(), 'ikea_index_page');
         $this->run(fn() => $menusQuery->execute(), 'menus');
 
         // 2. Кеши страниц категорий (товары + фильтры).
@@ -82,14 +74,6 @@ class WarmShopCacheJob implements ShouldQueue
             $this->run(
                 fn() => $roomPageQuery->execute((string) $slug, $params, $context),
                 'room:' . $slug,
-            );
-        }
-
-        // 4. Кеши страниц ИКЕА-категорий (товары).
-        foreach (ParserCategory::query()->pluck('slug') as $slug) {
-            $this->run(
-                fn() => $ikeaViewQuery->execute((string) $slug, $params),
-                'ikea:' . $slug,
             );
         }
 

@@ -21,6 +21,7 @@ class CategoryRoomMainData
         public string                 $title = '',
         public string                 $description = '',
         public ?ImageInfoData         $image = null,
+
     )
     {
     }

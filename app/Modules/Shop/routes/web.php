@@ -54,7 +54,7 @@ Route::group(
             Route::get('/{slug}', [CatalogController::class, 'view'])->name('view');
             Route::get('/', [CatalogController::class, 'index'])->name('index');
         });
-
+/*
         Route::group([
             'as' => 'ikea.',
             'prefix' => 'ikea',
@@ -63,7 +63,7 @@ Route::group(
             Route::get('/category/{slug}', [IkeaController::class, 'view'])->name('view');
             Route::get('/product/{code}', [IkeaController::class, 'product'])->name('product');
         });
-
+*/
         Route::group([
             'as' => 'room.',
             'prefix' => 'room',

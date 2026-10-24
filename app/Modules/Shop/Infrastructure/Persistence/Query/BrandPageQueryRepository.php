@@ -4,6 +4,7 @@ namespace App\Modules\Shop\Infrastructure\Persistence\Query;
 
 use App\Modules\Catalog\Infrastructure\Models\Product;
 use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomMainData;
+use App\Modules\Shop\Application\DTOs\Menu\BrandItemMenuData;
 use App\Modules\Shop\Application\Helpers\ImageInfoDataHelper;
 use Illuminate\Support\Facades\DB;
 
@@ -47,7 +48,7 @@ class BrandPageQueryRepository
             name: $row->name,
             slug: $row->slug,
             children: [],
-            entity: 'brand',
+            entity: 'category',
             parent: null,
             totalProducts: 0,
             title: $row->name,
@@ -92,5 +93,41 @@ class BrandPageQueryRepository
             ->orderBy('root_rooms.name')
             ->get()
             ->toArray();
+    }
+
+    /**
+     * @return BrandItemMenuData[]
+     */
+    public function getBrandsForMenu(): array
+    {
+        $rows = DB::table('brands')
+            ->leftJoin('photos', function ($join) {
+                $join->on('brands.id', '=', 'photos.imageable_id')
+                    ->where('photos.model_type', '=', self::BRAND_MODEL_TYPE)
+                    ->where('photos.type', '=', 'image');
+            })
+            ->select(
+                'brands.*',
+                'photos.id as photo_id',
+                'photos.file as photo_file',
+                'photos.alt as photo_alt',
+                'photos.title as photo_title',
+                'photos.description as photo_description',
+                'photos.format as photo_format',
+                'photos.width as photo_width',
+                'photos.height as photo_height',
+                'photos.model_type as model_type',
+            )
+            ->orderBy('brands.name')
+            ->get();
+
+        return $rows
+            ->map(fn (\stdClass $row) => new BrandItemMenuData(
+                id: $row->id,
+                name: $row->name,
+                slug: $row->slug,
+                image: !empty($row->photo_id) ? $this->imageInfoHelper->build($row) : null,
+            ))
+            ->all();
     }
 }

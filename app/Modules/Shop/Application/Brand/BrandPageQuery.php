@@ -81,14 +81,13 @@ readonly class BrandPageQuery
             name: $mainInfo->name,
             slug: $mainInfo->slug,
             children: $categories,
-            entity: 'brand',
+            entity: 'category',
             parent: null,
             totalProducts: 0,
             title: $mainInfo->title,
             description: $mainInfo->description,
             image: $mainInfo->image,
         );
-
         $listing = $this->listingResolver->resolve($allProductIds, $params, $page, $perPage, $clientContext);
 
         $mainInfo->totalProducts = $listing['total'];
