@@ -78,6 +78,19 @@ $total = $pageData->paginator->total;
                          'filters' => $pageData->filters,
                      ])
             <div class="list">
+                <!-- Content Blocks (Widget) -->
+                @foreach($pageData->blocks as $block)
+                    @if($block->section == "top-content")
+                        <div class="widget mt-4">
+                            @include('widgets::' . $block->widget->category . '.' . $block->widget->slug,
+                            [
+                                'params' => $block->widget->params,
+                                'widget' => $block->widget->id,
+                            ])
+                        </div>
+                    @endif
+                @endforeach
+
                 @if(count($pageData->filters->tags) > 0)
                     <div class="box-card top-tags">
                         @foreach($pageData->filters->tags as $tag)

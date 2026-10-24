@@ -8,10 +8,13 @@ final class ContentSection
 {
     public const string CONTENT = 'content';
     public const string BOTTOM_CONTENT = 'bottom-content';
+    public const string TOP_CONTENT = 'top-content';
 
     public const array SECTIONS = [
         self::CONTENT => 'Основной контейнер',
-        self::BOTTOM_CONTENT => 'Блок нижний'];
+        self::TOP_CONTENT => 'Блок верхний',
+        self::BOTTOM_CONTENT => 'Блок нижний',
+];
 
     private string $value;
 
