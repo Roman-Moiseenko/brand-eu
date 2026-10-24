@@ -19,7 +19,7 @@
                 </div>
                 @foreach($mainInfo->children as $child)
                     <div class="m-l_10 f-z_16">
-                        <a href="{{ route('shop.' . $mainInfo->entity. '.view', $child->slug) }}">{{ $child->name }}</a>
+                        <a href="{{ $child->url }}">{{ $child->name }}</a>
                     </div>
                 @endforeach
             </div>

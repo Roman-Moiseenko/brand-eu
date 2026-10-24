@@ -5,29 +5,35 @@ namespace App\Modules\Shop\Application\Queries\Room;
 use App\Modules\Setting\Application\Actions\GetWebSettingsUseCase;
 use App\Modules\Shop\Application\DTOs\ClientContext;
 use App\Modules\Shop\Application\DTOs\Elements\ChildrenData;
+use App\Modules\Shop\Application\DTOs\Elements\IdNameData;
 use App\Modules\Shop\Application\DTOs\Elements\UrlData;
 use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomSecondData;
+use App\Modules\Shop\Application\DTOs\Entities\ProductCardData;
 use App\Modules\Shop\Application\DTOs\PageElements\FilterProductsData;
 use App\Modules\Shop\Application\DTOs\PageElements\OgImage;
 use App\Modules\Shop\Application\DTOs\Pages\ProductIndexPageData;
-use App\Modules\Shop\Application\Services\ProductFiltersResolver;
-use App\Modules\Shop\Application\Services\ProductListingResolver;
+use App\Modules\Shop\Application\Services\RegionalPriceCalculator;
+use App\Modules\Shop\Infrastructure\Persistence\Builders\PaginatorBuilder;
 use App\Modules\Shop\Infrastructure\Persistence\Builders\SchemaBuilder;
 use App\Modules\Shop\Infrastructure\Persistence\CacheInvalidationRegistry;
+use App\Modules\Shop\Infrastructure\Persistence\Query\AttributeQueryRepository;
 use App\Modules\Shop\Infrastructure\Persistence\Query\ContentBlockQueryRepository;
+use App\Modules\Shop\Infrastructure\Persistence\Query\ProductIndexQueryRepository;
 use App\Modules\Shop\Infrastructure\Persistence\Query\RoomPageQueryRepository;
 use App\Modules\Shop\Infrastructure\Persistence\SeoAdapter;
 
 readonly class RoomPageQuery
 {
     public function __construct(
-        private RoomPageQueryRepository $repository,
-        private ProductListingResolver $listingResolver,
-        private ProductFiltersResolver $filtersResolver,
-        private SeoAdapter $seoAdapter,
-        private SchemaBuilder $schemaBuilder,
-        private ContentBlockQueryRepository $blockRepository,
+        private RoomPageQueryRepository     $repository,
+        private PaginatorBuilder            $paginatorBuilder,
+        private SeoAdapter                  $seoAdapter,
+        private ProductIndexQueryRepository $productIndexQueryRepository,
+        private AttributeQueryRepository    $attributeQueryRepository,
+        private SchemaBuilder               $schemaBuilder,
+        private ContentBlockQueryRepository   $blockRepository,
         private GetWebSettingsUseCase $webSettingsUseCase,
+        private RegionalPriceCalculator $regionalPriceCalculator,
     )
     {
     }
@@ -43,6 +49,7 @@ readonly class RoomPageQuery
         $perPage = 20;
         $page = (int)($params['page'] ?? 1);
 
+
         /**
          * $allProductIds - Список всех ID товаров без фильтрации
          */
@@ -50,18 +57,19 @@ readonly class RoomPageQuery
             $key_cache,
             now()->addDay(),
             fn() => $this->repository->getProductIdsInRoom($mainInfo->id),
-        ) ?? [];
+        );
+
 
         $categories = [];
         if ($allProductIds) {
             $categoriesRaw = $this->repository->getCategoriesByProductIds($allProductIds, $params);
             $categories = array_map(
-                fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug),
+                fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug, url: route('shop.category.view', $r->slug),),
                 $categoriesRaw,
             );
         }
 
-        $listing = $this->listingResolver->resolve($allProductIds, $params, $page, $perPage, $clientContext);
+        $idPaginator = $this->productIndexQueryRepository->getFilterSortPaginationProducts($params, $allProductIds, $page, $perPage);
 
         $urlBack = $mainInfo->parent
             ? new UrlData(
@@ -70,21 +78,52 @@ readonly class RoomPageQuery
             )
             : new UrlData(url: route('shop.room.index'), name: 'Комнаты');
         $mainInfo->back = $urlBack;
-        $mainInfo->totalProducts = $listing['total'];
+        $mainInfo->totalProducts = $idPaginator->total();
+
+        /**
+         * $productIds - Список всех ID товаров уже с фильтрацией
+         */
+        $productIds = $idPaginator->items();
+
+        $productCardsRaw = $this->productIndexQueryRepository->loadProductCards($productIds, $clientContext);
+
+        $productCards = array_map(
+            fn(array $item) => $this->regionalPriceCalculator->productCardData(
+                ProductCardData::fromArray($item),
+                $clientContext->region
+            ),
+            $productCardsRaw
+        );
+
 
         $secondInfo = new CategoryRoomSecondData(
             children: $categories,
             back: new UrlData(url: route('shop.category.index'), name: 'По категориям'),
             entity: 'category',
         );
-
-        $filters = $this->getCachedFilters(
-            $mainInfo->id,
-            array_map(fn(ChildrenData $cat) => $cat->id, $categories),
-            $allProductIds,
-            $params,
+        $paginator = $this->paginatorBuilder->build(
+            total: $idPaginator->total(),
+            perPage: $perPage,
+            currentPage: $page,
+            options: [
+                'path' => '/' . request()->path(),
+                'query' => array_diff_key(request()->query(), ['page' => null]),
+            ]
         );
 
+        $filters = $this->getCachedFilters($mainInfo->id,
+            array_map(fn(ChildrenData $cat) => $cat->id, $categories),
+            $allProductIds,
+        );
+        $filtersWithOrder = new FilterProductsData(
+            minPrice: $filters->minPrice,
+            maxPrice: $filters->maxPrice,
+            attributes: $filters->attributes,
+            brands: $filters->brands,
+            tags: $filters->tags,
+            sortOrder: $params['order'] ?? '',
+            tagId: isset($params['tag_id']) ? (int)$params['tag_id'] : null,
+        );
         $blocks = $this->blockRepository->getBlocksByContainer('room', $mainInfo->id);
         // вытаскиваем FAQ из блоков, если есть
         $faq = [];
@@ -94,36 +133,47 @@ readonly class RoomPageQuery
                 break;
             }
         }
-
         $meta = $this->seoAdapter->getSeo('catalog.room', $mainInfo, $page);
         $meta->ogSiteName = $web->web_name;
         $meta->canonical = route('shop.room.view', $slug);
         if (!is_null($mainInfo->image)) $meta->addImage(OgImage::fromData($mainInfo->image));
 
-        $schema = $this->schemaBuilder->buildForProductIndex($listing['products'], $mainInfo->slug, 'room', $faq);
-
+        $schema = $this->schemaBuilder->buildForProductIndex($productCards, $mainInfo->slug, 'room', $faq);
         return new ProductIndexPageData(
             mainInfo: $mainInfo,
             secondInfo: $secondInfo,
             blocks: $blocks,
-            products: $listing['products'],
-            paginator: $listing['paginator'],
-            filters: $filters,
+            products: $productCards,
+            paginator: $paginator,
+            filters: $filtersWithOrder,
             meta: $meta,
             schema: $schema,
         );
     }
 
-    private function getCachedFilters(int $roomId, array $categoryIds, array $productIds, array $params): FilterProductsData
+    private function getCachedFilters(int $roomId, array $categoryIds, array $productIds): FilterProductsData
     {
         $key_cache = str_replace('{id}', (string)$roomId, CacheInvalidationRegistry::ROOM_FILTERS_ID);
 
-        $aggregates = cache_remember(
+        return cache_remember(
             $key_cache,
             now()->addDay(),
-            fn() => $this->filtersResolver->resolveAggregates($categoryIds, $productIds),
-        );
+            function () use ($productIds, $categoryIds) {
+                $aggr = $this->attributeQueryRepository->getFilterAggregates($categoryIds, $productIds);
 
-        return $this->filtersResolver->buildFilterProductsData($aggregates, $params);
+                $tags = array_map(
+                    fn(\stdClass $item) => new IdNameData(id: (int)$item->id, name: $item->name),
+                    $aggr->tags ?? []
+                );
+
+                return new FilterProductsData(
+                    minPrice: $aggr->min_price ?? 0,
+                    maxPrice: $aggr->max_price ?? 0,
+                    attributes: $aggr->attributes ?? [],
+                    brands: $aggr->brands ?? [],
+                    tags: $tags,
+                );
+            }
+        );
     }
 }
