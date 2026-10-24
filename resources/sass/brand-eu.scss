@@ -28,8 +28,11 @@ $light-gray: #6b6b6b;
 $dark-gray: #858585;
 $sert-gray: #F8F6F0;
 $f2f2f2: #f2f2f2;
-$orange: #D7B56D;
-$light-orange:#F6EEDB;
+$orange: #d0713f;
+/**
+    $orange: #D7B56D;
+ */
+$light-orange: #d5916e;
 $red: #ff4a4a;
 $dark-red: #7B1616;
 $sert-red: #CA0A0F;
@@ -37,6 +40,8 @@ $light-red: #ff8562;
 $blue: #0088cc;
 $green: #56ab56;
 $yellow:#FCE944;
+
+
 $base-font: 'Adverta', sans-serif;
 $border-radius_100: 0;
 $border-radius_50: 0;
@@ -70,4 +75,5 @@ $border-radius_4: 4px;
 @import "brand-eu/products";
 @import "brand-eu/filter";
 @import "brand-eu/cookie";
+@import "brand-eu/widgets";
 
