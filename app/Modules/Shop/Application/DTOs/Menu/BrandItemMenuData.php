@@ -6,13 +6,13 @@ namespace App\Modules\Shop\Application\DTOs\Menu;
 
 use App\Modules\Shop\Application\DTOs\Elements\ImageInfoData;
 
-class BrandItemMenuData
+readonly class BrandItemMenuData
 {
     public function __construct(
-        public readonly int $id,
-        public readonly string $name,
-        public readonly string $slug,
-        public readonly ?ImageInfoData $image = null,
+        public int            $id,
+        public string         $name,
+        public string         $slug,
+        public ?ImageInfoData $image = null,
     )
     {
     }
