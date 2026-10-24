@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="title-page">
-        <h1>Каталог товаров Норди Хоум</h1>
+        <h1>Каталог товаров</h1>
     </div>
     <div class="row">
         @foreach($pageData->categories as $category)

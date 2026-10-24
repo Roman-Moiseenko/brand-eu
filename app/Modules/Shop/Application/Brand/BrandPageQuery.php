@@ -56,7 +56,12 @@ readonly class BrandPageQuery
         if ($allProductIds) {
             $categoriesRaw = $this->roomRepository->getCategoriesByProductIds($allProductIds, $params);
             $categories = array_map(
-                fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug),
+                fn(\stdClass $r) => new ChildrenData(
+                    id: (int)$r->id,
+                    name: $r->name,
+                    slug: $r->slug,
+                    url: route('shop.category.view', ['slug' => $r->slug, 'brand_id' => $mainInfo->id]),
+                ),
                 $categoriesRaw,
             );
         }
@@ -66,7 +71,9 @@ readonly class BrandPageQuery
         if ($allProductIds) {
             $roomsRaw = $this->repository->getRoomsByProductIds($allProductIds, $params);
             $rooms = array_map(
-                fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug),
+                fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug,
+                    url: route('shop.room.view', ['slug' => $r->slug, 'brand_id' => $mainInfo->id])
+                ),
                 $roomsRaw,
             );
         }
