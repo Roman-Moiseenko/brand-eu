@@ -40,7 +40,7 @@ class ParserTestBrandCommand extends Command
         $brand = $brandRepository->getByName('New Balance');
         $parser = $brand->parser();
         $categories = $categoryRepository->getActiveLeaves($brand->id);
-        //$products = $parser->GetListProductsByCategory(self::URL_NB);
+        //$products = $parser->GetListProductsByCategory(self::URLS);
 
         $categories = $categoryRepository->getActiveLeaves($brand->id);  //быстрая операция, запрос в БД
         foreach ($categories as $category) {
