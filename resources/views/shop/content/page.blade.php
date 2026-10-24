@@ -9,7 +9,7 @@
 @section('content')
     @foreach($pageData->blocks as $block)
         @if($block->section == "content")
-            <div class="widget mt-4">
+            <div class="widget mb-4">
                 @include('widgets::' . $block->widget->category . '.' . $block->widget->slug,
                 [
                     'params' => $block->widget->params,

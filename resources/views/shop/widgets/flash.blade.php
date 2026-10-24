@@ -1,3 +1,4 @@
+@if(Session::has('danger') || Session::has('success') || Session::has('warning') || Session::has('info'))
 <div class="container-xl mt-3 mb-3">
     <div class="row">
         <div class="col-lg-12">
@@ -32,3 +33,4 @@
         </div>
     </div>
 </div>
+@endif

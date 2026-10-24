@@ -1,11 +1,5 @@
-@import "widgets/text02";
-@import "widgets/text03";
-@import "widgets/text05";
-@import "widgets/text06";
-@import "widgets/text07";
-@import "widgets/text08";
-@import "widgets/main_interesting";
-@import "widgets/main_text-contacts";
-@import "widgets/main_text-map";
-@import "widgets/ikea-kitchens_advantages";
-@import "widgets/ikea-kitchens_quality";
+.widget--full-bg {
+    background: #d9dfcd;
+    box-shadow: 0 0 0 100vmax #d9dfcd;
+    clip-path: inset(0 -100vmax);
+}
