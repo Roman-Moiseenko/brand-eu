@@ -1,5 +1,8 @@
 @php
-    use App\Modules\Shop\Application\DTOs\Elements\UrlData;use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomMainData;use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomSecondData;use App\Modules\Shop\Application\DTOs\PageElements\FilterProductsData;
+    use App\Modules\Shop\Application\DTOs\Elements\UrlData;
+    use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomMainData;
+    use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomSecondData;
+    use App\Modules\Shop\Application\DTOs\PageElements\FilterProductsData;
     /** @var FilterProductsData  $filters*/
     /** @var CategoryRoomSecondData $secondInfo */
     /** @var CategoryRoomMainData $mainInfo */
@@ -26,6 +29,8 @@
             <br>
         @endif
 
+
+
         <x-widget.numeric name="price" min-value="{{ $filters->minPrice }}" max-value="{{ $filters->maxPrice }}"
                           current-min="{{ isset($request['price']) ? $request['price'][0] : '' }}"
                           current-max="{{ isset($request['price']) ? $request['price'][1] : '' }}"
@@ -36,6 +41,17 @@
         <x-widget.check name="discount" class="mt-3" checked="{{ isset($request['discount']) }}">Акция</x-widget.check>
     </div>
     <div class="attribute-filter">
+        <x-widget.variant class="" caption="Бренд" id="brand">
+            @foreach($filters->brands as $brand)
+                <x-widget.variant-item name="brands[]" id="{{ $brand->id }}"
+                                       caption="{{ $brand->name }}"
+                                       image="{{ $brand->image }}"
+                                       checked="{{ isset($request['brands']) ? in_array($brand->id, $request['brands']) : false }}"
+                                       alt="{{ $brand->name }}"
+                />
+            @endforeach
+        </x-widget.variant>
+        <hr/>
         @foreach($filters->attributes as $attribute)
             <div>
                 @if($attribute->isBool)

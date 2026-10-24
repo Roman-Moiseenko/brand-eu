@@ -60,7 +60,7 @@ readonly class BrandPageQuery
                     id: (int)$r->id,
                     name: $r->name,
                     slug: $r->slug,
-                    url: route('shop.category.view', ['slug' => $r->slug, 'brand_id' => $mainInfo->id]),
+                    url: route('shop.category.view', ['slug' => $r->slug, 'brands[]' => $mainInfo->id]),
                 ),
                 $categoriesRaw,
             );
@@ -72,7 +72,7 @@ readonly class BrandPageQuery
             $roomsRaw = $this->repository->getRoomsByProductIds($allProductIds, $params);
             $rooms = array_map(
                 fn(\stdClass $r) => new ChildrenData(id: (int)$r->id, name: $r->name, slug: $r->slug,
-                    url: route('shop.room.view', ['slug' => $r->slug, 'brand_id' => $mainInfo->id])
+                    url: route('shop.room.view', ['slug' => $r->slug, 'brands[]' => $mainInfo->id])
                 ),
                 $roomsRaw,
             );
