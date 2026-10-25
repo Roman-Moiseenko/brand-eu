@@ -17,6 +17,7 @@ class SizeMapper
             $parts = explode('/', $size);
             $size = trim(end($parts));
         }
+        $size = str_replace('.',',', $size);
 
         //MAINDO Для Adidas подключить другие размерные сетки
         return $size;
