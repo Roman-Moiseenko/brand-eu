@@ -92,7 +92,7 @@ window.$ = jQuery;
 
     document.addEventListener('e-order', event => {
         let data = event.detail
-        console.log('e-order222', data)
+     //   console.log('e-order222', data)
     })
     window.addEventListener('e-cart', event => {
         let data = event.detail

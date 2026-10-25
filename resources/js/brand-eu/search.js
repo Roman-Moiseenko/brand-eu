@@ -102,7 +102,7 @@ window.$ = jQuery;
 
     //HTML построители
     function _itemSuggestPresearch(item, type, position) {
-        console.log(item)
+      //  console.log(item)
         let img = '<i class="fa-light fa-magnifying-glass"></i>';
 
         const currency = item.isParser === true ? ' zł' : ' ₽';

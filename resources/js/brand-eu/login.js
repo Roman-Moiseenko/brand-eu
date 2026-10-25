@@ -89,7 +89,7 @@ window.$ = jQuery;
                     agreement: checkAgreement.prop('checked') ? 1 : 0,
                     newsletter: checkNewsletter.prop('checked') ? 1 : 0
                 }, function (data) {
-                    console.log(data)
+                //    console.log(data)
 
                     tokenError.hide();
                     passwordError.hide();
