@@ -27,6 +27,10 @@ class ParserLogItem extends Model
         'error',
     ];
 
+    protected $casts = [
+        'payload' => 'array',
+    ];
+
 
     public function log(): BelongsTo
     {

@@ -35,14 +35,14 @@ class ParserTest2BrandCommand extends Command
     ): void
     {
 
-        $this->info('Спарсить ошибочные товары Babolat');
+        $this->info('!!!!');
         //$brands = $brandRepository->getAll();
         //$this->info('Найдено брендов ' . count($brands));
-        $brand = $brandRepository->getByName('Babolat');
+        $brand = $brandRepository->getByName('New Balance');
         $parser = $brand->parser();
 
-        $products = $parser->GetListProductsByCategory(self::URL);
-        dd($products);
+        $parser->GetAvailability('https://newbalance.pl/buty_unisex_new_balance_u5742ch_bezowe', 916);
 
+        $this->info('!!!!');
     }
 }

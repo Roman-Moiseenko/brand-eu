@@ -9,11 +9,11 @@ use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductsJob;
 use App\Modules\Parser\Infrastructure\Models\ParserProduct;
 use Illuminate\Console\Command;
 
-class ParserAvailabilityCommand extends Command
+class ParserAllAvailabilityCommand extends Command
 {
     use CreatesApplication;
 
-    protected $signature = 'parser:availability';
+    protected $signature = 'parser:all-availability';
     protected $description = 'Все товары availability';
     public function handle(
     ): void

@@ -21,8 +21,6 @@ class ParserBrandProductCommand extends Command
     ): void
     {
         $brands = $brandRepository->getAll();
-        //$brand = $brandRepository->getByName('Babolat');
-       // $brands[] = $brand;
         foreach ($brands as $brand) {
             $this->info('Запускаем бренд ' . $brand->name);
             if (is_null($brand->parserClass)) continue;
