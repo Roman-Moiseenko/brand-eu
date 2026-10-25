@@ -1,7 +1,7 @@
 @php
     /** @var App\Modules\Shop\Application\DTOs\Menu\MenuData[] $menus */
 @endphp
-<footer id="footer" class="p-t_50 p-b_50 bg-black">
+<footer id="footer" class="p-t_50 bg-black">
     <div class="container-xl">
         <div class="row justify-content-between">
             <div class="col-12 col-md-12 col-lg-5">

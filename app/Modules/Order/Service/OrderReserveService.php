@@ -18,7 +18,7 @@ class OrderReserveService
 
     public function __construct(Settings $settings)
     {
-        $this->storage = Storage::where('default', true)->first();
+        //$this->storage = null; Storage::where('default', true)->first();
         $this->minutes = $settings->common->reserve;
      //   $this->logger = $logger;
     }
