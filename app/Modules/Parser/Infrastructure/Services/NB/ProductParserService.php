@@ -306,6 +306,9 @@ class ProductParserService
         if ($category !== null && !is_null($category->sizeGridId)) {
             $grid = $this->sizeGridRepository->getById($category->sizeGridId);
 
+            //Гарантируем наличие вариантов размеров товара (если они были удалены)
+            $this->setProductSizesUseCase->execute(new UpdateProductSizesData($product->id, $category->sizeGridId));
+
             //Все варианты сетки по умолчанию неактивны
             $desiredActive = [];
             foreach ($grid->getCombinations() as $values) {

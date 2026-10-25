@@ -23,6 +23,7 @@ use App\Modules\Parser\Presentation\Console\Commands\old\IkeaRenameCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserAllAvailabilityCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandCategoryCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ClearProductSizeGridCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserNBSeriesCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserProductAvailabilityCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTest2BrandCommand;
@@ -155,6 +156,7 @@ class ParserServiceProvider extends ServiceProvider
             IkeaProductPhotoCommand::class,
             ParserBrandCategoryCommand::class,
             ParserBrandProductCommand::class,
+            ClearProductSizeGridCommand::class,
             ParserTestBrandCommand::class,
             ParserTest2BrandCommand::class,
             ParserNBSeriesCommand::class,

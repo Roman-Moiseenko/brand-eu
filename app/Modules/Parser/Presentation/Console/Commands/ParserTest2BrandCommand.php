@@ -38,10 +38,11 @@ class ParserTest2BrandCommand extends Command
         $this->info('!!!!');
         //$brands = $brandRepository->getAll();
         //$this->info('Найдено брендов ' . count($brands));
-        $brand = $brandRepository->getByName('New Balance');
+        $brand = $brandRepository->getByName('Babolat'); //New Balance
         $parser = $brand->parser();
 
-        $parser->GetAvailability('https://newbalance.pl/buty_unisex_new_balance_u5742ch_bezowe', 916);
+        $url = 'https://babolat-tenis.pl/5302-21074-babolat-jet-mach-3-all-court-men-dark-blue-silver.html#/41-rozmiar-75_41/330-kolor-granatowo_srebrny';
+        $parser->GetAvailability($url, 110);
 
         $this->info('!!!!');
     }
