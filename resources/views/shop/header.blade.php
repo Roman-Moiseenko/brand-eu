@@ -8,11 +8,11 @@
 
     <nav class="menu-bottom navbar navbar-expand-md navbar-light bg-white">
         <div class="menu-container container-xl">
-            <div class="menu-bottom-catalog d-flex">
+            <div class="menu-bottom-catalog d-flex hide-mobile">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/images/icons/logo.png" alt="Euro Sport Brand" class="img-fluid img-logo" style="width: 80px;">
                 </a>
-                <ul>
+                <ul class="">
                     @foreach($categoryTree as $category)
                         @include('shop.widgets.header.menu-item', ['category' => $category])
                     @endforeach
@@ -45,17 +45,6 @@
                             <livewire:header.wish/>
                         </li>
 
-                        <!-- <li class="nav-item">
-            <a class="nav-link d-flex flex-column text-center" href="{{ route('cabinet.order.index') }}"
-               @notclient
-                        data-bs-toggle="modal" data-bs-target="#login-popup"
-@endnotclient
-                        >
-                            <i class="fa-sharp fa-light fa-box-open fs-4"></i>
-                            <span class="fs-7">Заказы</span>
-                        </a>
-                    </li> -->
-
                         <li class="nav-item">
                             <livewire:header.cart :client-id="$client?->id ?? null"/>
                         </li>
@@ -85,7 +74,8 @@
 
             <li class="menu-item">
                 <a href="{{ '#' }}" class="nav-link d-flex flex-column text-center">
-                    <span class="fs-9">BRANDS</span>
+                    <i class="fa-light fa-trademark fs-3"></i>
+                    <span class="fs-8">Бренды</span>
                 </a>
             </li>
 
