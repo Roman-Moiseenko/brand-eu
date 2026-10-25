@@ -270,7 +270,16 @@ class ProductParserService
         return preg_replace('/<\/?a\b[^>]*>/i', '', $html);
     }
 
-    public function availability(mixed $decoded, $parserProductId)
+    public function availability(array $decoded, $parserProductId)
     {
+        $parserProduct = $this->parserProductRepository->getById($parserProductId);
+        $product = $this->productRepository->getById($parserProduct->productId);
+
+        //Из $decoded вытащить размеры, включить отключить доступность в $parserProduct и $product
+        //Если появились новые, добавить в $parserProduct
+
+        //Проверить цену Base и Sell и если имзенилась, то изменить в $parserProduct  и пересчитать в $product
+
+        //Сохранить $parserProduct и $product
     }
 }
