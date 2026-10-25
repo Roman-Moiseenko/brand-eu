@@ -24,6 +24,7 @@ use App\Modules\Parser\Presentation\Console\Commands\ParserAllAvailabilityComman
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandCategoryCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ClearProductSizeGridCommand;
+use App\Modules\Parser\Presentation\Console\Commands\DeleteUnpublishedProductsCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserNBSeriesCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserProductAvailabilityCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTest2BrandCommand;
@@ -157,6 +158,7 @@ class ParserServiceProvider extends ServiceProvider
             ParserBrandCategoryCommand::class,
             ParserBrandProductCommand::class,
             ClearProductSizeGridCommand::class,
+            DeleteUnpublishedProductsCommand::class,
             ParserTestBrandCommand::class,
             ParserTest2BrandCommand::class,
             ParserNBSeriesCommand::class,

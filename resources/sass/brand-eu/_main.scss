@@ -469,17 +469,21 @@ a[href^="tel:"] {
 #footer {
     a {
         color:white;
-    }
-}
-.footer-menu {
-    li {
-        list-style: none;
-        margin-bottom: 20px;
-    }
-    a {
         text-decoration: none;
     }
+
+    p {
+        font-size: 14px;
+    }
+
+    .footer-menu {
+        li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+    }
 }
+
 
 @media (max-width: 990px) {
     .main-slider-sale .main-slider .sl-text {

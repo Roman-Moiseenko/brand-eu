@@ -32,7 +32,7 @@ class ClearProductSizeGridCommand extends Command
             explode(',', (string) $this->argument('categories'))
         )));
 
-        $productIds = Product::whereIn('main_category_id', $categoryIds)->pluck('id');
+        $productIds = Product::whereIn('main_category_id', $categoryIds)->where('brand_id', 3)->pluck('id');
 
         // 1. Каталог: размерный ряд товаров (products_sizes) + отвязка size_grid_id + обнуление stock
         $sizeIds = ProductSize::whereIn('product_id', $productIds)->pluck('id');
