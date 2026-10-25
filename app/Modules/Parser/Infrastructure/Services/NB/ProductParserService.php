@@ -19,8 +19,12 @@ use App\Modules\Catalog\Domain\ValueObjects\AttributeName;
 use App\Modules\Catalog\Domain\ValueObjects\Code;
 use App\Modules\Parser\Domain\Entities\ParserProductEntity;
 use App\Modules\Parser\Domain\Entities\ParserProductSizeEntity;
+use App\Modules\Parser\Application\Actions\ParserLog\CreateParserLogUseCase;
+use App\Modules\Parser\Application\DTOs\ParserLog\ParserLogCreateData;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Domain\ValueObjects\ParserStatus;
+use App\Modules\Parser\Domain\ValueObjects\PriceChangePayload;
 use App\Modules\Parser\Infrastructure\Jobs\LoadPublishedProductJob;
 use App\Modules\Parser\Infrastructure\Mappers\SizeMapper;
 use App\Modules\Parser\Infrastructure\Services\Common\CalculateParserPriceService;
@@ -47,6 +51,7 @@ class ProductParserService
         private PhotosProductService              $photosProductService,
         private SeriesRepositoryInterface         $seriesRepository,
         private FindSeriesByNameProductQuery      $findSeriesByNameProductQuery,
+        private CreateParserLogUseCase            $createParserLogUseCase,
     )
     {
     }
@@ -270,16 +275,180 @@ class ProductParserService
         return preg_replace('/<\/?a\b[^>]*>/i', '', $html);
     }
 
-    public function availability(array $decoded, $parserProductId)
+    public function availability(array|null $decoded, $parserProductId): void
     {
-        $parserProduct = $this->parserProductRepository->getById($parserProductId);
+        $parserProduct = $this->parserProductRepository->getById((int) $parserProductId);
         $product = $this->productRepository->getById($parserProduct->productId);
+
+        //Товар больше не найден у бренда — снимаем доступность
+        if ($decoded === null || $decoded === []) {
+            $parserProduct->availability = false;
+            $product->notSale = true;
+
+            $this->parserProductRepository->save($parserProduct);
+            $this->productRepository->save($product);
+
+            return;
+        }
+
+        $priceBase = (float) ($decoded['prices']['basePrice']['gross'] ?? 0);
+        $priceSell = (float) ($decoded['prices']['sellPrice']['gross'] ?? 0);
+        $oldPriceSell = $parserProduct->priceSell;
 
         //Из $decoded вытащить размеры, включить отключить доступность в $parserProduct и $product
         //Если появились новые, добавить в $parserProduct
+        $availabilityChanged = false;
 
-        //Проверить цену Base и Sell и если имзенилась, то изменить в $parserProduct  и пересчитать в $product
+        $category = $parserProduct->categoryId !== null
+            ? $this->parserCategoryRepository->getById($parserProduct->categoryId)
+            : null;
+
+        if ($category !== null && !is_null($category->sizeGridId)) {
+            $grid = $this->sizeGridRepository->getById($category->sizeGridId);
+
+            //Все варианты сетки по умолчанию неактивны
+            $desiredActive = [];
+            foreach ($grid->getCombinations() as $values) {
+                $desiredActive[ProductSizeEntity::keyFromValues($values)] = false;
+            }
+
+            $sizeDimensionCode = $grid->dimensions[0]->code ?? 'size';
+            $hasWidth = $grid->hasDimension('width');
+            $productSizes = $this->productSizeRepository->getByProductId($product->id);
+
+            //Индекс существующих размеров парсера по каноническому ключу
+            $existingByKey = [];
+            foreach ($parserProduct->sizes as $existingSize) {
+                if ($existingSize->values !== []) {
+                    $existingByKey[ProductSizeEntity::keyFromValues($existingSize->values)] = $existingSize;
+                }
+            }
+
+            $sizesForParser = [];
+            $processedKeys = [];
+
+            foreach ($decoded['variants'] ?? [] as $variant) {
+                $buyable = (bool) ($variant['availability']['buyable'] ?? false);
+
+                //Размер и ширина из options
+                $size = null;
+                $width = null;
+                foreach ($variant['options'] ?? [] as $option) {
+                    if (($option['name'] ?? '') === 'Rozmiar' || ($option['groupId'] ?? '') === '32') {
+                        $size = $option['value'];
+                    }
+                    if (($option['name'] ?? '') === 'Szerokość' || ($option['groupId'] ?? '') === '46') {
+                        $width = $this->mapWidth($option['value']);
+                    }
+                }
+                if ($size === null) {
+                    continue;
+                }
+
+                $sizeProduct = $this->sizeMapper->map($size);
+
+                $values = [$sizeDimensionCode => $sizeProduct];
+                if ($hasWidth && $width !== null) {
+                    $values['width'] = $width;
+                }
+                $key = ProductSizeEntity::keyFromValues($values);
+                $processedKeys[$key] = true;
+
+                $sizeEntity = null;
+                foreach ($productSizes as $productSize) {
+                    if ($productSize->key() === $key) {
+                        $sizeEntity = $productSize;
+                        break;
+                    }
+                }
+                if ($sizeEntity === null) {
+                    continue;
+                }
+
+                if ($buyable) {
+                    $desiredActive[$key] = true;
+                }
+
+                $sku = $variant['warehouseSymbol'] ?? '';
+                $price = (float) ($variant['prices']['basePrice']['gross'] ?? 0);
+
+                if (isset($existingByKey[$key])) {
+                    /** @var ParserProductSizeEntity $parserSize */
+                    $parserSize = $existingByKey[$key];
+                    if ($parserSize->available !== $buyable) {
+                        $availabilityChanged = true;
+                    }
+                    $parserSize->available = $buyable;
+                    $parserSize->sizeOriginal = $size;
+                    $parserSize->size = $sizeProduct;
+                    $parserSize->sku = $sku;
+                    $parserSize->price = $price;
+                    $sizesForParser[] = $parserSize;
+                } else {
+                    //Появился новый размер — добавляем в парсер-товар
+                    $availabilityChanged = true;
+                    $sizesForParser[] = ParserProductSizeEntity::create(
+                        productSizeId: $sizeEntity->id,
+                        sizeOriginal: $size,
+                        size: $sizeProduct,
+                        sku: $sku,
+                        price: $price,
+                        available: $buyable,
+                    );
+                }
+            }
+
+            //Отключаем размеры, которых больше нет в $decoded
+            foreach ($parserProduct->sizes as $existingSize) {
+                if ($existingSize->values === []) {
+                    $sizesForParser[] = $existingSize;
+                    continue;
+                }
+
+                $key = ProductSizeEntity::keyFromValues($existingSize->values);
+                if (isset($processedKeys[$key])) {
+                    continue; //уже обработан выше
+                }
+
+                if ($existingSize->available !== false) {
+                    $availabilityChanged = true;
+                }
+                $existingSize->available = false;
+                $sizesForParser[] = $existingSize;
+            }
+
+            $parserProduct->sizes = $sizesForParser;
+
+            //Применяем размерный ряд товара
+            $this->productSizeRepository->rebuildForProduct($product->id, $grid, $desiredActive);
+        }
+
+        //Проверить цену Base и Sell и если изменилась, то изменить в $parserProduct и пересчитать в $product
+        $priceChanged = $parserProduct->priceBase != $priceBase || $parserProduct->priceSell != $priceSell;
+        if ($priceChanged) {
+            $parserProduct->priceBase = $priceBase;
+            $parserProduct->priceSell = $priceSell;
+            $this->calculate->execute($priceBase, $product->id);
+        }
 
         //Сохранить $parserProduct и $product
+        $this->parserProductRepository->save($parserProduct);
+        $this->productRepository->save($product);
+
+        //Логирование изменений
+        if ($availabilityChanged) {
+            $this->createParserLogUseCase->execute(new ParserLogCreateData(
+                status: ParserStatus::sizeAvailble(),
+                parserId: $parserProduct->id,
+            ));
+        }
+
+        if ($priceChanged) {
+            $this->createParserLogUseCase->execute(new ParserLogCreateData(
+                status: ParserStatus::priceChanged(),
+                parserId: $parserProduct->id,
+                payload: new PriceChangePayload($oldPriceSell, $priceSell),
+            ));
+        }
     }
 }
