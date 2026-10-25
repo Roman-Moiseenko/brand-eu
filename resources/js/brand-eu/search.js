@@ -120,8 +120,6 @@ window.$ = jQuery;
             ? ' <span class="suggest--under-order" style="color: red;">Под заказ</span>'
             : '';
 
-        const button = (item.code !== null) ? ('<button class="to-cart btn btn-small btn-black e-add" data-product="' + item.id + '"><i class="fa-sharp fa-light fa-cart-plus"></i></button>') : '';
-
         return '<div class="presearch-suggest-item">' +
             '<a class="js-search-result" href="' + item.url + '"' +
             ' data-result-type="' + type + '"' +
@@ -132,7 +130,7 @@ window.$ = jQuery;
             '   <span class="suggest--label">' + name + underOrder + '</span>\n' +
             '   <span class="suggest--price">' + price + '</span>\n' +
 
-            '</a>' + button + '</div>'
+            '</a></div>'
     }
 
     function _escapeAttr(value) {
