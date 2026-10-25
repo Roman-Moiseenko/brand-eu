@@ -10,7 +10,6 @@ readonly class SearchQuery
 {
     public function __construct(
         private CatalogSearchQuery       $catalogSearch,
-        private ParserSearchQuery $parserSearch,
         private TrackSearchService       $trackSearchService,
     ) {}
 
@@ -21,7 +20,7 @@ readonly class SearchQuery
         if (empty($data->products)) {
             $this->trackSearchService->execute($search, 0);
             //Ищем по артикулу в Парсере
-            $data = $this->parserSearch->execute($search, $client);
+            //$data = $this->parserSearch->execute($search, $client);
         }
 
         return $data;
