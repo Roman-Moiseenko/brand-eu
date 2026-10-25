@@ -269,4 +269,8 @@ class ProductParserService
         );
         return preg_replace('/<\/?a\b[^>]*>/i', '', $html);
     }
+
+    public function availability(mixed $decoded, $parserProductId)
+    {
+    }
 }

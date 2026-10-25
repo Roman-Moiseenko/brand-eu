@@ -181,4 +181,9 @@ readonly class ProductParserService
         return $product;
     }
 
+    public function availability(mixed $decoded, array $sizes, $parserProductId)
+    {
+
+    }
+
 }

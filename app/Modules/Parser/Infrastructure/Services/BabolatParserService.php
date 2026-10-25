@@ -157,6 +157,23 @@ class BabolatParserService implements ParserServiceInterface
         return $this->productParser->create($decoded, $sizes, $categoryId, $url);
     }
 
+    public function GetAvailability($url, $parserProductId): void
+    {
+        $crawler = new Crawler($this->html($url));
+
+        $node = $crawler->filter('div#product-details[data-product]')->first();
+        if ($node->count() === 0) return;
+
+
+        $decoded = json_decode($node->attr('data-product'), true);
+        $ul = $crawler->filter('ul#group_1')->first();
+
+        $sizes =($ul->count() === 0) ? [] : $ul->filter('li input.input-radio')
+            ->each(fn(Crawler $input) => trim($input->attr('title') ?? '')
+            );
+
+        $this->productParser->availability($decoded, $sizes, $parserProductId);
+    }
     /**
      * Найти модификацию, в которую уже входит товар. Если товар не в модификации — null.
      */
@@ -276,10 +293,6 @@ class BabolatParserService implements ParserServiceInterface
         return trim(preg_replace('/[^a-z0-9_]+/', '_', $name), '_');
     }
 
-    public function GetAvailability($productCate): void
-    {
-        // TODO: Implement GetAvailability() method.
-    }
 
     private function html(string $url): string
     {

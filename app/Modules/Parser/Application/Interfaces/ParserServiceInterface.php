@@ -39,10 +39,11 @@ interface ParserServiceInterface
 
     /**
      * Проверка доступности товара, чтоб не парсить все данные (в некоторых случаях парсинг всей страницы - NB)
-     * @param $productCate
+     * @param $url
+     * @param $parserProductId
      * @return void
      */
-    public function GetAvailability($productCate): void;
+    public function GetAvailability($url, $parserProductId): void;
 
 
 }

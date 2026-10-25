@@ -144,9 +144,18 @@ class NBParserService implements ParserServiceInterface
         return $this->productParserService->create($decoded, $categoryId, $url);
     }
 
-    public function GetAvailability($productCate): void
+    public function GetAvailability($url, $parserProductId): void
     {
-        // TODO: Implement GetAvailability() method.
+        $data = $this->httpPage->getPage($url, '', false);
+        $queries = $this->getQueries($data);
+        $decoded = [];
+        foreach ($queries as $query) {
+            if (isset($query['state']['data']['product']))
+                $decoded = $query['state']['data']['product'];
+        }
+        if (empty($decoded)) return;
+
+        $this->productParserService->availability($decoded, $parserProductId);
     }
 
     public function GetSeries(): void
