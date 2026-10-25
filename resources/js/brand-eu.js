@@ -14,7 +14,7 @@ import './_feedback.js';
 
 /* Собственные */
 import './brand-eu/regions.js';
-import './brand-eu/menu-catalog.js';
+///import './brand-eu/menu-catalog.js';
 import './brand-eu/frontend';
 import './brand-eu/maps';
 import './brand-eu/parser';
