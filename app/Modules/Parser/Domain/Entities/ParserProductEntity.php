@@ -67,7 +67,7 @@ final class ParserProductEntity
     }
 
     /** Можно или нет возить под заказ */
-    public bool $availability = false {
+    public bool $availability = true {
         get => $this->availability;
         set => $this->availability = $value;
     }

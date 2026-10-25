@@ -59,7 +59,7 @@ interface ParserLogRepositoryInterface
     /**
      * Получить количество записей лога по статусам
      *
-     * @return array{new: int, price_changed: int, deleted: int, error: int}
+     * @return array{new: int, price_changed: int, size_availble: int, deleted: int, error: int}
      */
     public function getLogItemsCountsByStatus(int $logId): array;
 }

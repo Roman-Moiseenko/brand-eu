@@ -40,16 +40,6 @@
                                     {{ scope.row.availability ? 'Недоступен' : 'Доступен' }}
                                 </el-link>
                                 &nbsp;|&nbsp;
-                                <el-link :type="scope.row.fragile ? 'success' : 'warning'" :underline="false"
-                                         @click="onFragile(scope.row)">
-                                    {{ scope.row.fragile ? 'Не Хрупкий' : 'Хрупкий' }}
-                                </el-link>
-                                &nbsp;|&nbsp;
-                                <el-link :type="scope.row.sanctioned ? 'success' : 'danger'" :underline="false"
-                                         @click="onSanctioned(scope.row)">
-                                    {{ scope.row.sanctioned ? 'Не Санкционный' : 'Санкционный' }}
-                                </el-link>
-                                &nbsp;|&nbsp;
                                 <el-link type="primary" :underline="false"
                                          @click="onProduct(scope.row)">
                                     К товару
@@ -68,17 +58,6 @@
                 <el-table-column prop="availability" label="Доступен" width="120" align="center">
                     <template #default="scope">
                         <Active :active="scope.row.availability"/>
-                    </template>
-                </el-table-column>
-
-                <el-table-column prop="fragile" label="Хрупкий" width="120" align="center">
-                    <template #default="scope">
-                        <Active :active="scope.row.fragile"/>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="sanctioned" label="Санкционный" width="120" align="center">
-                    <template #default="scope">
-                        <Active :active="scope.row.sanctioned"/>
                     </template>
                 </el-table-column>
                 <el-table-column width="160" align="right">
@@ -138,28 +117,6 @@ function toCatalog(row) {
 
 function onAvailable(row) {
     router.visit(route('admin.parser.product.available', {id: row.id}), {
-        method: "post",
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: page => {
-            tableData.value = [...page.props.products.data]
-        }
-    })
-}
-
-function onFragile(row) {
-    router.visit(route('admin.parser.product.fragile', {id: row.id}), {
-        method: "post",
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: page => {
-            tableData.value = [...page.props.products.data]
-        }
-    })
-}
-
-function onSanctioned(row) {
-    router.visit(route('admin.parser.product.sanctioned', {id: row.id}), {
         method: "post",
         preserveScroll: true,
         preserveState: true,

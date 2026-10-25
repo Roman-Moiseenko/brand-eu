@@ -45,6 +45,7 @@ readonly class ProductParserService
         private AttachVariantAttributeService     $attachVariantAttributeService,
         private AttributeRepositoryInterface      $attributeRepository,
         private PhotosProductService              $photosProductService,
+        private CreateParserLogUseCase            $createParserLogUseCase,
     )
     {
     }
@@ -187,7 +188,144 @@ readonly class ProductParserService
 
     public function availability(mixed $decoded, array $sizes, $parserProductId)
     {
+        $parserProduct = $this->parserProductRepository->getById((int) $parserProductId);
+        $product = $this->productRepository->getById($parserProduct->productId);
 
+        //Товар больше не найден у бренда — снимаем доступность
+        if ($decoded === null || $decoded === []) {
+            $parserProduct->availability = false;
+            $product->notSale = true;
+
+            $this->parserProductRepository->save($parserProduct);
+            $this->productRepository->save($product);
+
+            return;
+        }
+
+        $priceBase = (float) ($decoded['price_without_reduction'] ?? 0);
+        $priceSell = $priceBase - (float) ($decoded['reduction'] ?? 0);
+        $oldPriceSell = $parserProduct->priceSell;
+
+        $availabilityChanged = false;
+
+        $category = $parserProduct->categoryId !== null
+            ? $this->parserCategoryRepository->getById($parserProduct->categoryId)
+            : null;
+
+        if ($category !== null && !is_null($category->sizeGridId)) {
+            $grid = $this->sizeGridRepository->getById($category->sizeGridId);
+
+            //Все варианты сетки по умолчанию неактивны
+            $desiredActive = [];
+            foreach ($grid->getCombinations() as $values) {
+                $desiredActive[ProductSizeEntity::keyFromValues($values)] = false;
+            }
+
+            $dimensionCode = $grid->dimensions[0]->code ?? 'size';
+            $productSizes = $this->productSizeRepository->getByProductId($product->id);
+
+            //Индекс существующих размеров парсера по каноническому ключу
+            $existingByKey = [];
+            foreach ($parserProduct->sizes as $existingSize) {
+                if ($existingSize->values !== []) {
+                    $existingByKey[ProductSizeEntity::keyFromValues($existingSize->values)] = $existingSize;
+                }
+            }
+
+            $sizesForParser = [];
+            $processedKeys = [];
+
+            foreach ($sizes as $size) {
+                $sizeProduct = $this->sizeMapper->map($size);
+
+                $sizeEntity = null;
+                foreach ($productSizes as $productSize) {
+                    if (($productSize->values[$dimensionCode] ?? null) === $sizeProduct) {
+                        $sizeEntity = $productSize;
+                        break;
+                    }
+                }
+                if ($sizeEntity === null) {
+                    continue;
+                }
+
+                $key = $sizeEntity->key();
+                $processedKeys[$key] = true;
+                $desiredActive[$key] = true;
+
+                if (isset($existingByKey[$key])) {
+                    /** @var ParserProductSizeEntity $parserSize */
+                    $parserSize = $existingByKey[$key];
+                    if ($parserSize->available !== true) {
+                        $availabilityChanged = true;
+                    }
+                    $parserSize->available = true;
+                    $parserSize->sizeOriginal = $size;
+                    $parserSize->size = $sizeProduct;
+                    $sizesForParser[] = $parserSize;
+                } else {
+                    //Появился новый размер — добавляем в парсер-товар
+                    $availabilityChanged = true;
+                    $sizesForParser[] = ParserProductSizeEntity::create(
+                        productSizeId: $sizeEntity->id,
+                        sizeOriginal: $size,
+                        size: $sizeProduct,
+                    );
+                }
+            }
+
+            //Отключаем размеры, которых больше нет в $sizes
+            foreach ($parserProduct->sizes as $existingSize) {
+                if ($existingSize->values === []) {
+                    $sizesForParser[] = $existingSize;
+                    continue;
+                }
+
+                $key = ProductSizeEntity::keyFromValues($existingSize->values);
+                if (isset($processedKeys[$key])) {
+                    continue; //уже обработан выше
+                }
+
+                if ($existingSize->available !== false) {
+                    $availabilityChanged = true;
+                }
+                $existingSize->available = false;
+                $sizesForParser[] = $existingSize;
+            }
+
+            $parserProduct->sizes = $sizesForParser;
+
+            //Применяем размерный ряд товара
+            $this->productSizeRepository->rebuildForProduct($product->id, $grid, $desiredActive);
+        }
+
+        //Проверить цену Base и Sell и если изменилась, то изменить в $parserProduct и пересчитать в $product
+        $priceChanged = $parserProduct->priceBase != $priceBase || $parserProduct->priceSell != $priceSell;
+        if ($priceChanged) {
+            $parserProduct->priceBase = $priceBase;
+            $parserProduct->priceSell = $priceSell;
+            $this->calculate->execute($priceBase, $product->id);
+        }
+
+        //Сохранить $parserProduct и $product
+        $this->parserProductRepository->save($parserProduct);
+        $this->productRepository->save($product);
+
+        //Логирование изменений
+        if ($availabilityChanged) {
+            $this->createParserLogUseCase->execute(new ParserLogCreateData(
+                status: ParserStatus::sizeAvailble(),
+                parserId: $parserProduct->id,
+            ));
+        }
+
+        if ($priceChanged) {
+            $this->createParserLogUseCase->execute(new ParserLogCreateData(
+                status: ParserStatus::priceChanged(),
+                parserId: $parserProduct->id,
+                payload: new PriceChangePayload($oldPriceSell, $priceSell),
+            ));
+        }
     }
 
 }

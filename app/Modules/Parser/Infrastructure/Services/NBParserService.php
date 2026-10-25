@@ -153,7 +153,7 @@ class NBParserService implements ParserServiceInterface
             if (isset($query['state']['data']['product']))
                 $decoded = $query['state']['data']['product'];
         }
-        if (empty($decoded)) return;
+       // if (empty($decoded)) return;
 
         $this->productParserService->availability($decoded, $parserProductId);
     }

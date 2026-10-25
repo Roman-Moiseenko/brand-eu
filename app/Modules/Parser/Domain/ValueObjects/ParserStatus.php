@@ -10,11 +10,13 @@ final class ParserStatus implements \Stringable
     private const string DELETED = 'deleted';
     private const string ERROR = 'error';
     private const string PRICE_CHANGED = 'price_changed';
+    private const string SIZE_AVAILBLE = 'size_availble';
 
     private const array ALLOWED = [
         self::NEW,
         self::DELETED,
         self::PRICE_CHANGED,
+        self::SIZE_AVAILBLE,
         self::ERROR,
     ];
 
@@ -43,6 +45,11 @@ final class ParserStatus implements \Stringable
     public static function priceChanged(): self
     {
         return new self(self::PRICE_CHANGED);
+    }
+
+    public static function sizeAvailble(): self
+    {
+        return new self(self::SIZE_AVAILBLE);
     }
 
     public static function from(string $value): self

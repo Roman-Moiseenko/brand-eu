@@ -111,6 +111,7 @@ class ParserLogRepository implements ParserLogRepositoryInterface
         return [
             'new' => (int)($counts['new'] ?? 0),
             'price_changed' => (int)($counts['price_changed'] ?? 0),
+            'size_availble' => (int)($counts['size_availble'] ?? 0),
             'deleted' => (int)($counts['deleted'] ?? 0),
             'error' => (int)($counts['error'] ?? 0),
         ];
