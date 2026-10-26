@@ -166,7 +166,10 @@
                     <div class="short-description">
                         {!! $product->short !!}
                     </div>
-                    @include('shop.product.__modification', ['modification' => $pageData->modification, 'current_id' => $product->id])
+                    @include('shop.product.__modification', [
+                        'modification' => $pageData->modification,
+                        'current_id' => $product->id,
+                    ])
                     @include('shop.product.__related', ['related' => $pageData->related])
 
 

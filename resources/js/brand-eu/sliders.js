@@ -26,7 +26,7 @@ window.$ = jQuery;
         dotsEach: 1,
         responsive: {
             990: {
-                nav: true
+                items: 2,
             }
         }
     };
@@ -54,6 +54,7 @@ window.$ = jQuery;
             optionsSliderWidget.nav = nav;
             optionsSliderWidget.touchDrag = touchDrag;
             optionsSliderWidget.mouseDrag = mouseDrag;
+            if (items == '1') optionsSliderWidget.responsive = {};
 
             sliderWidget.owlCarousel(optionsSliderWidget);
             if (mouseScroll === 1) {
@@ -82,7 +83,7 @@ window.$ = jQuery;
             optionsSliderWidget.items = items;
             optionsSliderWidget.dots = dots;
             optionsSliderWidget.nav = nav;
-
+            if (items == '1') optionsSliderWidget.responsive = {};
             sliderWidget.owlCarousel(optionsSliderWidget);
         });
     }

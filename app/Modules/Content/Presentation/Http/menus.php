@@ -35,7 +35,7 @@ return [
                 'vue' => true,
                 'font_awesome' => 'fa-light fa-files',
             ],
-            'products' => [
+       /*     'products' => [
                 'title' => 'Виджеты товаров',
                 'route_name' => 'admin.content.widget.product.index',
                 'vue' => true,
@@ -71,6 +71,14 @@ return [
                 'vue' => true,
                 'font_awesome' => 'fa-light fa-square-list',
             ],
+             'forms' => [
+                'title' => 'Обратная связь',
+                'route_name' => 'admin.content.widget.form.index',
+                'vue' => true,
+                'font_awesome' => 'fa-light fa-pen-field',
+            ],
+
+            */
             'contacts' => [
                 'title' => 'Контакты',
                 'route_name' => 'admin.content.contact.index',
@@ -96,12 +104,7 @@ return [
                 'vue' => true,
                 'font_awesome' => 'fa-light fa-images',
             ],
-            'forms' => [
-                'title' => 'Обратная связь',
-                'route_name' => 'admin.content.widget.form.index',
-                'vue' => true,
-                'font_awesome' => 'fa-light fa-pen-field',
-            ],
+
             'seo' => [
                 'title' => 'SEO мета',
                 'route_name' => 'admin.content.seo-meta.index',
