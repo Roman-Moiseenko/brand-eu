@@ -108,7 +108,7 @@
 
 <!--livewire:shop.popup.buy-click :user="$user" /-->
 @include('shop.pop-up.notification')
-@include('shop.pop-up.region')
+{{-- @include('shop.pop-up.region') --}}
 <div id="cookie_notification"></div>
 
 @include('analytics::tracker')
@@ -118,7 +118,7 @@
 
 @include('shop.footer')
 <button id="upbutton" type="button" class="scrollup" aria-label="В начало"> > </button>
-@include('shop.widgets.contact-bottom')
+{{-- @include('shop.widgets.contact-bottom') --}}
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
 

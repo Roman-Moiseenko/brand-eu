@@ -11,9 +11,10 @@ class RegionalPriceCalculator
 
     public function apply(int $price, ?int $region): int
     {
-        if (is_null($region) || $region == 39) return $price;
+        return $price;
+      //  if (is_null($region) || $region == 39) return $price;
         //TODO возможно сделать таблицу с коэфициентами по регионам и закешировать при загрузке
-        return (int)(ceil($price * 1.4));
+      //  return (int)(ceil($price * 1.4));
     }
 
     public function productCardData(ProductCardData $data, ?int $region): ProductCardData
