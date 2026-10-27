@@ -36,7 +36,7 @@ class SubToCartUseCaseTest extends TestCase
         $item = new CartItemEntity(productId: 10, quantity: 5.0, isParser: false);
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);
@@ -45,7 +45,7 @@ class SubToCartUseCaseTest extends TestCase
             ->once()
             ->with($item, $this->client)
             ->andReturnUsing(fn(CartItemEntity $item) => $item);
-        $this->cartRepository->shouldNotReceive('removeByProductId');
+        $this->cartRepository->shouldNotReceive('removeById');
 
         $this->useCase->execute(10, 2, $this->client);
 
@@ -58,12 +58,12 @@ class SubToCartUseCaseTest extends TestCase
         $item = new CartItemEntity(productId: 10, quantity: 2.0, isParser: false);
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);
         $this->cartRepository
-            ->shouldReceive('removeByProductId')
+            ->shouldReceive('removeById')
             ->with(10, $this->client)
             ->once();
         $this->cartRepository->shouldNotReceive('save');

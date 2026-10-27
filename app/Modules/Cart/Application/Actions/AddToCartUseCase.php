@@ -18,7 +18,8 @@ readonly class AddToCartUseCase
     public function execute(AddProductToCartData $dto, ClientContext $client): void
     {
 
-        $item = $this->cartRepository->getItemByProductId($dto->id, $client);
+        $item = $this->cartRepository->getItemByProductId($dto->id, $client, $dto->productSizeId);
+
 
 
         if (!is_null($item)) {
@@ -27,7 +28,8 @@ readonly class AddToCartUseCase
             $item = new CartItemEntity(
                 productId: $dto->id,
                 quantity: $dto->quantity,
-                isParser: $dto->isParser
+                isParser: $dto->isParser,
+                productSizeId: $dto->productSizeId,
             );
         }
         $this->cartRepository->save($item, $client);

@@ -40,13 +40,15 @@ class CartRepository implements CartRepositoryInterface
         return array_map(fn($model) => $this->hydrate($model), $models);
     }
 
-    public function getItemByProductId(int $productId, ClientContext $client):? CartItemEntity
+    public function getItemByProductId(int $productId, ClientContext $client, ?int $productSizeId):? CartItemEntity
     {
         if (!is_null($client->id)) {
             $query = CartStorage::where('client_id', $client->id);
         } else {
             $query = CartCookie::where('user_ui', $client->uuid);
         }
+
+        if (!is_null($productSizeId)) $query = $query->where('product_size_id', $productSizeId);
 
         $model = $query->where('product_id', $productId)->first();
         if (is_null($model)) return null;
@@ -63,15 +65,13 @@ class CartRepository implements CartRepositoryInterface
         return $this->hydrate($model);
     }
 
-    public function removeByProductId(int $productId, ClientContext $client): void
+    public function removeById(int $id, ClientContext $client): void
     {
         if (!is_null($client->id)) {
-            $query = CartStorage::where('client_id', $client->id);
+            CartStorage::where('id', $id)->delete();
         } else {
-            $query = CartCookie::where('user_ui', $client->uuid);
+            CartCookie::where('id', $id)->delete();
         }
-
-        $query->where('product_id', $productId)->delete();
     }
 
     public function save(CartItemEntity $entity, ClientContext $client): CartItemEntity
@@ -90,6 +90,7 @@ class CartRepository implements CartRepositoryInterface
         $model->quantity = $entity->quantity;
         $model->check = $entity->check;
         $model->is_parser = $entity->isParser;
+        $model->product_size_id = $entity->productSizeId;
         $model->save();
         return $this->hydrate($model);
     }
@@ -100,6 +101,7 @@ class CartRepository implements CartRepositoryInterface
             productId: $model->product_id,
             quantity: $model->quantity,
             isParser: $model->is_parser,
+            productSizeId: $model->product_size_id,
         );
         $entity->id = $model->id;
         $entity->check = $model->check;

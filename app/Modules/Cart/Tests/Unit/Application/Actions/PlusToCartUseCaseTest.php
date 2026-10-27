@@ -36,7 +36,7 @@ class PlusToCartUseCaseTest extends TestCase
         $item = new CartItemEntity(productId: 10, quantity: 2.0, isParser: false);
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);

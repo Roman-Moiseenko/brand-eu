@@ -58,6 +58,8 @@
     if ($productSizes.length > 0) {
         let $toCart = $('.product-page .to-cart');
         let twoAxes = String($productSizes.data('two-axes')) === '1';
+        let $widthBtns = $productSizes.find('.product-width-btn');
+        let $sizeLists = $productSizes.find('.product-sizes-list[data-width-value]');
 
         function setSelectedSize(sizeId) {
             $productSizes.attr('data-selected-size-id', sizeId ? String(sizeId) : '');
@@ -84,6 +86,20 @@
             window.history.replaceState({}, '', url.toString());
         }
 
+        function showWidth(widthValue) {
+            $sizeLists.each(function () {
+                let $list = $(this);
+                if (String($list.data('width-value')) === String(widthValue)) {
+                    $list.show();
+                } else {
+                    $list.hide();
+                }
+            });
+            $widthBtns.each(function () {
+                $(this).toggleClass('active', String($(this).data('width-value')) === String(widthValue));
+            });
+        }
+
         // Клик по размеру
         $productSizes.on('click', '.product-size-btn', function () {
             let $btn = $(this);
@@ -95,23 +111,6 @@
         });
 
         if (twoAxes) {
-            let $widthBtns = $productSizes.find('.product-width-btn');
-            let $sizeLists = $productSizes.find('.product-sizes-list[data-width-value]');
-
-            function showWidth(widthValue) {
-                $sizeLists.each(function () {
-                    let $list = $(this);
-                    if (String($list.data('width-value')) === String(widthValue)) {
-                        $list.show();
-                    } else {
-                        $list.hide();
-                    }
-                });
-                $widthBtns.each(function () {
-                    $(this).toggleClass('active', String($(this).data('width-value')) === String(widthValue));
-                });
-            }
-
             // Выбор ширины: размеры показываются только для выбранной ширины
             $widthBtns.on('click', function () {
                 let widthValue = $(this).data('width-value');

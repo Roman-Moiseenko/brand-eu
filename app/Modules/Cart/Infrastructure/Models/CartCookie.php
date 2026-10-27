@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $user_ui
  * @property int $product_id
+ * @property int $product_size_id
  * @property float $quantity
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -38,6 +39,7 @@ class CartCookie extends Model
         'options_json',
         'check',
         'is_parser',
+        'product_size_id',
     ];
     public static function register(string $user_ui, int $product_id, float $quantity, bool $is_parser): self
     {
@@ -55,13 +57,4 @@ class CartCookie extends Model
         $this->save();
     }
 
-    public function isCheck(): bool
-    {
-        return $this->check == true;
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
-    }
 }

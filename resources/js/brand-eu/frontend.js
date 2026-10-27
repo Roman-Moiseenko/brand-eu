@@ -153,6 +153,7 @@ window.$ = jQuery;
         let $btn = $(this);
         item.preventDefault();
         let _productId = $btn.data('product');
+        let _productSizeId = $btn.attr('data-options');
         let _quantity = 1;
         let _is_parser = $btn.data('parser');
 
@@ -161,6 +162,7 @@ window.$ = jQuery;
                 id: _productId,
                 quantity: _quantity,
                 isParser: _is_parser,
+                productSizeId: _productSizeId,
                 tz: -(new Date().getTimezoneOffset()),
             }, function (data) {//Получаем кол-во товаров в корзине
                 if (!common.error(data)) {

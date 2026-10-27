@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $client_id
  * @property int $product_id
+ * @property int $product_size_id
  * @property float $quantity
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -36,6 +37,7 @@ class CartStorage extends Model
         'options_json',
         'check',
         'is_parser',
+        'product_size_id',
     ];
 
     protected $casts = [
@@ -59,16 +61,6 @@ class CartStorage extends Model
     {
         $this->check = !$this->check;
         $this->save();
-    }
-
-    public function isCheck(): bool
-    {
-        return $this->check == true;
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     public function client()

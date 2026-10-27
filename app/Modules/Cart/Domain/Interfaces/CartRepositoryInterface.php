@@ -16,11 +16,11 @@ interface CartRepositoryInterface
      */
     public function getAll(ClientContext $client): array;
 
-    public function getItemByProductId(int $productId, ClientContext $client):? CartItemEntity;
+    public function getItemByProductId(int $productId, ClientContext $client, ?int $productSizeId):? CartItemEntity;
 
     public function getItemById(int $id, ClientContext $client): CartItemEntity;
 
-    public function removeByProductId(int $productId, ClientContext $client): void;
+    public function removeById(int $id, ClientContext $client): void;
 
 
     /**

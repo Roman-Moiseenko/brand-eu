@@ -82,7 +82,7 @@ class CartItem extends Component
     public function sub_item(SubToCartUseCase $useCase): void
     {
         $context = app(ClientContextFactory::class)->make();
-        $useCase->execute($this->item['productId'], 1, $context);
+        $useCase->execute($this->item['id'], 1, $context);
 
         $this->recordAnalyticsAction(
             ActionType::CART_QUANTITY_CHANGE,
@@ -100,7 +100,7 @@ class CartItem extends Component
     public function plus_item(PlusToCartUseCase $useCase): void
     {
         $context = app(ClientContextFactory::class)->make();
-        $useCase->execute($this->item['productId'], 1, $context);
+        $useCase->execute($this->item['id'], 1, $context);
 
         $this->recordAnalyticsAction(
             ActionType::CART_QUANTITY_CHANGE,
@@ -120,7 +120,7 @@ class CartItem extends Component
     public function set_item(SetToCartUseCase $useCase): void
     {
         $context = app(ClientContextFactory::class)->make();
-        $result = $useCase->execute($this->item['productId'], $this->quantity, $context);
+        $result = $useCase->execute($this->item['id'], $this->quantity, $context);
 
         $this->recordAnalyticsAction(
             ActionType::CART_QUANTITY_CHANGE,
@@ -149,7 +149,7 @@ class CartItem extends Component
     public function check_item(CheckToCartUseCase $useCase): void
     {
         $context = app(ClientContextFactory::class)->make();
-        $useCase->execute($this->item['productId'], $context);
+        $useCase->execute($this->item['id'], $context);
         $this->dispatch('update-header-cart');
     }
 
@@ -157,7 +157,7 @@ class CartItem extends Component
     {
         $context = app(ClientContextFactory::class)->make();
         $this->dispatch('e-cart', product_id: $this->item['productId'], e_type: 'remove', quantity: $this->quantity);
-        $useCase->execute($this->item['productId'], $context);
+        $useCase->execute($this->item['id'], $context);
 
         $this->recordAnalyticsAction(
             ActionType::CART_REMOVE,

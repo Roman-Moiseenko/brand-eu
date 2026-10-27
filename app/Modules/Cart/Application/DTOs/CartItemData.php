@@ -16,6 +16,9 @@ class CartItemData extends Data
         public readonly bool    $isParser,
         //ProductInfo
         public readonly int     $productId,
+        public readonly ?int    $productSizeId,
+        public readonly ?string $size,
+        public readonly ?string $width,
         public readonly string  $name,
         public readonly string  $image,
         public readonly string  $url,

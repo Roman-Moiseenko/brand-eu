@@ -27,13 +27,19 @@ class CartItemEntity
         set => $this->quantity = $value;
     }
 
+    public ?int $productSizeId  {
+        get => $this->productSizeId;
+        set => $this->productSizeId = $value;
+    }
+
     public function __construct(
-        int $productId, float $quantity, bool $isParser
+        int $productId, float $quantity, bool $isParser, ?int $productSizeId = null
     )
     {
         $this->productId = $productId;
         $this->quantity = $quantity;
         $this->isParser = $isParser;
+        $this->productSizeId = $productSizeId;
     }
 
 }

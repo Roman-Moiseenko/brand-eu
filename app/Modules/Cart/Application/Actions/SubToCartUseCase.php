@@ -13,12 +13,12 @@ readonly class SubToCartUseCase
     )
     {
     }
-    public function execute(int $productId, int $quantity, ClientContext $client): void
+    public function execute(int $id, int $quantity, ClientContext $client): void
     {
-        $item = $this->cartRepository->getItemByProductId($productId, $client);
+        $item = $this->cartRepository->getItemById($id, $client);
 
         if ($item->quantity <= $quantity) {
-            $this->cartRepository->removeByProductId($productId, $client);
+            $this->cartRepository->removeById($id, $client);
         } else {
             $item->quantity -= $quantity;
             $this->cartRepository->save($item, $client);

@@ -42,9 +42,8 @@ class CartController extends ShopAbstractController
     {
         $client = $this->getClient($request);
         $dto = AddProductToCartData::validateAndCreate($request->all());
-
+        \Log::warning(json_encode($request->all()));
         $this->addProductToCartService->execute($dto, $client);
-
 
         $this->recordAnalyticsAction(
             ActionType::CART_ADD,

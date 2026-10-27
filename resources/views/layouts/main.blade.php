@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-
-    <!--base href="https://39y.ru" /-->
-    <meta name="robots" content="noindex"/>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if(isset($pageData) && !is_null($pageData->meta))
@@ -109,7 +107,6 @@
 @endnotclient
 
 <!--livewire:shop.popup.buy-click :user="$user" /-->
-@include('shop.pop-up.buy-click')
 @include('shop.pop-up.notification')
 @include('shop.pop-up.region')
 <div id="cookie_notification"></div>

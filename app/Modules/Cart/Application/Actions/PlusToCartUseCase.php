@@ -14,9 +14,9 @@ class PlusToCartUseCase
     }
 
 
-    public function execute(int $productId, int $quantity, ClientContext $client): void
+    public function execute(int $id, int $quantity, ClientContext $client): void
     {
-        $itemEntity = $this->storage->getItemByProductId($productId, $client);
+        $itemEntity = $this->storage->getItemById($id, $client);
         $itemEntity->quantity += $quantity;
         $this->storage->save($itemEntity, $client);
 

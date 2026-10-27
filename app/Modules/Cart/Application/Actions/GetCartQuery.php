@@ -7,6 +7,7 @@ use App\Modules\Cart\Application\DTOs\CartInfoData;
 use App\Modules\Cart\Application\DTOs\CartItemData;
 use App\Modules\Cart\Domain\Interfaces\CartRepositoryInterface;
 use App\Modules\Catalog\Domain\Interfaces\ProductRepositoryInterface;
+use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
 use App\Modules\Order\Application\Queries\GetSellPriceQuery;
 use App\Modules\Parser\Application\Actions\Product\GetParserPriceByProductUseCase;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
@@ -40,6 +41,7 @@ readonly class GetCartQuery
         private GetParserPriceByProductUseCase   $getParserPriceByProductUseCase,
         private GetSellPriceQuery                $productSellPriceUseCase,
         private ProductRepositoryInterface       $productRepository,
+        private ProductSizeRepositoryInterface   $productSizeRepository,
         private ParserProductRepositoryInterface $parserProductRepository,
         private GetPhotoThumbUseCase             $getPhotoThumbUseCase,
         private RegionalPriceCalculator $regionalPriceCalculator,
@@ -71,6 +73,9 @@ readonly class GetCartQuery
                 $price = $this->getParserPriceByProductUseCase->execute($item->productId); // $item->base_cost * (1 + (int)$item->product->parser->sanctioned * $sanctioned / 100) * $ratio;
             } else {
                 $url = route('shop.product.view', $productEntity->slug);
+                if ($item->productSizeId !== null) {
+                    $url .= '?size=' . $item->productSizeId;
+                }
                 $productPrice = $this->productSellPriceUseCase->execute($item->productId, $priceType);
                 //Получить текущую цену для текущего клиента
                 $price = $productPrice->basePrice;
@@ -78,6 +83,8 @@ readonly class GetCartQuery
 
             //Расчитываем коэф. на базовую цену
             $price = $this->regionalPriceCalculator->apply($price, $clientContext->region);
+
+            $sizeInfo = $this->getSizeInfo($item->productId, $item->productSizeId);
 
             $itemData = new CartItemData(
                 id: $item->id,
@@ -88,6 +95,9 @@ readonly class GetCartQuery
                 isParser: $item->isParser,
                 //ProductInfo
                 productId: $item->productId,
+                productSizeId: $item->productSizeId,
+                size: $sizeInfo['size'],
+                width: $sizeInfo['width'],
                 name: $productEntity->name,
                 image: $this->getUrlImage($item->productId),
                 url: $url,
@@ -107,14 +117,6 @@ readonly class GetCartQuery
                 if ($itemData->discountPrice > 0) $discountCheck += ($itemData->cost - $itemData->discountPrice);
                 $quantityCheck += $itemData->quantity;
 
-                //Для парсера доп.расчет
-                if ($itemData->isParser) {
-                    $parserEntity = $this->parserProductRepository->getByProductId($item->productId);
-
-                    $weightParser = $parserEntity->weight();
-                    $weight += $weightParser * $itemData->quantity;
-                    if ($parserEntity->fragile) $fragile += $weightParser * $itemData->quantity;
-                }
             }
 
             $items[] = $itemData;
@@ -132,6 +134,31 @@ readonly class GetCartQuery
             delivery: 0,
             deliveryParser: $deliveryParser,
         );
+    }
+
+    /**
+     * Возвращает значения размерной сетки для элемента корзины.
+     *
+     * @return array{size: ?string, width: ?string}
+     */
+    private function getSizeInfo(int $productId, ?int $productSizeId): array
+    {
+        if ($productSizeId === null) {
+            return ['size' => null, 'width' => null];
+        }
+
+        foreach ($this->productSizeRepository->getByProductId($productId) as $sizeEntity) {
+            if ($sizeEntity->id === $productSizeId) {
+                $values = $sizeEntity->values;
+
+                return [
+                    'size' => $values['size'] ?? (count($values) > 0 ? (string) reset($values) : null),
+                    'width' => $values['width'] ?? null,
+                ];
+            }
+        }
+
+        return ['size' => null, 'width' => null];
     }
 
     private function getUrlImage(int $productId): string

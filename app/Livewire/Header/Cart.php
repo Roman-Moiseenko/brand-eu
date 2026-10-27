@@ -58,15 +58,28 @@ class Cart extends Component
         $context = app(ClientContextFactory::class)->make();
         $quantity = $useCase->execute($id, $context);
 
+        $productId = $this->findProductIdByItemId((int)$id);
+
         $this->recordAnalyticsAction(
             ActionType::CART_REMOVE,
             EntityType::PRODUCT,
-            (int)$id,
+            $productId,
             ['quantity' => $quantity],
         );
 
-        $this->dispatch('e-cart', product_id: $id, e_type: 'remove', quantity: $quantity);
+        $this->dispatch('e-cart', product_id: $productId, e_type: 'remove', quantity: $quantity);
         $this->dispatch('update-header-cart');
+    }
+
+    private function findProductIdByItemId(int $id): ?int
+    {
+        foreach ($this->items as $item) {
+            if ((int)$item['id'] === $id) {
+                return (int)$item['productId'];
+            }
+        }
+
+        return null;
     }
 
     /**

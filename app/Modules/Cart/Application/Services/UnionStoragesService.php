@@ -26,6 +26,7 @@ readonly class UnionStoragesService
                 id: $item->productId,
                 quantity: $item->quantity,
                 isParser: $item->isParser,
+                productSizeId: $item->productSizeId,
             );
             $this->addToCartUseCase->execute($dto, $context);
 

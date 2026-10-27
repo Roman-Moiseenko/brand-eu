@@ -1,5 +1,5 @@
 <div>
-    <div class="box-card full-cart-item" id="full-cart-item-{{ $item['productId'] }}">
+    <div class="box-card full-cart-item" id="full-cart-item-{{ $item['id'] }}">
         <div class="checked">
             <input type="checkbox" wire:model="check" wire:change="check_item">
         </div>
@@ -10,6 +10,11 @@
             <div>
                 <a href="{{ $item['url'] }}"><span>{{ $item['name'] }}</span></a>
             </div>
+            @if(!is_null($item['size']))
+                <div class="cart-item-size">
+                    Размер {{ $item['size'] }}@if(!is_null($item['width'])) ({{ $item['width'] }})@endif
+                </div>
+            @endif
             <div class="discount"
                  @if(is_null($item['discountPrice'])) style="display: none" @endif>
                 <span class="badge text-bg-danger">{{ $item['discountName'] }}</span>
@@ -39,7 +44,7 @@
                 >
                     <i class="fa-light fa-minus"></i></button>
                 <input type="text" class="form-control" autocomplete="off"
-                       data-product="{{ $item['productId'] }}" value="{{ $item['quantity'] }}"
+                       data-item="{{ $item['id'] }}" value="{{ $item['quantity'] }}"
                        wire:change="set_item" wire:model="quantity" wire:loading.attr="disabled"
                 />
                 <button class="btn"

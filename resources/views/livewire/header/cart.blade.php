@@ -29,6 +29,9 @@
                             <img class="cart-item-img" src="{{ $item['image'] }}">
                             <div class="cart-item-info">
                                 <div class="cart-item-name"><a href="{{ $item['url'] }}" class="cart-item-url" title="{{ $item['name'] }}">{{ $item['name'] }}</a></div>
+                                @if(!is_null($item['size']))
+                                    <div class="cart-item-size">Размер {{ $item['size'] }}@if(!is_null($item['width'])) ({{ $item['width'] }})@endif</div>
+                                @endif
                                 <div class="cart-item-quantity">{{ $item['quantity'] }} шт</div>
                             </div>
                             @if($item['discountPrice'] == 0)
@@ -40,7 +43,7 @@
                             </div>
                             @endif
                             <div class="cart-item-trash">
-                                <a href="#" wire:click="del_item({{$item['productId']}})"><i class="fa-light fa-trash-can"></i></a>
+                                <a href="#" wire:click="del_item({{$item['id']}})"><i class="fa-light fa-trash-can"></i></a>
                             </div>
                         </div>
                         @endforeach

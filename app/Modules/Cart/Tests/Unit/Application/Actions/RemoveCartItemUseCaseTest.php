@@ -33,7 +33,7 @@ class RemoveCartItemUseCaseTest extends TestCase
     public function it_removes_item(): void
     {
         $this->cartRepository
-            ->shouldReceive('removeByProductId')
+            ->shouldReceive('removeById')
             ->with(10, $this->client)
             ->once();
 

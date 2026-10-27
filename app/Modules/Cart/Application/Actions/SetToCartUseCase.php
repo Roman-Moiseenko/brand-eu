@@ -17,15 +17,15 @@ readonly class SetToCartUseCase
     {
     }
 
-    public function execute(int $productId, int $quantity, ClientContext $client): int
+    public function execute(int $id, int $quantity, ClientContext $client): int
     {
         //Удаляем при кол-ве = 0
         if ($quantity == 0) {
-            $this->cartRepository->removeByProductId($productId, $client);
+            $this->cartRepository->removeById($id, $client);
             return 0;
         }
 
-        $item = $this->cartRepository->getItemByProductId($productId, $client);
+        $item = $this->cartRepository->getItemById($id, $client);
         $item->quantity = $quantity;
         $this->cartRepository->save($item, $client);
 

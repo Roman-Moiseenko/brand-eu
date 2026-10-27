@@ -12,12 +12,13 @@ class AddProductToCartData extends Data
 {
     public function __construct(
         #[Required, Numeric]
-        public int $id,
+        public int           $id,
         #[Nullable, Numeric]
-        public readonly int $quantity = 1,
+        public readonly int  $quantity = 1,
         #[Nullable, BooleanType]
         public readonly bool $isParser = false,
-
+        #[Nullable, Numeric]
+        public readonly ?int $productSizeId = null,
     )
     {
 

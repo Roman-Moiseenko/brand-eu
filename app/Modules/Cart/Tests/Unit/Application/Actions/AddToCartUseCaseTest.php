@@ -36,7 +36,7 @@ class AddToCartUseCaseTest extends TestCase
     {
         $this->cartRepository
             ->shouldReceive('getItemByProductId')
-            ->with(10, $this->client)
+            ->with(10, $this->client, null)
             ->once()
             ->andReturnNull();
 
@@ -64,7 +64,7 @@ class AddToCartUseCaseTest extends TestCase
 
         $this->cartRepository
             ->shouldReceive('getItemByProductId')
-            ->with(10, $this->client)
+            ->with(10, $this->client, null)
             ->once()
             ->andReturn($existing);
 

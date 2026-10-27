@@ -147,6 +147,7 @@ class ShopServiceProvider extends ServiceProvider
             BreadcrumbProviderInterface::class,
             BreadcrumbService::class
         );
+
     }
 
     // =====================================================================

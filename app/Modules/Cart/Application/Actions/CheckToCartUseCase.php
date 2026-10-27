@@ -15,7 +15,7 @@ readonly class CheckToCartUseCase
 
     public function execute(int $id, ClientContext $client): void
     {
-        $item = $this->cartRepository->getItemByProductId($id, $client);
+        $item = $this->cartRepository->getItemById($id, $client);
         $item->check = !$item->check;
         $this->cartRepository->save($item, $client);
 

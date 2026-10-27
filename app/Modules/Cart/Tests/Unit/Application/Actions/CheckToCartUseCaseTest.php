@@ -37,7 +37,7 @@ class CheckToCartUseCaseTest extends TestCase
         $item->check = true;
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);
@@ -59,7 +59,7 @@ class CheckToCartUseCaseTest extends TestCase
         $item->check = false;
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);

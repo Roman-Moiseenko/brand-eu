@@ -16,9 +16,9 @@ readonly class RemoveCartItemUseCase
     {
 
     }
-    public function execute(int $productId, ClientContext $client): int
+    public function execute(int $id, ClientContext $client): int
     {
-        $this->cartRepository->removeByProductId($productId, $client);
+        $this->cartRepository->removeById($id, $client);
 
         return 0;
     }

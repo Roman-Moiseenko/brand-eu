@@ -34,10 +34,10 @@ class SetToCartUseCaseTest extends TestCase
     public function it_removes_item_when_quantity_is_zero(): void
     {
         $this->cartRepository
-            ->shouldReceive('removeByProductId')
+            ->shouldReceive('removeById')
             ->with(10, $this->client)
             ->once();
-        $this->cartRepository->shouldNotReceive('getItemByProductId');
+        $this->cartRepository->shouldNotReceive('getItemById');
         $this->cartRepository->shouldNotReceive('save');
 
         $this->assertSame(0, $this->useCase->execute(10, 0, $this->client));
@@ -49,7 +49,7 @@ class SetToCartUseCaseTest extends TestCase
         $item = new CartItemEntity(productId: 10, quantity: 2.0, isParser: false);
 
         $this->cartRepository
-            ->shouldReceive('getItemByProductId')
+            ->shouldReceive('getItemById')
             ->with(10, $this->client)
             ->once()
             ->andReturn($item);

@@ -99,7 +99,7 @@ class CartPage extends Component
         foreach ($items as $item) {
             if ($item->check) {
                 $this->dispatch('e-cart', product_id: $item->productId, e_type: 'remove', quantity: $item->quantity);
-                $useCase->execute($item->productId, $context);
+                $useCase->execute($item->id, $context);
 
                 $this->recordAnalyticsAction(
                     ActionType::CART_REMOVE,
