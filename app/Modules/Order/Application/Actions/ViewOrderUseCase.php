@@ -6,6 +6,7 @@ namespace App\Modules\Order\Application\Actions;
 use App\Modules\Accounting\Entity\Storage;
 use App\Modules\Auth\Domain\Interfaces\ClientRepositoryInterface;
 use App\Modules\Auth\Domain\Interfaces\StaffRepositoryInterface;
+use App\Modules\Catalog\Domain\Interfaces\ProductSizeRepositoryInterface;
 use App\Modules\Order\Application\DTOs\AmountOrderData;
 use App\Modules\Order\Application\DTOs\ClientOrderData;
 use App\Modules\Order\Application\DTOs\OrderAdditionViewData;
@@ -27,6 +28,7 @@ readonly class ViewOrderUseCase
         private GetProductItemDataUseCase $getProductItemData,
         private GetAdditionDataUseCase    $getAdditionDataUseCase,
         private StaffRepositoryInterface $staffRepository,
+        private ProductSizeRepositoryInterface $productSizeRepository,
     )
     {
     }
@@ -73,6 +75,8 @@ readonly class ViewOrderUseCase
                 $percentDiscount = ceil(($item->baseCost - $item->sellCost) / $item->baseCost * 100 * 10) / 10;
             }
 
+            $sizeInfo = $this->getSizeInfo($item->productId, $item->productSizeId);
+
             $itemDto = new OrderItemViewData(
                 id: $item->id,
                 product: $productItemData,
@@ -85,6 +89,8 @@ readonly class ViewOrderUseCase
                 comment: $item->comment,
                 assemblage: $item->assemblage,
                 packing: $item->packing,
+                size: $sizeInfo['size'],
+                width: $sizeInfo['width'],
             );
 
             if ($item->preorder) {
@@ -184,5 +190,30 @@ readonly class ViewOrderUseCase
             status: $currentStatus->value,
         );
 
+    }
+
+    /**
+     * Возвращает значения размерной сетки для позиции заказа.
+     *
+     * @return array{size: ?string, width: ?string}
+     */
+    private function getSizeInfo(int $productId, ?int $productSizeId): array
+    {
+        if ($productSizeId === null) {
+            return ['size' => null, 'width' => null];
+        }
+
+        foreach ($this->productSizeRepository->getByProductId($productId) as $sizeEntity) {
+            if ($sizeEntity->id === $productSizeId) {
+                $values = $sizeEntity->values;
+
+                return [
+                    'size' => $values['size'] ?? (count($values) > 0 ? (string) reset($values) : null),
+                    'width' => $values['width'] ?? null,
+                ];
+            }
+        }
+
+        return ['size' => null, 'width' => null];
     }
 }

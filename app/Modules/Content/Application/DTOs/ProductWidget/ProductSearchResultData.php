@@ -22,5 +22,6 @@ class ProductSearchResultData extends Data
         public readonly ?string $image_alt,
         public readonly ?string $image_next_src,
         public readonly ?string $image_next_alt,
+        public readonly ?array $sizes = null,
     ) {}
 }

@@ -22,6 +22,11 @@ class OrderItemEntity
         set => $this->productId = $value;
     }
 
+    public ?int $productSizeId = null {
+        get => $this->productSizeId;
+        set => $this->productSizeId = $value;
+    }
+
     public float $quantity {
         get => $this->quantity;
         set => $this->quantity = $value;

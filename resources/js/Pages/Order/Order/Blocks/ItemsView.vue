@@ -6,7 +6,14 @@
     >
         <el-table-column type="index" label="п/п"/>
         <el-table-column prop="product.code" label="Артикул" width="110"/>
-        <el-table-column prop="product.name" label="Товар" width="320" show-overflow-tooltip />
+        <el-table-column label="Товар" width="320" show-overflow-tooltip>
+            <template #default="scope">
+                {{ scope.row.product.name }}
+                <div v-if="scope.row.size" class="text-xs text-gray-500">
+                    Размер {{ scope.row.size }}<span v-if="scope.row.width"> ({{ scope.row.width }})</span>
+                </div>
+            </template>
+        </el-table-column>
 
         <el-table-column label="Продажа" width="240" align="center">
             <template #default="scope">

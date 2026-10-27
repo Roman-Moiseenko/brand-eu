@@ -30,6 +30,23 @@
         </el-select>
         <el-input-number id="quantity" v-if="props.quantity" v-model="form.quantity" @keyup.enter="onQuantity" class="ml-1" min="1" style="width: 120px;"/>
         <el-checkbox id="preorder" v-if="props.preorder" v-model="form.preorder" label="Под заказ" @change="onPreorder" class="ml-1"/>
+
+        <el-select
+            v-if="availableSizes.length"
+            id="product-size"
+            v-model="form.productSizeId"
+            placeholder="Размер"
+            class="ml-1"
+            style="width: 160px;"
+        >
+            <el-option
+                v-for="size in availableSizes"
+                :key="size.productSizeId"
+                :value="size.productSizeId"
+                :label="size.label"
+            />
+        </el-select>
+
         <el-button id="button-search-product" :type="button" @click="onAdd" class="ml-1">
             <i class="fa-light fa-box mr-2"></i>
             {{ props.caption }}
@@ -69,7 +86,7 @@
 </template>
 
 <script lang="ts" setup>
-import {inject, reactive, ref, defineProps, computed} from "vue";
+import {inject, reactive, ref, defineProps, computed, watch} from "vue";
 import {router} from "@inertiajs/vue3";
 import axios from "axios";
 import {ElLoading} from "element-plus";
@@ -136,13 +153,19 @@ const props = defineProps({
     }
 })
 const width = computed<String>( () => 'width: ' + props.width + 'px;')
+interface SizeItem {
+    productSizeId: Number,
+    label: String,
+}
 interface ListItem {
     id: Number
     name: String,
     code: String,
     stock: Boolean,
+    sizes?: SizeItem[],
 }
 const options = ref<ListItem[]>([])
+const availableSizes = ref<SizeItem[]>([])
 const loading = ref(false)
 const remoteMethod = (query: string) => {
     if (query) {
@@ -164,8 +187,16 @@ const form = reactive({
     quantity: 1,
     preorder: null,
     productId: null,
+    productSizeId: null,
 })
 const useCatalog = useCatalogStore()
+
+watch(() => form.product_id, (id) => {
+    const item = options.value.find(o => o.id === id)
+    availableSizes.value = item?.sizes ?? []
+    form.productSizeId = null
+})
+
 function onSelect() {
     if (props.quantity) {
         document.getElementById('quantity').focus()
@@ -189,6 +220,8 @@ function onAdd() {
             form.product_id = null
             form.quantity = 1
             form.preorder = null
+            form.productSizeId = null
+            availableSizes.value = []
             document.getElementById('select').focus()
         }
     })

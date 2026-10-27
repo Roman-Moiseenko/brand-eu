@@ -51,9 +51,12 @@ readonly class AddProductOrderUseCase
             discountId: !($dto->preorder) ? $productPrice->discountId : null,
             discountType: !($dto->preorder) ? $productPrice->discountType : null,
             preorder: $dto->preorder,
+            productSizeId: $dto->productSizeId,
         );
 
-        $orderEntity->addItem($itemDto, $dto->increase);
+        //Товар всегда увеличивается в количестве, дубли не создаются.
+        //Позиция считается одинаковой, если совпадают productId, preorder и productSizeId.
+        $orderEntity->addItem($itemDto, true);
 
         if ($dto->preorder) {
             $addition = $this->polandAdditionUseCase->execute();

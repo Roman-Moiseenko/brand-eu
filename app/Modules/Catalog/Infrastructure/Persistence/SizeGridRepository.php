@@ -30,6 +30,24 @@ class SizeGridRepository implements SizeGridRepositoryInterface
         return $this->hydrate(SizeGrid::with('values')->findOrFail($id));
     }
 
+    public function getByIds(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        $result = [];
+
+        SizeGrid::with('values')
+            ->whereIn('id', $ids)
+            ->get()
+            ->each(function (SizeGrid $model) use (&$result): void {
+                $result[$model->id] = $this->hydrate($model);
+            });
+
+        return $result;
+    }
+
     public function save(SizeGridEntity $sizeGrid): SizeGridEntity
     {
         $model = $sizeGrid->id

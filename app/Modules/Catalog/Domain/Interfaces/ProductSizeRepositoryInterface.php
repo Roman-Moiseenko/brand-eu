@@ -15,6 +15,14 @@ interface ProductSizeRepositoryInterface
     public function getByProductId(int $productId): array;
 
     /**
+     * Активные варианты размеров для нескольких товаров.
+     *
+     * @param int[] $productIds
+     * @return array<int, ProductSizeEntity[]> product_id => ProductSizeEntity[]
+     */
+    public function getActiveByProductIds(array $productIds): array;
+
+    /**
      * ID товаров, у которых настроена указанная размерная сетка.
      *
      * @return int[]

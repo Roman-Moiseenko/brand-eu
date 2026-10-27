@@ -139,8 +139,10 @@ class OrderEntity
         //При добавлении товара, добавляем, даже дубли, без изменения кол-ва
         if ($increase) {
             foreach ($this->items as &$item) {
-                //Если такой товар уже есть и тип заказа совпадает
-                if ($item->productId == $data->productId && $item->preorder == $data->preorder) {
+                //Если такой товар уже есть, тип заказа и размер совпадают
+                if ($item->productId == $data->productId
+                    && $item->preorder == $data->preorder
+                    && $item->productSizeId === $data->productSizeId) {
                     $item->quantity += $data->quantity;
                     $this->recalculateTotals();
                     return;
@@ -158,7 +160,7 @@ class OrderEntity
         $orderItem->discountId = $data->discountId;
         $orderItem->discountType = $data->discountType;
         $orderItem->preorder = $data->preorder ?? false;
-
+        $orderItem->productSizeId = $data->productSizeId;
         $this->items[] = $orderItem;
 
         $this->recalculateTotals();

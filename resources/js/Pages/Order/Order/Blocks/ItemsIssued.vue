@@ -9,6 +9,9 @@
         <el-table-column prop="product.name" label="Товар / Вес, Объем" width="240" show-overflow-tooltip>
             <template #default="scope">
                 {{ scope.row.product.name }} <span v-if="scope.row.preorder" class="font-medium ml-2">(предзаказ)</span>
+                <div v-if="scope.row.size" class="text-xs text-gray-500">
+                    Размер {{ scope.row.size }}<span v-if="scope.row.width"> ({{ scope.row.width }})</span>
+                </div>
                 <div>
                     {{ scope.row.product.weight }}кг / {{ scope.row.product.volume }}м3
                 </div>

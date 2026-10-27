@@ -116,3 +116,42 @@ products 1 ──── * products_sizes 1 ──── * stock.products_sizes_i
 - Две оси (`size` + `width`) — `width` образует колонки, внутри колонки идут размеры.
   Клик по заголовку колонки отключает/включает все размеры этой оси.
 - Кнопка «Сохранить размеры» отправляет изменённые `isActive` на сервер.
+
+## 7. Размеры в поиске, корзине и заказе
+
+### 7.1 Поиск товаров (админка)
+
+- [`ProductSearchService::loadSizes()`](app/Modules/Content/Application/Services/ProductSearchService.php:134)
+  возвращает активные варианты размеров товара в виде списка `{ productSizeId, label }`
+  в поле `sizes` DTO [`ProductSearchResultData`](app/Modules/Content/Application/DTOs/ProductWidget/ProductSearchResultData.php:9).
+- `label` вычисляется на бекенде [`ProductSearchService::buildLabel()`](app/Modules/Content/Application/Services/ProductSearchService.php:192)
+  по осям из `size_grids.dimensions`: одна ось → её `value` (`42`), две и более осей →
+  `первое значение (остальные)` (`42 (D)`).
+- Компонент [`AddProduct.vue`](resources/js/VueComponents/Search/AddProduct.vue:34) при выборе товара
+  показывает `el-select` «Размер» перед кнопкой добавления; выбранное значение записывается
+  в `form.productSizeId` и уходит в POST вместе с `product_id`/`productId`, `quantity`, `preorder`.
+
+### 7.2 Заказ (Order)
+
+- [`AddProductOrderUseCase`](app/Modules/Order/Application/Actions/OrderItem/AddProductOrderUseCase.php:34)
+  принимает DTO [`OrderAddProductData`](app/Modules/Order/Application/DTOs/OrderAddProductData.php:11)
+  с полем `productSizeId`, прокидывает его в [`OrderItemData`](app/Modules/Order/Application/DTOs/OrderItem/OrderItemData.php:7)
+  и вызывает `OrderEntity::addItem($itemDto, true)`.
+- [`OrderEntity::addItem()`](app/Modules/Order/Domain/Entities/OrderEntity.php:137) при `$increase = true`
+  ищет существующую позицию по `productId + preorder + productSizeId` (строгое сравнение `===`,
+  `null` означает «товар без размера») и увеличивает её `quantity`; если совпадения нет — создаёт
+  новую позицию. Дубли не создаются, а один товар с разными размерами — разные позиции.
+- `product_size_id` сохраняется и гидратируется в [`OrderRepository`](app/Modules/Order/Infrastructure/Persistence/OrderRepository.php:193)
+  (`syncItems()` / `hydrateItem()`) и модели [`OrderItem`](app/Modules/Order/Infrastructure/Models/OrderItem.php:47).
+
+### 7.3 Корзина (Cart)
+
+- Витрина: [`product.js`](resources/js/brand-eu/product.js:64) при выборе размера записывает `productSizeId`
+  в атрибут `data-options` кнопки `.to-cart`; [`frontend.js`](resources/js/brand-eu/frontend.js:152)
+  при клике отправляет его как `productSizeId` в `POST /cart_post/add`.
+- [`AddToCartUseCase`](app/Modules/Cart/Application/Actions/AddToCartUseCase.php:18) ищет позицию через
+  `CartRepository::getItemByProductId($id, $client, $productSizeId)` (фильтр по `product_size_id`,
+  если передан); при нахождении увеличивает `quantity`, иначе создаёт
+  [`CartItemEntity`](app/Modules/Cart/Domain/Entities/CartItemEntity.php:6) с `productSizeId`.
+- `product_size_id` сохраняется в [`CartStorage`](app/Modules/Cart/Infrastructure/Models/CartStorage.php:1) /
+  [`CartCookie`](app/Modules/Cart/Infrastructure/Models/CartCookie.php:1) (см. [`CartRepository::save()`](app/Modules/Cart/Infrastructure/Persistence/CartRepository.php:77)).

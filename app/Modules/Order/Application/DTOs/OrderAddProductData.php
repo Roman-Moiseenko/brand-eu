@@ -19,5 +19,7 @@ class OrderAddProductData extends Data
         public ?bool $preorder = false,
         #[Nullable, BooleanType]
         public ?bool $increase = false, //Увеличение имеющегося (true) или добавление новой позиции (false)
+        #[Nullable, Numeric]
+        public ?int $productSizeId = null,
     ) {}
 }

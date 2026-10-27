@@ -211,6 +211,7 @@ class OrderRepository implements OrderRepositoryInterface
                     $item->comment = $entity->comment ?? '';
                     $item->assemblage = $entity->assemblage;
                     $item->packing = $entity->packing;
+                    $item->product_size_id = $entity->productSizeId;
                     $item->save();
                     $entityIds[] = $entity->id;
                 }
@@ -228,6 +229,7 @@ class OrderRepository implements OrderRepositoryInterface
                     'comment' => $entity->comment ?? '',
                     'assemblage' => $entity->assemblage,
                     'packing' => $entity->packing,
+                    'product_size_id' => $entity->productSizeId,
                 ]);
                 $entity->id = $item->id;
                 $entity->orderId = $model->id;
@@ -434,6 +436,7 @@ class OrderRepository implements OrderRepositoryInterface
         $entity->reserveId = $model->reserve_id;
         $entity->assemblage = (bool) $model->assemblage;
         $entity->packing = (bool) $model->packing;
+        $entity->productSizeId = $model->product_size_id;
 
         if ($model->created_at instanceof \DateTimeInterface) {
             $entity->createdAt = DateTimeImmutable::createFromInterface($model->created_at);

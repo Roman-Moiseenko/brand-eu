@@ -20,6 +20,9 @@ readonly class OrderItemViewData
 
         public bool    $assemblage,
         public bool    $packing,
+
+        public ?string $size = null,
+        public ?string $width = null,
     )
     {
 

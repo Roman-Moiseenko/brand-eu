@@ -18,6 +18,7 @@ readonly class OrderItemData
         public ?string $comment = null,
         public ?bool   $assemblage = null,
         public ?bool   $packing = null,
+        public ?int    $productSizeId = null,
     ) {
     }
 }

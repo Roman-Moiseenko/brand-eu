@@ -78,6 +78,7 @@ readonly class CreateOrderFromCartService
                         discountId: $item->discountId,
                         discountType: !is_null($item->discountId) ? Promotion::class : null,
                         preorder: $item->isParser,
+                        productSizeId: $item->productSizeId,
                     );
                     $orderEntity->addItem($itemDto);
                     //Удаляем товары из корзины

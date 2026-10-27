@@ -22,6 +22,25 @@ class ProductSizeRepository implements ProductSizeRepositoryInterface
             ->all();
     }
 
+    public function getActiveByProductIds(array $productIds): array
+    {
+        if ($productIds === []) {
+            return [];
+        }
+
+        $result = [];
+
+        ProductSize::whereIn('product_id', $productIds)
+            ->where('is_active', true)
+            ->orderBy('id')
+            ->get()
+            ->each(function (ProductSize $model) use (&$result): void {
+                $result[$model->product_id][] = $this->hydrate($model);
+            });
+
+        return $result;
+    }
+
     public function getProductIdsBySizeGridId(int $sizeGridId): array
     {
         return Product::where('size_grid_id', $sizeGridId)
