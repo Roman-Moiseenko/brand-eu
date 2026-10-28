@@ -79,10 +79,10 @@ read-only контракт с одним методом на раздел: `dash
 - Агрегаты источников берутся из [`SourceDaily`](app/Modules/Analytics/Infrastructure/Models/SourceDaily.php:1).
 - Названия товаров/категорий/статей подставляются в [`topEntityPages()`](app/Modules/Analytics/Infrastructure/Persistence/AnalyticsReportRepository.php:418)
   через [`entityNames()`](app/Modules/Analytics/Infrastructure/Persistence/AnalyticsReportRepository.php:448):
-  - товар → [`Product::withTrashed()`](app/Modules/Catalog/Infrastructure/Models/Product.php:117);
-  - категория → [`Category`](app/Modules/Catalog/Infrastructure/Models/Category.php:32);
-  - пост/статья → [`Post`](app/Modules/Content/Infrastructure/Models/Post.php:26).
-  Если сущность не найдена, подставляется `#id`.
+    - товар → [`Product::withTrashed()`](app/Modules/Catalog/Infrastructure/Models/Product.php:117);
+    - категория → [`Category`](app/Modules/Catalog/Infrastructure/Models/Category.php:32);
+    - пост/статья → [`Post`](app/Modules/Content/Infrastructure/Models/Post.php:26).
+      Если сущность не найдена, подставляется `#id`.
 
 ### 3.4 Query-классы
 
@@ -221,7 +221,24 @@ read-only контракт с одним методом на раздел: `dash
 
 ---
 
-## 7. Замеченные особенности
+## 7. Очистка данных аналитики
+
+Полная очистка всех таблиц `analytics_*` выполняется командой
+[`ClearAnalyticsCommand`](app/Modules/Analytics/Presentation/Console/Commands/ClearAnalyticsCommand.php:1)
+(сигнатура `analytics:clear`):
+
+```bash
+php artisan analytics:clear
+# или без запроса подтверждения:
+php artisan analytics:clear --force
+```
+
+Команда очищает дочерние таблицы первыми, родительские — последними, с временным
+отключением проверки внешних ключей.
+
+---
+
+## 8. Замеченные особенности
 
 - Названия сущностей резолвятся по `entity_id` после агрегации, чтобы не тянуть
   отношения в основной запрос. Для удалённых товаров используется `withTrashed()`.
