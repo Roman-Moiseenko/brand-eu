@@ -1,9 +1,14 @@
+@php
+    /** @var App\Modules\Setting\Entity\Web $web */
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="yandex-verification" content="a700306944869a06" />
+    <meta name="google-site-verification" content="gXKAF21sBM_mk9C7cf-GkHU4_tqYc6r_wMHceq_0an4" />
     @if(isset($pageData) && !is_null($pageData->meta))
         @include('partials.seo-meta', ['meta' => $pageData->meta])
     @endif
@@ -48,7 +53,6 @@
                         ecommerce: "dataLayer"
                     });
 
-                    console.log('metrika', {{ $web->metrika }});
                     @endif
                     @if(!empty($web->google))
                         function gtag() {
