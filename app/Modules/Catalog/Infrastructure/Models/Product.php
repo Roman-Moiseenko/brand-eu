@@ -490,9 +490,16 @@ class Product extends Model
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
     }
 
-    public function main_modification(): HasOne
+    public function main_modification(): HasOneThrough
     {
-        return $this->hasOne(Modification::class, 'base_product_id', 'id');
+        return $this->hasOneThrough(
+            Modification::class,
+            ModificationProduct::class,
+            'product_id',
+            'id',
+            'id',
+            'modification_id'
+        )->where('modifications_products.is_primary', true);
     }
 
     public function modification_product(): HasOne
