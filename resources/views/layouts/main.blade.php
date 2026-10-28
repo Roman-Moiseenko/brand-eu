@@ -74,7 +74,7 @@
             var s = d.createElement('script');
             s.id = 'supportScript';
             s.async = true;
-            var id = '236d3c8e65ac924c3ad426f4d25680f3';
+            var id = '{{ $web->talkme }}';
             s.src = (!i ? 'https://lcab.talk-me.ru/support/support.js' : 'https://static.site-chat.me/support/support.int.js') + '?h=' + id;
             s.onerror = i ? undefined : function(){c(d,w,m,true)};
             w[m] = w[m] ? w[m] : function(){(w[m].q = w[m].q ? w[m].q : []).push(arguments);};

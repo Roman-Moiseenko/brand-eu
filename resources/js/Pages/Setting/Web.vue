@@ -100,7 +100,7 @@ const form = reactive({
     logo_alt: props.web.logo_alt,
     metrika: props.web.metrika,
     google: props.web.google,
-    talkme: props.web.google,
+    talkme: props.web.talkme,
     web_name: props.web.web_name,
 
     categories_title: props.web.categories_title,
