@@ -35,7 +35,7 @@ return new class extends Migration
                 ->comment('Referer на момент просмотра');
 
             // ============ МЕТРИКИ ============
-            $table->timestamp('viewed_at')->nullable()
+            $table->timestamp('viewed_at')
                 ->comment('Дата и время просмотра');
             $table->unsignedInteger('duration')->nullable()
                 ->comment('Время на странице в секундах');
