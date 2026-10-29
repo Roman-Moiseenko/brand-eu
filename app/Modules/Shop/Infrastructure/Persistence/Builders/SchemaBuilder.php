@@ -2,6 +2,8 @@
 
 namespace App\Modules\Shop\Infrastructure\Persistence\Builders;
 
+use App\Modules\Catalog\Infrastructure\Models\Brand;
+use App\Modules\Shop\Application\DTOs\Entities\BrandData;
 use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomData;
 use App\Modules\Shop\Application\DTOs\Entities\IkeaProductData;
 use App\Modules\Shop\Application\DTOs\Entities\PostCardData;
@@ -78,7 +80,7 @@ class SchemaBuilder
     }
 
     /**
-     * @param CategoryRoomData[] $categories
+     * @param CategoryRoomData[]|BrandData[] $categories
      * @return SchemaData
      */
     public function buildForCategoryIndex(array $categories, string $entity): SchemaData
@@ -103,6 +105,7 @@ class SchemaBuilder
 
         return new SchemaData($graph);
     }
+
 
     public function buildForProductIndex(array $products, string $slug, string $entity, array $faq): SchemaData
     {

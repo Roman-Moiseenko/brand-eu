@@ -27,6 +27,8 @@ abstract class AbstractSetting
         $setting = new static([]);
 
         foreach ($data as $field => $value) {
+            if (!isset($setting->$field)) continue;
+
             if (gettype($setting->$field) == 'boolean') {
                 $setting->$field = (bool)$value;
             } elseif (gettype($setting->$field) == 'integer') {

@@ -117,6 +117,7 @@ readonly class CategoryPageQuery
             attributes: $filters->attributes,
             brands: $filters->brands,
             tags: $filters->tags,
+            series: $filters->series,
             sortOrder: $params['order'] ?? '',
             tagId: isset($params['tag_id']) ? (int)$params['tag_id'] : null,
         );
@@ -190,6 +191,7 @@ readonly class CategoryPageQuery
             attributes: [],
             brands: [],
             tags: [],
+            series: [],
             sortOrder: $params['order'] ?? '',
             tagId: isset($params['tag_id']) ? (int)$params['tag_id'] : null,
         );

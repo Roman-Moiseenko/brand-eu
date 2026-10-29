@@ -8,6 +8,7 @@ use App\Modules\Catalog\Application\DTOs\Brand\FilterBrandIndexData;
 use App\Modules\Catalog\Domain\Entities\BrandEntity;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Catalog\Infrastructure\Models\Brand;
+use App\Modules\Shared\Domain\ValueObjects\Meta;
 use App\Modules\Shared\Domain\ValueObjects\Slug;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -48,6 +49,10 @@ class BrandRepository implements BrandRepositoryInterface
         $model->currency_id = $brand->currencyId;
         $model->parser_class = $brand->parserClass;
         $model->sameas_json = $brand->sameAs;
+        $model->meta = $brand->meta ? [
+            'title' => $brand->meta->getTitle(),
+            'description' => $brand->meta->getDescription(),
+        ] : [];
 
         $model->save();
 
@@ -156,6 +161,12 @@ class BrandRepository implements BrandRepositoryInterface
         $entity->currencyId = $model->currency_id;
         $entity->parserClass = $model->parser_class;
         $entity->sameAs = is_array($model->sameas_json) ? $model->sameas_json : [];
+
+        $metaData = is_array($model->meta) ? $model->meta : [];
+        $entity->meta = new Meta(
+            title: $metaData['title'] ?? '',
+            description: $metaData['description'] ?? '',
+        );
 
         return $entity;
     }

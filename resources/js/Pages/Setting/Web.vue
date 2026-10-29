@@ -59,11 +59,11 @@
                         <el-input v-model="form.rooms_desc" type="textarea" :rows="3"/>
                     </el-form-item>
 
-                    <el-form-item label="meta-Title для Икеа" label-position="top">
-                        <el-input v-model="form.ikea_title"  />
+                    <el-form-item label="meta-Title для страницы брендов" label-position="top">
+                        <el-input v-model="form.brand_title"  />
                     </el-form-item>
-                    <el-form-item label="meta-Description для Икеа" label-position="top">
-                        <el-input v-model="form.ikea_desc" type="textarea" :rows="3"/>
+                    <el-form-item label="meta-Description для страницы брендов" label-position="top">
+                        <el-input v-model="form.brand_desc" type="textarea" :rows="3"/>
                     </el-form-item>
 
                     <el-form-item label="meta-Title Контактные данные" label-position="top">
@@ -107,8 +107,8 @@ const form = reactive({
     categories_desc: props.web.categories_desc,
     rooms_title: props.web.rooms_title,
     rooms_desc: props.web.rooms_desc,
-    ikea_title: props.web.ikea_title,
-    ikea_desc: props.web.ikea_desc,
+    brand_title: props.web.brand_title,
+    brand_desc: props.web.brand_desc,
     title_contact: props.web.title_contact,
     title_city: props.web.title_city,
     is_cache: props.web.is_cache,

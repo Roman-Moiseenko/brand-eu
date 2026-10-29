@@ -9,6 +9,7 @@ use App\Modules\Catalog\Domain\Entities\BrandEntity;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
 use App\Modules\Shared\Domain\Entities\UserPermission;
 use App\Modules\Shared\Domain\Exceptions\AccessDeniedException;
+use App\Modules\Shared\Domain\ValueObjects\Meta;
 use App\Modules\Shared\Domain\ValueObjects\Slug;
 
 readonly class UpdateBrandUseCase
@@ -32,6 +33,15 @@ readonly class UpdateBrandUseCase
         $brand->description = $dto->description ?? '';
         $brand->currencyId = $dto->currencyId;
         $brand->sameAs = $dto->sameAs ?? [];
+
+        // Обновляем Meta
+        if ($dto->metaTitle !== null || $dto->metaDescription !== null) {
+            $currentMeta = $brand->meta ?? Meta::default();
+            $brand->meta = new Meta(
+                title: $dto->metaTitle ?? $currentMeta->getTitle(),
+                description: $dto->metaDescription ?? $currentMeta->getDescription(),
+            );
+        }
 
         if (empty(trim($dto->slug ?? ''))) {
             $slug = new Slug($brand->name);

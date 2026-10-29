@@ -73,7 +73,7 @@
             </li>
 
             <li class="menu-item">
-                <a href="{{ '#' }}" class="nav-link d-flex flex-column text-center">
+                <a href="{{ route('shop.brand.index') }}" class="nav-link d-flex flex-column text-center">
                     <i class="fa-light fa-trademark fs-3"></i>
                     <span class="fs-8">Бренды</span>
                 </a>

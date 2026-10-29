@@ -26,6 +26,10 @@ class BrandUpdateData extends Data
         public readonly ?int $currencyId,
         #[Nullable]
         public readonly ?array $sameAs,
+        #[Nullable, StringType, Max(255)]
+        public readonly ?string $metaTitle,
+        #[Nullable, StringType, Max(500)]
+        public readonly ?string $metaDescription,
     )
     {
     }

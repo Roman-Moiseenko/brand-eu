@@ -103,11 +103,14 @@ Breadcrumbs::for('shop.post.view', function (BreadcrumbTrail $trail, $slug) {
     $trail->parent('shop.posts.view', $post->category->slug);
     $trail->push($post->name, route('shop.post.view', $slug));
 });
+Breadcrumbs::for('shop.brand.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('shop.home');
+    $trail->push('Бренды', route('shop.brand.index'));
+});
 
 Breadcrumbs::for('shop.brand.view', function (BreadcrumbTrail $trail, $slug) {
-
     $brand = (new SlugRepository())->BrandBySlug($slug);
-    $trail->parent('shop.category.index');
+    $trail->parent('shop.brand.index');
     $trail->push($brand->name, route('shop.brand.view', $slug));
 });
 

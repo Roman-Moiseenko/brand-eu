@@ -47,6 +47,7 @@ readonly class ProductFiltersResolver
             attributes: $aggregates->attributes ?? [],
             brands: $aggregates->brands ?? [],
             tags: $tags,
+            series: $aggregates->series ?? [],
             sortOrder: $params['order'] ?? '',
             tagId: isset($params['tag_id']) ? (int)$params['tag_id'] : null,
         );

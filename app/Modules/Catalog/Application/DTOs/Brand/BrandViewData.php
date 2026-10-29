@@ -19,6 +19,7 @@ class BrandViewData extends Data
         public readonly ?string $parserClass,
         /** @var string[] */
         public readonly array $sameAs = [],
+        public readonly ?array $meta = null,
     )
     {
     }
@@ -34,6 +35,10 @@ class BrandViewData extends Data
             currencyId: $brand->currencyId,
             parserClass: $brand->parserClass,
             sameAs: $brand->sameAs,
+            meta: $brand->meta ? [
+                'title' => $brand->meta->getTitle(),
+                'description' => $brand->meta->getDescription(),
+            ] : null,
         );
     }
 }

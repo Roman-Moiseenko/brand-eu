@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Shop\Application\Brand;
+namespace App\Modules\Shop\Application\Queries\Brand;
 
 use App\Modules\Setting\Application\Actions\GetWebSettingsUseCase;
 use App\Modules\Shop\Application\DTOs\ClientContext;

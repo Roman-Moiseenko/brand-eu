@@ -20,8 +20,8 @@ class Web extends AbstractSetting
 
     public string $categories_title = '';
     public string $categories_desc = '';
-    public string $ikea_title = '';
-    public string $ikea_desc = '';
+    public string $brand_title = '';
+    public string $brand_desc = '';
     public string $rooms_title = '';
     public string $rooms_desc = '';
     public string $title_contact = '';

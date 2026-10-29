@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Catalog\Domain\Entities;
 
 use App\Modules\Parser\Application\Interfaces\ParserServiceInterface;
+use App\Modules\Shared\Domain\ValueObjects\Meta;
 use App\Modules\Shared\Domain\ValueObjects\Slug;
 use InvalidArgumentException;
 
@@ -44,6 +45,11 @@ final class BrandEntity
     public array $sameAs = [] {
         get => $this->sameAs;
         set => $this->sameAs = $value;
+    }
+
+    public ?Meta $meta = null {
+        get => $this->meta;
+        set => $this->meta = $value;
     }
 
     public ?string $image_url = null {

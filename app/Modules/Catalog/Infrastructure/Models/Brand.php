@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property string $url
  * @property string $sameas_json
+ * @property array $meta
  * @property Product[] $products
  * @property string $parser_class ... класс Парсер товаров
  * @property Currency $currency
@@ -24,16 +25,13 @@ class Brand extends Model
 {
     use ImageField;
 
-    const DEFAULT = 1;
-    const IKEA = 'Икеа';
-    const NB = 'New Balance';
-
     private array $sameAs = [];
     protected $fillable = [
         'name',
         'slug',
         'description',
         'url',
+        'meta',
     ];
 
     protected $attributes = [
@@ -41,6 +39,7 @@ class Brand extends Model
     ];
     protected $casts = [
         'sameas_json' => 'array',
+        'meta' => 'array',
     ];
 
     protected $hidden = [
@@ -57,16 +56,6 @@ class Brand extends Model
         ]);
     }
 
-    public function setSameAs($sameAs): void
-    {
-        $this->sameAs = $sameAs ?? [];
-    }
-
-    public function getSameAs(): array
-    {
-        return $this->sameAs;
-    }
-
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class, 'currency_id', 'id');
@@ -77,15 +66,4 @@ class Brand extends Model
        return $this->hasMany(Product::class, 'brand_id', 'id');
     }
 
-
-
-    public static function IkeaID(): int
-    {
-        return self::where('name', self::IKEA)->first()->id;
-    }
-
-    public static function NbID(): int
-    {
-        return self::where('name', self::NB)->first()->id;
-    }
 }

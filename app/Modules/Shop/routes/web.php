@@ -72,10 +72,17 @@ Route::group(
             Route::get('/', [RoomController::class, 'index'])->name('index');
             Route::get('/{slug}', [RoomController::class, 'view'])->name('view');
         });
-        Route::get('/novelty', [CatalogController::class, 'novelty'])->name('novelty');
+        Route::group([
+            'as' => 'brand.',
+            'prefix' => 'brand',
+        ], function () {
+            Route::get('/', [BrandController::class, 'index'])->name('index');
+            Route::get('/{slug}', [BrandController::class, 'view'])->name('view');
+        });
 
+        Route::get('/novelty', [CatalogController::class, 'novelty'])->name('novelty');
+        //TODO Возможно сделать группировку и добавить index
         Route::get('/promotion/{slug}', [PromotionController::class, 'view'])->name('promotion.view');
-        Route::get('/brand/{slug}', [BrandController::class, 'view'])->name('brand.view');
         Route::get('/group/{slug}', [GroupController::class, 'view'])->name('group.view');
 
         //CHECKOUT

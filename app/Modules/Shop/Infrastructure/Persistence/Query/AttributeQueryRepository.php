@@ -7,6 +7,7 @@ namespace App\Modules\Shop\Infrastructure\Persistence\Query;
 use App\Modules\Accounting\Domain\ValueObjects\PriceType;
 use App\Modules\Catalog\Domain\ValueObjects\AttributeType;
 use App\Modules\Shared\Application\Actions\GetImageThumbByRowUseCase;
+use App\Modules\Shop\Application\DTOs\Elements\IdNameData;
 use App\Modules\Shop\Application\DTOs\Elements\IdNameImageData;
 use App\Modules\Shop\Application\DTOs\Entities\AttributeFilterData;
 use Illuminate\Support\Facades\DB;
@@ -186,6 +187,7 @@ class AttributeQueryRepository
                 'max_price' => 0,
                 'brands' => [],
                 'tags' => [],
+                'series' => [],
             ];
         }
 
@@ -240,11 +242,30 @@ class AttributeQueryRepository
             ->get()
             ->toArray();
 
+        $series = DB::table('products')
+            ->join('series', 'products.series_id', '=', 'series.id')
+            ->whereIn('products.id', $productIds)
+            ->whereNotNull('products.series_id')
+            ->select('series.id', 'series.name')
+            ->distinct()
+            ->orderBy('series.name')
+            ->get()
+            ->toArray();
+
+        $seriesDtos = array_map(
+            fn($item) => new IdNameData(
+                id: (int)$item->id,
+                name: $item->name,
+            ),
+            $series,
+        );
+
         return (object)[
             'min_price' => (float)($priceData->min_price ?? 0),
             'max_price' => (float)($priceData->max_price ?? 0),
             'brands' => $brandDtos,
             'tags' => $tags,
+            'series' => $seriesDtos,
         ];
     }
 
@@ -264,6 +285,7 @@ class AttributeQueryRepository
                 'brands' => [],
                 'tags' => [],
                 'attributes' => [],
+                'series' => [],
             ];
         }
 
@@ -274,6 +296,7 @@ class AttributeQueryRepository
                 'brands' => [],
                 'tags' => [],
                 'attributes' => [],
+                'series' => [],
             ];
         }
 
@@ -347,6 +370,16 @@ class AttributeQueryRepository
         }
         if (!empty($filters['tag_id'])) {
             $query->whereHas('tags', fn($q) => $q->where('id', $filters['tag_id']));
+        }
+
+        if (!empty($filters['series'])) {
+            $seriesIds = array_values(array_filter(
+                array_map('intval', (array)$filters['series']),
+                fn(int $id) => $id > 0,
+            ));
+            if (!empty($seriesIds)) {
+                $query->whereIn('series_id', $seriesIds);
+            }
         }
 
         $attrIds = [];

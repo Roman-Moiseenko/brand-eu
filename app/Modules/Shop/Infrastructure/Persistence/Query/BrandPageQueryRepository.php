@@ -3,6 +3,7 @@
 namespace App\Modules\Shop\Infrastructure\Persistence\Query;
 
 use App\Modules\Catalog\Infrastructure\Models\Product;
+use App\Modules\Shop\Application\DTOs\Entities\BrandData;
 use App\Modules\Shop\Application\DTOs\Entities\CategoryRoomMainData;
 use App\Modules\Shop\Application\DTOs\Menu\BrandItemMenuData;
 use App\Modules\Shop\Application\Helpers\ImageInfoDataHelper;
@@ -17,6 +18,43 @@ class BrandPageQueryRepository
         private readonly ImageInfoDataHelper $imageInfoHelper,
     )
     {
+    }
+
+    /**
+     * @return BrandData[]
+     */
+    public function getBrands(): array
+    {
+        $rows = DB::table('brands')
+            ->leftJoin('photos', function ($join) {
+                $join->on('brands.id', '=', 'photos.imageable_id')
+                    ->where('photos.model_type', '=', self::BRAND_MODEL_TYPE)
+                    ->where('photos.type', '=', 'image');
+            })
+            ->select(
+                'brands.*',
+                'photos.id as photo_id',
+                'photos.file as photo_file',
+                'photos.alt as photo_alt',
+                'photos.title as photo_title',
+                'photos.description as photo_description',
+                'photos.format as photo_format',
+                'photos.width as photo_width',
+                'photos.height as photo_height',
+                'photos.model_type as model_type',
+            )
+            ->orderBy('brands.name')
+            ->get();
+
+        return $rows
+            ->map(fn (\stdClass $row) => new BrandData(
+                id: (int) $row->id,
+                name: $row->name,
+                slug: $row->slug,
+                image: !empty($row->photo_id) ? $this->imageInfoHelper->build($row)->src : '',
+                description: $row->description ?? '',
+            ))
+            ->all();
     }
 
     public function getBrand(string $slug): ?CategoryRoomMainData
@@ -43,6 +81,8 @@ class BrandPageQueryRepository
             ->first();
         if (!$row) return null;
 
+        $meta = json_decode($row->meta ?? '', true) ?? [];
+
         return new CategoryRoomMainData(
             id: $row->id,
             name: $row->name,
@@ -51,8 +91,8 @@ class BrandPageQueryRepository
             entity: 'category',
             parent: null,
             totalProducts: 0,
-            title: $row->name,
-            description: $row->description ?? '',
+            title: $meta['title'] ?? $row->name,
+            description: $meta['description'] ?? '',
             image: !empty($row->photo_id) ? $this->imageInfoHelper->build($row) : null,
         );
     }

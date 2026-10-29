@@ -52,6 +52,18 @@
             @endforeach
         </x-widget.variant>
         <hr/>
+        @if(!empty($filters->series))
+            <x-widget.variant class="" caption="Серия" id="series">
+                @foreach($filters->series as $series)
+                    <x-widget.variant-item name="series[]" id="{{ $series->id }}"
+                                           caption="{{ $series->name }}"
+                                           checked="{{ isset($request['series']) ? in_array($series->id, $request['series']) : false }}"
+                    />
+                @endforeach
+            </x-widget.variant>
+            <hr/>
+        @endif
+
         @foreach($filters->attributes as $attribute)
             <div>
                 @if($attribute->isBool)

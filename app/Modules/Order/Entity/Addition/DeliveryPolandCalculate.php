@@ -15,36 +15,7 @@ class DeliveryPolandCalculate extends CalculateAddition
     #[Deprecated]
     public static function calculate(Order $order, int $base): int
     {
-        $settings = app()->make(Settings::class);
-        $parser = $settings->parser;
-        $ikea = Brand::IkeaID();
 
-        //Считаем вес
-        $weight = 0;
-        $fragile = 0; //Хрупкий
-        $sanctioned = 0; //Санкционный
-        foreach ($order->items as $item) {
-            if ($item->preorder && $item->product->brand_id == $ikea) {
-                $weight += $item->product->weight() * $item->quantity;
-                if (!is_null($item->product->parser)) {
-
-                    if ($item->product->parser->sanctioned)
-                        $sanctioned += ($item->sell_cost * $parser->cost_sanctioned / 100) * $item->quantity;
-                    if ($item->product->parser->fragile)
-                        $fragile += $item->product->weight() * $item->quantity;
-                } else {
-                    //throw new \DomainException('Товара нет в таблице Парсера')
-                }
-            }
-        }
-        if ($weight == 0) return 0;
-        //Коэффициент к стоимости
-
-        $coef = self::getRatio($weight, $parser);
-
-        $cost = $weight * $coef + $fragile * $parser->cost_weight_fragile + $sanctioned;
-
-        return $cost < 1000 ? 1000 : (int)ceil($cost);
     }
 
 

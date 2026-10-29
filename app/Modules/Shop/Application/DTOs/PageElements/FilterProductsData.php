@@ -14,6 +14,7 @@ readonly class FilterProductsData
      * @param AttributeFilterData[] $attributes
      * @param IdNameImageData[] $brands
      * @param IdNameData[] $tags
+     * @param IdNameData[] $series
      * @param string $sortOrder
      * @param int|null $tagId
      */
@@ -23,6 +24,7 @@ readonly class FilterProductsData
         public array  $attributes,
         public array  $brands,
         public array  $tags,
+        public array  $series = [],
         public string $sortOrder = '',
         public ?int   $tagId = null,
     )

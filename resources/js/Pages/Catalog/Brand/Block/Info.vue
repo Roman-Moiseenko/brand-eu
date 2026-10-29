@@ -6,7 +6,7 @@
                     <PhotoDTO model-type="catalog.brand" :entity-id="brand.id" type="image"/>
                 </el-tooltip>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="6">
                 <el-form-item label="Название бренда">
                     <el-input v-model="info.name"/>
                 </el-form-item>
@@ -22,9 +22,17 @@
                     </el-select>
                 </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="7">
                 <el-form-item label="Описание">
-                    <el-input v-model="info.description" type="textarea" :rows="5"/>
+                    <el-input v-model="info.description" type="textarea" :rows="6"/>
+                </el-form-item>
+            </el-col>
+            <el-col :span="7">
+                <el-form-item label="Meta-Title">
+                    <el-input v-model="info.metaTitle"/>
+                </el-form-item>
+                <el-form-item label="Meta-Description">
+                    <el-input v-model="info.metaDescription" type="textarea" :rows="4"/>
                 </el-form-item>
             </el-col>
         </el-row>
@@ -59,6 +67,8 @@ const initialInfo = {
     currencyId: props.brand.currencyId ?? null,
     description: props.brand.description ?? '',
     sameAs: props.brand.sameAs ?? [],
+    metaTitle: props.brand?.meta?.title ?? '',
+    metaDescription: props.brand?.meta?.description ?? '',
 }
 
 const info = reactive({...initialInfo})
