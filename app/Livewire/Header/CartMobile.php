@@ -4,11 +4,13 @@ namespace App\Livewire\Header;
 
 use App\Modules\Cart\Application\Actions\GetCartQuery;
 use App\Modules\Shop\Application\Services\ClientContextFactory;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CartMobile extends Component
 {
+    #[Locked]
     public int $count = 0;
 
     public function mount(): void

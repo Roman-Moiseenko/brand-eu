@@ -11,19 +11,26 @@ use App\Modules\Cart\Application\Actions\RemoveCartItemUseCase;
 use App\Modules\Cart\Application\DTOs\CartItemData;
 use App\Modules\Shop\Application\Services\ClientContextFactory;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Cart extends Component
 {
     use RecordsAnalyticsAction;
+    #[Locked]
     public string $test = '';
+    #[Locked]
     public int $count;
+    #[Locked]
     public float $amount;
+    #[Locked]
     public float $discount;
+    #[Locked]
     public ?int $clientId = null;
 
     /** @var CartItemData[] $items  */
+    #[Locked]
     public array $items;
 
     public function boot(): void
