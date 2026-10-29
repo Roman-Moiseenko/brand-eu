@@ -24,11 +24,7 @@ window.$ = jQuery;
         touchDrag: true,
         mouseDrag: true,
         dotsEach: 1,
-        responsive: {
-            990: {
-                items: 2,
-            }
-        }
+        responsive: {}
     };
 
     if (document.querySelectorAll('.widget-slider-common') !== null) {
@@ -78,12 +74,20 @@ window.$ = jQuery;
         slidersWidget.each(function (element) {
             let sliderWidget = $(this);
             let items  = sliderWidget.data('items');
+            let items_mob  = sliderWidget.data('items-mob');
             let dots  = sliderWidget.data('dots');
             let nav  = sliderWidget.data('nav');
-            optionsSliderWidget.items = items;
+            console.log(sliderWidget.data('items-mob'))
+            if (items_mob === undefined) items_mob = items
+            optionsSliderWidget.items = items_mob;
             optionsSliderWidget.dots = dots;
             optionsSliderWidget.nav = nav;
-            if (items == '1') optionsSliderWidget.responsive = {};
+            optionsSliderWidget.responsive = {
+                756: {
+                    items: items
+                }
+            };
+            console.log(optionsSliderWidget)
             sliderWidget.owlCarousel(optionsSliderWidget);
         });
     }
