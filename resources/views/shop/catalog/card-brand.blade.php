@@ -9,7 +9,6 @@
                 <img
                     src="{{ (empty($item->image)) ? '\images\no-image.jpg' : $item->image }}"
                     alt="{{ $item->name }}">
-                <span>{{ $item->name }}</span>
             </div>
         </a>
         <div>
