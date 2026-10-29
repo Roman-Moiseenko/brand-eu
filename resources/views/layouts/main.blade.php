@@ -12,9 +12,9 @@
     @if(isset($pageData) && !is_null($pageData->meta))
         @include('partials.seo-meta', ['meta' => $pageData->meta])
     @endif
-    <link rel="icon" href="{{ url('images/icons/favicon.png') }}" size="32x32">
-    <link rel="icon" href="{{ url('images/icons/favicon.png') }}" size="192x192">
-    <link rel="apple-touch-icon" href="{{ url('images/icons/favicon.png') }}" size="192x192">
+    <link rel="icon" href="{{ url('images/icons/favicon-32.png') }}" size="32x32">
+    <link rel="icon" href="{{ url('images/icons/favicon-192.png') }}" size="192x192">
+    <link rel="apple-touch-icon" href="{{ url('images/icons/favicon-300.png') }}" size="300x300">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

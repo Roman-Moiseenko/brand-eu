@@ -111,7 +111,7 @@ class ShopServiceProvider extends ServiceProvider
         $this->registerSeeders();
 
 
-        $storefront = ['shop.*', 'cart.*', 'cabinet.*', 'errors.*'];
+        $storefront = ['shop.*', 'cart.*', 'cabinet.*', 'errors.*', 'errors::*'];
 
         View::composer($storefront, CategoryComposer::class);
         View::composer($storefront, ClientComposer::class); //shop.*
