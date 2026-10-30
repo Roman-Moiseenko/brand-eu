@@ -18,7 +18,7 @@ class ProductController extends ShopAbstractController
     public function __construct(
         private readonly ProductViewQuery       $productViewQuery,
         private readonly PageProductSearchQuery $productSearchQuery,
-        private readonly CatalogSearchQuery     $fullSearchQuery,
+       // private readonly CatalogSearchQuery     $fullSearchQuery,
         private readonly TrackSearchService     $trackSearchService,
         private readonly SearchQuery            $searchQuery,
     )
