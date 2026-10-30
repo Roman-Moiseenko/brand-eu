@@ -9,6 +9,8 @@ use App\Modules\Shared\Domain\Entities\PhotoEntity;
 use App\Modules\Shared\Domain\Entities\UserPermission;
 use App\Modules\Shared\Domain\Interfaces\PhotoRepositoryInterface;
 use App\Modules\Shared\Domain\ValueObjects\PhotoType;
+use App\Modules\Shared\Domain\ValueObjects\QueueName;
+use App\Modules\Shared\Infrastructure\Job\CreatePhotoThumbsJob;
 use App\Modules\Shared\Infrastructure\Mappers\ModelTypeMapper;
 use App\Modules\Shared\Infrastructure\Services\PhotoService;
 use Illuminate\Http\UploadedFile;
@@ -24,8 +26,6 @@ readonly class UploadPhotoUseCase
 
     public function execute(PhotoUploadData $dto): PhotoEntity
     {
-        // Проверка прав доступа
-        // if (!$userPermission->can('storage.photo.upload')) throw new \DomainException('Доступ запрещён');
 
         $fqcn = ModelTypeMapper::toFqcn($dto->modelType);
 
@@ -56,6 +56,10 @@ readonly class UploadPhotoUseCase
             }
         }
 
-        return $this->photoRepository->save($photo);
+        $saved = $this->photoRepository->save($photo);
+
+        CreatePhotoThumbsJob::dispatch($saved->id)->onQueue(QueueName::PHOTO);
+
+        return $saved;
     }
 }

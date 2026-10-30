@@ -91,6 +91,7 @@ readonly class CategoryPageQuery
 
         //Список всех ID товаров уже с фильтрацией
         $productIds = $idPaginator->items();
+
         $productCardsRaw = $this->productIndexQueryRepository->loadProductCards($productIds, $clientContext);
         $productCards = array_map(
             fn(array $item) => $this->regionalPriceCalculator->productCardData(

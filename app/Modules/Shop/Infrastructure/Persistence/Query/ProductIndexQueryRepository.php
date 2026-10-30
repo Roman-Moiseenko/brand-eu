@@ -220,6 +220,7 @@ class ProductIndexQueryRepository
         $sizesByProduct = $this->loadActiveSizes($ids);
 
         $result = [];
+        \Log::warning(count($products));
         foreach ($products as $item) {
             $imageData = $this->buildImageDataFromRow($item, '1');
             $imageNextData = !empty($item->photo2_file)

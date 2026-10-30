@@ -12,7 +12,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Log;
 
 class CatalogController extends ShopAbstractController
 {
@@ -35,13 +34,7 @@ class CatalogController extends ShopAbstractController
 
     public function view(Request $request, $slug): View|Factory|\Illuminate\View\View
     {
-        $start = microtime(true);
-
         $data = $this->categoryPageQuery->execute($slug, $request->all(), $this->getClient($request));
-
-        $durationMs = (microtime(true) - $start) * 1000;
-        Log::info('CategoryPageQuery execution time', ['milliseconds' => $durationMs]);
-
         if (is_null($data)) abort(404, 'Категория не найдена');
 
         return view('shop.product.index', [
