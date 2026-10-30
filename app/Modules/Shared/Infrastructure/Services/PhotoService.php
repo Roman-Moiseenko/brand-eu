@@ -97,7 +97,7 @@ class PhotoService
     {
         $path = $this->patternGeneratePath($modelType, $imageableId);
         $thumbName = $this->nameFileThumb($photoId, $fileName, $thumb);
-        //$this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
+       // $this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
         return $this->storage->url(self::URL_THUMB . $path . $thumbName);
 
     }

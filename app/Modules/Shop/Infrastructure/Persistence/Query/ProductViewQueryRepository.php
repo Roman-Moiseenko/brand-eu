@@ -144,6 +144,13 @@ class ProductViewQueryRepository
 
                 // Brand logo
                 DB::raw("(
+                    SELECT id FROM photos
+                    WHERE imageable_id = brands.id
+                      AND model_type = 'catalog.brand'
+                      AND type = 'image'
+                    LIMIT 1
+                ) as brand_logo_id"),
+                DB::raw("(
                     SELECT file FROM photos
                     WHERE imageable_id = brands.id
                       AND model_type = 'catalog.brand'
@@ -215,8 +222,14 @@ class ProductViewQueryRepository
 
         // Brand logo URL
         $brandLogo = '';
-        if (!empty($row->brand_logo_file)) {
-            $brandLogo = '/uploads/brand/' . $row->brand_id . '/' . $row->brand_logo_file;
+        if (!empty($row->brand_logo_id) && !empty($row->brand_logo_file)) {
+            $brandPhotoRow = new \stdClass();
+            $brandPhotoRow->id = (int) $row->brand_id;
+            $brandPhotoRow->photo_id = (int) $row->brand_logo_id;
+            $brandPhotoRow->photo_file = $row->brand_logo_file;
+            $brandPhotoRow->model_type = 'catalog.brand';
+
+            $brandLogo = $this->imageThumbUseCase->execute($brandPhotoRow);
         }
 
         // Размерный ряд товара (только активные варианты products_sizes)
