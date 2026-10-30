@@ -57,6 +57,30 @@ readonly class LocalPhotoStorage implements PhotoStorageInterface
         }
     }
 
+    public function deleteDirectory(string $directoryRelativePath): void
+    {
+        $dir = $this->absolute($directoryRelativePath);
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $file) {
+            /** @var \SplFileInfo $file */
+            if ($file->isDir()) {
+                @rmdir($file->getPathname());
+            } else {
+                @unlink($file->getPathname());
+            }
+        }
+
+        @rmdir($dir);
+    }
+
     public function url(string $relativePath): string
     {
         // Относительные пути у нас уже начинаются с "/uploads" или "/cache"

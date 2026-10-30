@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Setting\Application\Actions;
 
+use App\Modules\Setting\Application\Actions\Concerns\RunsArtisanCommand;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 
 class ClearImageCacheUseCase
 {
+    use RunsArtisanCommand;
     /**
      * Очищает кэш изображений и запускает пересоздание миниатюр
      * через команду photo:cache-regenerate.
@@ -17,16 +19,7 @@ class ClearImageCacheUseCase
      */
     public function execute(): string
     {
-        // Совместимость со старым кэшем в public/caches.
-        $legacyPath = public_path('caches');
-        if (File::isDirectory($legacyPath)) {
-            File::cleanDirectory($legacyPath);
-        }
+        return $this->runArtisan('photo:cache-regenerate');
 
-        $exitCode = Artisan::call('photo:cache-regenerate');
-
-        return $exitCode === 0
-            ? 'Кэш изображений очищен, задачи на пересоздание миниатюр поставлены в очередь "photo".'
-            : 'Ошибка при пересоздании кэша изображений';
     }
 }

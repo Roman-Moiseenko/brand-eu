@@ -39,38 +39,18 @@ class RegeneratePhotoCacheCommand extends Command
         }
         $modelTypes = array_values(array_unique($modelTypes));
 
-        $this->info('Удаляю кэш миниатюр...');
-
-        $cacheFiles = $this->storage->listFiles(PhotoService::URL_THUMB);
-        $deleteProgress = $this->output->createProgressBar(count($cacheFiles));
-        $deleteProgress->start();
-        foreach ($cacheFiles as $file) {
-            $this->storage->delete($file);
-            $deleteProgress->advance();
-        }
-        $deleteProgress->finish();
-        $this->newLine(2);
+        $this->storage->deleteDirectory(PhotoService::URL_THUMB);
+        $this->info('Папка кэша миниатюр удалена.');
 
         $ids = Photo::query()
             ->whereIn('model_type', $modelTypes)
             ->pluck('id');
 
-        $this->info(sprintf('Ставлю задачи в очередь "%s"...', QueueName::PHOTO));
-
-        $dispatchProgress = $this->output->createProgressBar($ids->count());
-        $dispatchProgress->start();
         foreach ($ids as $id) {
             CreatePhotoThumbsJob::dispatch((int)$id)->onQueue(QueueName::PHOTO);
-            $dispatchProgress->advance();
         }
-        $dispatchProgress->finish();
-        $this->newLine(2);
 
-        $this->info(sprintf(
-            'Удалено файлов кэша: %d. Поставлено задач: %d.',
-            count($cacheFiles),
-            $ids->count(),
-        ));
+        $this->info(sprintf('Поставлено задач в очередь "%s": %d.', QueueName::PHOTO, $ids->count()));
 
         return self::SUCCESS;
     }

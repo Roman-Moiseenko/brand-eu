@@ -72,6 +72,11 @@ final readonly class S3PhotoStorage implements PhotoStorageInterface
         }
     }
 
+    public function deleteDirectory(string $directoryRelativePath): void
+    {
+        $this->disk->deleteDirectory($this->key($directoryRelativePath));
+    }
+
     public function url(string $relativePath): string
     {
         $key = $this->key($relativePath);
