@@ -229,7 +229,7 @@ class ProductViewQueryRepository
             $brandPhotoRow->photo_file = $row->brand_logo_file;
             $brandPhotoRow->model_type = 'catalog.brand';
 
-            $brandLogo = $this->imageThumbUseCase->execute($brandPhotoRow);
+            $brandLogo = $this->imageThumbUseCase->execute($brandPhotoRow, 'mini');
         }
 
         // Размерный ряд товара (только активные варианты products_sizes)
