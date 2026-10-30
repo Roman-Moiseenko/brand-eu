@@ -36,7 +36,7 @@
                             <div class="form-check checked mt-2 p-0">
                                 <input class="form-check-input" type="checkbox" name="agreement" id="agreement"
                                        value="Согласие на обработку персональных данных">
-                                <label class="form-check-label f-z_14" for="agreement">Я <a href="/page/soglasie-na-obrabotku-personalnyx-dannyx" target="_blank">согласен</a> на обработку персональных данных. Подробнее об этом в <a href="/page/politika-obrabotki-personalnyx-dannyx" target="_blank">политике конфиденциальности</a>
+                                <label class="form-check-label f-z_14" for="agreement">Я <a href="/page/agreement" target="_blank">согласен</a> на обработку персональных данных. Подробнее об этом в <a href="/page/politika-obrabotki-personalnyx-dannyx" target="_blank">политике конфиденциальности</a>
                                 </label>
                                 <div class="invalid-feedback">
                                     Необходимо согласие на обработку персональных данных
@@ -56,15 +56,12 @@
                                 <a href="#">Регистрация</a>
                             </div>
                         </div>
-
-
-
                         <div class="d-flex justify-content-center my-5">
                             <button id="button-login" type="button" class="btn btn-dark fs-5 py-2 px-3">Войти</button>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <img src="/images/icons/nordi-home-rus.svg" alt="Логотип Норди Хоум" class="img-fluid img-logo">
+                        <img src="/images/icons/logo.png" alt="Логотип Норди Хоум" class="img-fluid img-logo">
                     </div>
                 </div>
 
