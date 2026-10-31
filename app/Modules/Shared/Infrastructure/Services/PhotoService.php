@@ -97,7 +97,7 @@ class PhotoService
     {
         $path = $this->patternGeneratePath($modelType, $imageableId);
         $thumbName = $this->nameFileThumb($photoId, $fileName, $thumb);
-        //$this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
+        $this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
         return $this->storage->url(self::URL_THUMB . $path . $thumbName);
 
     }
@@ -108,11 +108,6 @@ class PhotoService
     public function createThumbs(int $photoId, string $modelType, int $imageableId, string $fileName, string $thumb): void
     {
         $generatePath = $this->patternGeneratePath($modelType, $imageableId);
-        $uploadRelative = self::URL_UPLOAD . $generatePath . $fileName;
-        //$uploadPath = $this->catalogUpload . $generatePath . $fileName;
-
-        // if (!is_file($uploadPath)) return;
-        if (!$this->storage->exists($uploadRelative)) return;//Нет загруженного файла
 
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
         if (!in_array(mb_strtolower($ext), ['jpg', 'jpeg', 'png', 'webp'], true)) return; //Расширение невверное
@@ -126,20 +121,14 @@ class PhotoService
         if (!isset($params)) return; //Нет параметров для thumb файла
 
         $thumbRelative = self::URL_THUMB . $generatePath . $this->nameFileThumb($photoId, $fileName, $params['name']);
-        if ($this->storage->exists($thumbRelative)) return;
+        if ($this->storage->exists($thumbRelative)) return; //Файл существует
+
+        $uploadRelative = self::URL_UPLOAD . $generatePath . $fileName;
+        if (!$this->storage->exists($uploadRelative)) return;//Нет загруженного файла
+
         $localSource = $this->storage->localCopy($uploadRelative);
         if (!$localSource) return;
 
-        /*
-                $thumbFile = $this->catalogThumb
-                    . $generatePath
-                    . $this->nameFileThumb($photoId, $fileName, $params['name']);
-                if (is_file($thumbFile)) return; // Файл уже есть
-
-                $thumbDir = $this->catalogThumb . $generatePath; //Создать директорию если нет
-                if (!is_dir($this->catalogThumb . $generatePath)) mkdir($thumbDir, 0777, true);
-
-        */
         $manager = new ImageManager();
         try {
             $img = $manager->make($localSource);

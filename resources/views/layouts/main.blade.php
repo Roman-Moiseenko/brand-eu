@@ -122,7 +122,7 @@
 
 @include('shop.footer')
 <button id="upbutton" type="button" class="scrollup" aria-label="В начало"> > </button>
-{{-- @include('shop.widgets.contact-bottom') --}}
+@include('shop.widgets.contact-bottom')
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
 
