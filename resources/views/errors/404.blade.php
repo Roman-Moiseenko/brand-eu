@@ -12,7 +12,7 @@
         <h1>Страница не найдена. Ошибка 404</h1>
         <div class="row align-items-center">
             <div class="col-lg-6 t-a_center">
-                <img src="/images/nordihome/404-img-min.png" alt="Nordihome мебель из ИКЕА">
+                <img src="/images/icons/logo.png" alt="Обувь, одежда и инвентарь из Европы">
             </div>
             <div class="col-lg-5">
                   <h3 class="heading m-b_20">Ой, что-то пошло не так...</h3>
