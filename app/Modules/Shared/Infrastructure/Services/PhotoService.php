@@ -190,15 +190,6 @@ class PhotoService
             @unlink($tmpThumb);
             $this->cleanupTemp($localSource);
         }
-
-        /*
-                $thumbDir = pathinfo($thumbFile, PATHINFO_DIRNAME);
-                if (!is_dir($thumbDir)) {
-                    mkdir($thumbDir, 0777, true);
-                }
-                $img->save($thumbFile);
-                */
-        //}
     }
     private function cleanupTemp(string $path): void
     {
@@ -214,15 +205,26 @@ class PhotoService
     {
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
         if (!$ext) return;
-        //  $path = $this->catalogThumb . $this->patternGeneratePath($modelType, $imageableId);
-        //   if (!is_dir($path)) return;
+
         $thumbDir = self::URL_THUMB . $this->patternGeneratePath($modelType, $imageableId);
         foreach ($this->thumbs as $params) {
             $this->storage->deleteMatching($thumbDir, $params['name'] . '_*.' . $ext);
-            //  $thumbFile = $path . $params['name'] . '_*.' . $ext;
-            /*  foreach (glob($thumbFile) as $file) {
-                  if (is_file($file)) unlink($file);
-              }*/
+        }
+    }
+
+    /**
+     * Удаляет все thumb-файлы для одного фото по его id.
+     */
+    public function deleteThumbs(int $photoId, string $modelType, int $imageableId, string $fileName): void
+    {
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        if (!$ext) return;
+
+        $thumbDir = self::URL_THUMB . $this->patternGeneratePath($modelType, $imageableId);
+        foreach ($this->thumbs as $params) {
+            $this->storage->delete(
+                $thumbDir . $this->nameFileThumb($photoId, $fileName, $params['name'])
+            );
         }
     }
 
@@ -231,21 +233,12 @@ class PhotoService
      */
     public function deleteFile(string $modelType, int $imageableId, string $fileName): void
     {
-        if (empty($fileName)) {
-            return;
-        }
+        if (empty($fileName)) return;
 
         $this->clearThumbs($modelType, $imageableId, $fileName);
-
         $this->storage->delete(
             self::URL_UPLOAD . $this->patternGeneratePath($modelType, $imageableId) . $fileName
         );
-
-        /*
-        $uploadPath = $this->catalogUpload . $this->patternGeneratePath($modelType, $imageableId) . $fileName;
-        if (is_file($uploadPath)) {
-            unlink($uploadPath);
-        }*/
     }
 
     /**
