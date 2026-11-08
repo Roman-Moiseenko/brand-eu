@@ -183,4 +183,10 @@ class NBParserService implements ParserServiceInterface
         }
 
     }
+
+    public function ScraperCategories(): void
+    {}
+
+    public function ScraperAvailable(): void
+    {}
 }

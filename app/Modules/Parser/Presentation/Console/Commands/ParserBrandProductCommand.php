@@ -4,6 +4,7 @@ namespace App\Modules\Parser\Presentation\Console\Commands;
 
 use App\Console\CreatesApplication;
 use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
+use App\Modules\Parser\Domain\Entities\ParserCategoryEntity;
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductsJob;
 use Illuminate\Console\Command;
@@ -22,11 +23,12 @@ class ParserBrandProductCommand extends Command
     {
         $brands = $brandRepository->getAll();
         foreach ($brands as $brand) {
-            $this->info('Запускаем бренд ' . $brand->name);
+            $this->info('~~ Запускаем бренд ~~ ' . $brand->name);
             if (is_null($brand->parserClass)) continue;
             $categories = $categoryRepository->getActiveLeaves($brand->id);  //быстрая операция, запрос в БД
+            /** @var ParserCategoryEntity  $category */
             foreach ($categories as $category) {
-                $this->info('Категория ' . $category->nameRu);
+                $this->warn('Категория ' . $category->nameRu);
                 if (!empty($category->url)) LoadParserProductsJob::dispatch($category->url, $brand->id, $category->id);
             }
         }

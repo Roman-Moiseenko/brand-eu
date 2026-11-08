@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Modules\Catalog\Infrastructure\Models\Product;
 use App\Modules\Order\Entity\Order\OrderExpense;
 use App\Modules\Order\Entity\Order\OrderExpenseRefund;
 use App\Modules\Order\Entity\Order\OrderPayment;
@@ -99,14 +98,4 @@ Breadcrumbs::for('admin.order.refund.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('admin.order.refund.show', function (BreadcrumbTrail $trail, OrderExpenseRefund $refund) {
     $trail->parent('admin.order.refund.index');
     $trail->push('Возврат по заказу ' . $refund->expense->order->htmlNum() . ' от ' . $refund->expense->order->htmlDate(), route('admin.order.refund.show', $refund));
-});
-//PRODUCT
-Breadcrumbs::for('admin.order.product.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.order.index');
-    $trail->push('Все товары', route('admin.order.product.index'));
-});
-
-Breadcrumbs::for('admin.order.product.show', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('admin.order.product.index');
-    $trail->push($product->name, route('admin.order.product.show', $product));
 });

@@ -14,6 +14,12 @@ interface ParserProductRepositoryInterface
     public function getById(int $id): ParserProductEntity;
 
     public function getByCode(string $code): ?ParserProductEntity;
+
+    public function getByUrl(string $url): ?ParserProductEntity;
+
+    /** @return ParserProductEntity[] */
+    public function getAvailableByBrandId(int $brandId): array;
+
     public function existsByCode(string $code): bool;
 
     public function save(ParserProductEntity $product): ParserProductEntity;

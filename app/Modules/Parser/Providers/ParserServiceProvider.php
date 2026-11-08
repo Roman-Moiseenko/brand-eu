@@ -8,10 +8,16 @@ use App\Modules\Parser\Domain\Interfaces\CategoryProductParserRepositoryInterfac
 use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserLogRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
+use App\Modules\Parser\Domain\Interfaces\ScraperAvailableRepositoryInterface;
+use App\Modules\Parser\Domain\Interfaces\ScraperCategoryRepositoryInterface;
+use App\Modules\Parser\Domain\Interfaces\ScraperProductRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Persistence\CategoryProductParserRepository;
 use App\Modules\Parser\Infrastructure\Persistence\ParserCategoryRepository;
 use App\Modules\Parser\Infrastructure\Persistence\ParserLogRepository;
 use App\Modules\Parser\Infrastructure\Persistence\ParserProductRepository;
+use App\Modules\Parser\Infrastructure\Persistence\ScraperAvailableRepository;
+use App\Modules\Parser\Infrastructure\Persistence\ScraperCategoryRepository;
+use App\Modules\Parser\Infrastructure\Persistence\ScraperProductRepository;
 use App\Modules\Parser\Infrastructure\Services\IkeaProductApi;
 use App\Modules\Parser\Presentation\Console\Commands\old\IkeaAvailablePriceCommand;
 use App\Modules\Parser\Presentation\Console\Commands\old\IkeaCategoryCommand;
@@ -26,6 +32,10 @@ use App\Modules\Parser\Presentation\Console\Commands\ParserBrandProductCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ClearProductSizeGridCommand;
 use App\Modules\Parser\Presentation\Console\Commands\DeleteUnpublishedProductsCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserNBSeriesCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserAdidasCategoryCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserAdidasTestCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserScraperAvailableCommand;
+use App\Modules\Parser\Presentation\Console\Commands\ParserScraperCategoriesCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserProductAvailabilityCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTest2BrandCommand;
 use App\Modules\Parser\Presentation\Console\Commands\ParserTestBrandCommand;
@@ -131,6 +141,21 @@ class ParserServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            ScraperCategoryRepositoryInterface::class,
+            ScraperCategoryRepository::class
+        );
+
+        $this->app->bind(
+            ScraperProductRepositoryInterface::class,
+            ScraperProductRepository::class
+        );
+
+        $this->app->bind(
+            ScraperAvailableRepositoryInterface::class,
+            ScraperAvailableRepository::class
+        );
+
+        $this->app->bind(
             IkeaProductApiInterface::class,
             IkeaProductApi::class
         );
@@ -162,6 +187,10 @@ class ParserServiceProvider extends ServiceProvider
             ParserTestBrandCommand::class,
             ParserTest2BrandCommand::class,
             ParserNBSeriesCommand::class,
+            ParserAdidasCategoryCommand::class,
+            ParserAdidasTestCommand::class,
+            ParserScraperCategoriesCommand::class,
+            ParserScraperAvailableCommand::class,
             ParserAllAvailabilityCommand::class,
             ParserProductAvailabilityCommand::class,
         ]);

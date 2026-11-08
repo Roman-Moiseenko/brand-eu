@@ -74,6 +74,28 @@ class ParserProductRepository implements ParserProductRepositoryInterface
         return $this->hydrate($model);
     }
 
+    public function getByUrl(string $url): ?ParserProductEntity
+    {
+        $model = ParserProduct::with('sizes.productSize')->where('url', $url)->first();
+
+        if ($model === null) {
+            return null;
+        }
+
+        return $this->hydrate($model);
+    }
+
+    public function getAvailableByBrandId(int $brandId): array
+    {
+        return ParserProduct::with('sizes.productSize')
+            ->where('brand_id', $brandId)
+            ->where('availability', true)
+            ->get()
+            ->map(fn (ParserProduct $model) => $this->hydrate($model))
+            ->values()
+            ->toArray();
+    }
+
     public function existsByCode(string $code): bool
     {
          $product = ParserProduct::where('code', $code)->exists();

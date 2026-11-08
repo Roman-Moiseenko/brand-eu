@@ -1,0 +1,40 @@
+{
+    "id": 2,
+    "brand": "adidas",
+    "product": {
+        "id": "HP4584",
+        "name": "BUTY SUPERSTAR II",
+        "sku": "HP4584",
+        "description": "Buty Superstar II to nowa odsłona kultowego modelu adidas Originals, dostosowana do współczesnych oczekiwań. Standardowe dopasowanie oferuje prostą sylwetkę, łącząc tradycyjne wzornictwo z miejskim stylem oraz odważnym, wyrazistym wykończeniem.Skórzano-tekstylna cholewka nadaje elegancki wygląd, a gumowa osłona palców w kształcie muszli zachowuje charakterystyczne kontury oryginału. Sznurowanie pewnie i stabilnie utrzymuje stopę.Kolorowy branding z ząbkowanymi 3 paskami z boku oraz kultowe logo Trefoil nawiązują do dziedzictwa adidas, nadając ikonie świeży, współczesny charakter.",
+        "priceSell": 569,
+        "priceBase": 569,
+        "images": [
+            "https://assets.adidas.com/images/bffe666c795046e8bffc46079f9f5015_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_01_00_standard.jpg",
+            "https://assets.adidas.com/images/12552b0db5c4491ea774d0bcf2f7f8f0_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_02_standard.jpg",
+            "https://assets.adidas.com/images/7ff427cec9454eedaaa0116172e18fe2_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_03_standard.jpg",
+            "https://assets.adidas.com/images/6a864259235446529daf28801747a9d7_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_04_standard.jpg",
+            "https://assets.adidas.com/images/528664185f9f4ce3b73fbb33be458e50_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_05_standard.jpg",
+            "https://assets.adidas.com/images/c95b2b5a7f6d470fa1f8be185a3d999e_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_06_standard.jpg",
+            "https://assets.adidas.com/images/37da455fa7c54aee94434519afe60809_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_09_standard.jpg",
+            "https://assets.adidas.com/images/3c4823c7a8ef4aa38d8f701d250b8f59_9366/BUTY_SUPERSTAR_II_Niebieski_HP4584_15_hover_standard.jpg"
+        ],
+        "color": [
+            "Niebieski"
+        ],
+        "model": "SuperII",
+        "whom": [
+            "Для всех",
+            "Для него",
+            "Для нее"
+        ],
+        "material": [
+            "Cholewka ze skóry"
+        ],
+        "url": "https://www.adidas.pl/buty-superstar-ii/HP4584.html",
+        "weight": 643,
+        "surface": [
+            "Asfalt"
+        ],
+        "sizes": []
+    }
+}

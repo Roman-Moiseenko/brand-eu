@@ -2,7 +2,6 @@
 
 use App\Modules\Order\Controllers\ExpenseController;
 use App\Modules\Order\Controllers\PaymentController;
-use App\Modules\Order\Controllers\ProductController;
 use App\Modules\Order\Controllers\RefundController;
 use App\Modules\Order\Controllers\ReserveController;
 use App\Modules\Order\Presentation\Http\Controllers\Web\OrderController;
@@ -97,17 +96,6 @@ Route::group(
                 Route::get('/show/{refund}', [RefundController::class, 'show'])->name('show');
                 Route::post('/store/{expense}', [RefundController::class, 'store'])->name('store');
                 Route::get('/', [RefundController::class, 'index'])->name('index');
-            }
-        );
-        //Товары
-        Route::group(
-            [
-                'prefix' => 'product',
-                'as' => 'product.',
-            ],
-            function () {
-                Route::get('/', [ProductController::class, 'index'])->name('index');
-                // Route::post('/show/{product}', [ProductController::class, 'show'])->name('show');
             }
         );
         //Платежи

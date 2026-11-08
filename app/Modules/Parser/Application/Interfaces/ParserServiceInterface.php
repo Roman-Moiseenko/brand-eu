@@ -46,4 +46,17 @@ interface ParserServiceInterface
     public function GetAvailability($url, $parserProductId): void;
 
 
+    /**
+     * Заполняем задания на парсинг категорий на новые товары для js
+     * @return void
+     */
+    public function ScraperCategories(): void;
+
+    /**
+     * Заполняем задания на парсинг доступности товаров для js
+     * @return void
+     */
+    public function ScraperAvailable(): void;
+
+
 }

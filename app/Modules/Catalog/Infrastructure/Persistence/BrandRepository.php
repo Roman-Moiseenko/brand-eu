@@ -83,7 +83,7 @@ class BrandRepository implements BrandRepositoryInterface
 
     public function getByName(string $name): ?BrandEntity
     {
-        $model = Brand::where('name', $name)->first();
+        $model = Brand::whereRaw('LOWER(name) = LOWER(?)', [trim($name)])->first();
 
         if (!$model) {
             return null;

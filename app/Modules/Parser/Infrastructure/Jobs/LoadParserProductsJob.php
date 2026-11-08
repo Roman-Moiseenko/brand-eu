@@ -17,7 +17,7 @@ class LoadParserProductsJob implements ShouldQueue
     public function __construct(
         private readonly string $urlCategory,
         private readonly int    $brandId,
-        private readonly int    $categoryId,
+        private readonly int    $categoryId, //ParserCategoryEntity::id
     )
     {
     }

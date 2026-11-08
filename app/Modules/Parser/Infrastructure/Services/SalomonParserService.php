@@ -28,8 +28,18 @@ class SalomonParserService implements ParserServiceInterface
         // TODO: Implement GetParserProduct() method.
     }
 
-    public function GetAvailability($productCate): void
+    public function GetAvailability($url, $parserProductId): void
     {
         // TODO: Implement GetAvailability() method.
+    }
+
+    public function ScraperCategories(): void
+    {
+        // TODO: Implement ScraperCategories() method.
+    }
+
+    public function ScraperAvailable(): void
+    {
+        // TODO: Implement ScraperAvailable() method.
     }
 }

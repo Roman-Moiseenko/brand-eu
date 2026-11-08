@@ -555,4 +555,10 @@ class BabolatParserService implements ParserServiceInterface
         $dir = rtrim(dirname($parts['path'] ?? '/'), '/');
         return $scheme . '://' . $host . $dir . '/' . $href;
     }
+
+    public function ScraperCategories(): void
+    {}
+
+    public function ScraperAvailable(): void
+    {}
 }

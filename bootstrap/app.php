@@ -22,6 +22,7 @@ use App\Http\Middleware\ValidateSignature;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Modules\Accounting\Presentation\Http\Middlewares\CheckExchangeApiKeyMiddleware;
 use App\Modules\Analytics\Presentation\Http\Middlewares\IdentifyVisitorMiddleware;
+use App\Modules\Parser\Presentation\Http\Middlewares\CheckScraperApiKeyMiddleware;
 use App\Modules\Analytics\Presentation\Http\Middlewares\LinkVisitorToClientMiddleware;
 use App\Modules\Analytics\Presentation\Http\Middlewares\TrackPageViewMiddleware;
 use App\Modules\Shared\Presentation\Http\Middlewares\LoadUserPermission;
@@ -120,6 +121,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
             'logger' => AdminActivityLoggerMiddleware::class,
             'exchange.api.key' => CheckExchangeApiKeyMiddleware::class,
+            'scraper.api.key' => CheckScraperApiKeyMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
