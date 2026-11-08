@@ -36,13 +36,7 @@ class CreatePhotoThumbsJob implements ShouldQueue
             }
 
             foreach ($settings->getImage()->thumbs as $thumb) {
-                $photoService->createThumbs(
-                    photoId: $photo->id,
-                    modelType: $photo->model_type,
-                    imageableId: (int)$photo->imageable_id,
-                    fileName: $photo->file,
-                    thumb: $thumb['name'],
-                );
+                CreatePhotoThumbJob::dispatch($photo, $thumb['name']);
             }
         } catch (\Throwable $e) {
             \Log::warning('CreatePhotoThumbsJob failed', [
