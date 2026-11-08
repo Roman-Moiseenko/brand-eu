@@ -22,8 +22,8 @@ class CreatePhotoThumbJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
+        private readonly Photo $photo,
         private readonly string $thumb,
-        private readonly Photo $photo
     )
     {
     }

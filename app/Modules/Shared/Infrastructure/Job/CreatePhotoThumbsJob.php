@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Shared\Infrastructure\Job;
 
 use App\Modules\Setting\Entity\Settings;
+use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use App\Modules\Shared\Infrastructure\Models\Photo;
 use App\Modules\Shared\Infrastructure\Services\PhotoService;
 use Illuminate\Bus\Queueable;
@@ -36,7 +37,7 @@ class CreatePhotoThumbsJob implements ShouldQueue
             }
 
             foreach ($settings->getImage()->thumbs as $thumb) {
-                CreatePhotoThumbJob::dispatch($photo, $thumb['name']);
+                CreatePhotoThumbJob::dispatch($photo, $thumb['name'])->onQueue(QueueName::PHOTO);
             }
         } catch (\Throwable $e) {
             \Log::warning('CreatePhotoThumbsJob failed', [
