@@ -191,6 +191,13 @@ class BabolatParserService implements ParserServiceInterface
      */
     private function createModificationByColor(ProductEntity $product): ?ModificationEntity
     {
+        // Повторный прогон парсера: модификация с именем товара уже могла быть
+        // создана ранее, но не нашлась по product_id (товар пересоздан/связь потеряна).
+        $existing = $this->modificationRepository->findByName($product->name);
+        if ($existing !== null) {
+            return $existing;
+        }
+
         $color = $this->attributeRepository->findByName(AttributeName::COLOR);
         if ($color === null || $color->id === null) {
             return null;

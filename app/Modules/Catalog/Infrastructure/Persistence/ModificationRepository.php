@@ -28,6 +28,13 @@ class ModificationRepository implements ModificationRepositoryInterface
         return $this->hydrate(Modification::findOrFail($id));
     }
 
+    public function findByName(string $name): ?ModificationEntity
+    {
+        $model = Modification::where('name', $name)->first();
+
+        return $model === null ? null : $this->hydrate($model);
+    }
+
     public function getViewData(int $id): ModificationViewData
     {
         $model = Modification::with(['prod_attributes.variants', 'products'])

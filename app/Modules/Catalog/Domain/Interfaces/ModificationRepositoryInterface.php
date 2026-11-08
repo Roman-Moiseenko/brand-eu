@@ -13,6 +13,11 @@ interface ModificationRepositoryInterface
     public function getById(int $id): ModificationEntity;
 
     /**
+     * Найти модификацию по названию. Если такой нет — возвращает null.
+     */
+    public function findByName(string $name): ?ModificationEntity;
+
+    /**
      * Данные карточки модификации: название, оси с вариантами
      * и товары (из pivot + products).
      */
