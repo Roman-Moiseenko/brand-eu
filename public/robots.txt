@@ -1,0 +1,16 @@
+User-agent: *
+
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /order/
+Disallow: /login/
+Disallow: /search/
+# --- Закрываем технические файлы ---
+Disallow: /*.php$
+Disallow: /*?utm_
+Disallow: /*?from=
+
+Allow: /
+
+Sitemap: https://sport-shopper.ru/sitemap.xml

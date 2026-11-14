@@ -29,6 +29,7 @@ use App\Modules\Shop\Infrastructure\Observers\ProductCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\PromotionProductCacheObserver;
 use App\Modules\Shop\Infrastructure\Observers\RoomCacheObserver;
 use App\Modules\Shop\Infrastructure\Services\BreadcrumbService;
+use App\Modules\Shop\Presentation\Console\Commands\YandexIndexNowCommand;
 use App\Modules\Shop\Presentation\Http\ViewComposers\BrandComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\CategoryComposer;
 use App\Modules\Shop\Presentation\Http\ViewComposers\ClientComposer;
@@ -164,6 +165,7 @@ class ShopServiceProvider extends ServiceProvider
         $this->commands([
             ForgetShopCacheCommand::class,
             WarmShopCacheCommand::class,
+            YandexIndexNowCommand::class,
         ]);
     }
 
