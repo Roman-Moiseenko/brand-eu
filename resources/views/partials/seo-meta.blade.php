@@ -24,7 +24,7 @@
 <meta property="og:url" content="{{ $meta->ogUrl ?? $meta->canonical }}">
 @endif
 @foreach($meta->ogImages as $image){{-- ==================== OpenGraph Images ==================== --}}
-<meta property="og:image" content="{{ $domain . $image->url }}">
+<meta property="og:image" content="{{ $image->url }}">
 @if($image->width)
 <meta property="og:image:width" content="{{ $image->width }}">
 @endif

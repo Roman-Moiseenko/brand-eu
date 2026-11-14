@@ -61,10 +61,11 @@ readonly class PageViewQuery
         // 4. SEO
         $meta = $this->seoAdapter->getSeo('content.page', $page);
 
-        $meta->canonical = route('shop.page.view', $page->slug);
+        $meta->canonical = $page->slug == 'home' ? route('shop.home') : route('shop.page.view', $page->slug);
         $meta->ogSiteName = $web->web_name;
 
         if (!empty($page->image)) $meta->addImage(OgImage::fromData($page->image));
+
         $meta->articleModifiedTime = $page->updatedAt;
         $meta->articlePublishedTime = $page->publishedAt;
 

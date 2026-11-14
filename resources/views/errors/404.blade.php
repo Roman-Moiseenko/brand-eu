@@ -20,7 +20,7 @@
                 <div><section id="block-13" class="widget widget_block"></section></div>
                 <div class="d-flex justify-content-between">
                     <div><a href="/" class="btn btn-white-b t-t_uppercase m-t_20">На главную</a></div>
-                    <div><a href="/shop/" class="btn btn-orange m-t_20">Смотреть каталог</a></div>
+                    <div><a href="/catalog/" class="btn btn-orange m-t_20">Смотреть каталог</a></div>
                 </div>
             </div>
         </div>
