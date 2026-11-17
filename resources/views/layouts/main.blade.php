@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="a700306944869a06" />
     <meta name="google-site-verification" content="gXKAF21sBM_mk9C7cf-GkHU4_tqYc6r_wMHceq_0an4" />
+    <meta name="msvalidate.01" content="3F000DE6D06F73B0BF82A4D426D22B03" />
     @if(isset($pageData) && !is_null($pageData->meta))
         @include('partials.seo-meta', ['meta' => $pageData->meta])
     @endif
@@ -81,6 +82,9 @@
             (d.head ? d.head : d.body).appendChild(s);
         })(document,window,'TalkMe')})();
     </script>
+
+    <!-- script src="//code.jivo.ru/widget/GFG8RYD53n" async></script -->
+
     <!-- {/literal} End Talk-Me -->
 </head>
 <body class="@yield('body')">
