@@ -8,6 +8,8 @@ use App\Modules\Setting\Entity\Settings;
 use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use App\Modules\Shared\Infrastructure\Job\CloudPhotoCopyJob;
 use App\Modules\Shared\Infrastructure\Models\Photo;
+use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use function class_basename;
@@ -24,7 +26,8 @@ class MigratePhotoCloudToCloudCommand extends Command
 {
     protected $signature = 'photo:cloud-to-cloud
                             {--chunk=100 : Количество путей в одной задаче очереди}
-                            {--test : Тест: поставить в очередь только одну задачу}';
+                            {--test : Тест: поставить в очередь только одну задачу}
+                            {--check : Проверить подключение к Timeweb и Beget и выйти}';
 
     protected $description = 'Перенос изображений (оригиналы + нарезки thumbs) из Timeweb S3 в Beget S3';
 
@@ -64,6 +67,12 @@ class MigratePhotoCloudToCloudCommand extends Command
             || $target['key'] === '' || $target['secret'] === '' || $target['bucket'] === '') {
             $this->error('Заполните константы ACCESS_KEY, SECRET_KEY и PATH для Timeweb и Beget в классе команды MigratePhotoCloudToCloudCommand.');
             return self::FAILURE;
+        }
+
+        if ($this->option('check')) {
+            $this->check('Timeweb (источник)', $source);
+            $this->check('Beget (назначение)', $target);
+            return self::SUCCESS;
         }
 
         $paths = $this->collectPaths();
@@ -152,6 +161,66 @@ class MigratePhotoCloudToCloudCommand extends Command
         }
 
         return '/' . Str::slug(class_basename($imageableType)) . '/' . $imageableId . '/';
+    }
+
+    /**
+     * Диагностика подключения к облаку.
+     */
+    private function check(string $label, array $config): void
+    {
+        $this->line('');
+        $this->line($label);
+        $this->line('  endpoint: ' . $config['endpoint']);
+        $this->line('  region:   ' . $config['region']);
+        $this->line('  bucket:   ' . $config['bucket']);
+
+        $client = $this->makeClient($config);
+
+        try {
+            $client->headBucket(['Bucket' => $config['bucket']]);
+            $this->info('  OK: бакет доступен (headBucket).');
+        } catch (S3Exception $e) {
+            $this->error(sprintf(
+                '  Ошибка headBucket: HTTP %s [%s] %s',
+                $e->getStatusCode(),
+                $e->getAwsErrorCode() ?? 'Unknown',
+                $e->getAwsErrorMessage() ?? $e->getMessage(),
+            ));
+            return;
+        }
+
+        try {
+            $result = $client->listObjectsV2(['Bucket' => $config['bucket'], 'MaxKeys' => 1]);
+            $this->info('  OK: listObjectsV2 работает, объектов в первой странице: ' . count($result['Contents'] ?? []) . '.');
+        } catch (S3Exception $e) {
+            $this->warn(sprintf(
+                '  listObjectsV2: HTTP %s [%s] %s',
+                $e->getStatusCode(),
+                $e->getAwsErrorCode() ?? 'Unknown',
+                $e->getAwsErrorMessage() ?? $e->getMessage(),
+            ));
+        }
+    }
+
+    /**
+     * @param array{key: string, secret: string, bucket: string, endpoint: string, region: string} $config
+     */
+    private function makeClient(array $config): S3Client
+    {
+        return new S3Client([
+            'version' => 'latest',
+            'region' => $config['region'] ?? 'ru-1',
+            'endpoint' => $config['endpoint'],
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key' => $config['key'],
+                'secret' => $config['secret'],
+            ],
+            'http' => [
+                'connect_timeout' => 10,
+                'timeout' => 30,
+            ],
+        ]);
     }
 
     /**

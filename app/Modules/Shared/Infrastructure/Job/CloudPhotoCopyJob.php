@@ -54,13 +54,9 @@ class CloudPhotoCopyJob implements ShouldQueue
             $tmp = null;
 
             try {
-                if (!$this->sourceExists($sourceClient, $this->source['bucket'], $key)) {
-                    $this->logSkip($path, 'файл отсутствует в источнике (timeweb)');
-                    continue;
-                }
-
                 $tmp = tempnam(sys_get_temp_dir(), 'cloud_copy_');
 
+                // Скачивание из источника; если файла нет — SDK бросит NoSuchKey (404).
                 $sourceClient->getObject([
                     'Bucket' => $this->source['bucket'],
                     'Key' => $key,
@@ -72,8 +68,14 @@ class CloudPhotoCopyJob implements ShouldQueue
                     'Key' => $key,
                     'SourceFile' => $tmp,
                 ]);
+            } catch (S3Exception $e) {
+                if ($this->isNotFound($e)) {
+                    $this->logSkip($path, 'файл отсутствует в источнике (timeweb)');
+                } else {
+                    $this->logSkip($path, $this->errorMessage($e));
+                }
             } catch (\Throwable $e) {
-                $this->logSkip($path, $this->errorMessage($e));
+                $this->logSkip($path, $e->getMessage());
             } finally {
                 if (is_string($tmp) && is_file($tmp)) {
                     @unlink($tmp);
@@ -83,25 +85,15 @@ class CloudPhotoCopyJob implements ShouldQueue
     }
 
     /**
-     * Проверяет наличие файла в источнике.
-     * 404 — файла нет (возвращаем false), остальные ошибки — пробрасываем выше.
+     * Ошибки, которые означают отсутствие файла/бакета в источнике.
      */
-    private function sourceExists(S3Client $client, string $bucket, string $key): bool
+    private function isNotFound(S3Exception $e): bool
     {
-        try {
-            $client->headObject([
-                'Bucket' => $bucket,
-                'Key' => $key,
-            ]);
-
+        if ($e->getStatusCode() === 404) {
             return true;
-        } catch (S3Exception $e) {
-            if ($e->getStatusCode() === 404) {
-                return false;
-            }
-
-            throw $e;
         }
+
+        return in_array($e->getAwsErrorCode(), ['NoSuchKey', 'NotFound', 'NoSuchBucket'], true);
     }
 
     /**
@@ -127,8 +119,16 @@ class CloudPhotoCopyJob implements ShouldQueue
 
     private function errorMessage(\Throwable $e): string
     {
-        if ($e instanceof S3Exception && $e->getAwsErrorMessage() !== null) {
-            return $e->getAwsErrorMessage();
+        if ($e instanceof S3Exception) {
+            $status = $e->getStatusCode();
+            $code = $e->getAwsErrorCode() ?? 'UnknownCode';
+            $message = $e->getAwsErrorMessage() ?: ($e->getMessage() ?: 'нет сообщения');
+
+            if ($status === 403) {
+                return sprintf('HTTP %s [%s] %s (доступ запрещён)', $status, $code, $message);
+            }
+
+            return sprintf('HTTP %s [%s] %s', $status, $code, $message);
         }
 
         return $e->getMessage();
