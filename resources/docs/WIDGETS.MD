@@ -5,7 +5,7 @@
 Система виджетов состоит из трёх уровней:
 
 ```
-Widget (тип/шаблон виджета) 
+Widget (тип/шаблон виджета)
   └── WidgetInstance (экземпляр виджета с конкретными параметрами)
         └── ContentBlock (привязка экземпляра к странице/сущности)
 ```
@@ -167,21 +167,21 @@ widgets/{category}/{slug}.blade.php
 Позволяет визуально конструировать JSON Schema для полей виджета. Структура:
 
 - **SchemaEditor** — главный контейнер
-  - Список полей (аккордеон), каждое сворачиваемое
-  - Кнопка «Добавить поле» с диалогом настройки
-  - **PropertyAttributesEditor** — редактор атрибутов конкретного поля
-    - Ключ (имя поля)
-    - type (string, integer, number, boolean, array, object)
-    - title (человекочитаемое название)
-    - format (html, image, uri, date, date-time, widget, color)
-    - default (значение по умолчанию)
-    - minimum / maximum (для чисел)
-    - enum (для строк — выпадающий список)
-    - required (переключатель)
-    - Для type=array:
-      - **ItemPropertiesEditor** — редактор вложенных полей для элементов массива
-    - Для type=object:
-      - **ItemPropertiesEditor** — редактор вложенных полей объекта
+    - Список полей (аккордеон), каждое сворачиваемое
+    - Кнопка «Добавить поле» с диалогом настройки
+    - **PropertyAttributesEditor** — редактор атрибутов конкретного поля
+        - Ключ (имя поля)
+        - type (string, integer, number, boolean, array, object)
+        - title (человекочитаемое название)
+        - format (html, image, uri, date, date-time, widget, color)
+        - default (значение по умолчанию)
+        - minimum / maximum (для чисел)
+        - enum (для строк — выпадающий список)
+        - required (переключатель)
+        - Для type=array:
+            - **ItemPropertiesEditor** — редактор вложенных полей для элементов массива
+        - Для type=object:
+            - **ItemPropertiesEditor** — редактор вложенных полей объекта
 
 **Типы полей при добавлении (через диалог SchemaEditor):**
 
@@ -301,6 +301,13 @@ widgets/{category}/{slug}.blade.php
 - Правая панель: информация о выбранном изображении (alt, title, description)
 
 Загруженные изображения попадают в галерею «Виджет».
+
+> **Хранение изображений в `params`.** В `params` виджета изображение хранится как
+> `{id, alt, title, description}` (без конечного `url`/`src`). Актуальный `src`
+> вычисляется на лету через текущий драйвер хранилища (`local` / `s3`) сервисом
+> [`WidgetImageResolverService`](app/Modules/Content/Application/Services/WidgetImageResolverService.php:21).
+> Это позволяет менять место хранения или домен S3 без поломки уже сохранённых
+> виджетов: путь файла стабилен, меняется только домен.
 
 ---
 

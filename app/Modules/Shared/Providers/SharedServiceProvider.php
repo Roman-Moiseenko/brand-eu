@@ -14,6 +14,7 @@ use App\Modules\Shared\Infrastructure\Persistence\UserPermissionRepositoryFromAu
 use App\Modules\Shared\Infrastructure\Services\LaravelTransactionManager;
 use App\Modules\Shared\Infrastructure\Storage\LocalPhotoStorage;
 use App\Modules\Shared\Infrastructure\Storage\S3PhotoStorage;
+use App\Modules\Shared\Presentation\Console\Commands\MigratePhotoCloudToCloudCommand;
 use App\Modules\Shared\Presentation\Console\Commands\MigratePhotosToS3Command;
 use App\Modules\Shared\Presentation\Console\Commands\RegeneratePhotoCacheCommand;
 use Illuminate\Support\Facades\Blade;
@@ -156,6 +157,7 @@ class SharedServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         $this->commands([
+            MigratePhotoCloudToCloudCommand::class,
             MigratePhotosToS3Command::class,
             RegeneratePhotoCacheCommand::class,
         ]);

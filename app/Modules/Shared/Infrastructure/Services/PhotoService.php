@@ -6,6 +6,7 @@ namespace App\Modules\Shared\Infrastructure\Services;
 
 use App\Modules\Setting\Entity\Settings;
 use App\Modules\Shared\Application\Interfaces\PhotoStorageInterface;
+use App\Modules\Shared\Infrastructure\Models\Photo;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
@@ -36,8 +37,16 @@ class PhotoService
      */
     private function patternGeneratePath(string $modelType, int $imageableId): string
     {
+        return $this->patternGenerateBasePath($modelType) . $imageableId . '/';
+    }
+
+    /**
+     * Генерация базового пути сущности: /{module}/{model}/
+     */
+    private function patternGenerateBasePath(string $modelType): string
+    {
         [$module, $model] = explode('.', $modelType);
-        return '/' . $module . '/' . $model . '/' . $imageableId . '/';
+        return '/' . $module . '/' . $model . '/';
     }
 
     /**
@@ -86,6 +95,23 @@ class PhotoService
         return $this->storage->url(
             self::URL_UPLOAD . $this->patternGeneratePath($modelType, $imageableId) . $fileName
         );
+        // return self::URL_UPLOAD . $this->patternGeneratePath($modelType, $imageableId) . $fileName;
+    }
+
+    /**
+     * Возвращает URL оригинального файла по id записи Photo.
+     * URL формируется через текущий драйвер хранилища (local/s3),
+     * поэтому не зависит от сохранённого ранее конечного URL.
+     */
+    public function getUploadUrlById(int $photoId): string
+    {
+        $photo = Photo::find($photoId);
+
+        if ($photo === null || empty($photo->file)) {
+            return '';
+        }
+
+        return $this->getUploadUrl($photo->model_type, $photo->imageable_id, $photo->file);
     }
 
     /**
@@ -96,12 +122,15 @@ class PhotoService
     {
         $path = $this->patternGeneratePath($modelType, $imageableId);
         $thumbName = $this->nameFileThumb($photoId, $fileName, $thumb);
-     //   $this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
+        // $file = self::URL_THUMB . $path . $this->nameFileThumb($photoId, $fileName, $thumb);
+
+        //  $this->createThumbs($photoId, $modelType, $imageableId, $fileName, $thumb);
         return $this->storage->url(self::URL_THUMB . $path . $thumbName);
+        //  return $file;
     }
 
     /**
-     * Создаёт один thumb для файла по имени настройки (mini, catalog, card и т.д.).
+     * Создаёт все thumbs для файла (по настройкам из Settings)
      */
     public function createThumbs(int $photoId, string $modelType, int $imageableId, string $fileName, string $thumb): void
     {
@@ -205,11 +234,46 @@ class PhotoService
     {
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
         if (!$ext) return;
-
         $thumbDir = self::URL_THUMB . $this->patternGeneratePath($modelType, $imageableId);
         foreach ($this->thumbs as $params) {
             $this->storage->deleteMatching($thumbDir, $params['name'] . '_*.' . $ext);
         }
+    }
+
+    /**
+     * Удаляет оригинальный файл и все thumbs
+     */
+    public function deleteFile(string $modelType, int $imageableId, string $fileName): void
+    {
+        if (empty($fileName)) {
+            return;
+        }
+
+        $this->clearThumbs($modelType, $imageableId, $fileName);
+
+        $this->storage->delete(
+            self::URL_UPLOAD . $this->patternGeneratePath($modelType, $imageableId) . $fileName
+        );
+    }
+
+    /**
+     * Удаляет все файлы сущности (оригиналы и thumbs) по model_type.
+     * Пути строятся здесь: /uploads/{module}/{model} и /cache/{module}/{model}.
+     */
+    public function deleteEntityDirectory(string $modelType): void
+    {
+        $basePath = $this->patternGenerateBasePath($modelType);
+
+        $this->storage->deleteDirectory(self::URL_UPLOAD . $basePath);
+        $this->storage->deleteDirectory(self::URL_THUMB . $basePath);
+    }
+
+    /**
+     * Формирует имя файла для thumb: {thumb}_{photoId}.{ext}
+     */
+    private function nameFileThumb(int $photoId, string $fileName, string $thumb): string
+    {
+        return $thumb . '_' . $photoId . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
     }
 
     /**
@@ -228,24 +292,4 @@ class PhotoService
         }
     }
 
-    /**
-     * Удаляет оригинальный файл и все thumbs
-     */
-    public function deleteFile(string $modelType, int $imageableId, string $fileName): void
-    {
-        if (empty($fileName)) return;
-
-        $this->clearThumbs($modelType, $imageableId, $fileName);
-        $this->storage->delete(
-            self::URL_UPLOAD . $this->patternGeneratePath($modelType, $imageableId) . $fileName
-        );
-    }
-
-    /**
-     * Формирует имя файла для thumb: {thumb}_{photoId}.{ext}
-     */
-    private function nameFileThumb(int $photoId, string $fileName, string $thumb): string
-    {
-        return $thumb . '_' . $photoId . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
-    }
 }
