@@ -34,8 +34,8 @@ class MigratePhotoCloudToCloudCommand extends Command
     // =====================================================================
     // ИСТОЧНИК — TIMEWEB (откуда копируем)
     // =====================================================================
-    private const string TIMEWEB_ACCESS_KEY = 'V1POZFPWBX9RWNLEEZMC';
-    private const string TIMEWEB_SECRET_KEY = '2AiKrz4HKqmGIM1pyDNUicvMBSy14fqkZVvgC1B6';
+    private const string TIMEWEB_ACCESS_KEY = '6JLSEIR8LLALOYR1H4UE';
+    private const string TIMEWEB_SECRET_KEY = 'vJsd7olJk11c3vsKJCoNs5BBwCzyrad83CylrZ9s';
     /** PATH — имя бакета (bucket) в Timeweb Cloud S3 */
     private const string TIMEWEB_PATH = '9528803c-1b57-4eb3-846a-35facf8eda62';
     private const string TIMEWEB_ENDPOINT = 'https://s3.timeweb.com';
@@ -186,6 +186,7 @@ class MigratePhotoCloudToCloudCommand extends Command
                 $e->getAwsErrorCode() ?? 'Unknown',
                 $e->getAwsErrorMessage() ?? $e->getMessage(),
             ));
+            $this->listBuckets($client);
             return;
         }
 
@@ -195,6 +196,28 @@ class MigratePhotoCloudToCloudCommand extends Command
         } catch (S3Exception $e) {
             $this->warn(sprintf(
                 '  listObjectsV2: HTTP %s [%s] %s',
+                $e->getStatusCode(),
+                $e->getAwsErrorCode() ?? 'Unknown',
+                $e->getAwsErrorMessage() ?? $e->getMessage(),
+            ));
+        }
+    }
+
+    /**
+     * Выводит бакеты, доступные для переданных ключей.
+     */
+    private function listBuckets(S3Client $client): void
+    {
+        try {
+            $result = $client->listBuckets();
+            $names = array_map(
+                static fn (array $b): string => (string)$b['Name'],
+                $result['Buckets'] ?? [],
+            );
+            $this->line('  Бакеты, доступные для этих ключей: ' . ($names === [] ? 'нет' : implode(', ', $names)));
+        } catch (S3Exception $e) {
+            $this->warn(sprintf(
+                '  listBuckets: HTTP %s [%s] %s',
                 $e->getStatusCode(),
                 $e->getAwsErrorCode() ?? 'Unknown',
                 $e->getAwsErrorMessage() ?? $e->getMessage(),
