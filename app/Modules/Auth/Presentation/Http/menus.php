@@ -23,7 +23,7 @@ return [
     ],
 
     'clients' => [
-        'sort' => 10,
+        'sort' => 20,
         'icon' => 'users',
         'title' => 'Клиенты',
         'route_name' => 'admin.client.index',
@@ -65,6 +65,6 @@ return [
         */
     ],
     'clients_divider' => [
-        'sort' => 11,
+        'sort' => 21,
     ],
 ];

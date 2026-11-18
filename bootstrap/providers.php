@@ -7,6 +7,7 @@ return [
     App\Modules\Cabinet\Providers\CabinetServiceProvider::class,
     App\Modules\Cart\Providers\CartServiceProvider::class,
     App\Modules\Catalog\Providers\CatalogServiceProvider::class,
+    App\Modules\Chat\Providers\ChatServiceProvider::class,
     App\Modules\Content\Providers\ContentServiceProvider::class,
     App\Modules\Discount\Providers\DiscountServiceProvider::class,
     App\Modules\Feedback\Providers\FeedbackServiceProvider::class,

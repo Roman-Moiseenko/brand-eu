@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 return [
     'analytics' => [
-        'sort' => 110,
+        'sort' => 19,
         'icon' => 'scroll-text',
         'title' => 'Аналитика',
         'can' => 'admin-panel',
