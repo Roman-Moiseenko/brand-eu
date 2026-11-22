@@ -62,7 +62,7 @@ class MetaTemplateRepository
             return [
                 '{name}',
                 '{code}',
-           //     '{category}',
+                //     '{category}',
                 '{price}',
             ];
         }
@@ -76,8 +76,8 @@ class MetaTemplateRepository
         if ($class == ParserCategory::class) {
             return [
                 '{name}',
-             //   '{description}',
-              //  '{title}'
+                //   '{description}',
+                //  '{title}'
             ];
         }
         if ($class == Page::class) {
@@ -101,7 +101,7 @@ class MetaTemplateRepository
                 '{name}',
                 '{title}',
                 '{description}',
-                ];
+            ];
         }
         if ($class == Group::class) {
             return [
@@ -165,8 +165,8 @@ class MetaTemplateRepository
         if ($object instanceof ParserCategory) {
             return match ($var) {
                 '{name}' => $object->name,
-               // '{description}' => $object->description,
-               // '{title}' => $object->title,
+                // '{description}' => $object->description,
+                // '{title}' => $object->title,
             };
         }
         if ($object instanceof Page) {
@@ -286,10 +286,17 @@ class MetaTemplateRepository
     {
         $propertyName = trim($var, '{}');
 
-        // 1. Публичное свойство
+        // 1. Публичное свойство с точным именем
         if (property_exists($dto, $propertyName)) {
             return $this->valueToString($dto->{$propertyName});
         }
+
+        // 2. Свойство с суффиксом Name (например {category} => categoryName, {brand} => brandName)
+        $propertyNameWithSuffix = $propertyName . 'Name';
+        if (property_exists($dto, $propertyNameWithSuffix)) {
+            return $this->valueToString($dto->{$propertyNameWithSuffix});
+        }
+
         return '';
     }
 
