@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stock', function (Blueprint $table) {
+      Schema::table('stock', function (Blueprint $table) {
             $table->foreignId('products_sizes_id')
                 ->nullable()
                 ->after('product_id')
