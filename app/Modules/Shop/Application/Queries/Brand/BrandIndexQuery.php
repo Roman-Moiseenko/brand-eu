@@ -32,7 +32,7 @@ readonly class BrandIndexQuery
             ogSiteName: $web->web_name,
         );
 
-        $schema = $this->schemaBuilder->buildForCategoryIndex($brands, 'brand');
+        $schema = $this->schemaBuilder->buildForCategoryIndex($brands, 'brand', $meta);
         return new BrandIndexPageData(
             meta: $meta,
             brands: $brands,

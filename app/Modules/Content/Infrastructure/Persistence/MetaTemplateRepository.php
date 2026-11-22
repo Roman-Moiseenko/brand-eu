@@ -2,65 +2,81 @@
 
 namespace App\Modules\Content\Infrastructure\Persistence;
 
+use App\Modules\Base\Entity\Meta;
+use App\Modules\Catalog\Infrastructure\Models\Brand;
+use App\Modules\Catalog\Infrastructure\Models\Category;
+use App\Modules\Catalog\Infrastructure\Models\Group;
+use App\Modules\Catalog\Infrastructure\Models\Product;
+use App\Modules\Catalog\Infrastructure\Models\Room;
 use App\Modules\Content\Domain\Entities\MetaTemplateEntity;
 use App\Modules\Content\Domain\Interfaces\MetaTemplateRepositoryInterface;
 use App\Modules\Content\Infrastructure\Models\MetaTemplate;
+use App\Modules\Content\Infrastructure\Models\Page;
+use App\Modules\Content\Infrastructure\Models\Post;
+use App\Modules\Content\Infrastructure\Models\PostCategory;
+use App\Modules\Discount\Infrastructure\Models\Promotion;
+use App\Modules\Parser\Infrastructure\Models\ParserCategory;
+use App\Modules\Parser\Infrastructure\Models\ParserProduct;
+use App\Modules\Setting\Entity\Settings;
+use App\Modules\Shop\Application\DTOs\PageElements\SeoData;
+use Illuminate\Http\Request;
 
 class MetaTemplateRepository implements MetaTemplateRepositoryInterface
 {
-    /** @return MetaTemplateEntity[] */
+
+    private Settings $settings;
+
+    public function __construct(Settings $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * @return MetaTemplateEntity[]
+     */
     public function getAll(): array
     {
-        return MetaTemplate::all()
+        return MetaTemplate::get()
             ->map(fn(MetaTemplate $model) => $this->hydrate($model))
-            ->toArray();
+            ->all();
     }
 
     public function getById(int $id): MetaTemplateEntity
     {
-        $model = MetaTemplate::findOrFail($id);
-        return $this->hydrate($model);
+        return $this->hydrate(MetaTemplate::findOrFail($id));
     }
 
     public function getByClass(string $class): ?MetaTemplateEntity
     {
         $model = MetaTemplate::where('class', $class)->first();
-        if ($model === null) {
-            return null;
-        }
-        return $this->hydrate($model);
+
+        return $model ? $this->hydrate($model) : null;
     }
 
     public function getByEntity(string $entity): ?MetaTemplateEntity
     {
         $model = MetaTemplate::where('entity', $entity)->first();
-        if ($model === null) {
-            return null;
-        }
-        return $this->hydrate($model);
+
+        return $model ? $this->hydrate($model) : null;
     }
 
     public function existsByClass(string $class, ?int $excludeId = null): bool
     {
-        $query = MetaTemplate::where('class', $class);
-        if ($excludeId !== null) {
-            $query->where('id', '!=', $excludeId);
-        }
-        return $query->exists();
+        return MetaTemplate::where('class', $class)
+            ->when($excludeId !== null, fn($query) => $query->where('id', '!=', $excludeId))
+            ->exists();
     }
 
     public function existsByEntity(string $entity, ?int $excludeId = null): bool
     {
-        $query = MetaTemplate::where('entity', $entity);
-        if ($excludeId !== null) {
-            $query->where('id', '!=', $excludeId);
-        }
-        return $query->exists();
+        return MetaTemplate::where('entity', $entity)
+            ->when($excludeId !== null, fn($query) => $query->where('id', '!=', $excludeId))
+            ->exists();
     }
 
     public function save(MetaTemplateEntity $metaTemplate): MetaTemplateEntity
     {
-        $model = $metaTemplate->id !== null
+        $model = $metaTemplate->id
             ? MetaTemplate::findOrFail($metaTemplate->id)
             : new MetaTemplate();
 
@@ -76,8 +92,7 @@ class MetaTemplateRepository implements MetaTemplateRepositoryInterface
 
     public function delete(int $id): void
     {
-        $model = MetaTemplate::findOrFail($id);
-        $model->delete();
+        MetaTemplate::findOrFail($id)->delete();
     }
 
     private function hydrate(MetaTemplate $model): MetaTemplateEntity
@@ -88,9 +103,297 @@ class MetaTemplateRepository implements MetaTemplateRepositoryInterface
         );
 
         $entity->id = $model->id;
-        $entity->templateTitle = $model->template_title ?? '';
-        $entity->templateDescription = $model->template_description ?? '';
+        $entity->templateTitle = $model->template_title;
+        $entity->templateDescription = $model->template_description;
 
         return $entity;
     }
+
+    public function getIndex(Request $request)
+    {
+        return MetaTemplate::get()->map(fn(MetaTemplate $meta) => $this->MetaToArray($meta))->toArray();
+    }
+
+    private function MetaToArray(MetaTemplate $meta): array
+    {
+        return array_merge($meta->toArray(), [
+            'name' => MetaTemplate::TEMPLATES[$meta->class],
+            'variables' => $this->GetVariables($meta->class),
+        ]);
+    }
+
+    private function GetVariables(string $class): array
+    {
+        if ($class == Product::class) {
+            return [
+                '{name}',
+                '{code}',
+                '{category}',
+                '{price}',
+            ];
+        }
+        if ($class == Brand::class) {
+            return [
+                '{name}',
+                '{description}',
+            ];
+        }
+        if ($class == ParserProduct::class) {
+            return [
+                '{name}',
+                '{code}',
+                //     '{category}',
+                '{price}',
+            ];
+        }
+        if ($class == Category::class) {
+            return [
+                '{name}',
+                '{description}',
+                '{title}'
+            ];
+        }
+        if ($class == ParserCategory::class) {
+            return [
+                '{name}',
+                //   '{description}',
+                //  '{title}'
+            ];
+        }
+        if ($class == Page::class) {
+            return [
+                '{name}',
+                '{title}',
+                '{description}',
+                '{fragment}',
+            ];
+        }
+        if ($class == Post::class) {
+            return [
+                '{name}',
+                '{title}',
+                '{description}',
+                '{fragment}',
+            ];
+        }
+        if ($class == PostCategory::class) {
+            return [
+                '{name}',
+                '{title}',
+                '{description}',
+            ];
+        }
+        if ($class == Group::class) {
+            return [
+                '{name}',
+                '{description}',
+            ];
+        }
+        if ($class == Promotion::class) {
+            return [
+                '{name}',
+                '{title}',
+                '{description}',
+            ];
+        }
+        if ($class == Room::class) {
+            return [
+                '{name}',
+                '{title}',
+                '{description}',
+            ];
+        }
+        return [];
+    }
+
+
+    private function GetValue($object, string $var):? string
+    {
+
+        if ($object instanceof Product) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{code}' => $object->code,
+                '{category}' => $object->category->name,
+                '{price}' => price($object->price),
+            };
+        }
+        if ($object instanceof Brand) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+            };
+        }
+
+        if ($object instanceof Category) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+                '{title}' => $object->title,
+            };
+        }
+        if ($object instanceof ParserProduct) {
+            return match ($var) {
+                '{name}' => $object->product->name,
+                '{code}' => $object->product->code,
+                //'{category}' => $object->category->name,
+                //TODO parser_coefficient - или из Валюты или обновлять сразу два поля
+                '{price}' => price($object->price_sell * $this->settings->parser->parser_coefficient),
+            };
+        }
+
+        if ($object instanceof ParserCategory) {
+            return match ($var) {
+                '{name}' => $object->name,
+                // '{description}' => $object->description,
+                // '{title}' => $object->title,
+            };
+        }
+        if ($object instanceof Page) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+                '{title}' => $object->title,
+                '{fragment}' => $object->getFragment(),
+            };
+        }
+        if ($object instanceof Post) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+                '{title}' => $object->title,
+                '{fragment}' => $object->getFragment(),
+            };
+        }
+        if ($object instanceof PostCategory) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+                '{title}' => $object->title,
+            };
+        }
+        if ($object instanceof Group) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+            };
+        }
+        if ($object instanceof Promotion) {
+            return match ($var) {
+                '{name}' => $object->name,
+                '{description}' => $object->description,
+                '{title}' => $object->title,
+            };
+        }
+
+        return '';
+
+    }
+
+    /**
+     * Подстановка переменных в meta
+     */
+    public function seo($object, ?Meta $meta = null): Meta
+    {
+        if (is_null($meta)) $meta = new Meta();
+        /** @var MetaTemplate $metaTemplate */
+        $metaTemplate = MetaTemplate::where('class', get_class($object))->first();
+        if (is_null($metaTemplate)) return $meta;
+        if (empty($meta->title)) $meta->title = $this->renderMeta($object, $metaTemplate->template_title);
+        if (empty($meta->description)) $meta->description = $this->renderMeta($object, $metaTemplate->template_description);
+        return $meta;
+    }
+
+    /**
+     * Ф-ция обратного вызова, для seo() "Подстановка переменных в meta"
+     */
+    public function seoFn(): callable
+    {
+        return function ($object, Meta $meta) {
+            return $this->seo($object, $meta);
+        };
+    }
+
+    private function renderMeta($object, $text): string
+    {
+        if (empty($text)) return '';
+
+        $pattern = '/\{(.+?)}/';
+        preg_match_all($pattern, $text, $matches);
+        $replaces = $matches[0];
+        foreach ($replaces as $replace) {
+            $text = str_replace(
+                $replace,
+                $this->GetValue($object, $replace),
+                $text);
+        }
+        return $text;
+    }
+
+    public function generateSeo(string $entityKey, object $dto): SeoData
+    {
+        $template = MetaTemplate::where('entity', $entityKey)->first();
+        if (property_exists($dto, 'title') && !empty($dto->title)) {
+            $title = $dto->title;
+        } else {
+            $title = $template?->template_title
+                ? $this->render($dto, $template->template_title)
+                : '';
+        }
+
+
+        if (property_exists($dto, 'description') && !empty($dto->description)) {
+            $description = $dto->description;
+        } else{
+            $description = $template?->template_description
+                ? $this->render($dto, $template->template_description)
+                : '';
+        }
+        return new SeoData($title, $description);
+    }
+
+    /**
+     * Заменяет все {переменные} в тексте на значения из DTO.
+     */
+    public function render(object $dto, string $template): string
+    {
+        return preg_replace_callback('/\{.+?}/', function ($matches) use ($dto) {
+            return $this->extract($dto, $matches[0]);
+        }, $template);
+    }
+
+    public function extract(object $dto, string $var): string
+    {
+        $propertyName = trim($var, '{}');
+
+        // 1. Публичное свойство с точным именем
+        if (property_exists($dto, $propertyName)) {
+            return $this->valueToString($dto->{$propertyName});
+        }
+
+        // 2. Свойство с суффиксом Name (например {category} => categoryName, {brand} => brandName)
+        $propertyNameWithSuffix = $propertyName . 'Name';
+        if (property_exists($dto, $propertyNameWithSuffix)) {
+            return $this->valueToString($dto->{$propertyNameWithSuffix});
+        }
+
+        return '';
+    }
+
+    /**
+     * Преобразует произвольное значение в строку.
+     */
+    private function valueToString(mixed $value): string
+    {
+        if ($value === null) return '';
+        if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
+            return (string) $value;
+        }
+        // Для объектов Money или других Value Object, реализующих __toString
+        if (is_object($value)) {
+            return (string) $value; // вызовет __toString, если есть
+        }
+        return '';
+    }
+
 }

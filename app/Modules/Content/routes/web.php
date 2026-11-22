@@ -3,7 +3,6 @@
 use App\Modules\Content\Controllers\BannerWidgetController;
 use App\Modules\Content\Controllers\CacheController;
 use App\Modules\Content\Controllers\CatalogWidgetController;
-use App\Modules\Content\Controllers\ContactController;
 use App\Modules\Content\Controllers\FormWidgetController;
 use App\Modules\Content\Controllers\MenuController;
 use App\Modules\Content\Controllers\MetaTemplateController;
@@ -12,6 +11,7 @@ use App\Modules\Content\Controllers\PostWidgetController;
 use App\Modules\Content\Controllers\ProductWidgetController;
 use App\Modules\Content\Controllers\PromotionWidgetController;
 use App\Modules\Content\Controllers\TextWidgetController;
+use App\Modules\Content\Presentation\Http\Controllers\Web\ContactController;
 use App\Modules\Content\Presentation\Http\Controllers\Web\ContentBlockController;
 use App\Modules\Content\Presentation\Http\Controllers\Web\GalleryController;
 use App\Modules\Content\Presentation\Http\Controllers\Web\LabelController;
@@ -205,14 +205,14 @@ Route::group(
             'prefix' => 'contact',
             'as' => 'contact.'
         ], function () {
-            Route::post('/toggle/{contact}', [ContactController::class, 'toggle'])->name('toggle');
-            Route::post('/up/{contact}', [ContactController::class, 'up'])->name('up');
-            Route::post('/down/{contact}', [ContactController::class, 'down'])->name('down');
-            Route::post('/set-info/{contact}', [ContactController::class, 'set_info'])->name('set-info');
+            Route::post('/{id}/toggle', [ContactController::class, 'toggle'])->name('toggle');
+            Route::post('/{id}/up', [ContactController::class, 'up'])->name('up');
+            Route::post('/{id}/down', [ContactController::class, 'down'])->name('down');
             Route::get('/list', [ContactController::class, 'listContacts'])->name('list');
         });
-        Route::resource('contact', ContactController::class)->except(['show', 'create', 'edit', 'update']); //CRUD
-
+        Route::resource('contact', ContactController::class)
+            ->except(['show', 'create', 'edit'])
+            ->parameters(['contact' => 'id']); //CRUD
         //Новости
         Route::group([
             'prefix' => 'news',

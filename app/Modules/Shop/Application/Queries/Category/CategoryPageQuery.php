@@ -142,7 +142,7 @@ readonly class CategoryPageQuery
 
         //$meta->articleModifiedTime = $mainInfo->
 
-        $schema = $this->schemaBuilder->buildForProductIndex($productCards, $mainInfo->slug, 'category', $faq);
+        $schema = $this->schemaBuilder->buildForProductIndex($productCards, $mainInfo->slug, 'category', $faq, $meta);
         return new ProductIndexPageData(
             mainInfo: $mainInfo,
             secondInfo: $secondInfo,

@@ -16,6 +16,21 @@ class AvailabilityParserProductJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * Должен быть больше CURLOPT_TIMEOUT в HttpPage::request() (60 сек),
+     * иначе cURL не успевает завершиться до срабатывания таймаута очереди.
+     */
+    public int $timeout = 120;
+
+    public int $tries = 3;
+
+    public int $backoff = 30;
+
+    /**
+     * При таймауте не помечаем задачу как failed, а даём ей повториться.
+     */
+    public bool $failOnTimeout = false;
+
     public function __construct(
         private readonly int $productId,
     )

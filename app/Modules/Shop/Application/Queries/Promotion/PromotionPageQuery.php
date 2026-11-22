@@ -84,7 +84,7 @@ readonly class PromotionPageQuery
         $meta->canonical = route('shop.promotion.view', $slug);
         if (!is_null($mainInfo->image)) $meta->addImage(OgImage::fromData($mainInfo->image));
 
-        $schema = $this->schemaBuilder->buildForProductIndex($listing['products'], $mainInfo->slug, 'promotion', $faq);
+        $schema = $this->schemaBuilder->buildForProductIndex($listing['products'], $mainInfo->slug, 'promotion', $faq, $meta);
 
         return new ProductIndexPageData(
             mainInfo: $mainInfo,

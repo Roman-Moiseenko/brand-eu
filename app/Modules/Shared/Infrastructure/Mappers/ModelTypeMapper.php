@@ -9,6 +9,13 @@ namespace App\Modules\Shared\Infrastructure\Mappers;
  */
 class ModelTypeMapper
 {
+    public const array NO_THUMBS = [
+        'content.post-category',
+        'content.post',
+        'content.page',
+        'content.gallery',
+        'accounting.trader',
+    ];
     private const array MAP = [
         'catalog.room' => \App\Modules\Catalog\Infrastructure\Models\Room::class,
         'catalog.category' => \App\Modules\Catalog\Infrastructure\Models\Category::class,
@@ -31,6 +38,7 @@ class ModelTypeMapper
 
         'content.gallery' => \App\Modules\Content\Infrastructure\Models\Gallery::class, //MAINDO Перенести и в Базе данных, также добавиль model_type
         'discount.promotion' => \App\Modules\Discount\Infrastructure\Models\Promotion::class,
+        'accounting.trader' => \App\Modules\Accounting\Infrastructure\Models\Trader::class,
 
     ];
 
@@ -38,5 +46,11 @@ class ModelTypeMapper
     {
         return self::MAP[$modelType]
             ?? throw new \InvalidArgumentException("Неизвестный model_type: {$modelType}");
+    }
+
+    /** @return list<string> */
+    public static function allTypes(): array
+    {
+        return array_keys(self::MAP);
     }
 }

@@ -63,6 +63,10 @@ return [
         'brand-alt' => 'NORDI Home',
         'token_dadata' => env('DADATA_TOKEN')
     ],
+    'dadata' => [
+        'token' => env('DADATA_TOKEN', ''),
+        'secret' => env('DADATA_KEY', ''),
+    ],
     'tinymce' => env('TINYMCE', ''),
 
     'analytics' => [

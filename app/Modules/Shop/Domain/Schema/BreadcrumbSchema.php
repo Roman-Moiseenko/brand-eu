@@ -5,7 +5,7 @@ namespace App\Modules\Shop\Domain\Schema;
 class BreadcrumbSchema implements SchemaElement
 {
     /** @param array{name:string, url:string}[] $items */
-    public function __construct(private array $items) {}
+    public function __construct(private readonly array $items) {}
 
     public function toArray(): array
     {
@@ -18,7 +18,7 @@ class BreadcrumbSchema implements SchemaElement
             $listItems[] = [
                 '@type'    => 'ListItem',
                 'position' => $index + 1,
-                'name'     => $item['name'],
+                'name'     => $index === 0 ? 'Главная' : $item['name'],
                 'item'     => $item['url'],
             ];
         }

@@ -3,12 +3,8 @@
 namespace App\Modules\Parser\Presentation\Console\Commands;
 
 use App\Console\CreatesApplication;
-use App\Modules\Catalog\Domain\Interfaces\BrandRepositoryInterface;
-use App\Modules\Parser\Domain\Interfaces\ParserCategoryRepositoryInterface;
 use App\Modules\Parser\Domain\Interfaces\ParserProductRepositoryInterface;
 use App\Modules\Parser\Infrastructure\Jobs\AvailabilityParserProductJob;
-use App\Modules\Parser\Infrastructure\Jobs\LoadParserProductsJob;
-use App\Modules\Parser\Infrastructure\Models\ParserProduct;
 use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use Illuminate\Console\Command;
 

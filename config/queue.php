@@ -38,7 +38,9 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            // Должен быть больше максимального $timeout джоб (AvailabilityParserProductJob: 120),
+            // чтобы задача не была повторно захвачена вторым воркером до завершения первого.
+            'retry_after' => 180,
             'after_commit' => false,
         ],
 

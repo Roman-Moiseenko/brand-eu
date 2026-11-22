@@ -122,7 +122,7 @@ readonly class BrandPageQuery
         $meta->canonical = route('shop.brand.view', $slug);
         if (!is_null($mainInfo->image)) $meta->addImage(OgImage::fromData($mainInfo->image));
 
-        $schema = $this->schemaBuilder->buildForProductIndex($listing['products'], $mainInfo->slug, 'brand', $faq);
+        $schema = $this->schemaBuilder->buildForProductIndex($listing['products'], $mainInfo->slug, 'brand', $faq, $meta);
 
         return new ProductIndexPageData(
             mainInfo: $mainInfo,

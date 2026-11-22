@@ -182,6 +182,7 @@ class HttpPage
                 curl_setopt($curl, CURLOPT_URL, $_url . $url);
                 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
                 curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+                curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 15);
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
                 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);

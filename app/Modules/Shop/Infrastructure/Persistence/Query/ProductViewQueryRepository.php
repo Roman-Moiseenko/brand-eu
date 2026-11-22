@@ -12,8 +12,6 @@ use App\Modules\Shop\Application\DTOs\ClientContext;
 use App\Modules\Shop\Application\DTOs\Elements\DimensionsData;
 use App\Modules\Shop\Application\DTOs\Elements\ImageInfoData;
 use App\Modules\Shop\Application\DTOs\Elements\PromotionProductData;
-use App\Modules\Shop\Application\DTOs\Elements\ProductSizeData;
-use App\Modules\Shop\Application\DTOs\Elements\ProductSizeWidthData;
 use App\Modules\Shop\Application\DTOs\Entities\ProductData;
 use Illuminate\Support\Facades\DB;
 
@@ -53,8 +51,8 @@ class ProductViewQueryRepository
                     ->join('promotions', function ($join) use ($now) {
                         $join->on('promotions_products.promotion_id', '=', 'promotions.id')
                             ->where('promotions.status', PromotionStatus::STARTED);
-                            //->where('promotions.start_at', '<=', $now)
-                            //->where('promotions.finish_at', '>=', $now);
+                        //->where('promotions.start_at', '<=', $now)
+                        //->where('promotions.finish_at', '>=', $now);
                     });
             });
 
@@ -93,13 +91,13 @@ class ProductViewQueryRepository
                 'products.not_sale',
                 'products.price_reduced',
                 'products.published_at',
+                'products.updated_at',
                 'products.local',
                 'products.delivery',
                 'products.dimensions',
                 'products.packages',
                 'products.brand_id',
                 'products.only_on_order',
-                'products.size_grid_id',
                 // Category
                 'categories.name as category_name',
                 // Brand
@@ -232,17 +230,6 @@ class ProductViewQueryRepository
             $brandLogo = $this->imageThumbUseCase->execute($brandPhotoRow, 'mini');
         }
 
-        // Размерный ряд товара (только активные варианты products_sizes)
-        $sizeGridId = $row->size_grid_id !== null ? (int) $row->size_grid_id : null;
-        $sizesResult = $this->buildSizes($sizeGridId, (int) $row->id);
-
-        // Если у товара настроена размерная сетка, но нет ни одного активного размера,
-        // товар недоступен к покупке.
-        $isSale = !(bool) $row->not_sale;
-        if ($sizeGridId !== null && $sizesResult['sizes'] === []) {
-            $isSale = false;
-        }
-
         return new ProductData(
             id: $row->id,
             name: $row->name,
@@ -254,7 +241,7 @@ class ProductViewQueryRepository
             in_cart: (bool)$row->in_cart,
             count_reviews: (int)$row->count_reviews,
             rating: (float)($row->current_rating ?? 0),
-            is_sale: $isSale,
+            is_sale: !(bool)$row->not_sale,
             promotion: $promotion,
             price: $price,
             price_previous: (float)($row->price_previous ?? 0),
@@ -269,8 +256,8 @@ class ProductViewQueryRepository
             short: $row->short,
             care: $row->care,
             only_on_order: (bool)$row->only_on_order,
-            sizes: $sizesResult['sizes'],
-            twoAxes: $sizesResult['twoAxes'],
+            publishedAt: $row->published_at ? \Carbon\Carbon::parse($row->published_at)->format('Y-m-d') : null,
+            updatedAt: $row->updated_at ? \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d') : null,
         );
     }
 
@@ -308,159 +295,6 @@ class ProductViewQueryRepository
             volume: $volume,
             captions: $captions,
         );
-    }
-
-    /**
-     * Собирает доступные размеры товара (products_sizes с is_active = true).
-     *
-     * Одна ось — плоский список ProductSizeData.
-     * Две оси — список ProductSizeWidthData, сгруппированный по ширине.
-     *
-     * @return array{sizes: array, twoAxes: bool}
-     */
-    private function buildSizes(?int $sizeGridId, int $productId): array
-    {
-        if ($sizeGridId === null) {
-            return ['sizes' => [], 'twoAxes' => false];
-        }
-
-        $dimensionCodes = [];
-        $dimensionsRaw = DB::table('size_grids')->where('id', $sizeGridId)->value('dimensions');
-        $decoded = is_string($dimensionsRaw) ? json_decode($dimensionsRaw, true) : $dimensionsRaw;
-        if (is_array($decoded)) {
-            $dimensionCodes = array_values(array_filter(
-                array_map(
-                    static fn($d) => is_array($d) ? (string) ($d['code'] ?? '') : '',
-                    $decoded,
-                ),
-                static fn($c) => $c !== '',
-            ));
-        }
-
-        $sizeRows = DB::table('products_sizes')
-            ->where('product_id', $productId)
-            ->where('is_active', true)
-            ->orderBy('id')
-            ->get(['id', 'values']);
-
-        if ($sizeRows->isEmpty()) {
-            return ['sizes' => [], 'twoAxes' => false];
-        }
-
-        // Отображаемое значение оси (label ?? value) и порядок значений внутри оси.
-        $gridValues = DB::table('size_grid_values')
-            ->where('size_grid_id', $sizeGridId)
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get(['dimension_code', 'value', 'label']);
-
-        $displayByAxis = [];
-        $orderByAxis = [];
-        foreach ($gridValues as $gv) {
-            $code = $gv->dimension_code;
-            $displayByAxis[$code][$gv->value] = ($gv->label !== null && $gv->label !== '')
-                ? $gv->label
-                : $gv->value;
-
-            $orderByAxis[$code] ??= [];
-            if (!isset($orderByAxis[$code][$gv->value])) {
-                $orderByAxis[$code][$gv->value] = count($orderByAxis[$code]);
-            }
-        }
-
-        $display = static function (string $code, string $value) use ($displayByAxis): string {
-            return $displayByAxis[$code][$value] ?? $value;
-        };
-
-        // Одна ось — плоский список размеров.
-        if (count($dimensionCodes) <= 1) {
-            $code = $dimensionCodes[0] ?? 'size';
-            $sizes = [];
-            foreach ($sizeRows as $s) {
-                $values = is_string($s->values) ? json_decode($s->values, true) : $s->values;
-                if (!is_array($values)) {
-                    $values = [];
-                }
-                $value = (string) ($values[$code] ?? '');
-                $sizes[] = new ProductSizeData(
-                    productSizeId: (int) $s->id,
-                    value: $display($code, $value),
-                );
-            }
-
-            return ['sizes' => $sizes, 'twoAxes' => false];
-        }
-
-        // Две оси — группируем по ширине (код 'width'), внутри — размеры.
-        $sizeCode = in_array('size', $dimensionCodes, true) ? 'size' : $dimensionCodes[0];
-        $widthCode = 'width';
-        if (!in_array($widthCode, $dimensionCodes, true)) {
-            foreach ($dimensionCodes as $c) {
-                if ($c !== $sizeCode) {
-                    $widthCode = $c;
-                    break;
-                }
-            }
-        }
-
-        $groups = [];
-        foreach ($sizeRows as $s) {
-            $values = is_string($s->values) ? json_decode($s->values, true) : $s->values;
-            if (!is_array($values)) {
-                $values = [];
-            }
-            $sizeValue = (string) ($values[$sizeCode] ?? '');
-            $widthValue = (string) ($values[$widthCode] ?? '');
-
-            if (!isset($groups[$widthValue])) {
-                $groups[$widthValue] = [
-                    'value' => $widthValue,
-                    'label' => $displayByAxis[$widthCode][$widthValue] ?? $widthValue,
-                    'items' => [],
-                ];
-            }
-
-            $groups[$widthValue]['items'][] = [
-                'productSizeId' => (int) $s->id,
-                'value' => $display($sizeCode, $sizeValue),
-                'sort' => $orderByAxis[$sizeCode][$sizeValue] ?? PHP_INT_MAX,
-            ];
-        }
-
-        // Порядок групп соответствует порядку значений ширины в сетке.
-        $orderedWidths = array_keys($orderByAxis[$widthCode] ?? []);
-        $widths = [];
-        foreach ($orderedWidths as $wv) {
-            if (isset($groups[$wv])) {
-                $widths[] = $wv;
-            }
-        }
-        foreach (array_keys($groups) as $wv) {
-            if (!in_array($wv, $widths, true)) {
-                $widths[] = $wv;
-            }
-        }
-
-        $result = [];
-        foreach ($widths as $wv) {
-            $group = $groups[$wv];
-            usort($group['items'], static fn($a, $b) => $a['sort'] <=> $b['sort']);
-            $items = array_map(
-                static fn($item) => new ProductSizeData(
-                    productSizeId: $item['productSizeId'],
-                    value: $item['value'],
-                ),
-                $group['items'],
-            );
-            $result[] = new ProductSizeWidthData(
-                value: $group['value'],
-                label: $group['label'],
-                items: $items,
-            );
-        }
-
-        return ['sizes' => $result, 'twoAxes' => true];
     }
 
     public function getAttributes(ProductData $product): array
@@ -538,6 +372,64 @@ class ProductViewQueryRepository
             $result[$groupName][] = [
                 'name' => $attr['name'],
                 'value' => $value,
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает категории товара: основную (main_category_id) и привязанные через pivot.
+     *
+     * @return array<int, array{name: string, slug: string, image: string}>
+     */
+    public function getCategories(int $productId): array
+    {
+        $mainCategoryId = DB::table('products')->where('id', $productId)->value('main_category_id');
+        $pivotIds = DB::table('categories_products')->where('product_id', $productId)->pluck('category_id')->toArray();
+
+        $ids = array_values(array_unique(array_merge(
+            $mainCategoryId !== null ? [(int) $mainCategoryId] : [],
+            array_map('intval', $pivotIds),
+        )));
+
+        if (empty($ids)) {
+            return [];
+        }
+
+        $rows = DB::table('categories')
+            ->whereIn('categories.id', $ids)
+            ->leftJoin('photos', function ($join) {
+                $join->on('categories.id', '=', 'photos.imageable_id')
+                    ->where('photos.model_type', '=', 'catalog.category')
+                    ->where('photos.type', '=', 'image');
+            })
+            ->select(
+                'categories.id',
+                'categories.name',
+                'categories.slug',
+                'photos.id as photo_id',
+                'photos.file as photo_file',
+            )
+            ->get();
+
+        $result = [];
+        foreach ($rows as $row) {
+            $image = '';
+            if (!empty($row->photo_id) && !empty($row->photo_file)) {
+                $photoRow = new \stdClass();
+                $photoRow->id = (int) $row->id;
+                $photoRow->photo_id = (int) $row->photo_id;
+                $photoRow->photo_file = $row->photo_file;
+                $photoRow->model_type = 'catalog.category';
+
+                $image = $this->imageThumbUseCase->execute($photoRow, null);
+            }
+
+            $result[] = [
+                'name' => $row->name,
+                'slug' => $row->slug,
+                'image' => $image,
             ];
         }
 
