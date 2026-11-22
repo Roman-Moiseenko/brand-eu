@@ -290,7 +290,6 @@ class MetaTemplateRepository
         if (property_exists($dto, $propertyName)) {
             return $this->valueToString($dto->{$propertyName});
         }
-
         // 2. Свойство с суффиксом Name (например {category} => categoryName, {brand} => brandName)
         $propertyNameWithSuffix = $propertyName . 'Name';
         if (property_exists($dto, $propertyNameWithSuffix)) {

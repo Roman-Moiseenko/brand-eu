@@ -68,8 +68,7 @@
             }
         });
     </script>
-    <!-- Begin Talk-Me {literal} -->
-    <script>
+    <!--script>
         (function(){(function c(d,w,m,i) {
             window.supportAPIMethod = m;
             var s = d.createElement('script');
@@ -81,11 +80,10 @@
             w[m] = w[m] ? w[m] : function(){(w[m].q = w[m].q ? w[m].q : []).push(arguments);};
             (d.head ? d.head : d.body).appendChild(s);
         })(document,window,'TalkMe')})();
-    </script>
+    </script-->
 
-    <!-- script src="//code.jivo.ru/widget/GFG8RYD53n" async></script -->
+    <script src="//code.jivo.ru/widget/GFG8RYD53n" async></script>
 
-    <!-- {/literal} End Talk-Me -->
 </head>
 <body class="@yield('body')">
 @include('shop.header')
