@@ -56,6 +56,9 @@
                         <el-form-item label="Max Chat ID" prop="maxChatId">
                             <el-input v-model="form.maxChatId" placeholder="987654321"/>
                         </el-form-item>
+                        <el-form-item label="Ссылка на профиль" prop="urlProfile">
+                            <el-input v-model="form.urlProfile" placeholder="https://vk.ru/myProfile"/>
+                        </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-divider content-position="center">Дополнительно</el-divider>
@@ -140,7 +143,7 @@
                 >
                     <el-form-item label="Login" prop="name">
                         <el-input v-model="userForm.name" placeholder="ivanov" autocomplete="off" >
-                            <template #append>@{{ domain }}</template>
+                            <template #append>@nordihome.ru</template>
                         </el-input>
                     </el-form-item>
 
@@ -201,6 +204,7 @@ const props = defineProps({
         default: 'Карточка сотрудника',
     },
 })
+
 const useAuth = useAuthStore();
 const saving = ref(false)
 
@@ -220,12 +224,13 @@ const initialForm = {
     maxChatId: props.staff?.maxChatId ?? '',
     notes: props.staff?.notes ?? '',
     terminated: props.staff?.terminated ?? false,
+    urlProfile: props.staff?.urlProfile ?? '',
 }
-const domain = import.meta.env.VITE_DOMAIN
+
 const hasUser = computed(() => props.staff?.user !== null && props.staff?.user !== undefined)
 const initialUserForm = {
     active: props.staff?.user?.active ?? true,
-    name: props.staff?.user ? props.staff.user.email.replace('@' + domain, '') : '',
+    name: props.staff?.user ? props.staff.user.email.replace('@nordihome.ru', '') : '',
     password: '',
     roleNames: props.staff?.user?.roleNames ?? [],
 }
@@ -307,7 +312,7 @@ function onSaveAccess() {
 
     const formAccess = reactive({
         active: hasAccess.value,
-        email: userForm.value.name + '@' + domain,
+        email: userForm.value.name + '@nordihome.ru',
         password: passwordValue,
         roleNames: [...userForm.value.roleNames],
     })

@@ -11,7 +11,7 @@
             </el-tooltip>
         </div>
         <div class="mt-3 p-3 bg-white rounded-lg ">
-            <InfoPost :post="post" :templates="templates"/>
+            <InfoPost :post="post"/>
             <HelpBlock v-if="showHelp">
                 <p><b>Название записи</b> является обязательным полем.</p>
                 <p>Поле <b>Slug</b> (ссылка на рубрику) можно не заполнять, тогда оно заполнится автоматически. При
@@ -61,8 +61,8 @@ const props = defineProps({
         type: String,
         default: 'Карточка Записи',
     },
-    templates: Array,
-   // tiny_api: String,
+    //  templates: Array,
+    // tiny_api: String,
     blocks: Array,
 })
 const text = ref(props.post.text)

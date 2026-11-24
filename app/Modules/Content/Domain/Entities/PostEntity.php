@@ -39,12 +39,12 @@ final class PostEntity
         get => $this->fragment;
         set => $this->fragment = $value;
     }
-/*
-    public string $template {
-        get => $this->template;
-        set => $this->template = $value;
-    }
-*/
+    /*
+        public string $template {
+            get => $this->template;
+            set => $this->template = $value;
+        }
+    */
     public bool $published = false {
         get => $this->published;
         set => $this->published = $value;
@@ -75,6 +75,11 @@ final class PostEntity
         set => $this->categoryId = $value;
     }
 
+    public ?int $staffId = null {
+        get => $this->staffId;
+        set => $this->staffId = $value;
+    }
+
     public bool $oldRender = false {
         get => $this->oldRender;
         set => $this->oldRender = $value;
@@ -89,12 +94,12 @@ final class PostEntity
     public function __construct(
         string $name,
         Slug $slug,
-      //  string $template,
+        //  string $template,
         ?int $categoryId = null,
     ) {
         $this->name = $name;
         $this->slug = $slug;
-    //    $this->template = $template;
+        //    $this->template = $template;
         $this->categoryId = $categoryId;
     }
 

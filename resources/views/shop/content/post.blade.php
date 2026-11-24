@@ -21,7 +21,16 @@
             </div>
         @endif
     @endforeach
-
+    @if(!empty($pageData->post->authorName))
+        <div>
+            <p>
+                Автор статьи: <a href="{{ $pageData->post->authorUrl }}">{{ $pageData->post->authorName }}</a>
+            </p>
+            <p>
+                Дата публикации: {{ date('Y-m-d', strtotime($pageData->post->publishedAt)) }}
+            </p>
+        </div>
+    @endif
     <script type="application/ld+json" class="schemantra.com">
         {!! json_encode($pageData->schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
     </script>
