@@ -4,10 +4,8 @@ namespace App\Modules\Auth\Infrastructure\Models;
 
 use App\Modules\Auth\Domain\ValueObjects\Email;
 use App\Modules\Auth\Domain\ValueObjects\PhoneNumber;
-use App\Modules\Auth\Infrastructure\Models\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use App\Modules\Auth\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
