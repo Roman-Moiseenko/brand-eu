@@ -27,13 +27,20 @@ window.$ = jQuery;
         responsive: {}
     };
 
-    if (document.querySelectorAll('.widget-slider-common') !== null) {
-        let optionsSliderWidget = optionsSliderBase;
-        let slidersWidget= $('.widget-slider-common');
-        slidersWidget.each(function (element) {
-            let sliderWidget = $(this);
-            let mouseScroll = sliderWidget.data('mouse-scroll');
+    function initOwlAria($slider) {
+        $slider.find('.owl-prev').attr('aria-label', 'Предыдущий слайд');
+        $slider.find('.owl-next').attr('aria-label', 'Следующий слайд');
+        $slider.find('.owl-dot').each(function (index) {
+            $(this).attr('aria-label', 'Перейти к слайду ' + (index + 1));
+        });
+    }
 
+    if (document.querySelectorAll('.widget-slider-common').length) {
+        $('.widget-slider-common').each(function () {
+            let sliderWidget = $(this);
+            let optionsSliderWidget = { ...optionsSliderBase };
+
+            let mouseScroll = sliderWidget.data('mouse-scroll');
             let autoSpeed  = sliderWidget.data('auto-speed');
             let items  = sliderWidget.data('items');
             let autoplay  = sliderWidget.data('autoplay');
@@ -52,7 +59,8 @@ window.$ = jQuery;
             if (items == '1') optionsSliderWidget.responsive = {};
 
             sliderWidget.owlCarousel(optionsSliderWidget);
-            if (mouseScroll === 1) {
+
+            if (Number(mouseScroll) === 1) {
                 sliderWidget.on('mousewheel', '.owl-stage', function (e) {
                     if (e.originalEvent.deltaY > 0) {
                         sliderWidget.trigger('next.owl');
@@ -63,29 +71,25 @@ window.$ = jQuery;
                 });
             }
 
-            sliderWidget.on('initialized.owl.carousel', function() {
-                // Добавляем атрибуты для стрелок
-                $('.owl-prev').attr('aria-label', 'Предыдущий слайд');
-                $('.owl-next').attr('aria-label', 'Следующий слайд');
-                $('.owl-dot').each(function(index) {
-                    $(this).attr('aria-label', 'Перейти к слайду ' + (index + 1));
-                });
+            sliderWidget.on('initialized.owl.carousel', function () {
+                initOwlAria(sliderWidget);
             });
         });
     }
 
 
-    if (document.querySelectorAll('.widget-slider-products') !== null) {
-        let optionsSliderWidget = optionsSliderBase;
-        let slidersWidget= $('.widget-slider-products');
-        slidersWidget.each(function (element) {
+    if (document.querySelectorAll('.widget-slider-products').length) {
+        $('.widget-slider-products').each(function () {
             let sliderWidget = $(this);
+            let optionsSliderWidget = { ...optionsSliderBase };
+
             let items  = sliderWidget.data('items');
             let items_mob  = sliderWidget.data('items-mob');
             let dots  = sliderWidget.data('dots');
             let nav  = sliderWidget.data('nav');
-           // console.log(sliderWidget.data('items-mob'))
-            if (items_mob === undefined) items_mob = items
+
+            if (items_mob === undefined) items_mob = items;
+
             optionsSliderWidget.items = items_mob;
             optionsSliderWidget.dots = dots;
             optionsSliderWidget.nav = nav;
@@ -94,15 +98,11 @@ window.$ = jQuery;
                     items: items
                 }
             };
-            console.log(optionsSliderWidget)
+
             sliderWidget.owlCarousel(optionsSliderWidget);
-            sliderWidget.on('initialized.owl.carousel', function() {
-                // Добавляем атрибуты для стрелок
-                $('.owl-prev').attr('aria-label', 'Предыдущий слайд');
-                $('.owl-next').attr('aria-label', 'Следующий слайд');
-                $('.owl-dot').each(function(index) {
-                    $(this).attr('aria-label', 'Перейти к слайду ' + (index + 1));
-                });
+
+            sliderWidget.on('initialized.owl.carousel', function () {
+                initOwlAria(sliderWidget);
             });
         });
     }
