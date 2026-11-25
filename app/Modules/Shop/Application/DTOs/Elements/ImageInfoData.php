@@ -12,6 +12,7 @@ class ImageInfoData
         public string $title = '',
         public string $description = '',
         public string $mini = '',
+        public string $list = '',
         public ?string $format = null,
         public ?int $width = null,
         public ?int $height = null,
@@ -28,7 +29,7 @@ class ImageInfoData
             title: $data['title'],
             description: $data['description'],
             mini: $data['mini'] ?? '',
-
+            list: $data['list'] ?? '',
             format: $data['format'] ?? null,
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,

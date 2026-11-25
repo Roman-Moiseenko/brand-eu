@@ -185,7 +185,7 @@ class ProductViewQueryRepository
             $src = $this->imageThumbUseCase->execute($photoRow, 'card');
             $mini = $this->imageThumbUseCase->execute($photoRow, 'mini');
             $full = $this->imageThumbUseCase->execute($photoRow, 'original');
-
+            $list = $this->imageThumbUseCase->execute($photoRow, 'list');
 
             $images[] = ImageInfoData::fromArray([
                 'full' => $full,
@@ -194,6 +194,7 @@ class ProductViewQueryRepository
                 'title' => $photo->title ?? '',
                 'description' => $photo->description ?? '',
                 'mini' => $mini,
+                'list' => $list,
                 'format' => $photo->format ?? null,
                 'width' => $photo->width !== null ? (int)$photo->width : null,
                 'height' => $photo->height !== null ? (int)$photo->height : null,
