@@ -142,7 +142,7 @@ class SchemaBuilder
                 'image' => $product->image->src,
                 "Offers" => [
                     "@type" => "Offer",
-                    "price" => number_format($product->price, 2, ',', ''),
+                    "price" => number_format($product->price, 2, '.', ''),
                     "priceCurrency" => "RUB",
                     "availability" => $product->only_on_order ? 'https://schema.org/PreOrder' : "https://schema.org/InStock"
                 ],

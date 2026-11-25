@@ -14,7 +14,7 @@ class OfferSchema implements SchemaElement
     {
         return [
             '@type'         => 'Offer',
-            'price'         => $this->price,
+            'price'         => number_format($this->price, 2, '.', ''),
             'priceCurrency' => $this->priceCurrency,
             'availability'  => 'https://schema.org/' . $this->availability,
         ];
