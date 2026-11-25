@@ -28,7 +28,6 @@ window.$ = jQuery;
     };
 
     if (document.querySelectorAll('.widget-slider-common') !== null) {
-
         let optionsSliderWidget = optionsSliderBase;
         let slidersWidget= $('.widget-slider-common');
         slidersWidget.each(function (element) {
@@ -63,12 +62,20 @@ window.$ = jQuery;
                     e.preventDefault();
                 });
             }
+
+            sliderWidget.on('initialized.owl.carousel', function() {
+                // Добавляем атрибуты для стрелок
+                $('.owl-prev').attr('aria-label', 'Предыдущий слайд');
+                $('.owl-next').attr('aria-label', 'Следующий слайд');
+                $('.owl-dot').each(function(index) {
+                    $(this).attr('aria-label', 'Перейти к слайду ' + (index + 1));
+                });
+            });
         });
     }
 
 
     if (document.querySelectorAll('.widget-slider-products') !== null) {
-
         let optionsSliderWidget = optionsSliderBase;
         let slidersWidget= $('.widget-slider-products');
         slidersWidget.each(function (element) {
@@ -77,7 +84,7 @@ window.$ = jQuery;
             let items_mob  = sliderWidget.data('items-mob');
             let dots  = sliderWidget.data('dots');
             let nav  = sliderWidget.data('nav');
-            console.log(sliderWidget.data('items-mob'))
+           // console.log(sliderWidget.data('items-mob'))
             if (items_mob === undefined) items_mob = items
             optionsSliderWidget.items = items_mob;
             optionsSliderWidget.dots = dots;
@@ -89,6 +96,14 @@ window.$ = jQuery;
             };
             console.log(optionsSliderWidget)
             sliderWidget.owlCarousel(optionsSliderWidget);
+            sliderWidget.on('initialized.owl.carousel', function() {
+                // Добавляем атрибуты для стрелок
+                $('.owl-prev').attr('aria-label', 'Предыдущий слайд');
+                $('.owl-next').attr('aria-label', 'Следующий слайд');
+                $('.owl-dot').each(function(index) {
+                    $(this).attr('aria-label', 'Перейти к слайду ' + (index + 1));
+                });
+            });
         });
     }
 
@@ -109,11 +124,6 @@ window.$ = jQuery;
             }
             e.preventDefault();
         });
-    }
-    if (document.getElementById('main-slider01') !== null) {
-        let sliderPayment = $('#main-slider01');
-        sliderPayment.owlCarousel(optionsSliderBase);
-
     }
     if (document.getElementById('slider-main-specials') !== null) {
         let sliderPayment = $('#slider-main-specials');
