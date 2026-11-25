@@ -280,10 +280,11 @@
     top: 4px;
     border-radius: $border-radius_50;
     width: 65px;
-    height: 65px;
-    color: #fff;
+    height: 45px;
+    color: #000;
     display: grid;
-    font-size: 13px;
+    font-size: 18px;
+    font-weight:900;
     >span {
         margin: auto;
     }
