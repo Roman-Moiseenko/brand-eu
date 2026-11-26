@@ -173,40 +173,19 @@ window.$ = jQuery;
     }
 
 
-    if (document.querySelectorAll('.article-slider01') !== null) {
-        let product_optionsSliderBase = optionsSliderBase;
-        let slidersImagesProduct = $('.article-slider01');
-        slidersImagesProduct.each(function (element) {
-            let sliderImagesProduct = $(this);
-            let mouseScroll = sliderImagesProduct.data('mouse-scroll');
-            sliderImagesProduct.owlCarousel(product_optionsSliderBase);
-            if (mouseScroll !== 0) {
-                sliderImagesProduct.on('mousewheel', '.owl-stage', function (e) {
-                    if (e.originalEvent.deltaY > 0) {
-                        sliderImagesProduct.trigger('next.owl');
-                    } else {
-                        sliderImagesProduct.trigger('prev.owl');
-                    }
-                    e.preventDefault();
-                });
-            }
-        });
-    }
 
     if (document.querySelectorAll('.slider-images-product') !== null) {
-        let product_optionsSliderBase = optionsSliderBase;
+
         let slidersImagesProduct = $('.slider-images-product');
         slidersImagesProduct.each(function (element) {
+            let product_optionsSliderBase = optionsSliderBase;
             let sliderImagesProduct = $(this);
             let mouseScroll = sliderImagesProduct.data('mouse-scroll');
             let responsive = sliderImagesProduct.data('responsive');
             if (responsive === undefined || responsive.length !== 3) responsive = [2, 3, 4];
             product_optionsSliderBase.responsive = {0: {items: responsive[0]}, 576: {items: responsive[1]}, 991: {items: responsive[2]}};
-
             product_optionsSliderBase.loop = false;
-
             product_optionsSliderBase.margin = 0;
-            sliderImagesProduct.owlCarousel(product_optionsSliderBase);
             if (mouseScroll !== 0) {
                 sliderImagesProduct.on('mousewheel', '.owl-stage', function (e) {
                     if (e.originalEvent.deltaY > 0) {
@@ -217,6 +196,12 @@ window.$ = jQuery;
                     e.preventDefault();
                 });
             }
+            sliderImagesProduct.on('initialized.owl.carousel', function () {
+                setTimeout(function() {
+                    initOwlAria(sliderImagesProduct);
+                }, 0);
+            });
+            sliderImagesProduct.owlCarousel(product_optionsSliderBase);
         });
     }
     if (document.getElementById('slider-old-catalog') !== null) {
@@ -229,29 +214,5 @@ window.$ = jQuery;
         sliderOldCatalog.owlCarousel(optionsOldCatalog);
     }
 
-
-
-/*
-
-    if (document.getElementById('slider-images-product') !== null) {
-        let sliderImagesProduct = $('#slider-images-product');
-
-        let product_optionsSliderBase = optionsSliderBase;
-        let responsive = sliderImagesProduct.data('responsive');
-        if (responsive === undefined || responsive.length !== 3) responsive = [3, 6, 9];
-        product_optionsSliderBase.responsive = {0: {items: responsive[0]}, 576: {items: responsive[1]}, 991: {items: responsive[2]}};
-        product_optionsSliderBase.margin = 0;
-        sliderImagesProduct.owlCarousel(product_optionsSliderBase);
-        sliderImagesProduct.on('mousewheel', '.owl-stage', function (e) {
-            if (e.originalEvent.deltaY > 0) {
-                sliderImagesProduct.trigger('next.owl');
-            } else {
-                sliderImagesProduct.trigger('prev.owl');
-            }
-            e.preventDefault();
-        });
-    }
-
- */
 })();
 
