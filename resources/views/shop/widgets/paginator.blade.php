@@ -18,12 +18,12 @@
                     </li>
                 @else
                     <li class="page-item">
-                        <a class="page-link" href="{{ $paginator->url[1] }}">
+                        <a class="page-link" href="{{ $paginator->url[1] }}" aria-label="На первую страницу">
                             <i class="fa-light fa-chevrons-left"></i>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="{{ $paginator->previousPageUrl }}">
+                        <a class="page-link" href="{{ $paginator->previousPageUrl }}" aria-label="На предыдущую страницу">
                             <i class="fa-light fa-chevron-left"></i>
                         </a>
                     </li>
@@ -49,12 +49,12 @@
                 @endforeach
                 @if ($paginator->hasMorePages)
                     <li class="page-item">
-                        <a class="page-link" href="{{ $paginator->nextPageUrl }}">
+                        <a class="page-link" href="{{ $paginator->nextPageUrl }}" aria-label="На следующую страницу">
                             <i class="fa-light fa-chevron-right"></i>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="{{ $paginator->url[$paginator->lastPage] }}">
+                        <a class="page-link" href="{{ $paginator->url[$paginator->lastPage] }}" aria-label="На последнюю страницу">
                             <i class="fa-light fa-chevrons-right"></i>
                         </a>
                     </li>

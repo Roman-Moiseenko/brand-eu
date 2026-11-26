@@ -6,7 +6,10 @@
             @foreach ($breadcrumbs as $index => $breadcrumb)
                 @if ($breadcrumb->url && !$loop->last)
                     <li class="breadcrumb-item" data-index="{{ $index }}"><a
-                            href="{{ $breadcrumb->url }}">{!! $breadcrumb->title !!}  </a></li>
+                            href="{{ $breadcrumb->url }}"
+                            @if($breadcrumb->title == '<i class="fa-light fa-house"></i>') aria-label="Главная" @endif
+                        >{!! $breadcrumb->title !!}
+                        </a></li>
                 @else
                     <li class="breadcrumb-item active" data-index="{{ $index }}"><span>{!! $breadcrumb->title !!}</span>
                     </li>
