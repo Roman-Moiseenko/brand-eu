@@ -124,9 +124,12 @@ label.radio-img > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 
 //DROPDOWN-HOVER ПРИ НАВЕДЕНИИ
 
-.dropdown-hover.dropdown-toggle:after {
-    border: none;
-    content: none;
+.dropdown-hover {
+    background: white;
+    &.dropdown-toggle:after {
+        border: none;
+        content: none;
+    }
 }
 .dropdown:hover .dropdown-menu {
     display: block;

@@ -14,9 +14,9 @@
         <div class="d-flex align-items-center justify-content-end">
             <div class="t-color_dark-gray m-r_5 f-z_14"><span>Найдено: {{ count_product($pageData->mainInfo->totalProducts) }} </span></div>
             <div class="order btn-group">
-                <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Сортировка
-                </div>
+                </button>
                 <div class="dropdown-menu">
                     <ul>
                         <li class="{{ $pageData->filters->sortOrder == 'price-down' ? 'active' : '' }}"
@@ -39,9 +39,9 @@
     <form action="" method="GET">
         <div class="mobile-manager">
             <div class="order btn-group">
-                <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Сортировка
-                </div>
+                </button>
                 <div class="dropdown-menu">
                     <ul>
                         <li class="{{ $pageData->filters->sortOrder == 'price-down' ? 'active' : '' }}"
