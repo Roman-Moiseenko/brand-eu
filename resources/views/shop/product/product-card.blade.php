@@ -58,12 +58,12 @@
         </div>
         <div class="product-card-review">
             <div>
-                <a class="e-click" data-product="{{ $product->id }}"
+                <!--a class="e-click" data-product="{{ $product->id }}"
                    href="{{ route('shop.product.view', $product->slug) }}/#review"
                    title="Отзывы реальных покупателей на {{ $product->name }}">
                     <i class="fa-solid fa-star"></i>{{ $product->rating }} <span
                         class="">{{ $product->count_reviews }}</span>
-                </a>
+                </a-->
             </div>
             <div>
                 @if(!is_null($client))
@@ -73,8 +73,7 @@
                     </button>
                 @else
                     <button class="to-wish" data-bs-toggle="modal" data-bs-target="#login-popup"
-                            type="button"
-                            onclick="event.preventDefault();">
+                            type="button">
                         <i class="fa-light fa-heart" type="button" title="В Избранное"></i>
                     </button>
                 @endif

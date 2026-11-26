@@ -66,9 +66,9 @@
                             @include('shop.widgets.to-wish', ['product' => $product])
                         </div>
                         <div>
-                            <a href="#reviews" title="Отзывы реальных покупателей"
-                               aria-label="Отзывы реальных покупателей">{{ $product->count_reviews }}</a>
-                            @include('shop.widgets.stars', ['rating' => $product->rating, 'show_number' => true])
+                            <!--a href="#reviews" title="Отзывы реальных покупателей"
+                               aria-label="Отзывы реальных покупателей">{{ $product->count_reviews }}</a-->
+                            {{-- @include('shop.widgets.stars', ['rating' => $product->rating, 'show_number' => true]) --}}
                         </div>
                     </div>
                     <div class="product-code">Артикул: <span>{{ $product->code }}</span></div>
