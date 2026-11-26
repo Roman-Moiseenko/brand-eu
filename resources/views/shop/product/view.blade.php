@@ -52,7 +52,7 @@
 
                 <div class="slider-images-product owl-carousel owl-theme p-3" data-responsive="[3,6,9]">
                     @foreach($product->images as $index => $photo)
-                        <img src="{{ $photo->mini }}" data-image="{{ $photo->src }}"
+                        <img src="{{ $photo->list }}" data-image="{{ $photo->src }}"
                              class="slider-image-product" alt="{{ $photo->alt }}" data-index="{{ $index }}">
                     @endforeach
                 </div>

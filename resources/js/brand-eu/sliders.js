@@ -58,8 +58,6 @@ window.$ = jQuery;
             optionsSliderWidget.mouseDrag = mouseDrag;
             if (items == '1') optionsSliderWidget.responsive = {};
 
-            sliderWidget.owlCarousel(optionsSliderWidget);
-
             if (Number(mouseScroll) === 1) {
                 sliderWidget.on('mousewheel', '.owl-stage', function (e) {
                     if (e.originalEvent.deltaY > 0) {
@@ -72,8 +70,12 @@ window.$ = jQuery;
             }
 
             sliderWidget.on('initialized.owl.carousel', function () {
-                initOwlAria(sliderWidget);
+                setTimeout(function() {
+                    initOwlAria(sliderWidget);
+                }, 0);
             });
+
+            sliderWidget.owlCarousel(optionsSliderWidget);
         });
     }
 
@@ -98,12 +100,12 @@ window.$ = jQuery;
                     items: items
                 }
             };
-
-            sliderWidget.owlCarousel(optionsSliderWidget);
-
             sliderWidget.on('initialized.owl.carousel', function () {
-                initOwlAria(sliderWidget);
+                setTimeout(function() {
+                    initOwlAria(sliderWidget);
+                }, 0);
             });
+            sliderWidget.owlCarousel(optionsSliderWidget);
         });
     }
 
@@ -115,7 +117,6 @@ window.$ = jQuery;
         optionsSliderPayment.loop = false;
         optionsSliderPayment.nav = false;
 
-        sliderPayment.owlCarousel(optionsSliderPayment);
         sliderPayment.on('mousewheel', '.owl-stage', function (e) {
             if (e.originalEvent.deltaY > 0) {
                 sliderPayment.trigger('next.owl');
@@ -124,6 +125,8 @@ window.$ = jQuery;
             }
             e.preventDefault();
         });
+
+        sliderPayment.owlCarousel(optionsSliderPayment);
     }
     if (document.getElementById('slider-main-specials') !== null) {
         let sliderPayment = $('#slider-main-specials');
