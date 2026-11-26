@@ -75,7 +75,7 @@
         transition: all .5s;
     }
     &.is-active {
-        bottom:140px;
+        bottom:60px;
         opacity: 1;
         visibility: visible;
 
@@ -129,7 +129,7 @@
     }
     .scrollup {
         &.is-active {
-            bottom: 195px;
+            bottom: 130px;
         }
     }
     .online-chat-root-TalkMe {
