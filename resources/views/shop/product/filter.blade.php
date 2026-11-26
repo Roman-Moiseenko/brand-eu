@@ -21,7 +21,7 @@
                     <b>{{ $mainInfo->name }}</b>
                 </div>
                 @foreach($mainInfo->children as $child)
-                    <div class="m-l_10 f-z_16">
+                    <div class="m-l_10 f-z_16 m-b_5">
                         <a href="{{ $child->url }}">{{ $child->name }}</a>
                     </div>
                 @endforeach
