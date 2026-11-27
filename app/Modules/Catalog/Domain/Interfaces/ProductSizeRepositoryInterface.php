@@ -15,6 +15,11 @@ interface ProductSizeRepositoryInterface
     public function getByProductId(int $productId): array;
 
     /**
+     * Сохраняет (создаёт/обновляет) вариант размера товара.
+     */
+    public function save(ProductSizeEntity $size): ProductSizeEntity;
+
+    /**
      * Активные варианты размеров для нескольких товаров.
      *
      * @param int[] $productIds

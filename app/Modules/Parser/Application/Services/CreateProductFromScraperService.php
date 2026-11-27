@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Modules\Parser\Application\Services;
 
 use App\Modules\Base\Service\TranslateService;
+use App\Modules\Catalog\Application\Actions\Product\AddSizeToProductUseCase;
 use App\Modules\Catalog\Application\Actions\Product\EditPage\SetProductSizesUseCase;
 use App\Modules\Catalog\Application\Actions\Series\FindOrCreateSeriesUseCase;
+use App\Modules\Catalog\Application\Actions\SizeGrid\AddSizeToGridUseCase;
 use App\Modules\Catalog\Application\DTOs\Product\EditPage\UpdateProductSizesData;
 use App\Modules\Catalog\Application\Services\AttachVariantAttributeService;
 use App\Modules\Catalog\Domain\Entities\ProductEntity;
@@ -45,6 +47,8 @@ readonly class CreateProductFromScraperService
         private SizeGridRepositoryInterface       $sizeGridRepository,
         private TranslateService                  $translateService,
         private SetProductSizesUseCase            $setProductSizesUseCase,
+        private AddSizeToGridUseCase              $addSizeToGridUseCase,
+        private AddSizeToProductUseCase           $addSizeToProductUseCase,
         private SizeMapper                        $sizeMapper,
         private CalculateParserPriceService       $calculate,
         private AttachVariantAttributeService     $attachVariantAttributeService,
@@ -182,7 +186,12 @@ readonly class CreateProductFromScraperService
                 }
 
                 if ($sizeEntity === null) {
-                    //TODO Размер не найден. Создать размер в сетке и присвоить $sizeEntity.
+                    // Размер не найден — добавляем его в сетку и в товар
+                    $sizeGridValue = $this->addSizeToGridUseCase->execute($grid->id, $sizeProduct);
+                    $sizeEntity = $this->addSizeToProductUseCase->execute($sizeGridValue->id, $grid->id, $product->id);
+
+                    // Перезагружаем сетку: в неё добавлен новый размер
+                    $grid = $this->sizeGridRepository->getById($grid->id);
                 }
 
                 if ($available) {

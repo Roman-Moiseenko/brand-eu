@@ -22,6 +22,20 @@ class ProductSizeRepository implements ProductSizeRepositoryInterface
             ->all();
     }
 
+    public function save(ProductSizeEntity $size): ProductSizeEntity
+    {
+        $model = $size->id
+            ? ProductSize::findOrFail($size->id)
+            : new ProductSize();
+
+        $model->product_id = $size->productId;
+        $model->values = $size->values;
+        $model->is_active = $size->isActive;
+        $model->save();
+
+        return $this->hydrate($model->fresh());
+    }
+
     public function getActiveByProductIds(array $productIds): array
     {
         if ($productIds === []) {
