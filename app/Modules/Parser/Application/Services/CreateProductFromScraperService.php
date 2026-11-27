@@ -182,7 +182,7 @@ readonly class CreateProductFromScraperService
                 }
 
                 if ($sizeEntity === null) {
-                    continue;
+                    //TODO Размер не найден. Создать размер в сетке и присвоить $sizeEntity.
                 }
 
                 if ($available) {

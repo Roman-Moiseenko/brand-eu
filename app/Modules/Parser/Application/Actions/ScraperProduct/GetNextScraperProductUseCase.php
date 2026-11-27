@@ -24,15 +24,12 @@ readonly class GetNextScraperProductUseCase
     {
         $brand = $this->brandRepository->getByName($dto->brand);
 
-        if ($brand === null) {
-            throw new DomainException('Бренд не найден');
-        }
+        if ($brand === null) throw new DomainException('Бренд не найден');
 
         $first = $this->scraperProductRepository->findFirstByBrandId((int) $brand->id);
 
-        if ($first === null) {
-            return null;
-        }
+        if ($first === null) return null;
+
 
         return ScraperProductNextData::fromEntity($first);
     }
