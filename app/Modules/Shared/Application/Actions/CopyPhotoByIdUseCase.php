@@ -7,6 +7,7 @@ namespace App\Modules\Shared\Application\Actions;
 use App\Modules\Shared\Application\DTOs\JobPhotoCopyData;
 use App\Modules\Shared\Application\DTOs\Photo\PhotoUploadData;
 use App\Modules\Shared\Domain\Entities\UserPermission;
+use App\Modules\Shared\Domain\ValueObjects\QueueName;
 use App\Modules\Shared\Infrastructure\Job\RemoveTempPhotoJob;
 use App\Modules\Shared\Infrastructure\Models\Photo;
 use Illuminate\Http\UploadedFile;
@@ -67,7 +68,7 @@ class CopyPhotoByIdUseCase
             return null;
         }
 
-        RemoveTempPhotoJob::dispatch($fullFilename)->delay(now()->addMinutes(2));
+        RemoveTempPhotoJob::dispatch($fullFilename)->delay(now()->addMinutes(2))->onQueue(QueueName::PHOTO);
 
         return new UploadedFile(
             $fullFilename,
