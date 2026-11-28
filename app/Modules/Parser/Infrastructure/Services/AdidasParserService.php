@@ -121,9 +121,7 @@ class AdidasParserService implements ParserServiceInterface
         }
 
         // Если по бренду уже есть хотя бы одна запись в очереди — ничего не добавляем
-        if ($this->scraperCategoryRepository->existsByBrandId((int) $brand->id)) {
-            return;
-        }
+        if ($this->scraperCategoryRepository->existsByBrandId((int) $brand->id)) return;
 
         foreach ($this->parserCategoryRepository->getActiveLeaves((int) $brand->id) as $category) {
             if ($category->url === '') {
@@ -140,6 +138,7 @@ class AdidasParserService implements ParserServiceInterface
 
     public function ScraperAvailable(): void
     {
+        //
         $brand = $this->brandRepository->getByName(self::BRAND_NAME);
 
         if ($brand === null) {

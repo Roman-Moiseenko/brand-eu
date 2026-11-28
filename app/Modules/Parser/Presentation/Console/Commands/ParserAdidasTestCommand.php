@@ -33,7 +33,7 @@ class ParserAdidasTestCommand extends Command
 
         $this->info('Бренд: ' . $brand->name . ' (#' . $brand->id . ')');
         $brand->parser()->ScraperCategories();
-        $brand->parser()->ScraperAvailable();
+    //    $brand->parser()->ScraperAvailable();
 
         $count = ScraperCategory::where('brand_id', (int) $brand->id)->count();
         $this->info('Записей в scraper_categories для бренда: ' . $count);

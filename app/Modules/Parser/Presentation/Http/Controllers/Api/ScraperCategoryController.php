@@ -26,27 +26,21 @@ class ScraperCategoryController extends Controller
         } catch (ValidationException $e) {
             return response()->json($e->errors(), 422);
         }
-
         $data = $this->getNextScraperCategoryUseCase->execute($dto);
-
-        if ($data === null) {
-            return response()->json(['status' => 'done']);
-        }
+        if ($data === null) return response()->json(['status' => 'done']);
 
         return response()->json($data);
     }
 
     public function result(Request $request)
     {
-        \Log::info('result', $request->all());
         try {
             $dto = ScraperCategoryResultData::validateAndCreate($request->all());
         } catch (ValidationException $e) {
+            \Log::info('try', [$e->getMessage(), $e->getFile(), $e->getLine()]);
             return response()->json($e->errors(), 422);
         }
-
         $this->handleScraperCategoryResultService->execute($dto);
-
         return response()->json(['ok']);
     }
 }

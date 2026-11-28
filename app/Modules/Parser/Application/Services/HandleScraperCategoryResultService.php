@@ -25,7 +25,7 @@ readonly class HandleScraperCategoryResultService
         private ScraperCategoryRepositoryInterface $scraperCategoryRepository,
         private ScraperProductRepositoryInterface $scraperProductRepository,
         private ParserProductRepositoryInterface $parserProductRepository,
-        private ProcessScraperProductsUseCase $processScraperProductsUseCase,
+      //  private ProcessScraperProductsUseCase $processScraperProductsUseCase,
     ) {}
 
     public function execute(ScraperCategoryResultData $dto): void
@@ -34,11 +34,13 @@ readonly class HandleScraperCategoryResultService
 
         if (!$dto->isLastPage) {
             $this->addNextPage($dto, $current);
+        } else {
+            $this->scraperCategoryRepository->delete($dto->id);
         }
 
         $this->addProducts($dto, $current);
 
-        $this->processScraperProductsUseCase->execute($dto);
+       // $this->processScraperProductsUseCase->execute($dto);
     }
 
     private function addNextPage(ScraperCategoryResultData $dto, ScraperCategoryEntity $current): void

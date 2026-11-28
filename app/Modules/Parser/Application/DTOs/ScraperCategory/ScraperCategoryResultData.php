@@ -23,6 +23,7 @@ class ScraperCategoryResultData extends Data
         public readonly int $id,
         #[Required, BooleanType]
         public readonly bool $isLastPage,
+
         public readonly array $products = [],
         #[Nullable, StringType]
         public readonly ?string $nextPageUrl = null,
@@ -30,5 +31,12 @@ class ScraperCategoryResultData extends Data
         public readonly ?string $error = null,
     )
     {
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'products' => ['present', 'array'], // 'present' разрешает пустой массив
+        ];
     }
 }

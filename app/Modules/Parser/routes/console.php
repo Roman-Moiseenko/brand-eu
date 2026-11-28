@@ -14,12 +14,12 @@ Schedule::command('parser:products')
     ->at('02:00');
 //Категории для скрапера
 Schedule::command('parser:scraper-categories')
-    ->days([ScheduleDays::WEDNESDAY, ScheduleDays::SATURDAY])
-    ->at('02:00');
-//Доступность товаров скрапера
+    ->days([ScheduleDays::SATURDAY])
+    ->at('03:00');
+//Доступность товаров скрапера 1 раз в месяц
 Schedule::command('parser:scraper-available')
-    ->days([ScheduleDays::MONDAY, ScheduleDays::FRIDAY])
-    ->at('02:00');
+    ->days([ScheduleDays::FRIDAY])
+    ->at('03:00');
 
 //Кол-во на складах и доступность
 /*
