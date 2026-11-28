@@ -137,9 +137,7 @@ class ParserProductRepository implements ParserProductRepositoryInterface
     public function getByCategoryIds(array $categoryIds): array
     {
         return ParserProduct::with('sizes.productSize')
-            ->whereHas('categories', function ($query) use ($categoryIds) {
-                $query->whereIn('id', $categoryIds);
-            })
+            ->whereIn('category_id', $categoryIds)
             ->get()
             ->map(fn(ParserProduct $model) => $this->hydrate($model))
             ->values()
@@ -186,7 +184,7 @@ class ParserProductRepository implements ParserProductRepositoryInterface
     {
         return ParserProduct::with('sizes.productSize')
             ->orderBy('name')
-            ->whereHas('categories', fn($query) => $query->where('id', $categoryId))
+            ->where('category_id', $categoryId)
             ->paginate($perPage, ['*'], 'page', $page)
             ->through(fn(ParserProduct $model) => $this->hydrate($model));
     }

@@ -112,6 +112,7 @@ class CategoryParserController extends Controller
         $perPage = $request->integer('per_page', 15);
         $list = $this->listAllProductByCategoryUseCase->execute($id, $perPage, $page);
 
+        \Log::info('====', [$list]);
         return response()->json($list, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
     }
 

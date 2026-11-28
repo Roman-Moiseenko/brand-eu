@@ -38,11 +38,14 @@ class ScraperProductController extends Controller
             return response()->json(['status' => 'done']);
         }
 
+        \Log::info('next', ['data' => $data]);
         return response()->json($data);
     }
 
     public function result(Request $request)
     {
+        \Log::info('result', $request->all());
+
         try {
             $dto = ScraperProductResultData::validateAndCreate($request->all());
         } catch (ValidationException $e) {
